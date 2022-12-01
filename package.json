@@ -52,5 +52,8 @@
   "devDependencies": {
     "@types/react-helmet": "^6.1.6",
     "@types/react-router-dom": "^5.3.3"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
