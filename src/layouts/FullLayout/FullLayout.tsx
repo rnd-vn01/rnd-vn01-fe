@@ -5,7 +5,7 @@ import { RootState, useAppDispatch } from 'src/redux/store';
 
 export const FullLayout: React.FC<ILayout> = ({ header, children }) => {
   const dispatch = useAppDispatch();
-  const [isPageWithTabletTitle, setIsPageWithTabletTitle] = useState<boolean>(false);
+  const [isPageWithTabletTitle,] = useState<boolean>(false);
 
   useEffect(() => {
 

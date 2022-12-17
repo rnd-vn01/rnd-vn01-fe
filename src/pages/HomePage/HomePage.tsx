@@ -1,12 +1,7 @@
 import './HomePage.scss'
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from 'src/redux/store';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
-import { Helmet } from 'react-helmet';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Scene } from 'src/components/index';
 
 export const HomePage: React.FC = () => {
   return (
@@ -14,7 +9,9 @@ export const HomePage: React.FC = () => {
       role="div"
       aria-label="homepage"
       className="homepage">
-      R&D - VN01
+      <Canvas>
+        <Scene />
+      </Canvas>
     </div >
   );
 };

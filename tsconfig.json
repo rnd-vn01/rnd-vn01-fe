@@ -29,6 +29,7 @@
       "helpers/*": ["src/helpers/*"],
       "redux/*": ["src/redux/*"],
     },
+    "typeRoots" : ["node_modules/@types", "src/@types"]
   },
   "include": [
     "src"
