@@ -20,6 +20,8 @@ export const Scene: React.FC = () => {
         background={true}
       />
 
+      <ambientLight intensity={-0.3} />
+
       <PerspectiveCamera
         ref={camera}
         makeDefault
@@ -38,7 +40,7 @@ export const Scene: React.FC = () => {
         }}
         onChange={(e) => {
           var minPan = new Vector3(0.00, -30, 0);
-          var maxPan = new Vector3(0.01, 10, 0);
+          var maxPan = new Vector3(0.01, 15, 0);
 
           let _v = new Vector3();
           _v.copy(controls.current.target);
