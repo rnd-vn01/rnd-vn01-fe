@@ -1,6 +1,6 @@
-import { useLoader, extend } from '@react-three/fiber';
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader"
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
+import { extend } from '@react-three/fiber';
+import { FontLoader } from "src/assets/libraries/FontLoader"
+import { TextGeometry } from 'src/assets/libraries/TextGeometry'
 import helvetiker from "src/assets/fonts/helvetiker_regular.typeface.json"
 
 export const Text = ({ positionArray, text }) => {
@@ -15,7 +15,7 @@ export const Text = ({ positionArray, text }) => {
   }
 
   return (
-    <mesh position={positionArray} rotation={[0, 0, 0]} scale={[0.0175, 0.0175, 0.001]}>
+    <mesh position={positionArray} rotation={[0, 0, 0]} scale={[0.02, 0.02, 0.001]}>
       <textGeometry attach='geometry' args={[text || "", textOptions]} />
       <meshLambertMaterial attach='material' color={'black'} />
     </mesh>

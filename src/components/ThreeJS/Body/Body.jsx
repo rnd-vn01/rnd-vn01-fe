@@ -1,6 +1,6 @@
 import './Body.scss'
 import { useLoader } from "@react-three/fiber";
-import { GLTFLoader } from '../GLTFLoader/GLTFLoader';
+import { GLTFLoader } from 'src/assets/libraries/GLTFLoader';
 import MALEBODY from 'src/assets/models/NewSkinBody.glb';
 
 export const Body = () => {
