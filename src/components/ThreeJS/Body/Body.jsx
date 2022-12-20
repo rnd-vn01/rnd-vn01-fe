@@ -10,6 +10,6 @@ export const Body = () => {
   );
   
   return (
-    <primitive object={mesh.scene} rotation-y={-0.025}  position={[0, -30, 0]}/>
+    <primitive object={mesh.scene} rotation-y={-0.025} position={[0, -30, 0]}/>
   );
 };
