@@ -2,15 +2,13 @@
   "name": "rnd-vn01-fe",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-three/drei": "9.34.4",
     "@react-three/fiber": "8.8.10",
     "@reduxjs/toolkit": "^1.9.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.4",
     "@types/react": "^18.0.25",
@@ -27,6 +25,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
+    "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.56.1",
     "sweetalert2": "^11.6.15",
     "sweetalert2-react-content": "^5.0.7",
@@ -54,7 +53,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
     "@types/react-helmet": "^6.1.6",
     "@types/react-router-dom": "^5.3.3"
   },
