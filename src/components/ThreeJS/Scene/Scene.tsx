@@ -1,5 +1,5 @@
 import './Scene.scss'
-import React, { Suspense, useRef } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import {
   Environment,
   OrbitControls,
@@ -9,10 +9,28 @@ import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
 import { Vector3 } from 'three';
 import { LU, LI } from '../Meridians';
+import { useAppDispatch } from 'src/redux/store';
+import { setStateCameraQuaternion } from 'src/redux/slice/camera';
 
 export const Scene: React.FC = () => {
   const controls = useRef(null);
   const camera = useRef(null);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (camera.current) {
+        dispatch(setStateCameraQuaternion({
+          x: camera.current.quaternion._x,
+          y: camera.current.quaternion._y,
+          z: camera.current.quaternion._z,
+          w: camera.current.quaternion._w,
+        }))
+      }
+    }, 2500)
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Suspense fallback={null}>

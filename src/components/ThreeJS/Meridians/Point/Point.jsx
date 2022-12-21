@@ -18,8 +18,6 @@ export const Point = ({ positionArray, label, labelPosition }) => {
   
   const imgTex = useLoader(TextureLoader, circleImg);
 
-  
-
   return (
     <>
       <points>
