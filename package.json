@@ -38,7 +38,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:coverage": "react-scripts test --coverage"
+    "test:coverage": "react-scripts test --watchAll --coverage"
   },
   "browserslist": {
     "production": [
@@ -69,7 +69,8 @@
       "index.ts",
       "mocks",
       "BasicRoute.tsx",
-      "getAccessToken.ts"
+      "getAccessToken.ts",
+      "libraries"
     ]
   }
 }
