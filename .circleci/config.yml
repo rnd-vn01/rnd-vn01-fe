@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 jobs:
-  build-and-test:
+  test:
     docker:
       - image: 'cimg/base:stable'
     steps:
@@ -12,7 +12,30 @@ jobs:
       - node/install-packages
       - run:
           command: npm run test
+  deploy-to-staging:
+    description: Deploy application to staging server
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - run:
+          command: npm run build & firebase deploy --only hosting
+  
 workflows:
-  build-and-test:
+  test:
     jobs:
-      - build-and-test
+      - test:
+          filters:
+            branches:
+              ignore:
+                - main
+  
+  deploy-to-staging:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: main
+      - deploy-to-staging:
+          requires:
+            - test
