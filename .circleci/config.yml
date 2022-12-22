@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: '12.22'
+          node-version: '18.12'
       - node/install-packages
       - run:
           command: npm install -g firebase-tools
