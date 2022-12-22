@@ -18,8 +18,12 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
+      - node/install:
+          node-version: '12.22'
+      - node/install-packages
       - run:
-          command: npm run build & firebase deploy --only hosting
+          command: npm install -g firebase-tools
+          command: npm run build & firebase deploy --token=${process.env.COVERALLS_REPO_TOKEN} --non-interactive
   
 workflows:
   test:
