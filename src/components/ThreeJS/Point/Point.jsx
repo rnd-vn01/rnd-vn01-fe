@@ -2,7 +2,7 @@ import { useLoader } from '@react-three/fiber';
 import { TextureLoader, DynamicDrawUsage } from 'three';
 import circleImg from 'src/assets/images/circle.png';
 import { useMemo, useState } from 'react';
-import { Text } from "../index";
+import { Text } from "src/components/ThreeJS/index";
 
 export const Point = ({ positionArray, label, labelPosition }) => {
   let textPosition = useMemo(() => {
@@ -10,6 +10,10 @@ export const Point = ({ positionArray, label, labelPosition }) => {
       return [positionArray[0] + 0.1, positionArray[1] + 0.01, positionArray[2] + 0.01]
     } else if (labelPosition === 1) {
       return [positionArray[0] - 0.15, positionArray[1] + 0.1, positionArray[2] + 0.01]
+    } else if (labelPosition === 2) {
+      return [positionArray[0] - 0.5, positionArray[1] - 0.05, positionArray[2] + 0.02]
+    } else if (labelPosition === 3) {
+      return [positionArray[0] - 0.15, positionArray[1] - 0.25, positionArray[2] + 0.01]
     }
   }, [positionArray])
   let position = useMemo(() => {

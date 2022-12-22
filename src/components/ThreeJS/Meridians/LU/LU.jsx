@@ -1,5 +1,5 @@
 import './LU.scss'
-import { Point } from "../index";
+import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
 
 export const LU = () => {
@@ -12,9 +12,9 @@ export const LU = () => {
   }
 
   const points = []
-  points.push(new Vector3(-2.9, 6.4, 1.55))
-  points.push(new Vector3(-2.9, 6.9, 1.25))
-  points.push(new Vector3(-4.75, 5.55, 1.2))
+  points.push(new Vector3(-4, 6.4, 1.05))
+  points.push(new Vector3(-4, 6.9, 0.75))
+  points.push(new Vector3(-5.15, 5.9, 0.95))
   points.push(new Vector3(-6.6, 4.2, 0.35))
   points.push(new Vector3(-7.1, 3.7, 0.375))
   points.push(new Vector3(-7.9, 2.8, 0.5))
@@ -34,13 +34,13 @@ export const LU = () => {
   return (
     <>
     <Point
-      positionArray={[-2.9, 6.4, 1.55]}
+      positionArray={[-4, 6.4, 1.05]}
       label="LU-1"
-      labelPosition={0}/>
+      labelPosition={2}/>
     <Point
-      positionArray={[-2.9, 6.9, 1.25]}
+      positionArray={[-4, 6.9, 0.75]}
       label="LU-2"
-      labelPosition={0}/>
+      labelPosition={2}/>
     <Point
       positionArray={[-6.6, 4.2, 0.35]}
       label="LU-3"

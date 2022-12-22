@@ -1,5 +1,5 @@
 import './LI.scss'
-import { Point } from "../index";
+import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
 
 export const LI = ({ }) => {
