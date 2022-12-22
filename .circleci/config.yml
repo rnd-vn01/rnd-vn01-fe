@@ -14,6 +14,8 @@ jobs:
           command: npm run test
   deploy-to-staging:
     description: Deploy application to staging server
+    docker:
+      - image: 'cimg/base:stable'
     steps:
       - checkout
       - run:
