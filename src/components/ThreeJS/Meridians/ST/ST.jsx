@@ -180,6 +180,61 @@ export const ST = ({ }) => {
       label="ST-34"
       labelPosition={2}/>
 
+    <Point
+      positionArray={[-3.75, -16.5, 1.05]}
+      label="ST-35"
+      labelPosition={2}/>
+
+    <Point
+      positionArray={[-3.75, -18, 0.35]}
+      label="ST-36"
+      labelPosition={2}/>
+
+    <Point
+      positionArray={[-3.75, -20.875, 0.05]}
+      label="ST-37"
+      labelPosition={2}/>
+
+    <Point
+      positionArray={[-3.65, -22.125, -0.05]}
+      label="ST-38"
+      labelPosition={1}/>
+
+    <Point
+      positionArray={[-3.55, -22.75, -0.11]}
+      label="ST-39"
+      labelPosition={2}/>
+
+    <Point
+      positionArray={[-3.9, -22.35, -0.05]}
+      label="ST-40"
+      labelPosition={2}/>
+
+    <Point
+      positionArray={[-3.7, -27.075, 0.1]}
+      label="ST-41"
+      labelPosition={2}/>
+
+    <Point
+      positionArray={[-3.95, -27.85, 0.8]}
+      label="ST-42"
+      labelPosition={1}/>
+
+    <Point
+      positionArray={[-4.2, -28.4, 1.75]}
+      label="ST-43"
+      labelPosition={1}/>
+
+    <Point
+      positionArray={[-4.55, -29.05, 3.05]}
+      label="ST-44"
+      labelPosition={1}/>
+
+    <Point
+      positionArray={[-4.8, -29.35, 3.9]}
+      label="ST-45"
+      labelPosition={2}/>
+
     <line geometry={lineGeometry}>
       <lineBasicMaterial attach="material" color={'#00ff00'} linewidth={1} linecap={'round'} linejoin={'round'} />
     </line>
