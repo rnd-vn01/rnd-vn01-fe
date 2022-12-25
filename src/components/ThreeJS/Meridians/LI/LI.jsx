@@ -1,5 +1,5 @@
 import './LI.scss'
-import { Point } from "../index";
+import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
 
 export const LI = ({ }) => {
@@ -119,7 +119,7 @@ export const LI = ({ }) => {
       labelPosition={0}/>
     
     <line geometry={lineGeometry}>
-      <lineBasicMaterial attach="material" color={'#ff0000'} linewidth={1} linecap={'round'} linejoin={'round'} />
+      <lineBasicMaterial attach="material" color={'#ff0000'} linewidth={1.5} linecap={'round'} linejoin={'round'} />
     </line>
     </>
   );
