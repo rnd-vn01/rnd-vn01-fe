@@ -30,13 +30,6 @@ export const Scene: React.FC = () => {
     // }, 2500)
 
     // return () => clearInterval(interval);
-
-    dispatch(setStateCameraQuaternion({
-      x: 0,
-      y: 0,
-      z: 0,
-      w: 0,
-    }))
   }, []);
 
   return (
@@ -79,8 +72,8 @@ export const Scene: React.FC = () => {
       ></OrbitControls>
 
       <Body />
-      {/* <LU /> */}
-      {/* <LI/> */}
+      <LU />
+      <LI />
       <ST />
 
     </Suspense >

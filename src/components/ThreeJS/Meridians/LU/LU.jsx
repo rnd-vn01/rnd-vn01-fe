@@ -79,7 +79,7 @@ export const LU = () => {
       labelPosition={0}/>
     
     <line geometry={lineGeometry}>
-      <lineBasicMaterial attach="material" color={'#9c88ff'} linewidth={1} linecap={'round'} linejoin={'round'} />
+      <lineBasicMaterial attach="material" color={'#00ff00'} linewidth={1.5} linecap={'round'} linejoin={'round'} />
     </line>
     </>
   );
