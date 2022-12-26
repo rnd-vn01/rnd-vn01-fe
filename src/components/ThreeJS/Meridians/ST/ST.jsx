@@ -307,7 +307,7 @@ export const ST = ({ }) => {
       labelPosition={2}/>
 
     <line geometry={lineGeometry}>
-      <lineBasicMaterial attach="material" color={'#0000ff'} linewidth={1.5} linecap={'round'} linejoin={'round'} />
+      <lineBasicMaterial attach="material" color={'#0000ff'} linewidth={2} linecap={'round'} linejoin={'round'} />
     </line>
     </>
   );
