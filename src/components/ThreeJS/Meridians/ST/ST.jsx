@@ -154,7 +154,7 @@ export const ST = ({ }) => {
     <Point
       positionArray={[-3.3, 4.87, 2.4]}
       label="ST-15"
-      labelPosition={2}/>
+      labelPosition={1}/>
 
     <Point
       positionArray={[-3.3, 3.898, 2.7]}
@@ -164,7 +164,7 @@ export const ST = ({ }) => {
     <Point
       positionArray={[-3.25, 2.925, 2.8]}
       label="ST-17"
-      labelPosition={2}/>
+      labelPosition={3}/>
 
     <Point
       positionArray={[-3.05, 2.3, 2.4]}
@@ -307,7 +307,7 @@ export const ST = ({ }) => {
       labelPosition={2}/>
 
     <line geometry={lineGeometry}>
-      <lineBasicMaterial attach="material" color={'#0000ff'} linewidth={1.5} linecap={'round'} linejoin={'round'} />
+      <lineBasicMaterial attach="material" color={'#0000ff'} linewidth={2} linecap={'round'} linejoin={'round'} />
     </line>
     </>
   );
