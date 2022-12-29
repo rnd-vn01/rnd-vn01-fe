@@ -2,8 +2,10 @@ import './Scene.scss'
 import React, { Suspense, useEffect, useRef } from 'react';
 import {
   Environment,
+  Html,
   OrbitControls,
   PerspectiveCamera,
+  useProgress,
 } from "@react-three/drei";
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
@@ -16,6 +18,18 @@ export const Scene: React.FC = () => {
   const controls = useRef(null);
   const camera = useRef(null);
   const dispatch = useAppDispatch();
+
+  function Loader() {
+    const { active, progress, errors, item, loaded, total } = useProgress()
+    return <Html prepend center
+      style={{
+        display: "flex", width: "100vw", justifyContent: "center",
+        alignItems: "center", flexDirection: "column"
+      }}>
+      <h3 style={{ display: "inline", fontSize: 24 }}>{`${Math.round(progress)}% loaded`}</h3>
+      <progress id="file" value={progress} max="100"></progress>
+    </Html>
+  }
 
   useEffect(() => {
     // const interval = setInterval(() => {
@@ -33,7 +47,7 @@ export const Scene: React.FC = () => {
   }, []);
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<Loader />}>
       <Environment
         files={SCENE_BACKGROUND}
         background={true}
