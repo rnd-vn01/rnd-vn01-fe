@@ -8,7 +8,7 @@ import {
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
 import { Vector3 } from 'three';
-import { LU, LI, ST, SP } from '../Meridians';
+import { LU, LI, ST, SP, HT } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
 import { setStateCameraQuaternion } from 'src/redux/slice/camera';
 
@@ -59,7 +59,7 @@ export const Scene: React.FC = () => {
         }}
         onChange={(e) => {
           var minPan = new Vector3(-10, -30, 0);
-          var maxPan = new Vector3(10, 15, 0);
+          var maxPan = new Vector3(15, 15, 0);
 
           let _v = new Vector3();
           _v.copy(controls.current.target);
@@ -72,10 +72,11 @@ export const Scene: React.FC = () => {
       ></OrbitControls>
 
       <Body />
-      <LU />
+      {/* <LU />
       <LI />
       <ST />
-      <SP />
+      <SP /> */}
+      <HT />
 
     </Suspense >
   );
