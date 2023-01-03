@@ -36,13 +36,22 @@ workflows:
             branches:
               ignore:
                 - main
-  
+                - develop
   deploy-to-staging:
     jobs:
       - test:
           filters:
             branches:
-              only: main
+              only: develop
       - deploy-to-staging:
           requires:
             - test
+  deploy-to-live:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: main
+      # - deploy-to-live:
+      #     requires:
+      #       - test
