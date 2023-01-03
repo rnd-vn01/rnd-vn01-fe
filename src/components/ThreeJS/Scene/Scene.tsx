@@ -10,7 +10,7 @@ import {
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
 import { Vector3 } from 'three';
-import { LU, LI, ST, SP, HT } from '../Meridians';
+import { LU, LI, ST, SP, HT, SI } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
 import { setStateCameraQuaternion } from 'src/redux/slice/camera';
 
@@ -89,8 +89,9 @@ export const Scene: React.FC = () => {
       {/* <LU />
       <LI />
       <ST />
-      <SP /> */}
-      <HT />
+      <SP /> 
+      <HT /> */}
+      <SI />
 
     </Suspense >
   );
