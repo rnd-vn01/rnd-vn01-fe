@@ -73,7 +73,7 @@ export const HT = ({ }) => {
         labelPosition={1} />
 
       <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={'#ff00ff'} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={'#CCA443'} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );

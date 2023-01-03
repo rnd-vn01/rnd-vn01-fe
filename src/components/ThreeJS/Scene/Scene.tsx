@@ -89,7 +89,7 @@ export const Scene: React.FC = () => {
       {/* <LU />
       <LI />
       <ST />
-      <SP /> 
+      <SP />
       <HT /> */}
       <SI />
 
