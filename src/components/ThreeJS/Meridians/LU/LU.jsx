@@ -33,54 +33,54 @@ export const LU = () => {
 
   return (
     <>
-    <Point
-      positionArray={[-4, 6.4, 1.05]}
-      label="LU-1"
-      labelPosition={2}/>
-    <Point
-      positionArray={[-4, 6.9, 0.75]}
-      label="LU-2"
-      labelPosition={2}/>
-    <Point
-      positionArray={[-6.6, 4.2, 0.35]}
-      label="LU-3"
-      labelPosition={1}/>  
-    <Point
-      positionArray={[-7.1, 3.7, 0.375]}
-      label="LU-4"
-      labelPosition={1}/>  
-    <Point
-      positionArray={[-8.75, 1.9, 0.175]}
-      label="LU-5"
-      labelPosition={1}/> 
-    <Point
-      positionArray={[-10.75, 0.2, 1.025]}
-      label="LU-6"
-      labelPosition={1}/>  
-    <Point
-      positionArray={[-12.2, -1.5, 1.6]}
-      label="LU-7"
-      labelPosition={0}/> 
-    <Point
-      positionArray={[-12.4, -1.85, 1.5]}
-      label="LU-8"
-      labelPosition={0}/> 
-    <Point
-      positionArray={[-12.8, -2.5, 2]}
-      label="LU-9"
-      labelPosition={0}/> 
-    <Point
-      positionArray={[-13.3, -3.025, 3.1]}
-      label="LU-10"
-      labelPosition={0}/>
-    <Point
-      positionArray={[-13.9, -3.1, 4.5]}
-      label="LU-11"
-      labelPosition={0}/>
-    
-    <line geometry={lineGeometry}>
-      <lineBasicMaterial attach="material" color={'#00ff00'} linewidth={2} linecap={'round'} linejoin={'round'} />
-    </line>
+      <Point
+        positionArray={[-4, 6.4, 1.05]}
+        label="LU-1"
+        labelPosition={2} />
+      <Point
+        positionArray={[-4, 6.9, 0.75]}
+        label="LU-2"
+        labelPosition={2} />
+      <Point
+        positionArray={[-6.6, 4.2, 0.35]}
+        label="LU-3"
+        labelPosition={1} />
+      <Point
+        positionArray={[-7.1, 3.7, 0.375]}
+        label="LU-4"
+        labelPosition={1} />
+      <Point
+        positionArray={[-8.75, 1.9, 0.175]}
+        label="LU-5"
+        labelPosition={1} />
+      <Point
+        positionArray={[-10.75, 0.2, 1.025]}
+        label="LU-6"
+        labelPosition={1} />
+      <Point
+        positionArray={[-12.2, -1.5, 1.6]}
+        label="LU-7"
+        labelPosition={0} />
+      <Point
+        positionArray={[-12.4, -1.85, 1.5]}
+        label="LU-8"
+        labelPosition={0} />
+      <Point
+        positionArray={[-12.8, -2.5, 2]}
+        label="LU-9"
+        labelPosition={0} />
+      <Point
+        positionArray={[-13.3, -3.025, 3.1]}
+        label="LU-10"
+        labelPosition={0} />
+      <Point
+        positionArray={[-13.9, -3.1, 4.5]}
+        label="LU-11"
+        labelPosition={0} />
+
+      <line geometry={lineGeometry}>
+        <lineBasicMaterial attach="material" color={'#F38342'} linewidth={2} linecap={'round'} linejoin={'round'} />
+      </line>
     </>
   );
 };

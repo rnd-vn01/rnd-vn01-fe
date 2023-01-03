@@ -46,7 +46,7 @@ export const SP = ({ }) => {
   points.push(new Vector3(-4.35, 3.35, 1.65))
   points.push(new Vector3(-3.8, 2.65, 1.2))
   points.push(new Vector3(-3.65, 1.25, 0.8))
-  
+
   const lineGeometry = new BufferGeometry().setFromPoints(points)
 
   return (
@@ -157,7 +157,7 @@ export const SP = ({ }) => {
         labelPosition={2} />
 
       <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={'#ff00ff'} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={'#C5CC43'} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );

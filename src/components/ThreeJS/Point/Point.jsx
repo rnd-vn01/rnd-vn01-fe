@@ -14,12 +14,14 @@ export const Point = ({ positionArray, label, labelPosition }) => {
       return [positionArray[0] - 0.5, positionArray[1] - 0.05, positionArray[2] + 0.02]
     } else if (labelPosition === 3) {
       return [positionArray[0] - 0.15, positionArray[1] - 0.25, positionArray[2] + 0.01]
+    } else if (labelPosition === 4) {
+      return [positionArray[0], positionArray[1], positionArray[2] - 0.05]
     }
   }, [positionArray])
   let position = useMemo(() => {
     return new Float32Array(positionArray);
   }, [positionArray])
-  
+
   const imgTex = useLoader(TextureLoader, circleImg);
 
   return (
