@@ -1,0 +1,48 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+jobs:
+  test:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - node/install:
+          node-version: '12.22'
+      - node/install-packages
+      - run:
+          command: npm run test
+  deploy-to-staging:
+    description: Deploy application to staging server
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - node/install:
+          node-version: '18.12'
+      - node/install-packages
+      - run:
+          command: npm install -g firebase-tools
+      - run:
+          command: npm run build
+      - run:
+          command: firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+  
+workflows:
+  test:
+    jobs:
+      - test:
+          filters:
+            branches:
+              ignore:
+                - main
+  
+  deploy-to-staging:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: main
+      - deploy-to-staging:
+          requires:
+            - test
