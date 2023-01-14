@@ -4,7 +4,23 @@ import { BufferGeometry, Vector3 } from "three";
 
 export const BL = ({ }) => {
   const points = []
-  // points.push(new Vector3(0.35, 12.275, 2.5))
+  points.push(new Vector3(0.35, 12.275, 2.5))
+  points.push(new Vector3(0.35, 12.5, 2.75))
+  points.push(new Vector3(0.35, 12.7, 2.775))
+  points.push(new Vector3(0.35, 13.8, 2.45))
+  points.push(new Vector3(0.35, 14.2, 2.15))
+  points.push(new Vector3(0.7, 14.2, 2.05))
+  points.push(new Vector3(0.8, 14.45, 1.7))
+  points.push(new Vector3(0.8, 14.725, 0.65))
+  points.push(new Vector3(0.8, 14.75, 0.125))
+  points.push(new Vector3(0.8, 14.7, -0.4))
+  points.push(new Vector3(0.8, 14.6, -0.925))
+  points.push(new Vector3(0.8, 14.3, -1.45))
+  points.push(new Vector3(0.8, 13.5, -1.95))
+  points.push(new Vector3(0.8, 12.75, -2.05))
+  points.push(new Vector3(0.8, 12.4, -2))
+  points.push(new Vector3(0.8, 11.825, -1.9))
+  points.push(new Vector3(0.8, 11.25, -1.6))
 
   const lineGeometry = new BufferGeometry().setFromPoints(points)
 
@@ -36,12 +52,12 @@ export const BL = ({ }) => {
         labelPosition={0} />
 
       <Point
-        positionArray={[0.8, 14.8, 0.65]}
+        positionArray={[0.8, 14.725, 0.65]}
         label="BL-6"
         labelPosition={0} />
 
       <Point
-        positionArray={[0.8, 14.8, -0.4]}
+        positionArray={[0.8, 14.7, -0.4]}
         label="BL-7"
         labelPosition={0} />
 
@@ -51,12 +67,12 @@ export const BL = ({ }) => {
         labelPosition={0} />
 
       <Point
-        positionArray={[0.8, 12.4, -2.1]}
+        positionArray={[0.8, 12.4, -2]}
         label="BL-9"
         labelPosition={4} />
 
       <Point
-        positionArray={[0.8, 11.25, -1.725]}
+        positionArray={[0.8, 11.25, -1.6]}
         label="BL-10"
         labelPosition={4} />
 
@@ -346,7 +362,7 @@ export const BL = ({ }) => {
         labelPosition={0} />
 
       <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={'#43A6CC'} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={'#44A668'} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );
