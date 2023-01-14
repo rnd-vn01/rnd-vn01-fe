@@ -9,10 +9,11 @@ import {
 } from "@react-three/drei";
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
-import { Vector3 } from 'three';
+import { DoubleSide, Vector3 } from 'three';
 import { LU, LI, ST, SP, HT, SI } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
 import { setStateCameraQuaternion } from 'src/redux/slice/camera';
+import { angleToRadians } from 'src/helpers/angle';
 
 export const Scene: React.FC = () => {
   const controls = useRef(null);
@@ -53,7 +54,12 @@ export const Scene: React.FC = () => {
         background={true}
       />
 
-      <ambientLight intensity={-0.3} />
+      <ambientLight intensity={-0.25} />
+
+      <spotLight
+        args={["#f7f7f7", 0.4, 0, angleToRadians(45), 0.35]}
+        position={[-10, 17.5, 7.5]}
+        castShadow />
 
       <PerspectiveCamera
         ref={camera}
@@ -86,12 +92,19 @@ export const Scene: React.FC = () => {
       ></OrbitControls>
 
       <Body />
+      <ST />
       {/* <LU />
       <LI />
       <ST />
       <SP />
-      <HT /> */}
-      <SI />
+      <HT />
+      <SI /> */}
+
+      {/* Floor */}
+      <mesh rotation={[-(angleToRadians(90)), 0, 0]} position={[0, -29.9, 0]} receiveShadow>
+        <circleGeometry args={[300, 300]}  />
+        <meshStandardMaterial color="#ffffff"/>
+      </mesh>
 
     </Suspense >
   );

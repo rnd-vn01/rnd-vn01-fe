@@ -9,7 +9,7 @@ export const HomePage: React.FC = () => {
       role="div"
       aria-label="homepage"
       className="homepage">
-      <Canvas>
+      <Canvas shadows>
         <Scene />
       </Canvas>
     </div >
