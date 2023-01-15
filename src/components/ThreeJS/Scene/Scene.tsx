@@ -92,12 +92,12 @@ export const Scene: React.FC = () => {
       ></OrbitControls>
 
       <Body />
-      {/* <LU />
+      <LU />
       <LI />
       <ST />
       <SP />
       <HT />
-      <SI /> */}
+      <SI />
       <BL />
 
       {/* Floor */}
