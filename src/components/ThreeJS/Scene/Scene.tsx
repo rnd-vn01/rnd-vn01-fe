@@ -10,7 +10,7 @@ import {
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
 import { DoubleSide, Vector3 } from 'three';
-import { LU, LI, ST, SP, HT, SI } from '../Meridians';
+import { LU, LI, ST, SP, HT, SI, BL } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
 import { setStateCameraQuaternion } from 'src/redux/slice/camera';
 import { angleToRadians } from 'src/helpers/angle';
@@ -92,18 +92,18 @@ export const Scene: React.FC = () => {
       ></OrbitControls>
 
       <Body />
-      <ST />
-      {/* <LU />
+      <LU />
       <LI />
       <ST />
       <SP />
       <HT />
-      <SI /> */}
+      <SI />
+      <BL />
 
       {/* Floor */}
-      <mesh rotation={[-(angleToRadians(90)), 0, 0]} position={[0, -29.9, 0]} receiveShadow>
-        <circleGeometry args={[300, 300]}  />
-        <meshStandardMaterial color="#ffffff"/>
+      <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
+        <planeGeometry args={[3000, 300]} />
+        <meshStandardMaterial color="#ffffff" />
       </mesh>
 
     </Suspense >
