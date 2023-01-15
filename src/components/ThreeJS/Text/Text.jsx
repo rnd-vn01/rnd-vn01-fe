@@ -5,7 +5,7 @@ import helvetiker from "src/assets/fonts/helvetiker_regular.typeface.json"
 import { useSelector } from 'react-redux';
 import { Quaternion } from 'three';
 
-export const Text = ({ positionArray, text }) => {
+export const Text = ({ positionArray, text, reverse }) => {
   extend({ TextGeometry })
 
   const helvetikerRegular = new FontLoader().parse(helvetiker)
@@ -22,7 +22,7 @@ export const Text = ({ positionArray, text }) => {
 
   return (
     <mesh position={positionArray} rotation={[0, 0, 0]} scale={[0.02, 0.02, 0.001]} 
-          quaternion={new Quaternion(x, y, z, w)}>
+          quaternion={new Quaternion(x, reverse? 1 : y, z, w)}>
       <textGeometry attach='geometry' args={[text || "", textOptions]} />
       <meshLambertMaterial attach='material' color={'black'} />
     </mesh>
