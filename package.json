@@ -4,11 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@mui/material": "^5.11.4",
     "@react-three/drei": "9.34.4",
     "@react-three/fiber": "8.8.10",
     "@reduxjs/toolkit": "^1.9.1",
@@ -38,11 +35,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run build-tailwind & react-scripts start",
+    "build": "npm run build-tailwind & react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:coverage": "react-scripts test --watchAll --coverage"
+    "test:coverage": "react-scripts test --watchAll --coverage",
+    "build-tailwind": "npx tailwindcss -i ./src/assets/styles/tailwind.scss -o ./src/assets/styles/tailwind.css --watch"
   },
   "browserslist": {
     "production": [
@@ -64,6 +62,8 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/react-helmet": "^6.1.6",
     "@types/react-router-dom": "^5.3.3",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4"
   },
   "optionalDependencies": {

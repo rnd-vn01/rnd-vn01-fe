@@ -1,7 +1,4 @@
 @import "src/responsive.scss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
   --theme-background: #F8F0E9;
@@ -31,6 +28,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 html {
