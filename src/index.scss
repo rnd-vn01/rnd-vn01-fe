@@ -1,17 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import "src/responsive.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --theme-dark: #2d2d2d;
-  --theme-light: #ffffff;
-  --theme-blue-1: #bce4ed;
-  --theme-blue-2: #59bcd3;
-  --theme-blue-3: #2babc9;
-  --theme-blue-4: #3398b3;
-  --theme-orange-1: #ffd9b3;
-  --theme-orange-2: #eeaa5a;
-  --theme-orange-3: #ea8d1f;
+  --theme-background: #F8F0E9;
+  --theme-primary: #E2BE96;
+  --theme-danger: #834E46;
+  --theme-success: #93895E;
+  --theme-highlight: #99BBE3;
+
+  --theme-meridian-1: #F38342;
+  --theme-meridian-2: #B4CB3C;
+  --theme-meridian-3: #CCA443;
+  --theme-meridian-4: #C5CC43;
+  --theme-meridian-5: #43A6CC;
+  --theme-meridian-6: #B343CC;
+  --theme-meridian-7: #44A668;
+  --theme-meridian-8: #4377CC;
+  --theme-meridian-9: #5643CC;
+  --theme-meridian-10: #68CC43;
+  --theme-meridian-11: #4DC2BA;
+  --theme-meridian-12: #CC4370;
+
+  --theme-extra-meridian-1: #618888;
+  --theme-extra-meridian-2: #885C88;
 }
 
 html, body {
@@ -36,12 +49,37 @@ body * {
   transition: all 0.3s ease;
 }
 
-h1, h2 {
-  font-family: "Lobster" !important;
+@font-face {
+  font-family: "header";
+  src: local('regular'),
+  url("assets/fonts/SVN-Gilroy Bold.ttf")
+  format('truetype');
+}
+
+@font-face {
+  font-family: "header-light";
+  src: local('regular'),
+  url("assets/fonts/SVN-Gilroy Light.ttf")
+  format('truetype');
+}
+
+@font-face {
+  font-family: "regular";
+  src: local('regular'),
+  url("assets/fonts/AdelleSansEXT-Regular.ttf")
+  format('truetype');
+}
+
+h1, h2, h3 {
+  font-family: "header" !important;
+}
+
+h4, h5, h6 {
+  font-family: "header-light" !important;
 }
 
 * {
-  font-family: "Roboto";
+  font-family: "regular";
 }
 
 .flex-center {

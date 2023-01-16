@@ -1,6 +1,7 @@
 import './LU.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
+import { MERIDIANS_COLOR } from 'src/configs/constants';
 
 export const LU = () => {
   const calculateUnit = (array1, array2) => {
@@ -79,7 +80,7 @@ export const LU = () => {
         labelPosition={0} />
 
       <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={'#F38342'} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={MERIDIANS_COLOR[1]} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );
