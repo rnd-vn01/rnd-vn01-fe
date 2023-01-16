@@ -8,6 +8,8 @@ import { FullLayout } from 'src/layouts/FullLayout/FullLayout';
 import { BasicRoute } from './BasicRoute';
 import { HomePage } from 'src/pages/HomePage/HomePage';
 import { DemoPage } from 'src/pages/DemoPage/DemoPage';
+import { LoginPage } from 'src/pages/authentication/LoginPage/LoginPage';
+import { CreateAccountPage } from 'src/pages/authentication/CreateAccountPage/CreateAccountPage';
 
 export function Routers() {
   return (
@@ -25,6 +27,22 @@ export function Routers() {
           exact
           path="/demo"
           component={DemoPage}
+          layout={FullLayout}
+          isPrivate={true}
+        />
+
+        <BasicRoute
+          exact
+          path="/login"
+          component={LoginPage}
+          layout={FullLayout}
+          isPrivate={false}
+        />
+
+        <BasicRoute
+          exact
+          path="/signup"
+          component={CreateAccountPage}
           layout={FullLayout}
           isPrivate={false}
         />

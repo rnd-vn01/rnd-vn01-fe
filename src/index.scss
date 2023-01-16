@@ -3,6 +3,7 @@
 :root {
   --theme-background: #F8F0E9;
   --theme-primary: #E2BE96;
+  --theme-dark-primary: #be9b73;
   --theme-danger: #834E46;
   --theme-success: #93895E;
   --theme-highlight: #99BBE3;
@@ -24,7 +25,8 @@
   --theme-extra-meridian-2: #885C88;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -50,38 +52,43 @@ body * {
 @font-face {
   font-family: "header";
   src: local('regular'),
-  url("assets/fonts/SVN-Gilroy Bold.ttf")
-  format('truetype');
+    url("assets/fonts/SVN-Gilroy Bold.ttf") format('truetype');
 }
 
 @font-face {
   font-family: "header-light";
   src: local('regular'),
-  url("assets/fonts/SVN-Gilroy Light.ttf")
-  format('truetype');
+    url("assets/fonts/SVN-Gilroy Light.ttf") format('truetype');
 }
 
 @font-face {
   font-family: "regular";
   src: local('regular'),
-  url("assets/fonts/AdelleSansEXT-Regular.ttf")
-  format('truetype');
+    url("assets/fonts/AdelleSansEXT-Regular.ttf") format('truetype');
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: "header" !important;
 }
 
-h4, h5, h6 {
+h4,
+h5,
+h6 {
   font-family: "header-light" !important;
 }
 
 * {
-  font-family: "regular";
+  font-family: "regular" !important;
 }
 
 .flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+a {
+  color: var(--theme-highlight) !important;
 }

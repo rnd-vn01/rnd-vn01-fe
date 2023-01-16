@@ -17,3 +17,5 @@ export const EXTRA_MERIDIAN_COLORS = {
     1: "#618888",
     2: "#885C88"
 }
+
+export const APP_NAME = "Acupuncture 3D"
