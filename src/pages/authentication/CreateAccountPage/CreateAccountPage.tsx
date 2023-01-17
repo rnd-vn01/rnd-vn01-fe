@@ -4,18 +4,17 @@ import TextField from '@mui/material/TextField';
 import { signInWithGoogle, logInWithEmailAndPassword, registerWithEmailAndPassword, logout, onAuthStateChanged, auth, googleProvider } from 'src/configs/firebase';
 import { useHistory } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup } from 'firebase/auth';
-
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 
 import { Button } from 'src/components/common';
-
-// Assets
 import DemoImage from "src/assets/images/Demo.png";
 import Logo from "src/assets/images/Logo.svg";
 import GoogleLogo from "src/assets/images/GoogleLogo.svg";
 import { APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
+import { useAppDispatch } from 'src/redux/store';
+import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 
 export const CreateAccountPage: React.FC = () => {
   document.title = `${APP_NAME} | Sign up`
@@ -32,6 +31,7 @@ export const CreateAccountPage: React.FC = () => {
 
   const MySwal = withReactContent(Swal);
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   // Override Material UI class
   const style = {
@@ -46,6 +46,7 @@ export const CreateAccountPage: React.FC = () => {
   // Hooks
   useEffect(() => {
     logout();
+    dispatch(resetToInitialStateAuthSlice())
   }, []);
 
   // Functions
@@ -104,6 +105,7 @@ export const CreateAccountPage: React.FC = () => {
               })
                 .then(() => {
                   logout();
+                  dispatch(resetToInitialStateAuthSlice())
                   history.push("/");
                   return;
                 })
@@ -165,6 +167,16 @@ export const CreateAccountPage: React.FC = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user as any;
+
+      dispatch(setStateAuth({
+        isLoggedIn: true,
+        user: {
+          name: user.displayName,
+          email: user.email,
+          profileImage: user.photoURL,
+          firebaseId: user.uid
+        }
+      }))
 
       history.push("/")
     } catch (err: any) {

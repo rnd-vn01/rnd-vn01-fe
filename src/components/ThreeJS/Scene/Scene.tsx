@@ -12,7 +12,7 @@ import { Body } from "../Body/Body";
 import { DoubleSide, Vector3 } from 'three';
 import { LU, LI, ST, SP, HT, SI, BL } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
-import { setStateCameraQuaternion } from 'src/redux/slice/camera';
+import { setStateCameraQuaternion } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 
 export const Scene: React.FC = () => {

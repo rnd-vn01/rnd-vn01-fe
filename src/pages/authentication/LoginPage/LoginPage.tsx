@@ -16,6 +16,8 @@ import Logo from "src/assets/images/Logo.svg";
 import GoogleLogo from "src/assets/images/GoogleLogo.svg";
 import { APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
+import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { useAppDispatch } from 'src/redux/store';
 
 export const LoginPage: React.FC = () => {
   document.title = `${APP_NAME} | Login`
@@ -27,6 +29,7 @@ export const LoginPage: React.FC = () => {
 
   const MySwal = withReactContent(Swal);
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   // Override Material UI class
   const style = {
@@ -41,8 +44,7 @@ export const LoginPage: React.FC = () => {
   // Hooks
   useEffect(() => {
     logout();
-
-
+    dispatch(resetToInitialStateAuthSlice())
   }, []);
 
   // Functions
@@ -60,6 +62,16 @@ export const LoginPage: React.FC = () => {
       return;
     }
 
+    MySwal.fire({
+      didOpen: () => {
+        MySwal.showLoading(null);
+      },
+      didClose: () => {
+        MySwal.hideLoading();
+      },
+      allowOutsideClick: false,
+    })
+
     await logInWithEmailAndPassword(email, password)
       .then(async (result: any) => {
         MySwal.close();
@@ -72,12 +84,22 @@ export const LoginPage: React.FC = () => {
           })
             .then(() => {
               logout();
+              dispatch(resetToInitialStateAuthSlice())
               return;
             })
+        } else {
+          // Valid login
+          const user = result.user;
+          dispatch(setStateAuth({
+            isLoggedIn: true,
+            user: {
+              email: user.email,
+              profileImage: "https://firebasestorage.googleapis.com/v0/b/cs204finalproj.appspot.com/o/istockphoto-1223671392-612x612.jpg?alt=media&token=e9312c19-c34e-4a87-9a72-552532766cde",
+              firebaseId: user.uid
+            }
+          }))
+          history.push("/")
         }
-
-        // Valid login
-        history.push("/")
       })
       .catch((error: any) => {
         MySwal.close();
@@ -125,13 +147,15 @@ export const LoginPage: React.FC = () => {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user as any;
 
-      // dispatch(doPostNewUser({
-      //   firebase_id: user.uid,
-      //   email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
-      //   password: '',
-      //   image: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
-      //   name: user?.reloadUserInfo?.providerUserInfo?.[0].displayName
-      // }))
+      dispatch(setStateAuth({
+        isLoggedIn: true,
+        user: {
+          name: user.displayName,
+          email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
+          profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
+          firebaseId: user.uid
+        }
+      }))
 
       history.push("/")
     } catch (err: any) {
