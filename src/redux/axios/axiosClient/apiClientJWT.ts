@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
 import { 
   getAccessToken, 
   refreshAccessToken 
@@ -15,7 +15,8 @@ const apiClientJWT = axios.create({
 
 apiClientJWT.interceptors.request.use(config => {
   const accessToken = getAccessToken();
-  if (accessToken) config.headers.Authorization = 'Bearer ' + accessToken;
+  config.headers = { ...config.headers } as AxiosHeaders;
+  if (accessToken) config.headers.set('Authorization', 'Bearer ' + accessToken)
 
   return config;
 });
