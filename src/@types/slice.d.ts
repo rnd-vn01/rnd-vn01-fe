@@ -21,3 +21,7 @@ interface IAuthSlice {
 interface IQuickSearchResults {
   query: string;
 }
+
+interface ILanguageSlice {
+  currentLanguage: "VI" | "EN";
+}

@@ -195,7 +195,8 @@ export const CreateAccountPage: React.FC = () => {
       aria-label="create-account-page"
       className="create-account-page grid grid-cols-5">
       <div className="create-account-page__section create-account-page__section--main col-span-2 flex-center">
-        <img className="create-account-page__image--logo" src={Logo}></img>
+        <img className="create-account-page__image--logo" src={Logo}
+          onClick={() => history.push("/")}></img>
 
         <h1 className="create-account-page__title">Create an Account</h1>
 

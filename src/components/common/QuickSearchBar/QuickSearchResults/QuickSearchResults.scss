@@ -6,15 +6,18 @@
   top: 60px;
   cursor: default;
   border-bottom: 1px solid black;
+  background: var(--theme-background);
+  display: none;
 
-  height: 60vh;
-  background: none;
+  &--showing {
+    display: block;
+  }
 
   &__block {
     &--category {
       padding: 5px;
       color: white;
-      background: #1C681E;
+      background: var(--theme-green);
       font-size: 1.25rem;
     }
   }
