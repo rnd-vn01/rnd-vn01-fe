@@ -5,7 +5,9 @@ import store from 'src/redux/store';
 
 describe('AuthBar', () => {
   beforeEach(() => {
-    render(<AuthBar />)
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
   })
 
   it("to be rendered successfully", async () => {
