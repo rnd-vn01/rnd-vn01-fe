@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-export const Input: React.FC<IInput> = ({ value, placeholder, type, onChange, required, label, error, readonly }) => {
+export const Input: React.FC<IInput> = ({ 
+  value, placeholder, type, onChange, required, label, name, error, readonly 
+}) => {
   const [isShowingPassword, setIsShowingPassword] = useState<boolean>(false);
   const [inputType, setInputType] = useState<string>("");
 
@@ -32,6 +34,8 @@ export const Input: React.FC<IInput> = ({ value, placeholder, type, onChange, re
           value={value}
           onChange={onChange}
           required={required}
+          role="input"
+          aria-label={name ? `input-${name}` : 'input'}
           className={`input ${error !== "" ? "input__error" : ""} ${readonly ? "input--readonly" : ""}`}
           readOnly={readonly || false}>
         </input>

@@ -10,7 +10,7 @@ describe('Input', () => {
 
   it("to be rendered successfully", async () => {
     await waitFor(() => {
-      expect(screen.getByRole("div", { name: "input" })).toBeInTheDocument();
+      expect(screen.getByRole("input", { name: "input" })).toBeInTheDocument();
     })
   })
 });

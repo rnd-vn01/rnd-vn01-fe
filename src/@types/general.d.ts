@@ -22,6 +22,7 @@ interface IInput {
   label?: string;
   error?: string;
   readonly?: boolean;
+  name?: string;
 }
 
 interface IButton {
