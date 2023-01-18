@@ -1,6 +1,6 @@
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader, DynamicDrawUsage } from 'three';
-import circleImg from 'src/assets/images/Circle.png';
+import circleImg from 'src/assets/images/PointCircle.png';
 import { useMemo, useState } from 'react';
 import { Text } from "src/components/ThreeJS/index";
 
