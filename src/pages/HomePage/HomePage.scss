@@ -4,4 +4,14 @@
   width: 100vw;
   margin: 0 auto;
   height: 100vh;
+
+  &__section {
+    height: 100%;
+
+    &--side-bar {
+      background: var(--theme-background);
+      flex-direction: column;
+      border-left: 1px solid black;
+    }
+  }
 }

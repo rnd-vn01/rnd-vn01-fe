@@ -174,7 +174,8 @@ export const CreateAccountPage: React.FC = () => {
           name: user.displayName,
           email: user.email,
           profileImage: user.photoURL,
-          firebaseId: user.uid
+          firebaseId: user.uid,
+          isAdmin: true,
         }
       }))
 
@@ -192,103 +193,98 @@ export const CreateAccountPage: React.FC = () => {
     <div
       role="div"
       aria-label="create-account-page"
-      className="create-account-page">
-      <div
-        role="div"
-        aria-label="login-page"
-        className="login-page grid grid-cols-5">
-        <div className="login-page__section login-page__section--main col-span-2 flex-center">
-          <img className="login-page__image--logo" src={Logo}></img>
+      className="create-account-page grid grid-cols-5">
+      <div className="create-account-page__section create-account-page__section--main col-span-2 flex-center">
+        <img className="create-account-page__image--logo" src={Logo}></img>
 
-          <h1 className="login-page__title">Create an Account</h1>
+        <h1 className="create-account-page__title">Create an Account</h1>
 
-          <div className="login-page__subtitle">
-            already have an account? <a href="/login">click here</a>
-          </div>
-
-          <TextField
-            className="login-page__input login-page__input--name"
-            name="name"
-            label="Name"
-            margin="normal"
-            variant="standard"
-            sx={style}
-            value={name}
-            onChange={(e: any) => setName(e.target.value)}
-            type="text"
-            fullWidth
-            error={nameError !== ""}
-            helperText={nameError} />
-
-          <TextField
-            className="login-page__input login-page__input--email"
-            name="email"
-            label="Email"
-            margin="normal"
-            variant="standard"
-            sx={style}
-            value={email}
-            onChange={(e: any) => setEmail(e.target.value)}
-            type="email"
-            fullWidth
-            error={emailError !== ""}
-            helperText={emailError} />
-
-          <div className="grid grid-cols-2 w-full gap-x-2">
-            <div className="col-span-1">
-              <TextField
-                className="login-page__input login-page__input--password"
-                name="password"
-                label="Password"
-                margin="normal"
-                variant="standard"
-                sx={style}
-                value={password}
-                onChange={(e: any) => setPassword(e.target.value)}
-                type="password"
-                fullWidth
-                error={passwordError !== ""}
-                helperText={passwordError} />
-            </div>
-
-            <div className="col-span-1">
-              <TextField
-                className="login-page__input login-page__input--confirm-password"
-                name="confirm-password"
-                label="Confirm Password"
-                margin="normal"
-                variant="standard"
-                sx={style}
-                value={confirmPassword}
-                onChange={(e: any) => setConfirmPassword(e.target.value)}
-                type="password"
-                fullWidth
-                error={confirmPasswordError !== ""}
-                helperText={confirmPasswordError} />
-            </div>
-          </div>
-
-          <Button
-            theme="filled"
-            caption="Create account"
-            name="create-account"
-            onClick={() => {
-              validateAndRegister();
-            }}
-          />
-
-          <Button
-            theme="blank"
-            logo={GoogleLogo}
-            caption="Sign up with Google"
-            name="login"
-            onClick={signInWithGoogle}
-          />
+        <div className="create-account-page__subtitle">
+          already have an account? <a href="/login">click here</a>
         </div>
 
-        <div className="login-page__section login-page__section--image col-span-3">
-          <img className="login-page__image--demo" src={DemoImage}></img>
+        <TextField
+          className="create-account-page__input create-account-page__input--name"
+          name="name"
+          label="Name"
+          margin="normal"
+          variant="standard"
+          sx={style}
+          value={name}
+          onChange={(e: any) => setName(e.target.value)}
+          type="text"
+          fullWidth
+          error={nameError !== ""}
+          helperText={nameError} />
+
+        <TextField
+          className="create-account-page__input create-account-page__input--email"
+          name="email"
+          label="Email"
+          margin="normal"
+          variant="standard"
+          sx={style}
+          value={email}
+          onChange={(e: any) => setEmail(e.target.value)}
+          type="email"
+          fullWidth
+          error={emailError !== ""}
+          helperText={emailError} />
+
+        <div className="grid grid-cols-2 w-full gap-x-2">
+          <div className="col-span-1">
+            <TextField
+              className="create-account-page__input create-account-page__input--password"
+              name="password"
+              label="Password"
+              margin="normal"
+              variant="standard"
+              sx={style}
+              value={password}
+              onChange={(e: any) => setPassword(e.target.value)}
+              type="password"
+              fullWidth
+              error={passwordError !== ""}
+              helperText={passwordError} />
+          </div>
+
+          <div className="col-span-1">
+            <TextField
+              className="create-account-page__input create-account-page__input--confirm-password"
+              name="confirm-password"
+              label="Confirm Password"
+              margin="normal"
+              variant="standard"
+              sx={style}
+              value={confirmPassword}
+              onChange={(e: any) => setConfirmPassword(e.target.value)}
+              type="password"
+              fullWidth
+              error={confirmPasswordError !== ""}
+              helperText={confirmPasswordError} />
+          </div>
         </div>
+
+        <Button
+          theme="filled"
+          caption="Create account"
+          name="create-account"
+          onClick={() => {
+            validateAndRegister();
+          }}
+        />
+
+        <Button
+          theme="blank"
+          logo={GoogleLogo}
+          caption="Sign up with Google"
+          name="login"
+          onClick={signInWithGoogle}
+        />
+      </div>
+
+      <div className="create-account-page__section create-account-page__section--image col-span-3">
+        <img className="create-account-page__image--demo" src={DemoImage}></img>
       </div>
     </div >
   );

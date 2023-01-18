@@ -10,9 +10,14 @@ interface IUser {
   email?: string;
   profileImage?: string;
   firebaseId?: string;
+  isAdmin?: boolean;
 }
 
 interface IAuthSlice {
   isLoggedIn: boolean;
   user: IUser;
+}
+
+interface IQuickSearchResults {
+  query: string;
 }

@@ -153,7 +153,8 @@ export const LoginPage: React.FC = () => {
           name: user.displayName,
           email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
           profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
-          firebaseId: user.uid
+          firebaseId: user.uid,
+          isAdmin: true,
         }
       }))
 
