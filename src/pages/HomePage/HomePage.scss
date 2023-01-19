@@ -15,8 +15,10 @@
     }
 
     &--main-content {
-      height: calc(100% - 60px * 3);
+      height: calc(100vh - 60px * 3);
+      max-height: calc(100vh - 60px * 3);
       border-bottom: 1px solid black;
+      overflow-y: auto;
     }
   }
 }
