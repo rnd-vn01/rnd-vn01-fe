@@ -153,7 +153,8 @@ export const LoginPage: React.FC = () => {
           name: user.displayName,
           email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
           profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
-          firebaseId: user.uid
+          firebaseId: user.uid,
+          isAdmin: true,
         }
       }))
 
@@ -173,7 +174,8 @@ export const LoginPage: React.FC = () => {
       aria-label="login-page"
       className="login-page grid grid-cols-5">
       <div className="login-page__section login-page__section--main col-span-2 flex-center">
-        <img className="login-page__image--logo" src={Logo}></img>
+        <img className="login-page__image--logo" src={Logo}
+          onClick={() => history.push("/")}></img>
 
         <h1 className="login-page__title">Log in</h1>
 
