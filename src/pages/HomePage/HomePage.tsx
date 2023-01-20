@@ -1,19 +1,34 @@
 import './HomePage.scss'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthBar, FooterBar, HomeTitle, InformationBlock, QuickSearchBar } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
 import { Scene } from 'src/components/index';
-import DEMO_DATA from './acupoints_vi.json';
+import DEMO_DATA_VI from './acupoints_vi.json';
+import DEMO_DATA_EN from './acupoints_en.json';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 
 export const HomePage: React.FC = () => {
   const [isViewingItemInformation, setIsViewItemInformation] = useState<boolean>(false);
   const [itemInformation, setItemInformation] = useState<any>({});
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
+  );
 
   const getRandomPointInfo = () => {
+    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
     setItemInformation(DEMO_DATA[Math.floor(Math.random() * DEMO_DATA.length)]);
     setIsViewItemInformation(true);
   };
+
+  useEffect(() => {
+    if (isViewingItemInformation) {
+      getRandomPointInfo();
+    }
+  }, [currentLanguage])
 
   return (
     <div
@@ -44,6 +59,7 @@ export const HomePage: React.FC = () => {
               <InformationBlock
                 isPoint={true}
                 itemInformation={itemInformation}
+                usingLanguage={currentLanguage}
               /> :
               <HomeTitle />
           }

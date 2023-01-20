@@ -6,7 +6,7 @@ import './assets/styles/tailwind.css';
 import store, { persistor } from 'src/redux/store/index';
 import App from './App';
 import { PersistGate } from 'redux-persist/integration/react'
-import { createRoot } from "react-dom/client";
+import './i18n';
 
 ReactDOM.render(
   <Provider store={store}>

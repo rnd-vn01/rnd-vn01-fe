@@ -18,10 +18,9 @@ import { APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
+import { useTranslation } from "react-i18next";
 
 export const LoginPage: React.FC = () => {
-  document.title = `${APP_NAME} | Login`
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
@@ -30,6 +29,9 @@ export const LoginPage: React.FC = () => {
   const MySwal = withReactContent(Swal);
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
+
+  document.title = `${APP_NAME} | ${t('login_page.title')}`
 
   // Override Material UI class
   const style = {
@@ -53,12 +55,12 @@ export const LoginPage: React.FC = () => {
     setPasswordError("");
 
     if (!validateEmail(email)) {
-      setEmailError("Email is not valid!");
+      setEmailError(t('login_page.messages.invalid_email'));
       return;
     }
 
     if (password.length < 6) {
-      setPasswordError("Password is not valid!");
+      setPasswordError(t('login_page.messages.invalid_password'));
       return;
     }
 
@@ -80,7 +82,7 @@ export const LoginPage: React.FC = () => {
           MySwal.fire({
             icon: 'error',
             title: 'Error...',
-            text: 'Please verify your account through email!',
+            text: t('login_page.messages.not_verified'),
           })
             .then(() => {
               logout();
@@ -105,30 +107,30 @@ export const LoginPage: React.FC = () => {
         MySwal.close();
 
         if (error.code === "auth/user-not-found") {
-          setEmailError("Your login information is not correct!")
+          setEmailError(t('login_page.messages.not_found'))
           MySwal.fire({
             icon: 'error',
             title: 'Error...',
-            text: 'Your login information is not correct!',
+            text: t('login_page.messages.not_found'),
           })
           return;
         }
 
         if (error.code === "auth/invalid-email") {
-          setEmailError("Your email is invalid!");
+          setEmailError(t('login_page.messages.invalid_email'));
           MySwal.fire({
             icon: 'error',
             title: 'Error...',
-            text: 'Your email is invalid!',
+            text: t('login_page.messages.invalid_email'),
           })
           return;
         }
         if (error.code === "auth/wrong-password") {
-          setPasswordError("Your password is not correct!");
+          setPasswordError(t('login_page.messages.invalid_password'));
           MySwal.fire({
             icon: 'error',
             title: 'Error...',
-            text: 'Your password is not correct!',
+            text: t('login_page.messages.invalid_password'),
           })
           return;
         }
@@ -177,10 +179,10 @@ export const LoginPage: React.FC = () => {
         <img className="login-page__image--logo" src={Logo}
           onClick={() => history.push("/")}></img>
 
-        <h1 className="login-page__title">Log in</h1>
+        <h1 className="login-page__title">{t('login_page.title')}</h1>
 
         <div className="login-page__subtitle">
-          don't have an account? <a href="/signup">click here</a>
+          {t('login_page.dont_have_account')} <a href="/signup">{t('login_page.click_here')}</a>
         </div>
 
         <TextField
@@ -200,7 +202,7 @@ export const LoginPage: React.FC = () => {
         <TextField
           className="login-page__input login-page__input--password"
           name="password"
-          label="Password"
+          label={t('login_page.fields.password')}
           margin="normal"
           variant="standard"
           sx={style}
@@ -213,7 +215,7 @@ export const LoginPage: React.FC = () => {
 
         <Button
           theme="filled"
-          caption="Login"
+          caption={t('login_page.button_captions.login')}
           name="login"
           onClick={() => {
             validateLogin();
@@ -223,7 +225,7 @@ export const LoginPage: React.FC = () => {
         <Button
           theme="blank"
           logo={GoogleLogo}
-          caption="Sign in with Google"
+          caption={t('login_page.button_captions.sign_in_with_google')}
           name="login"
           onClick={signInWithGoogle}
         />

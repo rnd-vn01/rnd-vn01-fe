@@ -15,10 +15,9 @@ import { APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
 import { useAppDispatch } from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { useTranslation } from "react-i18next";
 
 export const CreateAccountPage: React.FC = () => {
-  document.title = `${APP_NAME} | Sign up`
-
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -32,6 +31,9 @@ export const CreateAccountPage: React.FC = () => {
   const MySwal = withReactContent(Swal);
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
+
+  document.title = `${APP_NAME} | ${t('create_account_page.title')}`
 
   // Override Material UI class
   const style = {
@@ -57,27 +59,27 @@ export const CreateAccountPage: React.FC = () => {
     setConfirmPasswordError("");
 
     if (name.length === 0) {
-      setNameError("Please fill in your name!");
+      setNameError(t('create_account_page.messages.fill_name'));
       return;
     }
 
     if (!validateEmail(email)) {
-      setEmailError("Email is not valid!");
+      setEmailError(t('create_account_page.messages.invalid_email'));
       return;
     }
 
     if (password.length < 6) {
-      setPasswordError("Password is not valid!");
+      setPasswordError(t('create_account_page.messages.invalid_password'));
       return;
     }
 
     if (confirmPassword.length < 6) {
-      setConfirmPasswordError("Invalid confirmation");
+      setConfirmPasswordError(t('create_account_page.messages.invalid_confirmation'));
       return;
     }
 
     if (confirmPassword !== password) {
-      setConfirmPasswordError("Invalid confirmation");
+      setConfirmPasswordError(t('create_account_page.messages.invalid_confirmation'));
       return;
     }
 
@@ -101,7 +103,7 @@ export const CreateAccountPage: React.FC = () => {
               MySwal.fire({
                 icon: 'success',
                 title: 'Success...',
-                text: 'Your account is created! Please check your email to verify your account!',
+                text: t('create_account_page.messages.account_created'),
               })
                 .then(() => {
                   logout();
@@ -123,36 +125,31 @@ export const CreateAccountPage: React.FC = () => {
         MySwal.close();
 
         if (error.code == "auth/missing-email") {
-          setEmailError("Please type in your email!");
-
           MySwal.fire({
             icon: 'error',
             title: 'Error...',
-            text: 'Please type in your email!',
+            text: t('create_account_page.messages.type_in_email'),
           })
-
+          setEmailError(t('create_account_page.messages.type_in_email'));
           return;
         }
         if (error.code == "auth/invalid-email") {
-          setEmailError("Your email is invalid!");
-
           MySwal.fire({
             icon: 'error',
             title: 'Error...',
-            text: 'Your email is invalid!',
+            text: t('create_account_page.messages.invalid_email'),
           })
-
+          setEmailError(t('create_account_page.messages.invalid_email'));
           return;
         }
         if (error.code == "auth/email-already-in-use") {
-          setEmailError("Email is already in use!");
-
           MySwal.fire({
             icon: 'error',
             title: 'Error...',
-            text: 'Email is already in use!',
+            text: t('create_account_page.messages.duplicated_email'),
           })
-
+          setEmailError(t('create_account_page.messages.duplicated_email'));
+          return;
         }
 
         MySwal.fire({
@@ -160,6 +157,7 @@ export const CreateAccountPage: React.FC = () => {
           title: 'Error...',
           text: error.message,
         })
+        return;
       });
   }
 
@@ -198,16 +196,16 @@ export const CreateAccountPage: React.FC = () => {
         <img className="create-account-page__image--logo" src={Logo}
           onClick={() => history.push("/")}></img>
 
-        <h1 className="create-account-page__title">Create an Account</h1>
+        <h1 className="create-account-page__title">{t('create_account_page.title')}</h1>
 
         <div className="create-account-page__subtitle">
-          already have an account? <a href="/login">click here</a>
+          {t('create_account_page.already_have_account')} <a href="/login">{t('create_account_page.click_here')}</a>
         </div>
 
         <TextField
           className="create-account-page__input create-account-page__input--name"
           name="name"
-          label="Name"
+          label={t('create_account_page.fields.name')}
           margin="normal"
           variant="standard"
           sx={style}
@@ -221,7 +219,7 @@ export const CreateAccountPage: React.FC = () => {
         <TextField
           className="create-account-page__input create-account-page__input--email"
           name="email"
-          label="Email"
+          label={t('create_account_page.fields.email')}
           margin="normal"
           variant="standard"
           sx={style}
@@ -237,7 +235,7 @@ export const CreateAccountPage: React.FC = () => {
             <TextField
               className="create-account-page__input create-account-page__input--password"
               name="password"
-              label="Password"
+              label={t('create_account_page.fields.password')}
               margin="normal"
               variant="standard"
               sx={style}
@@ -253,7 +251,7 @@ export const CreateAccountPage: React.FC = () => {
             <TextField
               className="create-account-page__input create-account-page__input--confirm-password"
               name="confirm-password"
-              label="Confirm Password"
+              label={t('create_account_page.fields.confirm_password')}
               margin="normal"
               variant="standard"
               sx={style}
@@ -268,7 +266,7 @@ export const CreateAccountPage: React.FC = () => {
 
         <Button
           theme="filled"
-          caption="Create account"
+          caption={t('create_account_page.button_captions.create_account')}
           name="create-account"
           onClick={() => {
             validateAndRegister();
@@ -278,7 +276,7 @@ export const CreateAccountPage: React.FC = () => {
         <Button
           theme="blank"
           logo={GoogleLogo}
-          caption="Sign up with Google"
+          caption={t('create_account_page.button_captions.sign_up_with_google')}
           name="login"
           onClick={signInWithGoogle}
         />

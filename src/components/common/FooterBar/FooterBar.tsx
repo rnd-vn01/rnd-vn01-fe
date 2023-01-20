@@ -5,10 +5,12 @@ import QuizIcon from "src/assets/images/QuizIcon.svg";
 import QuizBackground from "src/assets/images/ButtonQuizBackground.png";
 import { useHistory } from 'react-router-dom';
 import { LanguagePicker } from './LanguagePicker/LanguagePicker';
+import { useTranslation } from "react-i18next";
 
 export const FooterBar: React.FC = ({ }) => {
   const history = useHistory();
   const [isHoverQuizButton, setIsHoverQuizButton] = useState<boolean>(false);
+  const { t, i18n } = useTranslation();
 
   return (
     <div
@@ -25,7 +27,9 @@ export const FooterBar: React.FC = ({ }) => {
           :
           <div className="footer-bar__button-quiz">
             <img className="footer-bar__button-quiz--background" src={QuizBackground}></img>
-            <p className="footer-bar__button-quiz--caption flex items-center justify-center">Start Quiz</p>
+            <p className="footer-bar__button-quiz--caption flex items-center justify-center">
+              {t('footer_bar.start_quiz')}
+            </p>
           </div>}
 
       </div>

@@ -715,6 +715,10 @@ video {
   padding-right: 0.5rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .capitalize {
   text-transform: capitalize;
 }

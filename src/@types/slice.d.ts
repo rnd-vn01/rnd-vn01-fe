@@ -51,5 +51,6 @@ interface IAcupuncturePoint extends IAcupuncturePointSimple {
 
 interface IInformationBlock {
   isPoint?: boolean;
-  itemInformation?: IMeridian | IAcupuncturePoint
+  itemInformation?: IMeridian | IAcupuncturePoint;
+  usingLanguage?: "EN" | "VI";
 }
