@@ -1,12 +1,14 @@
 import './LanguagePicker.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { LANGUAGES_LIST, setStateLanguage } from 'src/redux/slice';
+import { useTranslation } from 'react-i18next';
 
 export const LanguagePicker: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isShowingDropdown, setIsShowingDropdown] = useState<boolean>(false);
+  const { i18n } = useTranslation();
 
   const {
     currentLanguage
@@ -18,6 +20,7 @@ export const LanguagePicker: React.FC = () => {
     dispatch(setStateLanguage({
       currentLanguage: option
     }))
+    i18n.changeLanguage(option.toLowerCase())
     setIsShowingDropdown(false);
   }
 

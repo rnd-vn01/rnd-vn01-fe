@@ -2,7 +2,7 @@ import './InformationBlock.scss';
 import React, { useState } from 'react';
 import { capitalize, capitalizeAndMapInformationField, capitalizeEachWord } from 'src/helpers/capitalize';
 
-export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInformation }) => {
+export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInformation, usingLanguage }) => {
   return (
     <div
       role="div"
@@ -22,7 +22,7 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
                 <div key={`point-information-${index}`}>
                   <div
                     className={`information-block__category ${field === "caution" ? "information-block__category--caution" : ""}`}>
-                    {capitalizeAndMapInformationField(isPoint, field)}
+                    {capitalizeAndMapInformationField(isPoint, field, usingLanguage)}
                   </div>
                   <div className="information-block__info">
                     {isPoint && field === "functionalities" ?

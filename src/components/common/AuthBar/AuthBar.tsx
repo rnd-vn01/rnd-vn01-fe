@@ -6,6 +6,7 @@ import { RootState } from 'src/redux/store';
 import Logo from "src/assets/images/Logo.svg";
 import { logout } from 'src/configs/firebase';
 import { resetToInitialStateAuthSlice } from 'src/redux/slice';
+import { useTranslation } from "react-i18next";
 
 export const AuthBar: React.FC = ({ }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
@@ -17,24 +18,25 @@ export const AuthBar: React.FC = ({ }) => {
   } = useSelector(
     (state: RootState) => state.authSlice,
   );
+  const { t, i18n } = useTranslation();
 
   const MENU_ITEMS = [
     {
-      item: "User Records",
+      item: t('auth_bar.menu.user_records'),
       onClick: () => {
         history.push("/records")
       },
       selectable: true
     },
     {
-      item: "Data Management",
+      item: t('auth_bar.menu.data_management'),
       onClick: () => {
         history.push("/data")
       },
       selectable: user && user?.isAdmin
     },
     {
-      item: "Log Out",
+      item: t('auth_bar.menu.log_out'),
       onClick: () => {
         logout();
         dispatch(resetToInitialStateAuthSlice());
@@ -54,13 +56,13 @@ export const AuthBar: React.FC = ({ }) => {
           <div
             className="auth-bar__option flex items-center justify-center col-span-1"
             onClick={() => history.push("/signup")}>
-            Sign Up
+            {t('auth_bar.sign_up')}
           </div>
 
           <div
             className="auth-bar__option flex items-center justify-center col-span-1"
             onClick={() => history.push("/login")}>
-            Log In
+            {t('auth_bar.log_in')}
           </div>
         </div> :
         <div className="auth-bar__logged-in w-full h-full inline-flex items-center justify-end">
