@@ -54,3 +54,54 @@ interface IInformationBlock {
   itemInformation?: IMeridian | IAcupuncturePoint;
   usingLanguage?: "EN" | "VI";
 }
+
+interface IModel {
+  testGetPointInfo?: () => void;
+}
+
+interface IQuizManager {
+
+}
+
+interface IQuizOptions {
+  fieldOptionsList?: Array<{
+    value?: number;
+    caption?: string;
+  }>;
+  numberOfQuestionsOptionsList?: Array<number>;
+  field?: number;
+  setField?: (number) => void;
+  numberOfQuestions?: number;
+  setNumberOfQuestion?: (number) => void;
+}
+
+interface IQuizProgressBar {
+
+}
+
+interface IQuizButton {
+  fallbackCaption?: string;
+  isDisabled?: boolean;
+  onClick?: () => void;
+  translateKey?: string;
+}
+
+interface IQuizQuestion {
+  questionContent?: string;
+  type?: QUIZ_QUESTION_TYPE;
+  optionsList?: Array<{
+    index?: number;
+    answer?: string;
+  }>
+  correctAnswer?: number | string;
+}
+
+interface IQuizStatusBar {
+  currentQuest?: number;
+  totalQuest?: number;
+  isPlus?: boolean;
+}
+
+interface IQuizTimer {
+
+}

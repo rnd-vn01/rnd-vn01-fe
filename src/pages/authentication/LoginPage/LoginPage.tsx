@@ -2,7 +2,7 @@ import './LoginPage.scss'
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import { signInWithGoogle, logInWithEmailAndPassword, registerWithEmailAndPassword, logout, onAuthStateChanged, auth, googleProvider } from 'src/configs/firebase';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { signInWithPopup } from 'firebase/auth';
 
 import Swal from 'sweetalert2'
@@ -29,6 +29,7 @@ export const LoginPage: React.FC = () => {
   const MySwal = withReactContent(Swal);
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const location = useLocation() as any;
   const { t, i18n } = useTranslation();
 
   document.title = `${APP_NAME} | ${t('login_page.title')}`
@@ -47,6 +48,14 @@ export const LoginPage: React.FC = () => {
   useEffect(() => {
     logout();
     dispatch(resetToInitialStateAuthSlice())
+
+    if (location?.state?.isRedirect) {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: t('login_page.messages.login_to_continue'),
+      })
+    }
   }, []);
 
   // Functions
@@ -81,7 +90,7 @@ export const LoginPage: React.FC = () => {
         if (!result.user?.emailVerified) {
           MySwal.fire({
             icon: 'error',
-            title: 'Error...',
+            title: t('error'),
             text: t('login_page.messages.not_verified'),
           })
             .then(() => {
@@ -110,7 +119,7 @@ export const LoginPage: React.FC = () => {
           setEmailError(t('login_page.messages.not_found'))
           MySwal.fire({
             icon: 'error',
-            title: 'Error...',
+            title: t('error'),
             text: t('login_page.messages.not_found'),
           })
           return;
@@ -120,7 +129,7 @@ export const LoginPage: React.FC = () => {
           setEmailError(t('login_page.messages.invalid_email'));
           MySwal.fire({
             icon: 'error',
-            title: 'Error...',
+            title: t('error'),
             text: t('login_page.messages.invalid_email'),
           })
           return;
@@ -129,7 +138,7 @@ export const LoginPage: React.FC = () => {
           setPasswordError(t('login_page.messages.invalid_password'));
           MySwal.fire({
             icon: 'error',
-            title: 'Error...',
+            title: t('error'),
             text: t('login_page.messages.invalid_password'),
           })
           return;
@@ -137,7 +146,7 @@ export const LoginPage: React.FC = () => {
 
         MySwal.fire({
           icon: 'error',
-          title: 'Error...',
+          title: t('error'),
           text: error.message,
         })
         return;
@@ -164,7 +173,7 @@ export const LoginPage: React.FC = () => {
     } catch (err: any) {
       MySwal.fire({
         icon: 'error',
-        title: 'Error...',
+        title: t('error'),
         text: err.message,
       })
     }

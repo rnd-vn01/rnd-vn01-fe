@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
 
@@ -15,10 +15,17 @@ export const BasicRoute: React.FC<IBasicRoute> = ({
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { i18n } = useTranslation();
+  const location = useLocation();
+
   const {
     currentLanguage
   } = useSelector(
     (state: RootState) => state.languageSlice,
+  );
+  const {
+    isLoggedIn
+  } = useSelector(
+    (state: RootState) => state.authSlice,
   );
 
   // Hooks
@@ -26,6 +33,14 @@ export const BasicRoute: React.FC<IBasicRoute> = ({
     // Update current language to i18n
     i18n.changeLanguage(currentLanguage?.toLowerCase() || "en")
   }, []);
+
+  useLayoutEffect(() => {
+    // Redirect if not logged in
+    console.log(isPrivate, isLoggedIn)
+    if (isPrivate && !isLoggedIn) {
+      history.push("/login", { isRedirect: true })
+    }
+  }, [location])
 
   return (
     <Route

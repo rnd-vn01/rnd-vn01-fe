@@ -1,0 +1,39 @@
+.quiz-question {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+
+  &__question {
+    margin: 8px;
+    height: 100%;
+    max-height: calc(100% - 130px);
+    overflow: auto;
+  }
+
+  &__full {
+    max-height: 100%;
+  }
+
+  &__answer {
+    bottom: 0;
+    height: 60px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-top: 1px solid black;
+
+    &:hover {
+      background: var(--theme-background-hover)
+    }
+
+    &:nth-child(even) {
+      border-left: 1px solid black;
+    }
+  }
+
+  &__answers {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+}

@@ -10,6 +10,7 @@ import { HomePage } from 'src/pages/HomePage/HomePage';
 import { DemoPage } from 'src/pages/DemoPage/DemoPage';
 import { LoginPage } from 'src/pages/authentication/LoginPage/LoginPage';
 import { CreateAccountPage } from 'src/pages/authentication/CreateAccountPage/CreateAccountPage';
+import { QuizPage } from 'src/pages/QuizPage/QuizPage';
 
 export function Routers() {
   return (
@@ -45,6 +46,14 @@ export function Routers() {
           component={CreateAccountPage}
           layout={FullLayout}
           isPrivate={false}
+        />
+
+        <BasicRoute
+          exact
+          path="/quiz"
+          component={QuizPage}
+          layout={FullLayout}
+          isPrivate={true}
         />
       </Switch>
     </Router>
