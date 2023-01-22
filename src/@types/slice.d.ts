@@ -94,14 +94,20 @@ interface IQuizQuestion {
     answer?: string;
   }>
   correctAnswer?: number | string;
+  onSubmitAnswer?: (number) => void;
+  isShowingAnswer?: boolean;
+  selectedAnswer?: number;
+  currentQuestion?: number;
 }
 
 interface IQuizStatusBar {
   currentQuest?: number;
   totalQuest?: number;
   isPlus?: boolean;
+  totalCorrect?: number;
 }
 
 interface IQuizTimer {
-
+  currentTime?: number;
+  totalTime?: number;
 }

@@ -36,7 +36,6 @@ export const BasicRoute: React.FC<IBasicRoute> = ({
 
   useLayoutEffect(() => {
     // Redirect if not logged in
-    console.log(isPrivate, isLoggedIn)
     if (isPrivate && !isLoggedIn) {
       history.push("/login", { isRedirect: true })
     }

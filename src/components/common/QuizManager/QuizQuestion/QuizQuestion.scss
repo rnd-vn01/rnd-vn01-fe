@@ -20,6 +20,7 @@
     font-size: 1.5rem;
     cursor: pointer;
     border-top: 1px solid black;
+    background: transparent;
 
     &:hover {
       background: var(--theme-background-hover)
@@ -27,6 +28,14 @@
 
     &:nth-child(even) {
       border-left: 1px solid black;
+    }
+
+    &--true {
+      background: #95A543;
+    }
+
+    &--false {
+      background: var(--theme-danger);
     }
   }
 

@@ -21,12 +21,13 @@ export const QuizOptions: React.FC<IQuizOptions> = ({
         <select
           className="quiz-options__select"
           onChange={(e) => setField(e.target.value)}
+          value={field}
         >
-          {fieldOptionsList?.map(option => (
+          {fieldOptionsList?.map((option, index) => (
             <option
               className="quiz-options__select--option"
               value={option.value}
-              selected={option.value === field}
+              key={`field-option-${index}`}
             >{option.caption}</option>
           ))}
         </select>
@@ -36,13 +37,16 @@ export const QuizOptions: React.FC<IQuizOptions> = ({
         className="quiz-options__option--testing mt-2">
         <select
           className="quiz-options__select quiz-options__select--quest-count"
-          onChange={(e) => setNumberOfQuestion(e.target.value)}
+          onChange={(e) => {
+            setNumberOfQuestion(e.target.value)
+          }}
+          value={numberOfQuestions}
         >
-          {numberOfQuestionsOptionsList?.map(option => (
+          {numberOfQuestionsOptionsList?.map((option, index) => (
             <option
               className="quiz-options__select--option"
               value={option}
-              selected={option === numberOfQuestions}
+              key={`number-of-quest-option-${index}`}
             >{option}</option>
           ))}
         </select>

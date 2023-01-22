@@ -1,5 +1,5 @@
 import './QuizManager.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AuthBar } from '../AuthBar/AuthBar';
 import { QuizProgressBar } from './QuizProgressBar/QuizProgressBar';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { QuizStatusBar } from './QuizStatusBar/QuizStatusBar';
 import { QuizQuestion } from './QuizQuestion/QuizQuestion';
 import { QUIZ_QUESTION_TYPE } from 'src/configs/constants';
+import { QuizTimer } from './QuizTimer/QuizTimer';
 
 enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
@@ -30,7 +31,15 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
   const [quizState, setQuizState] = useState<number>(QUIZ_STATE["SELECT_OPTIONS"]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [field, setField] = useState<number>(0);
-  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
+  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(5);
+  const [isPlus, setIsPlus] = useState<boolean>(false);
+  const [correctAnswer, setCorrectAnswer] = useState<number>(0);
+  const currentTime = useRef<number>(60);
+  const timer = useRef<any>(null);
+  const [renderTime, setRenderTime] = useState<number>(0);
+  const [numberOfCorrectQuestions, setNumberOfCorrectQuestions] = useState<number>(0);
+  const [isShowingAnswer, setIsShowingAnswer] = useState<boolean>(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<number>(null);
 
   const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "LR", "DU", "Ren"]
   const DEMO_FIELD_OPTIONS = [
@@ -50,10 +59,15 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
 
   const startQuiz = () => {
     setCurrentQuestion(1);
-    setQuizState(QUIZ_STATE["IN_PROGRESS"])
+    setQuizState(QUIZ_STATE["IN_PROGRESS"]);
+    startTimer();
   }
 
-  const TEST_QUESTION_CONTENT = "Bở dưới xương đòn gánh, ngang với cơ ngực to. Chỗ hõm giữa cơ Đenta. Từ đường dọc chính giữa xương ngực đo ngang ra mỗi bên 6 thốn. Bở dưới xương đòn gánh, ngang với cơ ngực to. Chỗ hõm giữa cơ Đenta. Từ đường dọc chính giữa xương ngực đo ngang ra mỗi bên 6 thốn. Bở dưới xương đòn gánh, ngang với cơ ngực to.  Chỗ hõm giữa cơ Đenta. Chỗ hõm giữa cơ Đenta."
+  const endQuiz = () => {
+
+  }
+
+  let TEST_QUESTION_CONTENT = "Bở dưới xương đòn gánh, ngang với cơ ngực to. Chỗ hõm giữa cơ Đenta. Từ đường dọc chính giữa xương ngực đo ngang ra mỗi bên 6 thốn. Bở dưới xương đòn gánh, ngang với cơ ngực to. Chỗ hõm giữa cơ Đenta. Từ đường dọc chính giữa xương ngực đo ngang ra mỗi bên 6 thốn. Bở dưới xương đòn gánh, ngang với cơ ngực to.  Chỗ hõm giữa cơ Đenta. Chỗ hõm giữa cơ Đenta."
   const TEST_ANSWERS_LIST = [{
     "index": 0,
     "answer": "LU-1"
@@ -68,6 +82,40 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
     "answer": "LU-4"
   }]
 
+  const submitAnswer = (answer) => {
+    endAnswerTime()
+    setSelectedAnswer(answer)
+    if (answer === correctAnswer)
+      setNumberOfCorrectQuestions(numberOfCorrectQuestions + 1)
+  }
+
+  const endAnswerTime = () => {
+    clearInterval(timer.current)
+    setIsShowingAnswer(true);
+    timer.current = null
+  }
+
+  const startTimer = () => {
+    currentTime.current = 60;
+
+    timer.current = setInterval(() => {
+      if (currentTime.current - 1 === 0) {
+        endAnswerTime();
+      }
+
+      currentTime.current -= 1
+      setRenderTime(60 - currentTime.current + 1)
+    }, 1000);
+  }
+
+  const reset = () => {
+    setSelectedAnswer(null);
+    setCorrectAnswer(0);
+    setIsShowingAnswer(false);
+    setCurrentQuestion(currentQuestion + 1);
+    startTimer();
+  }
+
   return (
     <div
       role="div"
@@ -78,7 +126,8 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
           <AuthBar /> : <QuizStatusBar
             currentQuest={currentQuestion}
             totalQuest={numberOfQuestions}
-            isPlus={false}
+            isPlus={selectedAnswer === correctAnswer}
+            totalCorrect={numberOfCorrectQuestions}
           />}
       </div>
 
@@ -96,7 +145,11 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
             questionContent={TEST_QUESTION_CONTENT}
             type={QUIZ_QUESTION_TYPE["MULTIPLE_CHOICE"]}
             optionsList={TEST_ANSWERS_LIST}
-            correctAnswer={2}
+            correctAnswer={correctAnswer}
+            isShowingAnswer={isShowingAnswer}
+            selectedAnswer={selectedAnswer}
+            onSubmitAnswer={submitAnswer}
+            currentQuestion={currentQuestion}
           />}
       </div>
 
@@ -107,12 +160,25 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
             translateKey="quiz_page.buttons.start"
             onClick={() => startQuiz()}
           /> :
-          <QuizButton
-            fallbackCaption="Next"
-            translateKey="quiz_page.buttons.next"
-            onClick={() => { }}
-            isDisabled={true}
-          />}
+          currentQuestion !== numberOfQuestions ?
+            <QuizButton
+              fallbackCaption="Next"
+              translateKey="quiz_page.buttons.next"
+              onClick={() => {
+                reset();
+              }}
+              isDisabled={!isShowingAnswer}
+            />
+            :
+            <QuizButton
+              fallbackCaption="Next"
+              translateKey="quiz_page.buttons.end"
+              onClick={() => {
+                //HANDLE END QUIZ
+
+              }}
+              isDisabled={!isShowingAnswer}
+            />}
       </div>
 
       <div className="quiz-manager__section quiz-manager__section--button quiz-manager__no-border">
@@ -121,7 +187,12 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
             fallbackCaption="Close"
             translateKey="quiz_page.buttons.close"
             onClick={() => history.push("/")}
-          /> : <></>}
+          /> :
+          <QuizTimer
+            data-render={renderTime}
+            currentTime={currentTime.current}
+            totalTime={60}
+          />}
       </div>
     </div>
   );

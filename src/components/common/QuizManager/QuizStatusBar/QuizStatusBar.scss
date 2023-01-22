@@ -1,4 +1,6 @@
 .quiz-status-bar {
+  position: relative;
+
   &__menu {
     &--name {
       font-size: 1.5rem;
@@ -38,6 +40,13 @@
     &--plus {
       font-size: 1.5rem;
       margin-right: 10px;
+      color: #95A543;
+    }
+
+    &--point {
+      position: absolute;
+      left: 5px;
+      font-size: 1.5rem;
       color: #95A543;
     }
   }

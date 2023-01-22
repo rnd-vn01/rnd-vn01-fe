@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Logo from "src/assets/images/Logo.svg";
 
 export const QuizStatusBar: React.FC<IQuizStatusBar> = ({
-  currentQuest, totalQuest, isPlus
+  currentQuest, totalQuest, isPlus, totalCorrect
 }) => {
   return (
     <div
@@ -11,6 +11,9 @@ export const QuizStatusBar: React.FC<IQuizStatusBar> = ({
       aria-label="quiz-status-bar"
       className="quiz-status-bar w-full h-full inline-flex items-center justify-end">
       <span className="quiz-status-bar__menu pr-2 flex items-center justify-center">
+        <p className="quiz-status-bar__menu--point inline-block">
+          {totalCorrect}
+        </p>
         {isPlus && <p className="quiz-status-bar__menu--plus inline-block">
           +1
         </p>}
