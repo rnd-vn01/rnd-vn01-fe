@@ -86,6 +86,15 @@ i18n
               close: "Close",
               next: "Next",
               end: "End"
+            },
+            captions: {
+              result: "Quiz Result",
+              options: "Options",
+              details: "Details",
+              question: "Question",
+              correct: "Correct",
+              wrong: "Wrong",
+              seconds: "Seconds"
             }
           }
         }
@@ -169,6 +178,15 @@ i18n
               close: "Đóng",
               next: "Tiếp theo",
               end: "Kết thúc"
+            },
+            captions: {
+              result: "Kết quả bài Kiểm tra",
+              options: "Lựa chọn",
+              details: "Chi tiết",
+              question: "Câu",
+              correct: "Đúng",
+              wrong: "Sai",
+              seconds: "Giây"
             }
           }
         }

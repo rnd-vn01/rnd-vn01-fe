@@ -111,3 +111,7 @@ interface IQuizTimer {
   currentTime?: number;
   totalTime?: number;
 }
+
+interface IQuizSummary {
+  data?: any
+}

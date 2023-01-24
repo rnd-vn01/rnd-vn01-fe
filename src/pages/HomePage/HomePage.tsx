@@ -4,8 +4,8 @@ import { AuthBar, FooterBar, HomeTitle, InformationBlock, QuickSearchBar } from 
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
 import { Scene } from 'src/components/index';
-import DEMO_DATA_VI from './acupoints_vi.json';
-import DEMO_DATA_EN from './acupoints_en.json';
+import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
+import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 

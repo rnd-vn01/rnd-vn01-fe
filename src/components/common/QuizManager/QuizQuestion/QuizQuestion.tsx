@@ -1,5 +1,5 @@
 import './QuizQuestion.scss';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 
 export const QuizQuestion: React.FC<IQuizQuestion> = ({
@@ -19,19 +19,20 @@ export const QuizQuestion: React.FC<IQuizQuestion> = ({
 
       {type === QUIZ_QUESTION_TYPE["MULTIPLE_CHOICE"] &&
         <div className={"quiz-question__answers grid grid-cols-2"}>
-          {optionsList.map((option, index) =>
-            <div
-              className={`quiz-question__answer col-span-1 
+          {optionsList.map((option, index) => <div
+            className={`quiz-question__answer col-span-1 
               flex justify-center items-center
-              ${isShowingAnswer ? option.index === correctAnswer ? "quiz-question__answer--true" : "" : ""}
-              ${selectedAnswer && option.index !== correctAnswer && option.index === selectedAnswer ? "quiz-question__answer--false" : ""}`}
-              key={`option-${index}`}
-              onClick={() => {
-                if (!isShowingAnswer)
-                  onSubmitAnswer(option.index)
-              }}>
-              {option.answer}
-            </div>)}
+              ${isShowingAnswer ? option.index === correctAnswer ? "quiz-question__answer--true quiz-question__answer--ended" : "quiz-question__answer--ended" : "quiz-question__answer--not-ended"}
+              ${option.index !== correctAnswer && option.index === selectedAnswer ? "quiz-question__answer--false" : ""}`}
+            key={`option-${index}`}
+            id={`option-${index}`}
+            onClick={() => {
+              if (!isShowingAnswer)
+                onSubmitAnswer(option.index)
+            }}>
+            {option.answer}
+          </div>
+          )}
         </div>}
     </div>
   );

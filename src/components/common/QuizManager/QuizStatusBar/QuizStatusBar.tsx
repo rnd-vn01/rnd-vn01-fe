@@ -12,6 +12,7 @@ export const QuizStatusBar: React.FC<IQuizStatusBar> = ({
       className="quiz-status-bar w-full h-full inline-flex items-center justify-end">
       <span className="quiz-status-bar__menu pr-2 flex items-center justify-center">
         <p className="quiz-status-bar__menu--point inline-block">
+          <span style={{ color: "black", marginRight: "5px" }}> Point:</span>
           {totalCorrect}
         </p>
         {isPlus && <p className="quiz-status-bar__menu--plus inline-block">
