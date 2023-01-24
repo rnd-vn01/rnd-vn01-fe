@@ -9,6 +9,7 @@ i18n
     resources: {
       en: {
         translation: {
+          error: "Error...",
           hometitle: {
             sub: "welcome to",
             project_name: "3D Acupuncture Healthcare Data Management And Treatment System",
@@ -68,13 +69,39 @@ i18n
               invalid: "Invalid!",
               invalid_password: "Your password is invalid!",
               not_verified: "Please verify your account through email!",
-              not_found: "Your login information is not correct!"
+              not_found: "Your login information is not correct!",
+              login_to_continue: "Please log in to continue!"
+            }
+          },
+          quiz_page: {
+            title: "Quiz",
+            options: {
+              testing: "testing",
+              questions: "questions",
+              all_meridians: "all meridians",
+              meridian_only: "meridian only"
+            },
+            buttons: {
+              start: "Start",
+              close: "Close",
+              next: "Next",
+              end: "End"
+            },
+            captions: {
+              result: "Quiz Result",
+              options: "Options",
+              details: "Details",
+              question: "Question",
+              correct: "Correct",
+              wrong: "Wrong",
+              seconds: "Seconds"
             }
           }
         }
       },
       vi: {
         translation: {
+          error: "Lỗi...",
           hometitle: {
             sub: "chào mừng đến với",
             project_name: "Hệ Thống Điều Trị Và Quản Lý Dữ Liệu Châm Cứu 3D",
@@ -134,7 +161,32 @@ i18n
               invalid: "không hợp lệ!",
               invalid_password: "Mật khẩu không hợp lệ!",
               not_verified: "Vui lòng xác thực tài khoản qua Email đã đăng ký!",
-              not_found: "Thông tin đăng nhập không đúng!"
+              not_found: "Thông tin đăng nhập không đúng!",
+              login_to_continue: "Vui lòng đăng nhập để tiếp tục!"
+            }
+          },
+          quiz_page: {
+            title: "Kiểm tra",
+            options: {
+              testing: "kiểm tra",
+              questions: "câu hỏi",
+              all_meridians: "tất cả kinh lạc",
+              meridian_only: "chỉ kinh lạc"
+            },
+            buttons: {
+              start: "Bắt đầu",
+              close: "Đóng",
+              next: "Tiếp theo",
+              end: "Kết thúc"
+            },
+            captions: {
+              result: "Kết quả bài Kiểm tra",
+              options: "Lựa chọn",
+              details: "Chi tiết",
+              question: "Câu",
+              correct: "Đúng",
+              wrong: "Sai",
+              seconds: "Giây"
             }
           }
         }

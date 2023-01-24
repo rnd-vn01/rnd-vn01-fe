@@ -1,16 +1,16 @@
 import { initializeApp } from "firebase/app";
 import {
-  GoogleAuthProvider, 
-  getAuth, 
+  GoogleAuthProvider,
+  getAuth,
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
   sendEmailVerification,
-  onAuthStateChanged 
+  onAuthStateChanged
 }
-from "firebase/auth";
+  from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -27,7 +27,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal);
 
-const app = initializeApp(firebaseConfig);  
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
@@ -52,23 +52,23 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
 
 const registerWithEmailAndPassword = async (email: string, password: string) => {
   return createUserWithEmailAndPassword(auth, email, password)
-  .then((user: any) => {
-    if (auth.currentUser) {
-      sendEmailVerification(auth.currentUser)
-      .then((result: any) => {
-      })
-      .catch((err: any) => {
-        MySwal.fire({
-          icon: 'error',
-          title: 'Error...',
-          text: err.message,
-        })
-      });
-    }
-  });
+    .then((user: any) => {
+      if (auth.currentUser) {
+        sendEmailVerification(auth.currentUser)
+          .then((result: any) => {
+          })
+          .catch((err: any) => {
+            MySwal.fire({
+              icon: 'error',
+              title: 'Error...',
+              text: err.message,
+            })
+          });
+      }
+    });
 };
 
-const sendVerificationEmail = async(user: any) => {
+const sendVerificationEmail = async (user: any) => {
   return sendEmailVerification(user);
 }
 

@@ -4,12 +4,14 @@ import { QuickSearchBar } from "./QuickSearchBar/QuickSearchBar"
 import { FooterBar } from "./FooterBar/FooterBar"
 import { HomeTitle } from "./HomeTitle/HomeTitle"
 import { InformationBlock } from "./InformationBlock/InformationBlock"
+import { QuizManager } from "./QuizManager/QuizManager"
 
 export {
-    Button,
-    AuthBar,
-    QuickSearchBar,
-    FooterBar,
-    HomeTitle,
-    InformationBlock
+  Button,
+  AuthBar,
+  QuickSearchBar,
+  FooterBar,
+  HomeTitle,
+  InformationBlock,
+  QuizManager
 }

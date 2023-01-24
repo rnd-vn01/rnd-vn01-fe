@@ -115,7 +115,7 @@ export const CreateAccountPage: React.FC = () => {
             .catch((err: any) => {
               MySwal.fire({
                 icon: 'error',
-                title: 'Error...',
+                title: t('error'),
                 text: err.message,
               })
             });
@@ -127,7 +127,7 @@ export const CreateAccountPage: React.FC = () => {
         if (error.code == "auth/missing-email") {
           MySwal.fire({
             icon: 'error',
-            title: 'Error...',
+            title: t('error'),
             text: t('create_account_page.messages.type_in_email'),
           })
           setEmailError(t('create_account_page.messages.type_in_email'));
@@ -136,7 +136,7 @@ export const CreateAccountPage: React.FC = () => {
         if (error.code == "auth/invalid-email") {
           MySwal.fire({
             icon: 'error',
-            title: 'Error...',
+            title: t('error'),
             text: t('create_account_page.messages.invalid_email'),
           })
           setEmailError(t('create_account_page.messages.invalid_email'));
@@ -145,7 +145,7 @@ export const CreateAccountPage: React.FC = () => {
         if (error.code == "auth/email-already-in-use") {
           MySwal.fire({
             icon: 'error',
-            title: 'Error...',
+            title: t('error'),
             text: t('create_account_page.messages.duplicated_email'),
           })
           setEmailError(t('create_account_page.messages.duplicated_email'));
@@ -154,7 +154,7 @@ export const CreateAccountPage: React.FC = () => {
 
         MySwal.fire({
           icon: 'error',
-          title: 'Error...',
+          title: t('error'),
           text: error.message,
         })
         return;
@@ -181,7 +181,7 @@ export const CreateAccountPage: React.FC = () => {
     } catch (err: any) {
       MySwal.fire({
         icon: 'error',
-        title: 'Error...',
+        title: t('error'),
         text: err.message,
       })
     }
