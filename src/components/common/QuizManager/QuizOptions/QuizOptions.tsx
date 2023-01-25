@@ -38,7 +38,7 @@ export const QuizOptions: React.FC<IQuizOptions> = ({
         <select
           className="quiz-options__select quiz-options__select--quest-count"
           onChange={(e) => {
-            setNumberOfQuestion(e.target.value)
+            setNumberOfQuestion(parseInt(e.target.value))
           }}
           value={numberOfQuestions}
         >
