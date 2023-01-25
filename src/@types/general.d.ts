@@ -33,3 +33,16 @@ interface IButton {
   logo?: any;
   name?: string;
 }
+
+interface IAdvancedSearchPage {
+
+}
+
+interface IFullPageTitleBar {
+  pageCode?: string;
+  translateCode?: string;
+}
+
+interface ISearchBar {
+
+}

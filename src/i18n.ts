@@ -96,6 +96,25 @@ i18n
               wrong: "Wrong",
               seconds: "Seconds"
             }
+          },
+          title_bar: {
+            menu: {
+              user_records: "User Records",
+              data_management: "Data Management",
+              log_out: "Log Out",
+              sign_up: "Sign Up",
+              log_in: "Log In"
+            },
+            pages: {
+              default: "",
+              advanced_search: "Advanced Search",
+            }
+          },
+          advanced_search_page: {
+            title: "Advanced Search",
+          },
+          search_bar: {
+            matches: "matches"
           }
         }
       },
@@ -188,6 +207,25 @@ i18n
               wrong: "Sai",
               seconds: "Giây"
             }
+          },
+          title_bar: {
+            menu: {
+              user_records: "Cá nhân",
+              data_management: "Quản lý Dữ liệu",
+              log_out: "Đăng xuất",
+              sign_up: "Đăng ký",
+              log_in: "Đăng nhập"
+            },
+            pages: {
+              default: "",
+              advanced_search: "Tìm Kiếm Nâng Cao"
+            }
+          },
+          advanced_search_page: {
+            title: "Tìm kiếm Nâng cao",
+          },
+          search_bar: {
+            matches: "trùng khớp"
           }
         }
       }
