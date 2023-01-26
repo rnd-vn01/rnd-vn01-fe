@@ -6,7 +6,6 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
   data
 }) => {
   const { t } = useTranslation();
-  console.log(data);
 
   return (
     <div

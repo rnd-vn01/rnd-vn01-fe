@@ -115,3 +115,46 @@ interface IQuizTimer {
 interface IQuizSummary {
   data?: any
 }
+
+interface ISearchProcessor {
+  query?: query;
+  callbackSetResults?: (any) => void;
+  callbackSetLoading?: (boolean) => void;
+}
+
+interface IAdvancedSearchPage {
+
+}
+
+interface IFullPageTitleBar {
+  pageCode?: string;
+  translateCode?: string;
+}
+
+interface ISearchBar {
+  callbackSetResults?: (any) => void;
+  callbackSetLoading?: (boolean) => void;
+  callbackSetQuery?: (string) => void;
+  numberOfMatchingResults?: number;
+  isChoosingAlphabet?: boolean;
+}
+
+interface ISearchResults {
+  results?: Array<any>;
+  query?: string;
+  isLoading?: boolean;
+  callbackSetNumberOfMatchingResults?: (any) => void;
+  callbackSetChoosingAlphabet?: (boolean) => void;
+}
+
+interface ISearchResultItem {
+  item?: any;
+  isPoint?: boolean;
+  usingLanguage?: "EN" | "VI";
+  query?: Array<string>;
+}
+
+interface ISearchResultsAlphabetFilters {
+  results?: Array<any>;
+  callbackSetAlphabetFilteringOption?: (number) => void;
+}

@@ -5,6 +5,10 @@ import { FooterBar } from "./FooterBar/FooterBar"
 import { HomeTitle } from "./HomeTitle/HomeTitle"
 import { InformationBlock } from "./InformationBlock/InformationBlock"
 import { QuizManager } from "./QuizManager/QuizManager"
+import { FullPageTitleBar } from "./FullPageTitleBar/FullPageTitleBar"
+import {
+  SearchBar, SearchProcessor, SearchResults
+} from "./Search";
 
 export {
   Button,
@@ -13,5 +17,9 @@ export {
   FooterBar,
   HomeTitle,
   InformationBlock,
-  QuizManager
+  QuizManager,
+  FullPageTitleBar,
+  SearchBar,
+  SearchProcessor,
+  SearchResults
 }

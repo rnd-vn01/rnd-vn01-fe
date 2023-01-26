@@ -24,3 +24,10 @@ export enum QUIZ_QUESTION_TYPE {
     MULTIPLE_CHOICE = 0,
     PRACTICAL = 1
 }
+
+export const ALPHABET_LISTS = {
+    VI: ["A", "Ă", "Â", "B", "C", "D", "Đ", "E", "Ê", "G", "H", "I", "K", "L", "M", "N", "O", "Ô", "Ơ",
+        "P", "Q", "R", "S", "T", "U", "Ư", "V", "X", "Y"],
+    EN: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+        "T", "U", "V", "W", "X", "Y", "Z"]
+}
