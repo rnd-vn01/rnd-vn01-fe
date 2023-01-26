@@ -10,7 +10,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
   item,
   isPoint,
   usingLanguage,
-  query
+  query,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const history = useHistory();
@@ -63,7 +63,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
           icon={faChevronRight}
           onClick={(e) => {
             e.stopPropagation();
-            history.push(`/detail/${isPoint ? "point" : "meridian"}/${item.code}`)
+            history.push(`/detail/${isPoint ? "point" : "meridian"}/${item.code}?query=${query}`)
           }}></FontAwesomeIcon>
       </div>
 

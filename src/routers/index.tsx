@@ -12,6 +12,8 @@ import { LoginPage } from 'src/pages/authentication/LoginPage/LoginPage';
 import { CreateAccountPage } from 'src/pages/authentication/CreateAccountPage/CreateAccountPage';
 import { QuizPage } from 'src/pages/QuizPage/QuizPage';
 import { AdvancedSearchPage } from 'src/pages/AdvancedSearchPage/AdvancedSearchPage';
+import { DataManagementPage } from 'src/pages/DataManagementPage/DataManagementPage';
+import { DetailPage } from 'src/pages/DetailPage/DetailPage';
 
 export function Routers() {
   return (
@@ -58,9 +60,23 @@ export function Routers() {
         />
 
         <BasicRoute
-          exact
           path="/advanced-search"
           component={AdvancedSearchPage}
+          layout={FullLayout}
+          isPrivate={false}
+        />
+
+        <BasicRoute
+          exact
+          path="/data"
+          component={DataManagementPage}
+          layout={FullLayout}
+          isPrivate={true}
+        />
+
+        <BasicRoute
+          path="/detail"
+          component={DetailPage}
           layout={FullLayout}
           isPrivate={false}
         />

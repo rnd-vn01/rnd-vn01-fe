@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { AdvancedSearchPage } from './AdvancedSearchPage';
+import { DetailPage } from './DetailPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 
 jest.mock("react-router-dom", () => ({
   useLocation: () => ({
-    pathname: '/advanced_search?query=search',
+    pathname: '/detail/point/GB-20?query=search',
     search: 'query=search'
   }),
   useHistory: () => ({
@@ -13,16 +13,16 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-describe('AdvancedSearchPage', () => {
+describe('DetailPage', () => {
   beforeEach(() => {
     render(<Provider store={store}>
-      <AdvancedSearchPage />
+      <DetailPage />
     </Provider>)
   })
 
   it("to be rendered successfully", async () => {
     await waitFor(() => {
-      expect(screen.getByRole("div", { name: "advanced-search-page" })).toBeInTheDocument();
+      expect(screen.getByRole("div", { name: "detail-page" })).toBeInTheDocument();
     })
   })
 });

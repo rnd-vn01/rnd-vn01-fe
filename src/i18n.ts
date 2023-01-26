@@ -108,6 +108,7 @@ i18n
             pages: {
               default: "",
               advanced_search: "Advanced Search",
+              data_management: "Data Management"
             }
           },
           advanced_search_page: {
@@ -126,7 +127,10 @@ i18n
                 show: "show"
               }
             }
-          }
+          },
+          data_management_page: {
+            title: "Data Management",
+          },
         }
       },
       vi: {
@@ -229,7 +233,8 @@ i18n
             },
             pages: {
               default: "",
-              advanced_search: "Tìm Kiếm Nâng Cao"
+              advanced_search: "Tìm Kiếm Nâng Cao",
+              data_management: "Quản Lý Dữ Liệu"
             }
           },
           advanced_search_page: {
@@ -248,7 +253,10 @@ i18n
                 show: "hiển thị"
               }
             }
-          }
+          },
+          data_management_page: {
+            title: "Quản lý Dữ liệu",
+          },
         }
       }
     }

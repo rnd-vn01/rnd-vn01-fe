@@ -1,5 +1,5 @@
-import './AdvancedSearchPage.scss'
-import React, { useEffect, useState } from 'react';
+import './DataManagementPage.scss'
+import React, { useState } from 'react';
 import {
   FullPageTitleBar,
   SearchBar,
@@ -7,15 +7,12 @@ import {
 } from 'src/components/common';
 import { APP_NAME } from 'src/configs/constants';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
-import { useQuery } from 'src/helpers/hooks/useQuery';
 
-export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
+export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
 
 }) => {
   const { t } = useTranslation();
-  let hookQuery = useQuery();
-  document.title = `${APP_NAME} | ${t('advanced_search_page.title')}`
+  document.title = `${APP_NAME} | ${t('data_management_page.title')}`
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,12 +23,12 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
   return (
     <div
       role="div"
-      aria-label="advanced-search-page"
-      className="advanced-search-page grid grid-cols-7">
-      <div className="advanced-search-page__content">
+      aria-label="data-management-page"
+      className="data-management-page grid grid-cols-7">
+      <div className="data-management-page__content">
         <FullPageTitleBar
-          pageCode="advanced-search"
-          translateCode="advanced_search"
+          pageCode="data-management"
+          translateCode="data_management"
         />
 
         <SearchBar
@@ -40,7 +37,6 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
           callbackSetQuery={setQuery}
           numberOfMatchingResults={numberOfMatchingResults}
           isChoosingAlphabet={isChoosingAlphabet}
-          passedQuery={hookQuery.get('query')}
         />
 
         <SearchResults
