@@ -83,6 +83,10 @@ export const SearchResults: React.FC<ISearchResults> = ({
     }
   }, [choosingAlphabetOption])
 
+  useEffect(() => {
+    setChoosingAlphabetOption(-1);
+  }, [query])
+
   const processShowingItems = () => {
     let newResults = results.filter(
       item => passFilter(item, query, true, currentFilterOptions.searchBy)
