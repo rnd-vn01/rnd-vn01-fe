@@ -1,3 +1,5 @@
+import { ALPHABET_LISTS } from "src/configs/constants";
+
 export enum SEARCH_BY {
   ALL = 0,
   CODE = 1,
@@ -64,4 +66,28 @@ export const passFilter = (item: any, query: string, isPoint: boolean, searchBy:
   }
 
   return passed
+}
+
+export const filterByAlphabet = (items: Array<any>, alphabet: number, usingLanguage: string) => {
+  const usingAlphabet = ALPHABET_LISTS[usingLanguage]
+
+  if (alphabet === -1) {
+    return items
+  }
+
+  return items.filter(e => replaceVietnameseNotation(e.name.toUpperCase()[0]) === usingAlphabet[alphabet])
+}
+
+export const replaceVietnameseNotation = (character: string) => {
+  return character.replace("Á", "A").replace("À", "A").replace("Ả", "A").replace("Ã", "A").replace("Ạ", "A")
+    .replace("Ắ", "Ă").replace("Ằ", "Ă").replace("Ẳ", "Ă").replace("Ẵ", "Ă").replace("Ặ", "Ă")
+    .replace("Ấ", "Â").replace("Ầ", "Â").replace("Ẩ", "Â").replace("Ẫ", "Â").replace("Ậ", "Â")
+    .replace("É", "E").replace("È", "E").replace("Ẻ", "E").replace("Ẽ", "E").replace("Ẹ", "E")
+    .replace("Ế", "Ê").replace("Ề", "Ê").replace("Ể", "Ê").replace("Ễ", "Ê").replace("Ệ", "Ê")
+    .replace("Í", "I").replace("Ì", "I").replace("Ỉ", "I").replace("Ĩ", "I").replace("Ị", "I")
+    .replace("Ó", "O").replace("Ò", "O").replace("Ỏ", "O").replace("Õ", "O").replace("Ọ", "O")
+    .replace("Ố", "Ô").replace("Ồ", "Ô").replace("Ổ", "Ô").replace("Ỗ", "Ô").replace("Ộ", "Ô")
+    .replace("Ớ", "Ơ").replace("Ờ", "Ơ").replace("Ở", "Ơ").replace("Ỡ", "Ơ").replace("Ợ", "Ơ")
+    .replace("Ú", "U").replace("Ù", "U").replace("Ủ", "U").replace("Ũ", "U").replace("Ụ", "U")
+    .replace("Ứ", "Ư").replace("Ừ", "Ư").replace("Ử", "Ư").replace("Ữ", "Ư").replace("Ự", "Ư")
 }

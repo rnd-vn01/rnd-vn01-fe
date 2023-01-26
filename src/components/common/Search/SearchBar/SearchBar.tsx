@@ -10,7 +10,8 @@ export const SearchBar: React.FC<ISearchBar> = ({
   callbackSetResults,
   callbackSetLoading,
   callbackSetQuery,
-  numberOfMatchingResults
+  numberOfMatchingResults,
+  isChoosingAlphabet
 }) => {
   const inputBoxRef = useRef()
   const history = useHistory();
@@ -56,6 +57,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
           onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
           onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
           value={query}
+          disabled={isChoosingAlphabet}
           onChange={e => setQuery(e.target.value)}></input>
 
         {!isLoading && query !== "" && <span className="search-bar__number-of-results"

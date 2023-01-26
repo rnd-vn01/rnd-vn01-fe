@@ -136,6 +136,7 @@ interface ISearchBar {
   callbackSetLoading?: (boolean) => void;
   callbackSetQuery?: (string) => void;
   numberOfMatchingResults?: number;
+  isChoosingAlphabet?: boolean;
 }
 
 interface ISearchResults {
@@ -143,6 +144,7 @@ interface ISearchResults {
   query?: string;
   isLoading?: boolean;
   callbackSetNumberOfMatchingResults?: (any) => void;
+  callbackSetChoosingAlphabet?: (boolean) => void;
 }
 
 interface ISearchResultItem {
@@ -150,4 +152,9 @@ interface ISearchResultItem {
   isPoint?: boolean;
   usingLanguage?: "EN" | "VI";
   query?: Array<string>;
+}
+
+interface ISearchResultsAlphabetFilters {
+  results?: Array<any>;
+  callbackSetAlphabetFilteringOption?: (number) => void;
 }

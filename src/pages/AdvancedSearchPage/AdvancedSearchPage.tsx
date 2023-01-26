@@ -18,6 +18,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [query, setQuery] = useState<string>("");
   const [numberOfMatchingResults, setNumberOfMatchingResults] = useState<number>(0);
+  const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
 
   return (
     <div
@@ -35,12 +36,15 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
           callbackSetLoading={setIsLoading}
           callbackSetQuery={setQuery}
           numberOfMatchingResults={numberOfMatchingResults}
+          isChoosingAlphabet={isChoosingAlphabet}
         />
+
         <SearchResults
           results={searchResults}
           isLoading={isLoading}
           query={query}
           callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
+          callbackSetChoosingAlphabet={setIsChoosingAlphabet}
         />
       </div>
     </div>
