@@ -91,7 +91,6 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
   }
 
   const endQuiz = () => {
-    console.log(quizHistory)
     setQuizState(QUIZ_STATE["ENDED"])
   }
 

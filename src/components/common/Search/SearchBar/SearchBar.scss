@@ -1,10 +1,10 @@
 .search-bar {
-  height: 60px;
   width: 100%;
   border: 1px solid black;
   cursor: text;
   position: relative;
   margin-top: 15px;
+  height: 60px;
 
   &__logo {
     &--search {
@@ -31,16 +31,11 @@
       top: calc(25px / 2 - 5px);
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: start;
     }
   }
 
   &__number-of-results {
     background: var(--theme-highlight);
-    display: none;
-
-    &--is-showing {
-      display: block;
-    }
   }
 }

@@ -1,7 +1,13 @@
 .title-bar {
   height: 60px;
   margin: 0 auto;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0 1vw;
+  right: 0;
+  background: var(--theme-background);
+  z-index: 1001;
 
   &__option {
     font-size: 1.5rem;
@@ -44,7 +50,7 @@
     top: calc(100% + 1px);
     background: var(--theme-background);
     z-index: 100;
-    right: 0px;
+    right: 1vw;
 
     &--hide {
       display: none;

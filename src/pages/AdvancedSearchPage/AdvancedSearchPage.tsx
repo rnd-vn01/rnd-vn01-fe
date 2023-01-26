@@ -1,6 +1,10 @@
 import './AdvancedSearchPage.scss'
-import React from 'react';
-import { FullPageTitleBar, SearchBar } from 'src/components/common';
+import React, { useState } from 'react';
+import {
+  FullPageTitleBar,
+  SearchBar,
+  SearchResults
+} from 'src/components/common';
 import { APP_NAME } from 'src/configs/constants';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +13,11 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
 }) => {
   const { t } = useTranslation();
   document.title = `${APP_NAME} | ${t('advanced_search_page.title')}`
+
+  const [searchResults, setSearchResults] = useState<Array<any>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>("");
+  const [numberOfMatchingResults, setNumberOfMatchingResults] = useState<number>(0);
 
   return (
     <div
@@ -21,7 +30,18 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
           translateCode="advanced_search"
         />
 
-        <SearchBar />
+        <SearchBar
+          callbackSetResults={setSearchResults}
+          callbackSetLoading={setIsLoading}
+          callbackSetQuery={setQuery}
+          numberOfMatchingResults={numberOfMatchingResults}
+        />
+        <SearchResults
+          results={searchResults}
+          isLoading={isLoading}
+          query={query}
+          callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
+        />
       </div>
     </div>
   );

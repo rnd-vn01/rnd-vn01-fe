@@ -114,7 +114,18 @@ i18n
             title: "Advanced Search",
           },
           search_bar: {
-            matches: "matches"
+            matches: "matches",
+            filters: {
+              categories: {
+                search: "Search",
+                show: "Show"
+              },
+              options: {
+                search_on: "search on",
+                search_by: "search by",
+                show: "show"
+              }
+            }
           }
         }
       },
@@ -225,7 +236,18 @@ i18n
             title: "Tìm kiếm Nâng cao",
           },
           search_bar: {
-            matches: "trùng khớp"
+            matches: "trùng khớp",
+            filters: {
+              categories: {
+                search: "Tìm kiếm",
+                show: "Hiển thị"
+              },
+              options: {
+                search_on: "tìm trên",
+                search_by: "tìm theo",
+                show: "hiển thị"
+              }
+            }
           }
         }
       }

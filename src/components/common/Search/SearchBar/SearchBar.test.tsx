@@ -5,7 +5,13 @@ import store from 'src/redux/store';
 
 describe('SearchBar', () => {
   beforeEach(() => {
-    render(<SearchBar />)
+    render(<Provider store={store}>
+      <SearchBar
+        callbackSetResults={jest.fn()}
+        callbackSetLoading={jest.fn()}
+        callbackSetQuery={jest.fn()}
+      />
+    </Provider>)
   })
 
   it("to be rendered successfully", async () => {

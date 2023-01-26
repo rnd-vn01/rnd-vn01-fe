@@ -1,18 +1,38 @@
 import './SearchBar.scss';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SearchIconGray from "src/assets/images/SearchIconGray.svg"
 import SearchIconBlack from "src/assets/images/SearchIconBlack.svg"
 import { useHistory } from 'react-router-dom';
-import { SearchResults } from './SearchResults/SearchResults';
 import { useTranslation } from 'react-i18next';
+import { SearchProcessor } from '../SearchProcessor/SearchProcessor';
 
-export const SearchBar: React.FC<ISearchBar> = ({ }) => {
+export const SearchBar: React.FC<ISearchBar> = ({
+  callbackSetResults,
+  callbackSetLoading,
+  callbackSetQuery,
+  numberOfMatchingResults
+}) => {
   const inputBoxRef = useRef()
   const history = useHistory();
 
   const [usingQuickSearchIconImage, setUsingQuickSearchIconImage] = useState<any>(SearchIconGray)
   const [query, setQuery] = useState<string>("");
   const { t } = useTranslation();
+
+  const [searchResults, setSearchResults] = useState<Array<any>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    callbackSetResults(searchResults)
+  }, [searchResults])
+
+  useEffect(() => {
+    callbackSetLoading(isLoading)
+  }, [isLoading])
+
+  useEffect(() => {
+    callbackSetQuery(query)
+  }, [query])
 
   return (
     <div
@@ -38,16 +58,18 @@ export const SearchBar: React.FC<ISearchBar> = ({ }) => {
           value={query}
           onChange={e => setQuery(e.target.value)}></input>
 
-        <span className="search-bar__number-of-results"
+        {!isLoading && query !== "" && <span className="search-bar__number-of-results"
           onClick={(e) => e.stopPropagation()}>
-          {100}
+          {numberOfMatchingResults}
           {` `}
           {t('search_bar.matches')}
-        </span>
+        </span>}
       </span>
 
-      <SearchResults
+      <SearchProcessor
         query={query}
+        callbackSetResults={setSearchResults}
+        callbackSetLoading={setIsLoading}
       />
     </div>
   );
