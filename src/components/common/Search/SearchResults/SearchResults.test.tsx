@@ -20,6 +20,7 @@ describe('SearchResults', () => {
     render(<Provider store={store}>
       <SearchResults
         callbackSetNumberOfMatchingResults={jest.fn()}
+        callbackSetChoosingAlphabet={jest.fn()}
         results={[]}
       />
     </Provider>)
