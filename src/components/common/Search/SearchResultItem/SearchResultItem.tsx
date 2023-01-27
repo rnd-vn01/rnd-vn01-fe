@@ -75,13 +75,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
                 <div key={`point-information-${index}`}>
                   <div
                     className={`search-result__category ${field === "caution" ? "search-result__category--caution" : ""}`}>
-                    <Highlighter
-                      highlightClassName='search-result__highlighted'
-                      searchWords={query || []}
-                      autoEscape={true}
-                      textToHighlight={capitalizeAndMapInformationField(isPoint, field, usingLanguage)}
-                    >
-                    </Highlighter>
+                    <span>{capitalizeAndMapInformationField(isPoint, field, usingLanguage)}</span>
                   </div>
                   <div className="search-result__info">
                     {isPoint && field === "functionalities" ?
