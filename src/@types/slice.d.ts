@@ -170,3 +170,7 @@ interface IItemDetail {
   usingLanguage?: "EN" | "VI";
   query?: string;
 }
+
+interface IItemDetailEdit extends IItemDetail {
+  callbackUpdateDetail?: (any) => void;
+}

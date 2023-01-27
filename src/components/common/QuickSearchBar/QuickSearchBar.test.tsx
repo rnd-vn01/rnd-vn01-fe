@@ -5,7 +5,9 @@ import store from 'src/redux/store';
 
 describe('QuickSearchBar', () => {
   beforeEach(() => {
-    render(<QuickSearchBar />)
+    render(<Provider store={store}>
+      <QuickSearchBar />
+    </Provider>)
   })
 
   it("to be rendered successfully", async () => {

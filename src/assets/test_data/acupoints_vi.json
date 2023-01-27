@@ -17,7 +17,7 @@
   {
     "code": "Du-20",
     "name": "Bách hội",
-    "description": "Giao hội huyệt của mạch Đốc và 6 kinh dương\nKhi điểm huyệt ngồi ngay thẳng, kéo vòng hai bên đỉnh tai lên ngay giữa đầu. Huyệt là điểm gặp nhau của hai đường vuông góc: Một là đường ngang qua đỉnh vành tai và một đường dọc qua giữa đầu, sờ vào đó có một khe hõm nhỏ",
+    "description": "Giao hội huyệt của mạch Đốc và 6 kinh dương. Khi điểm huyệt ngồi ngay thẳng, kéo vòng hai bên đỉnh tai lên ngay giữa đầu. Huyệt là điểm gặp nhau của hai đường vuông góc: Một là đường ngang qua đỉnh vành tai và một đường dọc qua giữa đầu, sờ vào đó có một khe hõm nhỏ",
     "anatomy": "Dưới huyệt là cân sọ, dưới nữa là xương sọ. Da vùng huyệt chi phối bởi tiết đoạn thần kinh C2.",
     "functionalities": [
       "Nhức đỉnh đầu",
@@ -35,7 +35,7 @@
   {
     "code": "GB-20",
     "name": "Phong trì",
-    "description": "Giao hội huyệt của 2 kinh thủ túc Thiếu Dương và mạch Dương duy\nXác định đáy họp sọ, cơ thang và cơ ức-đòn-chũm. Huyệt nằm ở chỗ hõm do bờ trong cơ ức-đòn-chũm và bờ ngoài cơ thang bám vào đáy hộp sọ tạo nên.",
+    "description": "Giao hội huyệt của 2 kinh thủ túc Thiếu Dương và mạch Dương duy. Xác định đáy họp sọ, cơ thang và cơ ức-đòn-chũm. Huyệt nằm ở chỗ hõm do bờ trong cơ ức-đòn-chũm và bờ ngoài cơ thang bám vào đáy hộp sọ tạo nên.",
     "anatomy": "Dưới huyệt là góc tạo nên bởi cơ thang và cơ ức-đòn-chũm, đáy là cơ gối đầu và cơ đầu dài. Dưới là đáy hộp sọ. Thần kinh vận động cơ là nhánh của dây cổ 2, nhánh của dây thần kinh chẩm lớn, nhánh của dây thần kinh dưới chẩm. Da vùng huyệt chi phối bởi tiết đoạn thần kinh C2.",
     "functionalities": [
       "Đau đầu",
@@ -69,7 +69,7 @@
   {
     "code": "SI-19",
     "name": "Thính cung",
-    "description": "Giao hội huyệt của kinh thủ Thái dương và thủ túc Thiếu dương\n Khi há miệng ở giữa phía trước bình tai có chỗ hõm, sau lồi cầu xương hàm dưới",
+    "description": "Giao hội huyệt của kinh thủ Thái dương và thủ túc Thiếu dương.  Khi há miệng ở giữa phía trước bình tai có chỗ hõm, sau lồi cầu xương hàm dưới",
     "anatomy": "Dưới huyệt là bờ sau tuyến mang tai, bờ sau lồi cầu xương hàm dưới. Da vùng huyệt chi phối bởi tiết đoạn thần kinh sọ não V3.",
     "functionalities": [
       "Ù tai, điếc",
@@ -80,7 +80,7 @@
   {
     "code": "TE-17",
     "name": "Ế phong",
-    "description": "Giao hội huyệt của 2 kinh thủ túc Thiếu Dương.\nChỗ hõm khi há mồm sau dái tai, ấn vào đó thấy đau. Huyệt ở giữa xương hàm dưới và xương chũm, sau mỏm nhọn cao nhất của dái tai, sát bờ trước cơ ức-đòn-chũm, sau góc xương hàm dưới.",
+    "description": "Giao hội huyệt của 2 kinh thủ túc Thiếu Dương.. Chỗ hõm khi há mồm sau dái tai, ấn vào đó thấy đau. Huyệt ở giữa xương hàm dưới và xương chũm, sau mỏm nhọn cao nhất của dái tai, sát bờ trước cơ ức-đòn-chũm, sau góc xương hàm dưới.",
     "anatomy": "Dưới huyệt là trước bờ trước cơ ức-đòn-chũm, cơ trâm hầu, trâm mông, trâm lưỡi và cơ 2 thân, trên các cơ bậc thang. Thần kinh vận động cơ là nhánh của dây thần kinh sọ não XI, nhánh của đám rối cổ sau, nhánh dây thần kinh sọ não số IX, XII, nhánh của dây cổ 3, 4, 5. Da vùng huyệt chi phối bởi tiết đoạn thần kinh C2.",
     "functionalities": [
       "Điếc, ù tai, lãng tai",
@@ -94,7 +94,7 @@
   {
     "code": "LI-20",
     "name": "Nghinh hương",
-    "description": "Huyệt hội của các Dương minh ở tay và chân.\nCười thể hiện rõ vành mũi - mồm. Huyệt là điểm gặp nhau của đường ngang qua chân cánh mũi và rãnh mũi-mồm",
+    "description": "Huyệt hội của các Dương minh ở tay và chân.. Cười thể hiện rõ vành mũi - mồm. Huyệt là điểm gặp nhau của đường ngang qua chân cánh mũi và rãnh mũi-mồm",
     "anatomy": "Dưới huyệt là bờ ngoài cơ nâng cánh mũi và môi trên, bờ ngoài cơ nở cánh mũi và cơ ngang mũi, bờ trng cơ gò má nhỏ và cớ nanh, bờ trên cơ vòng môi. Thần kinh vận động cơ là nhánh thần kinh sọ não VII. Da vùng huyệt chi phối bởi tiết đoạn thần kinh V2.",
     "functionalities": [
       "Thông tỉ khiếu, tán phong nhiệt, thanh khí hoả.",
@@ -107,7 +107,7 @@
   {
     "code": "St-4",
     "name": "Địa thương",
-    "description": "Giao hội huyệt của 2 kinh thủ, túc Dương minh và mạch Dương Kiểu\nKhoé miệng đo ra 4 phân, cười để rõ rãnh mép mũi. Huyệt nằm trên đường ngang qua mép và rảnh mép-mũi",
+    "description": "Giao hội huyệt của 2 kinh thủ, túc Dương minh và mạch Dương Kiểu. Khoé miệng đo ra 4 phân, cười để rõ rãnh mép mũi. Huyệt nằm trên đường ngang qua mép và rảnh mép-mũi",
     "anatomy": "Dưới huyệt là chỗ đan chéo thớ của các cơ vòng môi, cơ gò má lớn, cơ cười, cơ tam giác môi. Dưới nữa là cơ mút, cơ manh. Thần kinh vận động cơ là nhánh của dây thần kinh sọ não số VII. Da vùng huyệt chi phối bởi tiết đoạn thần kinh V3.",
     "functionalities": [
       "Tê liệt thần kinh mặt, đau dây thần kinh tam thoa, co giật thần kinh mặt.",
@@ -136,7 +136,7 @@
   {
     "code": "Du-26",
     "name": "Nhân trung",
-    "description": "Giao hội huyệt của mạch Đốc với 2 kinh Thủ túc Dương minh\nNgay giữa đáy rãnh Nhân trung. Huyệt là điểm nối với tỉ lệ 1/3 trên với 2/3 dưới.",
+    "description": "Giao hội huyệt của mạch Đốc với 2 kinh Thủ túc Dương minh. Ngay giữa đáy rãnh Nhân trung. Huyệt là điểm nối với tỉ lệ 1/3 trên với 2/3 dưới.",
     "anatomy": "Dưới huyệt là cơ vòng môi trên. Thần kinh vận động cơ là nhánh của dây sọ não VIII. Da vùng huyệt chi phối bởi tiết đoạn thần kinh V2.",
     "functionalities": [
       "Liệt mặt, cảm giác kiến bò ở môi, méo miệng.",
@@ -155,7 +155,7 @@
   {
     "code": "Ren-17",
     "name": "Đản trung",
-    "description": "Mộ huyệt của Tâm bào, hội huyệt của Khí\nGiữa ức, ngang giữa hai đầu vú, đàn bà lấy theo xương sườn thứ 4, ngay ở giữa. Huyệt là nơi gặp nhau của đường dọc giữa xương ức và đường ngang qua bờ trên khớp ức sườn 4.",
+    "description": "Mộ huyệt của Tâm bào, hội huyệt của Khí. Giữa ức, ngang giữa hai đầu vú, đàn bà lấy theo xương sườn thứ 4, ngay ở giữa. Huyệt là nơi gặp nhau của đường dọc giữa xương ức và đường ngang qua bờ trên khớp ức sườn 4.",
     "anatomy": "Dưới huyệt là xương ức. Da vùng huyệt chi phối bởi tiết đoạn thần kinh T4",
     "functionalities": [
       "Tức ngực, đau ngực, viêm màng ngực",
@@ -172,7 +172,7 @@
   {
     "code": "Ren-14",
     "name": "Cự khuyết",
-    "description": "Mộ huyệt của Tâm\nNgồi ngay hoặc nằm ngửa. Huyệt là điểm gặp nhau của hai bờ sườn và rốn, tỷ lệ 6/8 dưới lên hoặc 2/8 trên xuống.",
+    "description": "Mộ huyệt của Tâm. Ngồi ngay hoặc nằm ngửa. Huyệt là điểm gặp nhau của hai bờ sườn và rốn, tỷ lệ 6/8 dưới lên hoặc 2/8 trên xuống.",
     "anatomy": "Dưới huyệt là đường trắng, sau là phúc mạc. Dưới nữa là thuỳ gan trái. Da vùng huyệt chi phối bởi tiết đoạn thần kinh T6.",
     "functionalities": [
       "Co thắt hoành cách mô",
@@ -191,7 +191,7 @@
   {
     "code": "Ren-12",
     "name": "Trung quản",
-    "description": "Mộ huyệt của Vị, hội huyệt của Phủ.\nHuyệt trên đường giữa bụng, từ rốn đo lên 4 thốn. Điểm huyệt nằm ngửa",
+    "description": "Mộ huyệt của Vị, hội huyệt của Phủ.. Huyệt trên đường giữa bụng, từ rốn đo lên 4 thốn. Điểm huyệt nằm ngửa",
     "anatomy": "Dưới huyệt là đường trắng, dưới nữa là mạc ngang, phúc mạc, phần ngang của dạ dày. Thần kinh: Da vùng huyệt chi phối bởi tiết đoạn T7 hoặc T8.",
     "functionalities": [
       "Viêm dạ dày, loét dạ dày, sa dạ dày, viêm dạ dày cấp mãn tính",
@@ -230,7 +230,7 @@
   {
     "code": "SP-11",
     "name": "Kỳ môn",
-    "description": "Mộ huyệt của Can\nNgồi ngay, từ đầu gối đo lên 8 thốn cách Huyết hải 6 thốn, nơi có động mạch nhảy. Huyệt ở chỗ hõm tạo nên bởi bờ ngoài, cơ may, bờ trong, cơ thẳng trước đùi và cơ rộng trong.",
+    "description": "Mộ huyệt của Can. Ngồi ngay, từ đầu gối đo lên 8 thốn cách Huyết hải 6 thốn, nơi có động mạch nhảy. Huyệt ở chỗ hõm tạo nên bởi bờ ngoài, cơ may, bờ trong, cơ thẳng trước đùi và cơ rộng trong.",
     "anatomy": "Dưới huyệt là bờ ngoài bó mạch thần kinh đùi, khe giữa cơ chậu và cơ lược, cơ bịt ngoài, cơ sinh đôi dưới. Thần kinh vận động cơ là các ngành ngang của đám rối thắt lưng, nhánh của dây thần kinh cơ da, các nhánh dây thần kinh bịt. Da vùng huyệt chi phối bởi tiết đoạn thần kinh L3.",
     "functionalities": [
       "Sưng hạch bẹn",
@@ -752,7 +752,7 @@
       "Phụ nữ tắc kinh"
     ],
     "technique": "Châm thẳng, sâu từ nửa - 1 thốn, có cảm giác căng tức tại chỗ, có khi như điện giật tê xuống ngón trỏ.. Co quắp, bại liệt: mũi kim hướng tới lao cung, sâu 2 - 3 thốn. Bệnh đầu và mặt: Châm xiên, dọc theo bờ xương ngón tay 1 - 1,5 thốn.. Cứu 3 – 5 lửa. . Ôn cứu từ 5 – 15 phút",
-    "caution": "Cấm châm cho phụ nữ sinh non\nChâm kèm huyệt Tam Âm giao có thể làm hư thai"
+    "caution": "Cấm châm cho phụ nữ sinh non. Châm kèm huyệt Tam Âm giao có thể làm hư thai"
   },
   {
     "code": "LI-11",
@@ -800,7 +800,7 @@
     "code": "PC-6",
     "name": "Nội quan",
     "description": "Vểnh ngược bàn tay vào cẳng tay để lộ rõ khe của cơ gân tay lớn và cơ gân tay bé. Trên khớp gấp nếp cổ tay 2 thốn",
-    "anatomy": "Dưới lớp da vùng huyệt là khe giữa gân cơ gan tay bé, gân cơ gan tay lớn, gân cơ gấp dài ngón tay cái, gân cơ gấp chung ngón tay nông và sâu, cơ sấp vuông, màng gian cốt trụ và quay.\nCác nhánh của dây thần kinh giữa và các nhánh của dây thần kinh trụ đóng vai trò là dây thần kinh vận động cơ.\nDa vùng huyệt do tiết đoạn thần kinh D1 hoặc C7 chi phối.",
+    "anatomy": "Dưới lớp da vùng huyệt là khe giữa gân cơ gan tay bé, gân cơ gan tay lớn, gân cơ gấp dài ngón tay cái, gân cơ gấp chung ngón tay nông và sâu, cơ sấp vuông, màng gian cốt trụ và quay.. Các nhánh của dây thần kinh giữa và các nhánh của dây thần kinh trụ đóng vai trò là dây thần kinh vận động cơ.. Da vùng huyệt do tiết đoạn thần kinh D1 hoặc C7 chi phối.",
     "functionalities": [
       "Đau cẳng tay",
       "Viêm cơ tim",
@@ -818,8 +818,8 @@
   {
     "code": "PC-7",
     "name": "Đại lăng",
-    "description": "Lật ngửa bàn tay ra sau cẳng tay lộ rõ khe gân. Huyệt ở trên lằn chỉ gấp khớp cổ tay, giữa hai cơ gân tay lớn và cơ gân tay bé.\nHoặc có thể xác định bằng cách gấp các ngón tay vào lòng bàn tay, đầu ngón tay giữa chạm vào lằn chỉ (văn) tay ở đâu thì đó là huyệt",
-    "anatomy": "Dưới da vùng huyệt là khe giữa gân cơ gan tay lớn và gân cơ gan tay bé. Ở sâu bên trong là khe giữa gân cơ gấp dài ngón tay cái, cơ gấp chung ngón tay nông và sâu cùng khe khớp cổ tay.\nThần kinh vận động cơ tại vị trí huyệt là các nhánh của dây thần kinh giữa và dây thần kinh trụ.\nDa vùng huyệt được chi phối bởi tiết đoạn thần kinh C7 hoặc C8.",
+    "description": "Lật ngửa bàn tay ra sau cẳng tay lộ rõ khe gân. Huyệt ở trên lằn chỉ gấp khớp cổ tay, giữa hai cơ gân tay lớn và cơ gân tay bé.. Hoặc có thể xác định bằng cách gấp các ngón tay vào lòng bàn tay, đầu ngón tay giữa chạm vào lằn chỉ (văn) tay ở đâu thì đó là huyệt",
+    "anatomy": "Dưới da vùng huyệt là khe giữa gân cơ gan tay lớn và gân cơ gan tay bé. Ở sâu bên trong là khe giữa gân cơ gấp dài ngón tay cái, cơ gấp chung ngón tay nông và sâu cùng khe khớp cổ tay.. Thần kinh vận động cơ tại vị trí huyệt là các nhánh của dây thần kinh giữa và dây thần kinh trụ.. Da vùng huyệt được chi phối bởi tiết đoạn thần kinh C7 hoặc C8.",
     "functionalities": [
       "Đau cổ tay",
       "Viêm khớp cổ tay",
@@ -838,7 +838,7 @@
     "code": "HT-5",
     "name": "Thông lý",
     "description": "Mặt trước trong cẳng tay, trên nếp gấp cổ tay 1 thốn (huyệt Thần Môn - Tm.7), khe giữa gân cơ trụ trước và cơ gấp chung nông các ngón tay. Lật ngửa bàn tay ra sau lộ gân cơ",
-    "anatomy": "Dưới huyệt là khe giữa gân cơ trụ trước và gân cơ gấp chung sâu các ngón tay, cơ gấp vuông, xương trụ.\n\nThần kinh vận động cơ là các nhánh của dây thần kinh giữa và dây trụ.\n\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh C8.",
+    "anatomy": "Dưới huyệt là khe giữa gân cơ trụ trước và gân cơ gấp chung sâu các ngón tay, cơ gấp vuông, xương trụ.. . Thần kinh vận động cơ là các nhánh của dây thần kinh giữa và dây trụ.. . Da vùng huyệt chi phối bởi tiết đoạn thần kinh C8.",
     "functionalities": [
       "Hồi hộp, đau tim, tim đập quá chậm",
       "Suy nhược thần kinh",
@@ -852,7 +852,7 @@
     "code": "HT-7",
     "name": "Thần môn",
     "description": "Duỗi ngửa bàn tay, ở phía xương trụ, nằm trên lằn chỉ cổ tay, nơi chỗ lõm sát bờ ngoài gân cơ trụ trước và góc ngoài bờ trên xương trụ.",
-    "anatomy": "Dưới huyệt là gân cơ trụ trước, xương đậu và xương tháp.\n\nThần kinh vận động cơ là nhánh của dây thần kinh trụ.\n\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh C8.",
+    "anatomy": "Dưới huyệt là gân cơ trụ trước, xương đậu và xương tháp.. . Thần kinh vận động cơ là nhánh của dây thần kinh trụ.. . Da vùng huyệt chi phối bởi tiết đoạn thần kinh C8.",
     "functionalities": [
       "Suy nhược thần kinh",
       "Bệnh tâm thần",
@@ -868,7 +868,7 @@
     "code": "TE-4",
     "name": "Dương trì",
     "description": "Khớp xương cổ tay, phía trên thẳng với ngón áp út, gần mắt cá tay. Muốn biết rõ phải ngửa bàn tay ra sau để rõ các nếp gấp khớp và gân",
-    "anatomy": "Dưới huyệt là khe giữa gân cơ duỗi chung ngón tay và duỗi riêng ngón tay trỏ ở ngoài với gân cơ duỗi riêng ngón tay út ở trong, khe giữa đầu dưới xương quay và xương trụ, ở trên xương nguyệt.\nThần kinh vận động cơ là các nhánh của dây thần kinh trụ.\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh C7.",
+    "anatomy": "Dưới huyệt là khe giữa gân cơ duỗi chung ngón tay và duỗi riêng ngón tay trỏ ở ngoài với gân cơ duỗi riêng ngón tay út ở trong, khe giữa đầu dưới xương quay và xương trụ, ở trên xương nguyệt.. Thần kinh vận động cơ là các nhánh của dây thần kinh trụ.. Da vùng huyệt chi phối bởi tiết đoạn thần kinh C7.",
     "functionalities": [
       "Viêm khớp cổ tay, đau tay",
       "Viêm họng",
@@ -885,7 +885,7 @@
     "code": "TE-5",
     "name": "Ngoại quan",
     "description": "Từ huyệt Dương Trì đo lên 2 thốn, huyệt ở giữa khe xương quay và xương trụ",
-    "anatomy": "Dưới huyệt là khe giữa các cơ duỗi chung ngón tay và cơ duỗi dài riêng ngón tay cái ở ngoài, với các cơ duỗi riêng ngón tay út và cơ duỗi riêng ngón tay trỏ ở trong, giữa màng gian cốt.\nThần kinh vận động cơ là các nhánh của dây thần kinh quay.\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh C7.",
+    "anatomy": "Dưới huyệt là khe giữa các cơ duỗi chung ngón tay và cơ duỗi dài riêng ngón tay cái ở ngoài, với các cơ duỗi riêng ngón tay út và cơ duỗi riêng ngón tay trỏ ở trong, giữa màng gian cốt.. Thần kinh vận động cơ là các nhánh của dây thần kinh quay.. Da vùng huyệt chi phối bởi tiết đoạn thần kinh C7.",
     "functionalities": [
       "Đau thần kinh tay trước",
       "Viêm khớp chi trên",
@@ -901,7 +901,7 @@
     "code": "SI-4",
     "name": "Uyển cốt",
     "description": "Bàn tay hơi nắm lại, ở phía mu tay quay. Phía bờ trong bàn tay, nơi chỗ lõm giữa xương móc và xương bàn tay 5, trên đường tiếp giáp da gan tay, mu tay.",
-    "anatomy": "Dưới huyệt là cơ da gan tay, cơ dạng ngón út, chỗ lõm giữa đầu trên xương bàn tay 5 và xương tháp, đáy chỗ lõm là xương móc.\nThần kinh vận động cơ là các nhánh của dây thần kinh trụ.\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh C8.",
+    "anatomy": "Dưới huyệt là cơ da gan tay, cơ dạng ngón út, chỗ lõm giữa đầu trên xương bàn tay 5 và xương tháp, đáy chỗ lõm là xương móc.. Thần kinh vận động cơ là các nhánh của dây thần kinh trụ.. Da vùng huyệt chi phối bởi tiết đoạn thần kinh C8.",
     "functionalities": [
       "Viêm khớp ngón, cổ tay, khớp khuỷu",
       "Đau đầu",
@@ -916,7 +916,7 @@
     "code": "SI-7",
     "name": "Chi chính",
     "description": "Đo thẳng lên 5 thốn từ khớp cổ tay, tại sát bờ sau xương trụ, cách cổ tay 5 thốn, trên đường nối huyệt Dương Cốc và huyệt Tiểu Hải.",
-    "anatomy": "Dưới huyệt là khe giữa cơ trụ trước và cơ trụ sau, chỗ bám vào xương của cơ duỗi riêng ngón tay trỏ và cơ gấp chung sâu các ngón tay xương trụ.\nThần kinh vận động cơ là các nhánh của dây thần kinh trụ và dây thần kinh quay.\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh T1.",
+    "anatomy": "Dưới huyệt là khe giữa cơ trụ trước và cơ trụ sau, chỗ bám vào xương của cơ duỗi riêng ngón tay trỏ và cơ gấp chung sâu các ngón tay xương trụ.. Thần kinh vận động cơ là các nhánh của dây thần kinh trụ và dây thần kinh quay.. Da vùng huyệt chi phối bởi tiết đoạn thần kinh T1.",
     "functionalities": [
       "Đau cánh tay, co tay, ngón tay không nắm được",
       "Cổ gáy sưng đau, đau hàm",
@@ -930,8 +930,8 @@
   {
     "code": "St-36",
     "name": "Túc tam lý",
-    "description": "Dưới mắt gối ngoài 3 thốn, phía ngoài xương mác khoảng 1 khoát ngón tay, nơi cơ cẳng chân trước, khe giữa xương chầy và xương mác.\nHoặc úp lòng bàn tay vào giữa đầu gối, đầu ngón tay giữa chạm vào xương ống chân (xương chầy), từ đó đo ra 1 thốn là huyệt túc tam lý\nDưới lõm ngoài xương bánh chè (Độc Tỵ) 3 thốn.",
-    "anatomy": "Dưới da là cơ cẳng chân trước, chỗ bám các thớ gân cơ 2 đầu đùi, khe giữa xương chầy và xương mác, màng gian cốt.\nThần kinh đi từ tiết đoạn thắt lưng 4 cùng 1. Lớp nông có dây thần kinh da bắp chân ngoài và nhánh da thần kinh hiển, lớp sâu có dây thần kinh hông khoeo đi qua\n\nThần kinh vận động cơ là nhánh của dây thần kinh hông to, nhánh của dây thần kinh chầy trước.\n\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh L5.",
+    "description": "Dưới mắt gối ngoài 3 thốn, phía ngoài xương mác khoảng 1 khoát ngón tay, nơi cơ cẳng chân trước, khe giữa xương chầy và xương mác.. Hoặc úp lòng bàn tay vào giữa đầu gối, đầu ngón tay giữa chạm vào xương ống chân (xương chầy), từ đó đo ra 1 thốn là huyệt túc tam lý. Dưới lõm ngoài xương bánh chè (Độc Tỵ) 3 thốn.",
+    "anatomy": "Dưới da là cơ cẳng chân trước, chỗ bám các thớ gân cơ 2 đầu đùi, khe giữa xương chầy và xương mác, màng gian cốt.. Thần kinh đi từ tiết đoạn thắt lưng 4 cùng 1. Lớp nông có dây thần kinh da bắp chân ngoài và nhánh da thần kinh hiển, lớp sâu có dây thần kinh hông khoeo đi qua. . Thần kinh vận động cơ là nhánh của dây thần kinh hông to, nhánh của dây thần kinh chầy trước.. . Da vùng huyệt chi phối bởi tiết đoạn thần kinh L5.",
     "functionalities": [
       "Đau đầu gối co duỗi khó",
       "Viêm dạ dày cấp mãn tính, loét dạ dày",
@@ -952,8 +952,8 @@
   {
     "code": "St-40",
     "name": "Phong long",
-    "description": "Ngồi thòng chân, đỉnh mắt cá chân ngoài lên 8 thốn hoặc lấy huyệt ở điểm giữa nếp kheo chân và mắt cá chân ngoài.\nKhi tìm huyệt vểnh bàn chân lên xoay qua lại cho lộ khe cơ. Huyệt ở trên chỗ lồi cao nhất của mắt cá ngoài chân",
-    "anatomy": "Dưới da là khe giữa cơ duỗi chung các ngón chân và cơ mác bên ngắn, ở sâu là cơ duỗi dài riêng ngón chân cái, xương mác.\n\nThần kinh vận động cơ là nhánh của dây thần kinh chầy trước và nhánh của dây thần kinh cơ-da.\n\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh L5.",
+    "description": "Ngồi thòng chân, đỉnh mắt cá chân ngoài lên 8 thốn hoặc lấy huyệt ở điểm giữa nếp kheo chân và mắt cá chân ngoài.. Khi tìm huyệt vểnh bàn chân lên xoay qua lại cho lộ khe cơ. Huyệt ở trên chỗ lồi cao nhất của mắt cá ngoài chân",
+    "anatomy": "Dưới da là khe giữa cơ duỗi chung các ngón chân và cơ mác bên ngắn, ở sâu là cơ duỗi dài riêng ngón chân cái, xương mác.. . Thần kinh vận động cơ là nhánh của dây thần kinh chầy trước và nhánh của dây thần kinh cơ-da.. . Da vùng huyệt chi phối bởi tiết đoạn thần kinh L5.",
     "functionalities": [
       "Cước khí, đau nhứt chân, sưng tứ chi",
       "Đau đầu, chóng mặt",
@@ -966,7 +966,7 @@
     "code": "St-42",
     "name": "Xung dương",
     "description": "Nơi cao nhất của mu bàn chân, có động mạch đập, trên huyệt Nội Đình 5 thốn, nằm giữa huyệt Nội Đình và Giải Khê, bờ trong gân cơ duỗi ngón thứ 2 và cơ duỗi ngắn ngón cái.",
-    "anatomy": "Dưới huyệt là bờ trong gân cơ duỗi ngón 2 của cơ duỗi chung các ngón chân, cơ duỗi ngắn ngón cái, sau khớp chêm-thuyền.\n\nThần kinh vận động cơ là các nhánh của dây thần kinh chày trước.\n\nDa vùng huyệt chi phối bởi tiết đoạn thần kinh L5.",
+    "anatomy": "Dưới huyệt là bờ trong gân cơ duỗi ngón 2 của cơ duỗi chung các ngón chân, cơ duỗi ngắn ngón cái, sau khớp chêm-thuyền.. . Thần kinh vận động cơ là các nhánh của dây thần kinh chày trước.. . Da vùng huyệt chi phối bởi tiết đoạn thần kinh L5.",
     "functionalities": [
       "Đau mu bàn chân, tay chân không đưa lên cao",
       "Đau đầu liệt mặt, đau răng",

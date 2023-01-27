@@ -1,10 +1,12 @@
 import './ItemDetail.scss';
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
 import { useHistory } from 'react-router-dom';
 import Highlighter from "react-highlight-words";
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 
 export const ItemDetail: React.FC<IItemDetail> = ({
   item,
@@ -13,6 +15,12 @@ export const ItemDetail: React.FC<IItemDetail> = ({
   query
 }) => {
   const history = useHistory();
+  const {
+    isLoggedIn,
+    user
+  } = useSelector(
+    (state: RootState) => state.authSlice,
+  );
 
   return (
     <div
@@ -44,12 +52,20 @@ export const ItemDetail: React.FC<IItemDetail> = ({
         </div>
 
         <FontAwesomeIcon
-          className="item-detail__header--view"
+          className="item-detail__header--back"
           icon={faChevronLeft}
           onClick={(e) => {
             e.stopPropagation();
             history.push(`${query ? `/advanced-search?query=${query}` : "/advanced-search"}`)
           }}></FontAwesomeIcon>
+
+        {isLoggedIn && user?.isAdmin && <FontAwesomeIcon
+          className="item-detail__header--edit"
+          icon={faEdit}
+          onClick={(e) => {
+            e.stopPropagation();
+            history.push(location.pathname + "?edit")
+          }}></FontAwesomeIcon>}
       </div>
 
       <div className="item-detail__information">
@@ -59,13 +75,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
               <div key={`point-information-${index}`}>
                 <div
                   className={`item-detail__category ${field === "caution" ? "item-detail__category--caution" : ""}`}>
-                  <Highlighter
-                    highlightClassName='item-detail__highlighted'
-                    searchWords={[]}
-                    autoEscape={true}
-                    textToHighlight={capitalizeAndMapInformationField(isPoint, field, usingLanguage)}
-                  >
-                  </Highlighter>
+                  <span>{capitalizeAndMapInformationField(isPoint, field, usingLanguage)}</span>
                 </div>
                 <div className="item-detail__info">
                   {isPoint && field === "functionalities" ?

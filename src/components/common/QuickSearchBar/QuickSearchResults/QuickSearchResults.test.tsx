@@ -5,9 +5,12 @@ import store from 'src/redux/store';
 
 describe('QuickSearchResults', () => {
   beforeEach(() => {
-    render(<QuickSearchResults 
-        query={""}
-    />)
+    render(
+      <Provider store={store}>
+        <QuickSearchResults
+          query={""}
+        />
+      </Provider>)
   })
 
   it("to be rendered successfully", async () => {

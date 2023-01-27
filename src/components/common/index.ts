@@ -11,6 +11,7 @@ import {
 } from "./Search";
 import { SearchBarRedirect } from "./SearchBarRedirect/SearchBarRedirect"
 import { ItemDetail } from "./ItemDetail/ItemDetail"
+import { ItemDetailEdit } from "./ItemDetailEdit/ItemDetailEdit"
 
 export {
   Button,
@@ -26,5 +27,6 @@ export {
   SearchResults,
   SearchBarRedirect,
   SearchResultItem,
-  ItemDetail
+  ItemDetail,
+  ItemDetailEdit
 }
