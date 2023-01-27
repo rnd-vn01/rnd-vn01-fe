@@ -19,14 +19,15 @@
       margin-right: 5px;
 
       &-container {
-        width: calc(100% - 2.5rem)
+        width: 100%
       }
     }
 
     &--text {
       font-size: 1.25rem;
       margin-right: 5px;
-      width: 2.5rem;
+      position: absolute;
+      right: 2px;
     }
   }
 }
