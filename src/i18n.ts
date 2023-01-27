@@ -108,6 +108,7 @@ i18n
             pages: {
               default: "",
               advanced_search: "Advanced Search",
+              data_management: "Data Management"
             }
           },
           advanced_search_page: {
@@ -126,6 +127,28 @@ i18n
                 show: "show"
               }
             }
+          },
+          data_management_page: {
+            title: "Data Management",
+          },
+          placeholders: {
+            name: "name",
+            code: "code",
+            description: "description",
+            anatomy: "location",
+            add_new_functionality: "add new functionality",
+            functionality: "functionality",
+            technique: "triggering technique",
+            add_caution: "add caution",
+            caution: "caution",
+            point: "point",
+            add_new_point: "add new point"
+          },
+          edit_page: {
+            caution: "caution: fields remained blank would be skipped in saving",
+            demo_caution: "Please be informed that the UI is for demo purpose, so no update would be made. The following\
+            are the content of the detail after update:",
+            warning: "Warning"
           }
         }
       },
@@ -229,7 +252,8 @@ i18n
             },
             pages: {
               default: "",
-              advanced_search: "Tìm Kiếm Nâng Cao"
+              advanced_search: "Tìm Kiếm Nâng Cao",
+              data_management: "Quản Lý Dữ Liệu"
             }
           },
           advanced_search_page: {
@@ -248,6 +272,28 @@ i18n
                 show: "hiển thị"
               }
             }
+          },
+          data_management_page: {
+            title: "Quản lý Dữ liệu",
+          },
+          placeholders: {
+            name: "tên",
+            code: "mã",
+            description: "mô tả",
+            anatomy: "vị trí",
+            add_new_functionality: "thêm chức năng",
+            functionality: "chức năng",
+            technique: "phương pháp châm huyệt",
+            add_caution: "thêm lưu ý",
+            caution: "lưu ý",
+            point: "huyệt đạo",
+            add_new_point: "thêm huyệt đạo"
+          },
+          edit_page: {
+            caution: "lưu ý: các trường được để trống sẽ không được lưu trữ",
+            demo_caution: "Vì giao diện hiện tại đang được sử dụng cho mục đích demo, quá trình cập nhật thông tin\
+            sẽ không được thực hiện. Thông tin chi tiết sau khi được cập nhật sẽ bao gồm:",
+            warning: "Lưu ý"
           }
         }
       }

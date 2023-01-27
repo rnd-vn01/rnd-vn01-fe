@@ -8,6 +8,7 @@ import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
+import { APP_NAME } from 'src/configs/constants';
 
 export const HomePage: React.FC = () => {
   const [isViewingItemInformation, setIsViewItemInformation] = useState<boolean>(false);
@@ -17,6 +18,8 @@ export const HomePage: React.FC = () => {
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+
+  document.title = `${APP_NAME}`
 
   const getRandomPointInfo = () => {
     const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI

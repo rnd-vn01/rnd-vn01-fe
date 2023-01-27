@@ -11,7 +11,8 @@ export const SearchBar: React.FC<ISearchBar> = ({
   callbackSetLoading,
   callbackSetQuery,
   numberOfMatchingResults,
-  isChoosingAlphabet
+  isChoosingAlphabet,
+  passedQuery
 }) => {
   const inputBoxRef = useRef()
   const history = useHistory();
@@ -34,6 +35,12 @@ export const SearchBar: React.FC<ISearchBar> = ({
   useEffect(() => {
     callbackSetQuery(query)
   }, [query])
+
+  useEffect(() => {
+    if (passedQuery && passedQuery !== query) {
+      setQuery(passedQuery)
+    }
+  }, [passedQuery])
 
   return (
     <div

@@ -7,8 +7,11 @@ import { InformationBlock } from "./InformationBlock/InformationBlock"
 import { QuizManager } from "./QuizManager/QuizManager"
 import { FullPageTitleBar } from "./FullPageTitleBar/FullPageTitleBar"
 import {
-  SearchBar, SearchProcessor, SearchResults
+  SearchBar, SearchProcessor, SearchResults, SearchResultItem
 } from "./Search";
+import { SearchBarRedirect } from "./SearchBarRedirect/SearchBarRedirect"
+import { ItemDetail } from "./ItemDetail/ItemDetail"
+import { ItemDetailEdit } from "./ItemDetailEdit/ItemDetailEdit"
 
 export {
   Button,
@@ -21,5 +24,9 @@ export {
   FullPageTitleBar,
   SearchBar,
   SearchProcessor,
-  SearchResults
+  SearchResults,
+  SearchBarRedirect,
+  SearchResultItem,
+  ItemDetail,
+  ItemDetailEdit
 }

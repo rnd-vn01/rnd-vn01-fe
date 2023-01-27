@@ -4,29 +4,51 @@ import { useHistory } from 'react-router-dom';
 import { capitalize } from 'src/helpers/capitalize';
 import { debounce } from "lodash"
 
+import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
+import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
+import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
+import Highlighter from 'react-highlight-words';
+
 export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => {
   const history = useHistory();
-  const EXAMPLE_RESULT = {
-    meridians: [{
-      name: "LU",
-      url: "/item/meridian/5"
-    }, {
-      name: "LI",
-      url: "/item/meridian/3"
-    }],
-    points: [{
-      name: "Yintang",
-      url: "/item/point/5"
-    }, {
-      name: "Shaoyin",
-      url: "/item/point/4"
-    }]
-  }
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
+  );
 
   const [isLoading, setIsLoading] = useState<any>(false)
   const [results, setResults] = useState<any>({})
 
-  const fetchResults = (query: string) => {
+  const fetchResults = async (query: string) => {
+    const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "LR", "DU", "Ren"]
+
+    let EXAMPLE_RESULT = {
+      meridians: [],
+      points: []
+    }
+
+    MERIDIANS.forEach(meridian => {
+      EXAMPLE_RESULT.meridians.push({
+        "name": meridian,
+        "url": `/detail/meridian/${meridian}`
+      })
+    })
+
+    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+
+    DEMO_DATA.forEach((point) => {
+      if (passFilter(point, query, true, SEARCH_BY.NAME)
+        || passFilter(point, query, true, SEARCH_BY.CODE)) {
+        EXAMPLE_RESULT.points.push({
+          "name": point.name,
+          "url": `/detail/point/${point.code}`
+        })
+      }
+    })
+
     setResults(EXAMPLE_RESULT);
     setIsLoading(false);
   }
@@ -61,14 +83,28 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
                 key={`quick-search-category-${index}`}
               >
                 <div className="quick-search-results__block--category">
-                  {capitalize(category)}
+                  <span className="quick-search-results__result-block">
+                    <Highlighter
+                      highlightClassName='quick-search-results__highlighted'
+                      searchWords={[query]}
+                      autoEscape={true}
+                      textToHighlight={capitalize(category)}>
+                    </Highlighter>
+                  </span>
                 </div>
                 {results[category].map((item: any, subIndex: number) => (
                   <div
                     className="quick-search-results__item"
                     onClick={() => history.push(item.url)}
                     key={`quick-search-result-item-${index}-${subIndex}`}>
-                    <span>{capitalize(item.name)}</span>
+                    <span className="quick-search-results__result-block">
+                      <Highlighter
+                        highlightClassName='quick-search-results__highlighted'
+                        searchWords={[query]}
+                        autoEscape={true}
+                        textToHighlight={capitalize(item.name)}>
+                      </Highlighter>
+                    </span>
                   </div>
                 ))}
               </div>
