@@ -43,14 +43,14 @@ export const SearchResults: React.FC<ISearchResults> = ({
       searchBy: ["tất cả", "mã", "tên", "mô tả", "vị trí", "chức năng", "phương pháp"],
       show: ["tất cả kinh lạc", "chỉ kinh lạc LU", "chỉ kinh lạc LI", "chỉ kinh lạc ST", "chỉ kinh lạc SP",
         "chỉ kinh lạc HT", "chỉ kinh lạc SI", "chỉ kinh lạc BL", "chỉ kinh lạc KI", "chỉ kinh lạc PC",
-        "chỉ kinh lạc TE", "chỉ kinh lạc GB", "chỉ kinh lạc LR", "chỉ kinh lạc DU", "chỉ kinh lạc Ren"]
+        "chỉ kinh lạc TE", "chỉ kinh lạc GB", "chỉ kinh lạc Liv", "chỉ kinh lạc Du", "chỉ kinh lạc Ren"]
     },
     EN: {
       searchOn: ["all", "meridians", "points"],
       searchBy: ["all", "code", "name", "description", "location", "functionalities", "method"],
       show: ["all meridians", "LU meridian only", "LI meridian only", "ST meridian only", "SP meridian only",
         "HT meridian only", "SI meridian only", "BL meridian only", "KI meridian only", "PC meridian only",
-        "TE meridian only", "GB meridian only", "LR meridian only", "DU meridian only", "Ren meridian only"]
+        "TE meridian only", "GB meridian only", "Liv meridian only", "Du meridian only", "Ren meridian only"]
     }
   }
 
@@ -89,8 +89,16 @@ export const SearchResults: React.FC<ISearchResults> = ({
 
   const processShowingItems = () => {
     let newResults = results.filter(
-      item => passFilter(item, query, true, currentFilterOptions.searchBy)
+      item => passFilter(item, query, item.diseases ? false : true, currentFilterOptions.searchBy)
     )
+
+    if (currentFilterOptions.searchOn !== 0) {
+      if (currentFilterOptions.searchOn === 1) {
+        newResults = newResults.filter(item => item.diseases)
+      } else {
+        newResults = newResults.filter(item => !item.diseases)
+      }
+    }
 
     if (currentFilterOptions.show !== 0) {
       const meridian_name = FILTER_OPTIONS[currentLanguage]["show"][currentFilterOptions.show]
@@ -140,7 +148,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
                     item={result}
                     query={[query]}
                     usingLanguage={currentLanguage}
-                    isPoint={true}
+                    isPoint={result.diseases ? false : true}
                   />)}
               </div>
             </>}

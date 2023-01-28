@@ -9,6 +9,8 @@ import { RootState } from 'src/redux/store';
 
 import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
+import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
+import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 import { useQuery } from 'src/helpers/hooks/useQuery';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -68,14 +70,29 @@ export const DetailPage: React.FC<IDetailPage> = ({
   }, [location])
 
   useEffect(() => {
+    console.log(itemCode, isPoint)
     if (itemCode) {
-      const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
-      DEMO_DATA.forEach((item) => {
-        if (item.code.toUpperCase() === itemCode.toUpperCase()) {
-          setDetail(item)
-          document.title = `${APP_NAME} | ${item.code} | ${item.name}`
-        }
-      })
+      if (isPoint) {
+        const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+
+        DEMO_DATA.forEach((item) => {
+          if (item.code.toUpperCase() === itemCode.toUpperCase()) {
+            setDetail(item)
+            document.title = `${APP_NAME} | ${item.code} | ${item.name}`
+          }
+        })
+      } else {
+        const DEMO_DATA_MERIDIAN = currentLanguage === "EN" ? DEMO_DATA_MERIDIAN_EN : DEMO_DATA_MERIDIAN_VI
+
+        DEMO_DATA_MERIDIAN.forEach((item) => {
+          if (item.code.toUpperCase() === itemCode.toUpperCase()) {
+            setDetail(item)
+            document.title = `${APP_NAME} | ${item.code} | ${item.name}`
+          }
+        })
+
+      }
+
     } else {
       document.title = `${APP_NAME}`
     }

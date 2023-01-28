@@ -99,4 +99,13 @@
   &__highlighted {
     background: var(--theme-highlight)
   }
+
+  &__meridian-point {
+    cursor: pointer;
+    width: fit-content;
+
+    &:hover {
+      background: var(--theme-highlight);
+    }
+  }
 }

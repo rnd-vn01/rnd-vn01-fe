@@ -31,7 +31,7 @@ export const passFilter = (item: any, query: string, isPoint: boolean, searchBy:
         keyToFilter = "anatomy";
         break;
       case SEARCH_BY.FUNCTIONALITIES:
-        keyToFilter = "functionalities";
+        keyToFilter = isPoint ? "functionalities" : "diseases";
         break;
       case SEARCH_BY.METHOD:
         keyToFilter = "method";
@@ -41,19 +41,21 @@ export const passFilter = (item: any, query: string, isPoint: boolean, searchBy:
 
   if (isAll) {
     Object.keys(item).forEach((key) => {
-      if ((key === "functionalities" && isPoint)) {
-        item[key]?.forEach((subitem) => {
-          if (subitem.toUpperCase().includes(query.toUpperCase())) {
+      if (key !== "points") {
+        if ((key === "functionalities" && isPoint)) {
+          item[key]?.forEach((subitem) => {
+            if (subitem.toUpperCase().includes(query.toUpperCase())) {
+              passed = true;
+            }
+          })
+        } else {
+          if (item[key]?.toUpperCase().includes(query.toUpperCase())) {
             passed = true;
           }
-        })
-      } else {
-        if (item[key]?.toUpperCase().includes(query.toUpperCase())) {
-          passed = true;
         }
       }
     })
-  } else if (keyToFilter === "functionalities") {
+  } else if (keyToFilter === "functionalities" || keyToFilter === "points") {
     item[keyToFilter]?.forEach((subitem) => {
       if (subitem.toUpperCase().includes(query.toUpperCase())) {
         passed = true;
