@@ -14,6 +14,8 @@ import { QuizTimer } from './QuizTimer/QuizTimer';
 
 import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
+import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
+import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 
 // Sounds
 import mainSound from "src/assets/sounds/main.mp3"
@@ -59,7 +61,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
   const correctSoundPlayer = useRef<any>(new Audio(correctSound));
   const wrongSoundPlayer = useRef<any>(new Audio(wrongSound));
 
-  const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "LR", "DU", "Ren"]
+  const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "Liv", "Du", "Ren"]
   const DEMO_FIELD_OPTIONS = [
     {
       value: 0,

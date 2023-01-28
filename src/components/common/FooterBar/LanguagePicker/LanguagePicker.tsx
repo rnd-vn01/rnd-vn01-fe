@@ -35,7 +35,10 @@ export const LanguagePicker: React.FC = () => {
             <div
               className={`language-picker__dropdown--item w-full 
               ${language === currentLanguage ? "language-picker__dropdown--selected" : ""}`}
-              onClick={() => { setLanguage(language) }}
+              onClick={() => {
+                setLanguage(language);
+                history.go(0)
+              }}
               key={`language-${index}`}>
               {language}
             </div>

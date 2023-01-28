@@ -7,12 +7,16 @@ export const capitalize = (inputString) => {
 }
 
 export const capitalizeEachWord = (inputString) => {
-  let words = inputString.split(" ")
+  if (inputString) {
+    let words = inputString.split(" ")
 
-  for (let i = 0; i < words.length; i++)
-    words[i] = capitalize(words[i])
+    for (let i = 0; i < words.length; i++)
+      words[i] = capitalize(words[i])
 
-  return words.join(" ");
+    return words.join(" ");
+  }
+
+  return ""
 }
 
 export const capitalizeAndMapInformationField = (isPoint, inputField, usingLanguage) => {

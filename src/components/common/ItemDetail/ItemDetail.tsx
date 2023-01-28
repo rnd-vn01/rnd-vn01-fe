@@ -32,22 +32,22 @@ export const ItemDetail: React.FC<IItemDetail> = ({
         className="item-detail__header">
         <div className="item-detail__flex-block flex justify-between">
           <h1 className="item-detail__header--code">
-            <Highlighter
+            {item?.code && <Highlighter
               highlightClassName='item-detail__highlighted'
               searchWords={[]}
               autoEscape={true}
-              textToHighlight={item?.code}
+              textToHighlight={item?.code || ""}
             >
-            </Highlighter>
+            </Highlighter>}
           </h1>
           <h1 className="item-detail__header--name">
-            <Highlighter
+            {item?.name && <Highlighter
               highlightClassName='item-detail__highlighted'
               searchWords={[]}
               autoEscape={true}
-              textToHighlight={item?.name}
+              textToHighlight={item?.name || ""}
             >
-            </Highlighter>
+            </Highlighter>}
           </h1>
         </div>
 
@@ -85,13 +85,13 @@ export const ItemDetail: React.FC<IItemDetail> = ({
                         <p
                           key={`point-functionality-${itemIndex}`}
                         >
-                          <Highlighter
+                          {functionality && <Highlighter
                             highlightClassName='item-detail__highlighted'
                             searchWords={[]}
                             autoEscape={true}
-                            textToHighlight={`${itemIndex + 1}. ${functionality}`}
+                            textToHighlight={`${itemIndex + 1}. ${functionality}` || ""}
                           >
-                          </Highlighter>
+                          </Highlighter>}
                         </p>
                       ))}
                     </div>
@@ -103,27 +103,29 @@ export const ItemDetail: React.FC<IItemDetail> = ({
                             (
                               <p
                                 key={`meridian-points-${itemIndex}`}
+                                className={"item-detail__meridian-point"}
+                                onClick={() => location.pathname = `/detail/point/${point}`}
                               >
-                                <Highlighter
+                                {point && <Highlighter
                                   highlightClassName='item-detail__highlighted'
                                   searchWords={[]}
                                   autoEscape={true}
-                                  textToHighlight={`${point.code.toUpperCase()} - ${point.name}`}
+                                  textToHighlight={`${point}` || ""}
                                 >
-                                </Highlighter>
+                                </Highlighter>}
                               </p>
                             ))}
                           </div>
                           :
                           <p className={`item-detail__info--text pb-2 pt-1
                           ${field === "caution" ? "item-detail__info--text-caution" : ""}`}>
-                            <Highlighter
+                            {item[field] && <Highlighter
                               highlightClassName='item-detail__highlighted'
                               searchWords={[]}
                               autoEscape={true}
-                              textToHighlight={item[field]}
+                              textToHighlight={item[field] || ""}
                             >
-                            </Highlighter>
+                            </Highlighter>}
                           </p>
                       }
                     </>

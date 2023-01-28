@@ -6,6 +6,9 @@ import { debounce } from "lodash"
 
 import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
+import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
+import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
+
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
@@ -23,28 +26,32 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
   const [results, setResults] = useState<any>({})
 
   const fetchResults = async (query: string) => {
-    const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "LR", "DU", "Ren"]
+    const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "Liv", "Du", "Ren"]
 
     let EXAMPLE_RESULT = {
       meridians: [],
       points: []
     }
 
-    MERIDIANS.forEach(meridian => {
-      EXAMPLE_RESULT.meridians.push({
-        "name": meridian,
-        "url": `/detail/meridian/${meridian}`
-      })
-    })
-
     const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+    const DEMO_DATA_MERIDIAN = currentLanguage === "EN" ? DEMO_DATA_MERIDIAN_EN : DEMO_DATA_MERIDIAN_VI
 
     DEMO_DATA.forEach((point) => {
       if (passFilter(point, query, true, SEARCH_BY.NAME)
         || passFilter(point, query, true, SEARCH_BY.CODE)) {
         EXAMPLE_RESULT.points.push({
-          "name": point.name,
+          "name": `${point.name} (${point.code})`,
           "url": `/detail/point/${point.code}`
+        })
+      }
+    })
+
+    DEMO_DATA_MERIDIAN.forEach((meridian) => {
+      if (passFilter(meridian, query, false, SEARCH_BY.NAME)
+        || passFilter(meridian, query, false, SEARCH_BY.CODE)) {
+        EXAMPLE_RESULT.meridians.push({
+          "name": `${meridian.name} (${meridian.code})`,
+          "url": `/detail/meridian/${meridian.code}`
         })
       }
     })

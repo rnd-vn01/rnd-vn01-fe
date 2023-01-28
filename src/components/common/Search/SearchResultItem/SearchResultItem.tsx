@@ -108,7 +108,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
                                     highlightClassName='search-result__highlighted'
                                     searchWords={query || []}
                                     autoEscape={true}
-                                    textToHighlight={`${point.code.toUpperCase()} - ${point.name}`}
+                                    textToHighlight={`${point}`}
                                   >
                                   </Highlighter>
                                 </p>
