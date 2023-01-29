@@ -10,7 +10,7 @@ import {
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
 import { DoubleSide, Vector3 } from 'three';
-import { LU, LI, ST, SP, HT, SI, BL, KI } from '../Meridians';
+import { LU, LI, ST, SP, HT, SI, BL, KI, PC } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
 import { setStateCameraQuaternion } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
@@ -78,7 +78,7 @@ export const Scene: React.FC = () => {
           RIGHT: 0
         }}
         onChange={(e) => {
-          var minPan = new Vector3(-10, -30, 0);
+          var minPan = new Vector3(-15, -30, 0);
           var maxPan = new Vector3(15, 15, 0);
 
           let _v = new Vector3();
@@ -98,8 +98,9 @@ export const Scene: React.FC = () => {
       <SP />
       <HT />
       <SI />
-      <BL /> */}
-      <KI />
+      <BL />
+      <KI /> */}
+      <PC />
 
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
