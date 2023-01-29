@@ -4,7 +4,7 @@ import circleImg from 'src/assets/images/PointCircle.png';
 import { useMemo, useState } from 'react';
 import { Text } from "src/components/ThreeJS/index";
 
-export const Point = ({ positionArray, label, labelPosition, reverse = false }) => {
+export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   let textPosition = useMemo(() => {
     if (labelPosition === 0) {
       return [positionArray[0] + 0.1, positionArray[1] + 0.01, positionArray[2] + 0.01]
@@ -54,6 +54,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false }) 
         positionArray={textPosition}
         text={label}
         reverse={reverse}
+        viewFromBottom={viewFromBottom}
       ></Text>
     </>
   );
