@@ -174,7 +174,7 @@ export const ST = ({ }) => {
       <Point
         positionArray={[-1.4, 2, 3]}
         label="ST-19"
-        labelPosition={0} />
+        labelPosition={2} />
 
       <Point
         positionArray={[-1.45, 1.4227, 3.1]}

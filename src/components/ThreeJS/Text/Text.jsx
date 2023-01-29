@@ -4,8 +4,9 @@ import { TextGeometry } from 'src/assets/libraries/TextGeometry'
 import helvetiker from "src/assets/fonts/helvetiker_regular.typeface.json"
 import { useSelector } from 'react-redux';
 import { Quaternion } from 'three';
+import { useEffect } from 'react';
 
-export const Text = ({ positionArray, text, reverse }) => {
+export const Text = ({ positionArray, text, reverse, viewFromBottom }) => {
   extend({ TextGeometry })
 
   const helvetikerRegular = new FontLoader().parse(helvetiker)
@@ -20,9 +21,16 @@ export const Text = ({ positionArray, text, reverse }) => {
     (state) => state.cameraQuaternionSlice,
   );
 
+  useEffect(() => {
+    console.log(x, y, z, w)
+  }, [x, y, z, w])
+
   return (
-    <mesh position={positionArray} rotation={[0, 0, 0]} scale={[0.02, 0.02, 0.001]} 
-          quaternion={new Quaternion(x, reverse? 1 : y, z, w)}>
+    <mesh position={positionArray} rotation={[0, 0, 0]} scale={[0.02, 0.02, 0.001]}
+      quaternion={
+        !viewFromBottom ? new Quaternion(x, reverse ? 1 : y, z, w)
+          : new Quaternion(0.7, -0.05, 0.05, 0.7)
+      }>
       <textGeometry attach='geometry' args={[text || "", textOptions]} />
       <meshLambertMaterial attach='material' color={'black'} />
     </mesh>

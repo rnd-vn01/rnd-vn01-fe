@@ -5,6 +5,7 @@ import { SP } from "./SP/SP";
 import { HT } from "./HT/HT";
 import { SI } from "./SI/SI";
 import { BL } from "./BL/BL";
+import { KI } from "./KI/KI";
 
 export {
   LU,
@@ -13,5 +14,6 @@ export {
   SP,
   HT,
   SI,
-  BL
+  BL,
+  KI
 }
