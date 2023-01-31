@@ -10,6 +10,12 @@ i18n
       en: {
         translation: {
           error: "Error...",
+          general: {
+            "point": "point",
+            "meridian": "meridian",
+            "points": "points",
+            "meridians": "meridians",
+          },
           hometitle: {
             sub: "welcome to",
             project_name: "3D Acupuncture Healthcare Data Management And Treatment System",
@@ -22,7 +28,7 @@ i18n
             sign_up: "Sign Up",
             log_in: "Log In",
             menu: {
-              user_records: "User Records",
+              personal_records: "Personal Records",
               data_management: "Data Management",
               log_out: "Log Out"
             }
@@ -99,7 +105,7 @@ i18n
           },
           title_bar: {
             menu: {
-              user_records: "User Records",
+              personal_records: "Personal Records",
               data_management: "Data Management",
               log_out: "Log Out",
               sign_up: "Sign Up",
@@ -108,7 +114,8 @@ i18n
             pages: {
               default: "",
               advanced_search: "Advanced Search",
-              data_management: "Data Management"
+              data_management: "Data Management",
+              personal_records: "Personal Records"
             }
           },
           advanced_search_page: {
@@ -149,12 +156,44 @@ i18n
             demo_caution: "Please be informed that the UI is for demo purpose, so no update would be made. The following\
             are the content of the detail after update:",
             warning: "Warning"
+          },
+          personal_records_page: {
+            title: "Personal Records"
+          },
+          records: {
+            summary: {
+              summary: "Summary",
+              options: {
+                all_time: "all time",
+                this_year: "this year",
+                this_month: "this month",
+                this_week: "this week"
+              },
+              showing: "showing",
+              caption: {
+                learnt: "learnt",
+                quiz_attempted: "quizzes",
+                accuracy_rate: "accuracy rate"
+              }
+            },
+            progress_log: {
+              options: {
+                progress: "Progress",
+                log: "Log"
+              }
+            }
           }
         }
       },
       vi: {
         translation: {
           error: "Lỗi...",
+          general: {
+            "point": "huyệt đạo",
+            "meridian": "kinh lạc",
+            "points": "huyệt đạo",
+            "meridians": "kinh lạc",
+          },
           hometitle: {
             sub: "chào mừng đến với",
             project_name: "Hệ Thống Điều Trị Và Quản Lý Dữ Liệu Châm Cứu 3D",
@@ -167,7 +206,7 @@ i18n
             sign_up: "Đăng Ký",
             log_in: "Đăng Nhập",
             menu: {
-              user_records: "Cá nhân",
+              personal_records: "Dữ liệu Cá nhân",
               data_management: "Quản lý Dữ liệu",
               log_out: "Đăng xuất"
             }
@@ -244,7 +283,7 @@ i18n
           },
           title_bar: {
             menu: {
-              user_records: "Cá nhân",
+              personal_records: "Dữ liệu Cá nhân",
               data_management: "Quản lý Dữ liệu",
               log_out: "Đăng xuất",
               sign_up: "Đăng ký",
@@ -253,7 +292,8 @@ i18n
             pages: {
               default: "",
               advanced_search: "Tìm Kiếm Nâng Cao",
-              data_management: "Quản Lý Dữ Liệu"
+              data_management: "Quản Lý Dữ Liệu",
+              personal_records: "Dữ Liệu Cá Nhân"
             }
           },
           advanced_search_page: {
@@ -294,6 +334,32 @@ i18n
             demo_caution: "Vì giao diện hiện tại đang được sử dụng cho mục đích demo, quá trình cập nhật thông tin\
             sẽ không được thực hiện. Thông tin chi tiết sau khi được cập nhật sẽ bao gồm:",
             warning: "Lưu ý"
+          },
+          personal_records_page: {
+            title: "Dữ Liệu Cá Nhân"
+          },
+          records: {
+            summary: {
+              summary: "Tổng kết",
+              options: {
+                all_time: "toàn bộ",
+                this_year: "năm nay",
+                this_month: "tháng này",
+                this_week: "tuần này"
+              },
+              showing: "hiển thị",
+              caption: {
+                learnt: "đã học",
+                quiz_attempted: "bài kiểm tra",
+                accuracy_rate: "tỉ lệ trả lời đúng"
+              }
+            },
+            progress_log: {
+              options: {
+                progress: "Tiến độ",
+                log: "Chi tiết"
+              }
+            }
           }
         }
       }

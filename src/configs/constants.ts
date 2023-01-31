@@ -82,3 +82,32 @@ export const BASIC_FIELDS = {
     critical: true
   }]
 }
+
+export const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "Liv", "Du", "Ren"]
+
+
+export const SUMMARY_SHOWING_TIME_TYPES = [
+  {
+    id: 0,
+    code: "all_time"
+  },
+  {
+    id: 1,
+    code: "this_year"
+  },
+  {
+    id: 2,
+    code: "this_month"
+  },
+  {
+    id: 3,
+    code: "this_week"
+  }
+]
+
+export enum SUMMARY_SHOWING_TIME_TYPE_OPTIONS {
+  ALL_TIME = 0,
+  THIS_YEAR = 1,
+  THIS_MONTH = 2,
+  THIS_WEEK = 3
+}
