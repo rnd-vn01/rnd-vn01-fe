@@ -181,6 +181,20 @@ i18n
                 progress: "Progress",
                 log: "Log"
               }
+            },
+            chart: {
+              by: "by",
+              from: "from",
+              to: "to",
+              time_units: {
+                day: "day",
+                week: "week",
+                month: "month",
+                year: "year"
+              },
+              caution: "\"From\" date must be before or equal to \"to\" date",
+              total: "total",
+              learnt: "learnt so far"
             }
           }
         }
@@ -359,6 +373,20 @@ i18n
                 progress: "Tiến độ",
                 log: "Chi tiết"
               }
+            },
+            chart: {
+              by: "theo",
+              from: "từ",
+              to: "đến",
+              time_units: {
+                day: "ngày",
+                week: "tuần",
+                month: "tháng",
+                year: "năm"
+              },
+              caution: "Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.",
+              total: "tổng",
+              learnt: "đã học tích luỹ"
             }
           }
         }

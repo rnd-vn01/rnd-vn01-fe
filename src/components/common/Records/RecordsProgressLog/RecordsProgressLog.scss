@@ -2,7 +2,7 @@
   background: white;
   border: 1px solid black;
   width: 100%;
-  height: fit-content;
+  height: 60vh;
 
   &__title {
     font-size: 1.75rem;
@@ -31,13 +31,13 @@
   }
 
   &__progress {
-    max-height: 50vh;
+    height: calc(100% - 2rem);
     margin-top: 5px;
     overflow: auto;
 
     &--item {
       margin-bottom: 7.5px;
-      padding-right: 2px;
+      padding-right: 5px;
     }
 
     &--percentage-bg {

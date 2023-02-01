@@ -35,7 +35,7 @@ export const PersonalRecordsPage: React.FC<IPersonalRecordsPage> = ({
           }}
         />
 
-        <div className="grid grid-cols-3 pt-3">
+        <div className="grid grid-cols-3 pt-3 gap-3">
           <div className="col-span-1">
             <RecordsProgressLog />
           </div>

@@ -190,3 +190,7 @@ interface IRecordsProgressLog {
 interface IRecordsSummary {
   data?: any
 }
+
+interface IRecordsLog {
+  logData?: any;
+}
