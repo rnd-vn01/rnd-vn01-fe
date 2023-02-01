@@ -22,7 +22,7 @@ export const AuthBar: React.FC = ({ }) => {
 
   const MENU_ITEMS = [
     {
-      item: t('auth_bar.menu.user_records'),
+      item: t('auth_bar.menu.personal_records'),
       onClick: () => {
         history.push("/records")
       },

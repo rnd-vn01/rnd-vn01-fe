@@ -12,6 +12,9 @@ import {
 import { SearchBarRedirect } from "./SearchBarRedirect/SearchBarRedirect"
 import { ItemDetail } from "./ItemDetail/ItemDetail"
 import { ItemDetailEdit } from "./ItemDetailEdit/ItemDetailEdit"
+import {
+  RecordsChart, RecordsProgressLog, RecordsSummary
+} from "./Records";
 
 export {
   Button,
@@ -28,5 +31,8 @@ export {
   SearchBarRedirect,
   SearchResultItem,
   ItemDetail,
-  ItemDetailEdit
+  ItemDetailEdit,
+  RecordsChart,
+  RecordsProgressLog,
+  RecordsSummary
 }

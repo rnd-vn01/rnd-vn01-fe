@@ -26,8 +26,6 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
   const [results, setResults] = useState<any>({})
 
   const fetchResults = async (query: string) => {
-    const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "Liv", "Du", "Ren"]
-
     let EXAMPLE_RESULT = {
       meridians: [],
       points: []

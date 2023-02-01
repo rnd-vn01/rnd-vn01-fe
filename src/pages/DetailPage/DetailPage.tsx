@@ -44,8 +44,6 @@ export const DetailPage: React.FC<IDetailPage> = ({
       delete formattedDetail[field];
     })
 
-    console.log(formattedDetail)
-
     MySwal.fire({
       icon: 'warning',
       title: `${t('edit_page.warning')}...`,
@@ -70,7 +68,6 @@ export const DetailPage: React.FC<IDetailPage> = ({
   }, [location])
 
   useEffect(() => {
-    console.log(itemCode, isPoint)
     if (itemCode) {
       if (isPoint) {
         const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI

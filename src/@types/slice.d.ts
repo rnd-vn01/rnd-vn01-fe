@@ -174,3 +174,23 @@ interface IItemDetail {
 interface IItemDetailEdit extends IItemDetail {
   callbackUpdateDetail?: (any) => void;
 }
+
+interface IPersonalRecordsPage {
+
+}
+
+interface IRecordsChart {
+
+}
+
+interface IRecordsProgressLog {
+
+}
+
+interface IRecordsSummary {
+  data?: any
+}
+
+interface IRecordsLog {
+  logData?: any;
+}

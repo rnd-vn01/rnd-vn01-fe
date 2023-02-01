@@ -25,12 +25,12 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
 
   const MENU_ITEMS = [
     {
-      item: t('title_bar.menu.user_records'),
+      item: t('title_bar.menu.personal_records'),
       onClick: () => {
         history.push("/records")
       },
       selectable: isLoggedIn,
-      code: "user_records"
+      code: "personal_records"
     },
     {
       item: t('title_bar.menu.data_management'),

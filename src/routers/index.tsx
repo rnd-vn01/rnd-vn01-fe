@@ -14,6 +14,7 @@ import { QuizPage } from 'src/pages/QuizPage/QuizPage';
 import { AdvancedSearchPage } from 'src/pages/AdvancedSearchPage/AdvancedSearchPage';
 import { DataManagementPage } from 'src/pages/DataManagementPage/DataManagementPage';
 import { DetailPage } from 'src/pages/DetailPage/DetailPage';
+import { PersonalRecordsPage } from 'src/pages/PersonalRecordsPage/PersonalRecordsPage'
 
 export function Routers() {
   return (
@@ -79,6 +80,14 @@ export function Routers() {
           component={DetailPage}
           layout={FullLayout}
           isPrivate={false}
+        />
+
+        <BasicRoute
+          exact
+          path="/records"
+          component={PersonalRecordsPage}
+          layout={FullLayout}
+          isPrivate={true}
         />
       </Switch>
     </Router>
