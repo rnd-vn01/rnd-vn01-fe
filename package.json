@@ -89,7 +89,6 @@
       "BasicRoute.tsx",
       "getAccessToken.ts",
       "libraries",
-      "RecordsChart.tsx"
     ]
   }
 }
