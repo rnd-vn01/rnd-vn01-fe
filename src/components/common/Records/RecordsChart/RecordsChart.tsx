@@ -15,7 +15,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+} from 'src/assets/libraries/chart.js';
 import { Line } from 'react-chartjs-2';
 import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';

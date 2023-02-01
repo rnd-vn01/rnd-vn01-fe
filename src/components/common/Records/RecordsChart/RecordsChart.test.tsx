@@ -18,6 +18,19 @@ jest.mock('react-chartjs-2', () => ({
   Line: () => null
 }));
 
+jest.mock('chart.js', () => ({
+  Chart: () => {
+    register: () => new Promise(() => { })
+  },
+  CategoryScale: () => null,
+  LinearScale: () => null,
+  PointElement: () => null,
+  LineElement: () => null,
+  Title: () => null,
+  Tooltip: () => null,
+  Legend: () => null,
+}))
+
 describe('RecordsChart', () => {
   beforeEach(() => {
     render(<Provider store={store}>
