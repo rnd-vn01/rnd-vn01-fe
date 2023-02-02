@@ -194,6 +194,10 @@ export const LoginPage: React.FC = () => {
           {t('login_page.dont_have_account')} <a href="/signup">{t('login_page.click_here')}</a>
         </div>
 
+        <div className="login-page__subtitle">
+          {t('login_page.forget_password')} <a href="/password-reset">{t('login_page.click_here')}</a>
+        </div>
+
         <TextField
           className="login-page__input login-page__input--email"
           name="email"

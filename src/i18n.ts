@@ -30,7 +30,8 @@ i18n
             menu: {
               personal_records: "Personal Records",
               data_management: "Data Management",
-              log_out: "Log Out"
+              log_out: "Log Out",
+              edit_profile: "Edit Profile"
             }
           },
           create_account_page: {
@@ -62,6 +63,7 @@ i18n
             title: "Log in",
             dont_have_account: "don't have an account?",
             click_here: "click here",
+            forget_password: "forgot password?",
             fields: {
               email: "Email",
               password: "Password",
@@ -109,14 +111,16 @@ i18n
               data_management: "Data Management",
               log_out: "Log Out",
               sign_up: "Sign Up",
-              log_in: "Log In"
+              log_in: "Log In",
+              edit_profile: "Edit Profile"
             },
             pages: {
               default: "",
               advanced_search: "Advanced Search",
               data_management: "Data Management",
               personal_records: "Personal Records",
-              about_us: "About Us"
+              about_us: "About Us",
+              edit_profile: "Edit Profile"
             }
           },
           advanced_search_page: {
@@ -250,6 +254,26 @@ i18n
                 of implementing a professional project in business environment.
               `
             }
+          },
+          password_reset_page: {
+            title: "Password Reset",
+            login: "login?",
+            fields: {
+              email: "Email",
+              password: "Password",
+            },
+            button_captions: {
+              reset_password: "Reset Password",
+            },
+            messages: {
+              reset_email_sent: "Please check your email to get the link for resetting password!"
+            }
+          },
+          edit_profile_page: {
+            title: "Edit Profile",
+            button_captions: {
+              update_profile: "Update"
+            }
           }
         }
       },
@@ -276,7 +300,8 @@ i18n
             menu: {
               personal_records: "Dữ liệu Cá nhân",
               data_management: "Quản lý Dữ liệu",
-              log_out: "Đăng xuất"
+              log_out: "Đăng xuất",
+              edit_profile: "Cập nhật thông tin"
             }
           },
           create_account_page: {
@@ -308,6 +333,7 @@ i18n
             title: "Đăng nhập",
             dont_have_account: "chưa có tài khoản?",
             click_here: "bấm vào đây",
+            forget_password: "quên mật khẩu?",
             fields: {
               email: "Email",
               password: "Mật khẩu",
@@ -355,14 +381,16 @@ i18n
               data_management: "Quản lý Dữ liệu",
               log_out: "Đăng xuất",
               sign_up: "Đăng ký",
-              log_in: "Đăng nhập"
+              log_in: "Đăng nhập",
+              edit_profile: "Cập nhật Thông tin"
             },
             pages: {
               default: "",
               advanced_search: "Tìm Kiếm Nâng Cao",
               data_management: "Quản Lý Dữ Liệu",
               personal_records: "Dữ Liệu Cá Nhân",
-              about_us: "Về Chúng Tôi"
+              about_us: "Về Chúng Tôi",
+              edit_profile: "Cập Nhật Thông Tin"
             }
           },
           advanced_search_page: {
@@ -494,6 +522,25 @@ i18n
                 khách hàng và người dùng cuối, đồng thời tạo cơ hội để sinh viên làm quen với quy trình triển khai một đồ án
                 thật sự trong môi trường doanh nghiệp.
               `
+            }
+          },
+          password_reset_page: {
+            title: "Cập nhật Mật khẩu",
+            login: "đăng nhập?",
+            fields: {
+              email: "Email",
+            },
+            button_captions: {
+              reset_password: "Cập nhật Mật khẩu",
+            },
+            messages: {
+              reset_email_sent: "Vui lòng kiểm tra Email để nhận link cập nhật mật khẩu!"
+            }
+          },
+          edit_profile_page: {
+            title: "Cập Nhật Thông Tin",
+            button_captions: {
+              update_profile: "Cập nhật"
             }
           }
         }
