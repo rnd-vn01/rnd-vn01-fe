@@ -15,6 +15,7 @@ import { AdvancedSearchPage } from 'src/pages/AdvancedSearchPage/AdvancedSearchP
 import { DataManagementPage } from 'src/pages/DataManagementPage/DataManagementPage';
 import { DetailPage } from 'src/pages/DetailPage/DetailPage';
 import { PersonalRecordsPage } from 'src/pages/PersonalRecordsPage/PersonalRecordsPage'
+import { AboutPage } from 'src/pages/AboutPage/AboutPage';
 
 export function Routers() {
   return (
@@ -86,6 +87,14 @@ export function Routers() {
           exact
           path="/records"
           component={PersonalRecordsPage}
+          layout={FullLayout}
+          isPrivate={true}
+        />
+
+        <BasicRoute
+          exact
+          path="/about"
+          component={AboutPage}
           layout={FullLayout}
           isPrivate={true}
         />

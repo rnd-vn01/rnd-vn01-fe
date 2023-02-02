@@ -27,7 +27,7 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
   const filterDate = (dates: any, filterBy: any) => {
     let startDate = null;
 
-    dates.sort((a: Date, b: Date) => getMidnight(a) < getMidnight(b))
+    dates.sort((a: Date, b: Date) => new Date(a.getTime()) < new Date(b.getTime()))
 
     switch (filterBy) {
       case SUMMARY_SHOWING_TIME_TYPE_OPTIONS.ALL_TIME:
@@ -43,7 +43,7 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
         break;
     }
 
-    return dates.filter((item: Date) => getMidnight(item) >= getMidnight(startDate))
+    return dates.filter((item: Date) => getMidnight(new Date(item.getTime())) >= getMidnight(new Date(startDate.getTime())))
   }
 
   useEffect(() => {

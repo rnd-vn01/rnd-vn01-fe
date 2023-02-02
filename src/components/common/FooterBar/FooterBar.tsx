@@ -36,7 +36,9 @@ export const FooterBar: React.FC = ({ }) => {
 
       <div
         className="footer-bar__option flex items-center justify-center col-span-1">
-        <img className="footer-bar__icon--logo" src={Logo}></img>
+        <img
+          onClick={() => history.push("/about")}
+          className="footer-bar__icon--logo" src={Logo}></img>
       </div>
 
       <LanguagePicker />

@@ -51,11 +51,11 @@ export const getInputDateFormat = (date: Date) => {
 }
 
 export const generateRandomDate = (start, end) => {
-  return getMidnight(new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())));
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
 export const getMidnight = (date: Date) => {
-  let result = new Date(date)
+  let result = new Date(date.getTime())
   result.setHours(0, 0, 0, 0);
   return result;
 }
