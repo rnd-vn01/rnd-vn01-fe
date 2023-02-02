@@ -98,7 +98,7 @@ export function Routers() {
           path="/about"
           component={AboutPage}
           layout={FullLayout}
-          isPrivate={true}
+          isPrivate={false}
         />
 
         <BasicRoute
