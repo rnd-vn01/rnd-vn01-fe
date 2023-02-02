@@ -41,6 +41,14 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       code: "data_management"
     },
     {
+      item: t('auth_bar.menu.edit_profile'),
+      onClick: () => {
+        history.push("/edit-profile")
+      },
+      selectable: user,
+      code: "edit_profile"
+    },
+    {
       item: t('title_bar.menu.log_out'),
       onClick: () => {
         logout();

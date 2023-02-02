@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom';
 
 // Layouts
 import { FullLayout } from 'src/layouts/FullLayout/FullLayout';
@@ -17,6 +17,7 @@ import { DetailPage } from 'src/pages/DetailPage/DetailPage';
 import { PersonalRecordsPage } from 'src/pages/PersonalRecordsPage/PersonalRecordsPage'
 import { AboutPage } from 'src/pages/AboutPage/AboutPage';
 import { ChangePasswordPage } from 'src/pages/authentication/ChangePasswordPage/ChangePasswordPage';
+import { EditProfilePage } from 'src/pages/authentication/EditProfilePage/EditProfilePage';
 
 export function Routers() {
   return (
@@ -107,6 +108,16 @@ export function Routers() {
           layout={FullLayout}
           isPrivate={false}
         />
+
+        <BasicRoute
+          exact
+          path="/edit-profile"
+          component={EditProfilePage}
+          layout={FullLayout}
+          isPrivate={true}
+        />
+
+        <Redirect to='/' />
       </Switch>
     </Router>
   );

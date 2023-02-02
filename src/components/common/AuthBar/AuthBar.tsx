@@ -36,6 +36,13 @@ export const AuthBar: React.FC = ({ }) => {
       selectable: user && user?.isAdmin
     },
     {
+      item: t('auth_bar.menu.edit_profile'),
+      onClick: () => {
+        history.push("/edit-profile")
+      },
+      selectable: user
+    },
+    {
       item: t('auth_bar.menu.log_out'),
       onClick: () => {
         logout();

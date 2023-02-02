@@ -108,7 +108,7 @@ export const ChangePasswordPage: React.FC = () => {
         <h1 className="password-reset-page__title">{t('password_reset_page.title')}</h1>
 
         <div className="password-reset-page__subtitle">
-          {t('password_reset_page.login')} <a href="/signup">{t('login_page.click_here')}</a>
+          {t('password_reset_page.login')} <a href="/login">{t('login_page.click_here')}</a>
         </div>
 
         <TextField
