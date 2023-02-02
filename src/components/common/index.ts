@@ -15,6 +15,7 @@ import { ItemDetailEdit } from "./ItemDetailEdit/ItemDetailEdit"
 import {
   RecordsChart, RecordsProgressLog, RecordsSummary
 } from "./Records";
+import { AboutPageSection } from "./AboutPageSection/AboutPageSection"
 
 export {
   Button,
@@ -34,5 +35,6 @@ export {
   ItemDetailEdit,
   RecordsChart,
   RecordsProgressLog,
-  RecordsSummary
+  RecordsSummary,
+  AboutPageSection
 }

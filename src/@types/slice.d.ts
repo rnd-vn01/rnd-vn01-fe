@@ -194,3 +194,14 @@ interface IRecordsSummary {
 interface IRecordsLog {
   logData?: any;
 }
+
+interface IAboutPage {
+
+}
+
+interface IAboutPageSection {
+  showContent?: any;
+  isCollapsable?: boolean;
+  sectionName?: string;
+  information?: string;
+}

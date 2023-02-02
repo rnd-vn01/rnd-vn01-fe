@@ -311,7 +311,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
         moment().startOf('year').subtract(1, 'days').toDate()))
     }
 
-    dates.sort((a: Date, b: Date) => getMidnight(a) < getMidnight(b))
+    dates.sort((a: Date, b: Date) => new Date(a.getTime()) < new Date(b.getTime()))
 
     dates.forEach((date) => {
       const numberOfQuestions = (Math.floor(Math.random() * 6) + 1) * 5;

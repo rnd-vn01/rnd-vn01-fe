@@ -115,7 +115,8 @@ i18n
               default: "",
               advanced_search: "Advanced Search",
               data_management: "Data Management",
-              personal_records: "Personal Records"
+              personal_records: "Personal Records",
+              about_us: "About Us"
             }
           },
           advanced_search_page: {
@@ -195,6 +196,59 @@ i18n
               caution: "\"From\" date must be before or equal to \"to\" date",
               total: "total",
               learnt: "learnt so far"
+            }
+          },
+          about_page: {
+            title: "About Us",
+            sections: {
+              description: "Description",
+              rnd: "Research & Development Project",
+              client: "Client",
+              dr: "Dr.",
+              supervisor: "Supervisor",
+              nhan_le_thi: "Nhan Le Thi",
+              development_team: "Development team",
+              members: {
+                nhan_nguyen_cao: "Nhan Nguyen Cao",
+                tan_le_tran_ba: "Tan Le Tran Ba",
+                trang_ho_ngoc_thao: "Trang Ho Ngoc Thao",
+                chuong_pham_dinh: "Chuong Pham Dinh"
+              },
+              roles: {
+                business_analyst: "Business Analyst",
+                front_end_dev: "Front-end Developer",
+                project_manager: "Project Manager",
+                designer: "Designer",
+                back_end_dev: "Back-end Developer",
+                quality_engineer: "Quality Engineer",
+              },
+              mmed: "MMed.",
+              consultants: {
+                title: "Consultants",
+                minh_ma_hoang: "Minh Ma Hoang",
+                van_le_thi_tuong: "Van Le Thi Tuong"
+              },
+              users: {
+                title: "Users",
+                description: "Medical University students at Ho Chi Minh City Medicine and Pharmacy University"
+              },
+              references: "References"
+            },
+            description: {
+              project: `
+                The 3D Acupuncture Data Management and Treatment System is a technical solution aimed to support medical
+                university students and researchers in the sub-field of Acupuncture in Traditional Chinese Medicine, focusing
+                on providing support in exploring, studying about the acupuncture points and meridians of human body. The system
+                provides an interactive 3D model to visualize the positions of acupuncture points and meridians, as well as 
+                some basic functionalities allowing searching for trusted specialized knowledge about the meridians and acupuncture points.
+              `,
+              rnd: `
+                Research and Development Project is a paper of the Bachelor's program in Computer and Information Sciences
+                of Auckland University of Technology, New Zealand, in association with University of Science - Vietnam National 
+                University of Ho Chi Minh City. The project lasts for 8 months, aiming to build a product that serves the requirements
+                of the client and end-users, as well as give the students the opportunity to familiarize themselves with the procedure
+                of implementing a professional project in business environment.
+              `
             }
           }
         }
@@ -307,7 +361,8 @@ i18n
               default: "",
               advanced_search: "Tìm Kiếm Nâng Cao",
               data_management: "Quản Lý Dữ Liệu",
-              personal_records: "Dữ Liệu Cá Nhân"
+              personal_records: "Dữ Liệu Cá Nhân",
+              about_us: "Về Chúng Tôi"
             }
           },
           advanced_search_page: {
@@ -387,6 +442,58 @@ i18n
               caution: "Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.",
               total: "tổng",
               learnt: "đã học tích luỹ"
+            }
+          },
+          about_page: {
+            title: "Về Chúng Tôi",
+            sections: {
+              description: "Mô tả",
+              rnd: "Đồ án Nghiên cứu và Phát triển",
+              client: "Khách hàng",
+              dr: "TS.",
+              supervisor: "Giáo viên Hướng dẫn",
+              nhan_le_thi: "Lê Thị Nhàn",
+              development_team: "Nhóm thực hiện",
+              members: {
+                nhan_nguyen_cao: "Nguyễn Cao Nhân",
+                tan_le_tran_ba: "Lê Trần Bá Tân",
+                trang_ho_ngoc_thao: "Hồ Ngọc Thảo Trang",
+                chuong_pham_dinh: "Phạm Đình Chương"
+              },
+              roles: {
+                business_analyst: "Phân tích Nghiệp vụ",
+                front_end_dev: "Lập trình viên Front-end",
+                project_manager: "Quản lý Dự án",
+                designer: "Thiết kế",
+                back_end_dev: "Lập trình viên Back-end",
+                quality_engineer: "Kỹ sư Chất lượng",
+              },
+              mmed: "Ths.BS.",
+              consultants: {
+                title: "Cố vấn Chuyên môn",
+                minh_ma_hoang: "Mã Hoàng Minh",
+                van_le_thi_tuong: "Lê Thị Tường Vân"
+              },
+              users: {
+                title: "Người dùng",
+                description: "Nhóm Sinh viên Y học Cổ truyền tại Đại học Y Dược TP.HCM"
+              },
+              references: "Tài liệu tham khảo"
+            },
+            description: {
+              project: `
+                Hệ thống Điều trị Và Quản lý Dữ liệu Châm cứu 3D là một giải pháp công nghệ hướng đến mục tiêu hỗ trợ sinh viên hoặc
+                những người nghiên cứu về lĩnh vực Châm cứu trong Y học Cổ truyền trong việc tìm hiểu về các kinh lạc, huyệt
+                đạo trên cơ thể. Hệ thống cung cấp một mô hình 3D trực quan hoá vị trí các kinh lạc, huyệt đạo, cùng tính
+                năng cơ bản cho phép tra cứu thông tin chuyên môn về kinh lạc, huyệt đạo để ghi nhớ.
+              `,
+              rnd: `
+                Đồ án Nghiên cứu và Phát triển là một môn học thuộc chương trình đào tạo Cử nhân về Máy tính và Khoa học
+                Thông tin của Trường Đại học Công nghệ Auckland, New Zealand liên kết với Trường Đại học Khoa học Tự nhiên, 
+                ĐHQG TP.HCM. Đồ án kéo dài trong khoảng 8 tháng, hướng đến mục tiêu xây dựng một sản phẩm phục vụ nhu cầu của
+                khách hàng và người dùng cuối, đồng thời tạo cơ hội để sinh viên làm quen với quy trình triển khai một đồ án
+                thật sự trong môi trường doanh nghiệp.
+              `
             }
           }
         }
