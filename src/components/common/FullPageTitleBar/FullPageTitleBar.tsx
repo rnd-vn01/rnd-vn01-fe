@@ -45,7 +45,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       onClick: () => {
         history.push("/edit-profile")
       },
-      selectable: user,
+      selectable: isLoggedIn,
       code: "edit_profile"
     },
     {
