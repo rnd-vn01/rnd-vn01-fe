@@ -5,7 +5,10 @@
     padding: 5px;
     color: black;
     background: var(--theme-primary);
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    font-family: "header" !important;
+    line-height: 2rem;
+    padding-top: 6px;
 
     &--caution {
       background: var(--theme-danger);
