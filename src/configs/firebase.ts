@@ -73,16 +73,7 @@ const sendVerificationEmail = async (user: any) => {
 }
 
 const sendPasswordReset = async (email: string) => {
-  try {
-    await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent!");
-  } catch (err: any) {
-    MySwal.fire({
-      icon: 'error',
-      title: 'Error...',
-      text: err.message,
-    })
-  }
+  await sendPasswordResetEmail(auth, email);
 };
 
 const logout = () => {

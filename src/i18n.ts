@@ -62,6 +62,7 @@ i18n
             title: "Log in",
             dont_have_account: "don't have an account?",
             click_here: "click here",
+            forget_password: "forgot password?",
             fields: {
               email: "Email",
               password: "Password",
@@ -250,7 +251,21 @@ i18n
                 of implementing a professional project in business environment.
               `
             }
-          }
+          },
+          password_reset_page: {
+            title: "Password Reset",
+            login: "login?",
+            fields: {
+              email: "Email",
+              password: "Password",
+            },
+            button_captions: {
+              reset_password: "Reset Password",
+            },
+            messages: {
+              reset_email_sent: "Please check your email to get the link for resetting password!"
+            }
+          },
         }
       },
       vi: {
@@ -308,6 +323,7 @@ i18n
             title: "Đăng nhập",
             dont_have_account: "chưa có tài khoản?",
             click_here: "bấm vào đây",
+            forget_password: "quên mật khẩu?",
             fields: {
               email: "Email",
               password: "Mật khẩu",
@@ -495,7 +511,20 @@ i18n
                 thật sự trong môi trường doanh nghiệp.
               `
             }
-          }
+          },
+          password_reset_page: {
+            title: "Cập nhật mật khẩu",
+            login: "đăng nhập?",
+            fields: {
+              email: "Email",
+            },
+            button_captions: {
+              reset_password: "Cập nhật mật khẩu",
+            },
+            messages: {
+              reset_email_sent: "Vui lòng kiểm tra Email để nhận link cập nhật mật khẩu!"
+            }
+          },
         }
       }
     }

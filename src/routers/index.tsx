@@ -16,6 +16,7 @@ import { DataManagementPage } from 'src/pages/DataManagementPage/DataManagementP
 import { DetailPage } from 'src/pages/DetailPage/DetailPage';
 import { PersonalRecordsPage } from 'src/pages/PersonalRecordsPage/PersonalRecordsPage'
 import { AboutPage } from 'src/pages/AboutPage/AboutPage';
+import { ChangePasswordPage } from 'src/pages/authentication/ChangePasswordPage/ChangePasswordPage';
 
 export function Routers() {
   return (
@@ -97,6 +98,14 @@ export function Routers() {
           component={AboutPage}
           layout={FullLayout}
           isPrivate={true}
+        />
+
+        <BasicRoute
+          exact
+          path="/password-reset"
+          component={ChangePasswordPage}
+          layout={FullLayout}
+          isPrivate={false}
         />
       </Switch>
     </Router>
