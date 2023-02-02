@@ -30,7 +30,8 @@ export const getTimeText = (date: Date) => {
 }
 
 export const getWeekNumber = (date: Date) => {
-  return moment(getMonday(date)).isoWeek();
+  let cloneDate = new Date(date.getTime())
+  return moment(getMonday(cloneDate)).isoWeek();
 }
 
 export const getMonday = (d: Date) => {

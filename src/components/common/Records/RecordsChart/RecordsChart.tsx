@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { capitalize } from 'src/helpers/capitalize';
-import { generateRandomDate, getCurrentDateFullString, getInputDateFormat, getMidnight, getWeekNumber } from 'src/helpers/date';
+import { generateRandomDate, getCurrentDateFullString, getInputDateFormat, getMidnight, getMonday, getWeekNumber } from 'src/helpers/date';
 import moment from 'moment';
 import {
   Chart as ChartJS,
@@ -185,22 +185,25 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
         let weekEnd = getWeekNumber(toDate)
         let maxWeekYear = moment(fromDate).weeksInYear();
 
-        if (fromDate.getFullYear() !== toDate.getFullYear()) {
-          for (let i = fromDate.getFullYear(); i <= toDate.getFullYear(); i++) {
-            if (i === fromDate.getFullYear()) {
+        let getStartYear = getMonday(new Date(fromDate.getTime())).getFullYear()
+        let getEndYear = getMonday(new Date(toDate.getTime())).getFullYear()
+
+        if (getStartYear !== getEndYear) {
+          for (let i = getStartYear; i <= getEndYear; i++) {
+            if (i === getStartYear) {
               for (let i = weekStart; i <= maxWeekYear; i++) {
                 labels.push({
                   week: i,
-                  year: fromDate.getFullYear(),
-                  label: `W${i}/${fromDate.getFullYear()}`
+                  year: getStartYear,
+                  label: `W${i}/${getStartYear}`
                 })
               }
-            } else if (i === toDate.getFullYear()) {
+            } else if (i === getEndYear) {
               for (let i = 1; i <= weekEnd; i++) {
                 labels.push({
                   week: i,
-                  year: toDate.getFullYear(),
-                  label: `W${i}/${toDate.getFullYear()}`
+                  year: getEndYear,
+                  label: `W${i}/${getEndYear}`
                 })
               }
             } else {
@@ -217,8 +220,8 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
           for (let i = weekStart; i <= weekEnd; i++) {
             labels.push({
               week: i,
-              year: fromDate.getFullYear(),
-              label: `W${i}/${fromDate.getFullYear()}`
+              year: getStartYear,
+              label: `W${i}/${getStartYear}`
             })
           }
         }
