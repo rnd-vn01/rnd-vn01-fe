@@ -42,7 +42,7 @@ html {
   scroll-behavior: smooth;
 }
 
-::-webkit-sadcrollbar {
+::-webkit-scrollbar {
   width: 0px;
   background: transparent;
   display: none;
@@ -54,20 +54,20 @@ body * {
 
 @font-face {
   font-family: "header";
-  src: local('regular'),
-    url("assets/fonts/SVN-Gilroy Bold.ttf") format('truetype');
+  src: url("assets/fonts/SVN-Gilroy Bold.ttf") format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "header-light";
-  src: local('regular'),
-    url("assets/fonts/SVN-Gilroy Light.ttf") format('truetype');
+  src: url("assets/fonts/SVN-Gilroy Light.ttf") format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "regular";
-  src: local('regular'),
-    url("assets/fonts/AdelleSansEXT-Regular.ttf") format('truetype');
+  src: url("assets/fonts/AdelleSansEXT-Regular.ttf") format('truetype');
+  font-display: swap;
 }
 
 h1,
@@ -76,11 +76,9 @@ h3,
 h1 *,
 h2 *,
 h3 * {
-  font-family: "#VI. Gilroy" !important;
+  font-family: "header" !important;
   font-weight: bold !important;
 }
-
-
 
 h4,
 h5,
@@ -94,7 +92,7 @@ h6 * {
 *,
 div,
 option {
-  font-family: "#VI. Adelle Sans Extended" !important;
+  font-family: "regular" !important;
 }
 
 .flex-center {

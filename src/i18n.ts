@@ -102,7 +102,11 @@ i18n
               question: "Question",
               correct: "Correct",
               wrong: "Wrong",
-              seconds: "Seconds"
+              seconds: "Seconds",
+              time_over: "Time Over"
+            },
+            questions: {
+              description: "Which acupuncture point has the following description: "
             }
           },
           title_bar: {
@@ -372,7 +376,11 @@ i18n
               question: "Câu",
               correct: "Đúng",
               wrong: "Sai",
-              seconds: "Giây"
+              seconds: "Giây",
+              time_over: "Hết giờ"
+            },
+            questions: {
+              description: "Huyệt đạo nào có mô tả sau: "
             }
           },
           title_bar: {
