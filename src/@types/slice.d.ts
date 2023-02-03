@@ -193,6 +193,7 @@ interface IRecordsSummary {
 
 interface IRecordsLog {
   logData?: any;
+  index?: number;
 }
 
 interface IAboutPage {
@@ -204,4 +205,5 @@ interface IAboutPageSection {
   isCollapsable?: boolean;
   sectionName?: string;
   information?: string;
+  index?: number;
 }

@@ -5,7 +5,8 @@ import { MERIDIANS } from 'src/configs/constants';
 import { useHistory } from 'react-router-dom';
 
 export const RecordsLog: React.FC<IRecordsLog> = ({
-  logData
+  logData,
+  index
 }) => {
   const history = useHistory();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
@@ -13,7 +14,7 @@ export const RecordsLog: React.FC<IRecordsLog> = ({
 
   useEffect(() => {
     if (isCollapsed) {
-      var growDiv = document.querySelector('.records-log__information') as HTMLElement;
+      var growDiv = document.querySelector(`#records-log-${index}`) as HTMLElement;
       if (growDiv.clientHeight) {
         growDiv.style.height = "0px";
         growDiv.style.overflow = "hidden";
@@ -94,7 +95,8 @@ export const RecordsLog: React.FC<IRecordsLog> = ({
       </div>
 
       {isCollapsed && showingLogResult?.points &&
-        <div className="records-log__information">
+        <div className="records-log__information"
+          id={`records-log-${index}`}>
           {Object.keys(showingLogResult.points).map(meridian =>
             <div
               className='records-log__meridian mb-3'

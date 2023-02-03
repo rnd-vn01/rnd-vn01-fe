@@ -6,7 +6,8 @@ export const AboutPageSection: React.FC<IAboutPageSection> = ({
   showContent,
   isCollapsable,
   sectionName,
-  information
+  information,
+  index
 }) => {
   const history = useHistory();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
@@ -14,7 +15,7 @@ export const AboutPageSection: React.FC<IAboutPageSection> = ({
 
   useEffect(() => {
     if (isCollapsed && isCollapsable) {
-      var growDiv = document.querySelector('.about-page-section__information') as HTMLElement;
+      var growDiv = document.querySelector(`#about-page-section__${index}`) as HTMLElement;
       if (growDiv.clientHeight) {
         growDiv.style.height = "0px";
         growDiv.style.overflow = "hidden";
@@ -46,9 +47,10 @@ export const AboutPageSection: React.FC<IAboutPageSection> = ({
       </div>
 
       {isCollapsed && isCollapsable &&
-        <div className="about-page-section__information">
+        <div className="about-page-section__information"
+          id={`about-page-section__${index}`}>
           {showContent}
         </div>}
-    </div>
+    </div >
   );
 };

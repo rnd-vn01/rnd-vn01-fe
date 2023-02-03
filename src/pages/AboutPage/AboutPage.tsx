@@ -68,6 +68,7 @@ export const AboutPage: React.FC<IAboutPage> = ({
           isCollapsable={true}
           sectionName={`${t('about_page.sections.rnd')}:`}
           information={`HCMUS - AUT · cycle 13`}
+          index={0}
         />
 
         <AboutPageSection
@@ -159,6 +160,7 @@ export const AboutPage: React.FC<IAboutPage> = ({
           isCollapsable={true}
           sectionName={`${t('about_page.sections.development_team')}:`}
           information={`VN01`}
+          index={1}
         />
 
         <AboutPageSection
@@ -180,6 +182,7 @@ export const AboutPage: React.FC<IAboutPage> = ({
           isCollapsable={true}
           sectionName={`${t('about_page.sections.consultants.title')}:`}
           information={``}
+          index={2}
         />
 
         <AboutPageSection
@@ -192,6 +195,7 @@ export const AboutPage: React.FC<IAboutPage> = ({
           isCollapsable={true}
           sectionName={`${t('about_page.sections.users.title')}:`}
           information={``}
+          index={3}
         />
 
         <AboutPageSection
@@ -210,6 +214,7 @@ export const AboutPage: React.FC<IAboutPage> = ({
           isCollapsable={true}
           sectionName={`${t('about_page.sections.references')}:`}
           information={``}
+          index={4}
         />
       </div>
     </div >
