@@ -207,9 +207,10 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
 
       {!isProgress &&
         <div className='records-progress__progress'>
-          {showingData.map((data: any) =>
+          {showingData.map((data: any, index: number) =>
             <RecordsLog
-              logData={data} />
+              logData={data}
+              index={index} />
           )}
         </div>
       }

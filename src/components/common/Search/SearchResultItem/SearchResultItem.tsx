@@ -17,7 +17,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
 
   useEffect(() => {
     if (isCollapsed) {
-      var growDiv = document.querySelector('.search-result__information') as HTMLElement;
+      var growDiv = document.querySelector(`#search-result-${item?.code}`) as HTMLElement;
       if (growDiv.clientHeight) {
         growDiv.style.height = "0px";
         growDiv.style.overflow = "hidden";
@@ -68,7 +68,8 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
       </div>
 
       {isCollapsed && item &&
-        <div className="search-result__information">
+        <div className="search-result__information"
+          id={`search-result-${item?.code}`}>
           {Object.keys(item).map((field, index) => {
             if (field !== "name" && field !== "code") {
               return (
