@@ -14,7 +14,7 @@ import { Button } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import Logo from "src/assets/images/Logo.svg";
 import GoogleLogo from "src/assets/images/GoogleLogo.svg";
-import { APP_NAME } from 'src/configs/constants';
+import { ADMIN_EMAILS, APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
@@ -106,7 +106,8 @@ export const LoginPage: React.FC = () => {
             user: {
               email: user.email,
               profileImage: "https://firebasestorage.googleapis.com/v0/b/cs204finalproj.appspot.com/o/istockphoto-1223671392-612x612.jpg?alt=media&token=e9312c19-c34e-4a87-9a72-552532766cde",
-              firebaseId: user.uid
+              firebaseId: user.uid,
+              isAdmin: ADMIN_EMAILS.includes(user.email)
             }
           }))
           history.push("/")
@@ -165,7 +166,7 @@ export const LoginPage: React.FC = () => {
           email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
           profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
           firebaseId: user.uid,
-          isAdmin: true,
+          isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
         }
       }))
 

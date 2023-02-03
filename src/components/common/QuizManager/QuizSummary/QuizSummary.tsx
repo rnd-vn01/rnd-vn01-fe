@@ -6,6 +6,7 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
   data
 }) => {
   const { t } = useTranslation();
+  console.log(data);
 
   return (
     <div
@@ -33,7 +34,7 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
             <span className={`${question.answer === question.correctAnswer ? "quiz-summary__correct" : "quiz-summary__wrong"}`}>
               {question.answer === question.correctAnswer ? t('quiz_page.captions.correct') : t('quiz_page.captions.wrong')}
             </span>
-            {` (${question.time} ${t('quiz_page.captions.seconds')})`}
+            {question.time !== -1 ? ` (${question.time} ${t('quiz_page.captions.seconds')})` : ` (${t('quiz_page.captions.time_over')})`}
           </p>
         ))}
       </div>

@@ -55,6 +55,13 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
 
   const usedPointIndexes = useRef<any>([]);
   const quizHistory = useRef<any>({});
+  const temporarilyStoredQuestionContent = useRef<any>({
+    question: "",
+    options: [],
+    answer: null,
+    correctAnswer: null,
+    time: 60
+  });
 
   // Sounds
   const mainSoundPlayer = useRef<any>(new Audio(mainSound))
@@ -141,13 +148,14 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
 
     timer.current = setInterval(() => {
       if (currentTime.current - 1 === 0) {
-        quizHistory.current.questions.push({
-          question: questionContent,
-          options: answersList,
+        temporarilyStoredQuestionContent.current = {
+          ...temporarilyStoredQuestionContent.current,
           answer: null,
-          correctAnswer: correctAnswer,
-          time: 60
-        })
+          time: -1
+        }
+
+        quizHistory.current.questions.push(temporarilyStoredQuestionContent.current)
+
         endAnswerTime();
       }
 
@@ -187,8 +195,16 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
       })
     })
     setAnswersList(TEST_ANSWERS_LIST)
-    setQuestionContent(DEMO_DATA[used[correct]].description)
+    setQuestionContent(`${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`)
     setCorrectAnswer(correct)
+
+    temporarilyStoredQuestionContent.current = {
+      question: `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`,
+      options: TEST_ANSWERS_LIST,
+      answer: null,
+      correctAnswer: correct,
+      time: 60
+    }
   }
 
   return (

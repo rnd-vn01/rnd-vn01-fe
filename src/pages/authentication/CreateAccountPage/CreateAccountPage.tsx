@@ -11,7 +11,7 @@ import { Button } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import Logo from "src/assets/images/Logo.svg";
 import GoogleLogo from "src/assets/images/GoogleLogo.svg";
-import { APP_NAME } from 'src/configs/constants';
+import { ADMIN_EMAILS, APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
 import { useAppDispatch } from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
@@ -173,7 +173,7 @@ export const CreateAccountPage: React.FC = () => {
           email: user.email,
           profileImage: user.photoURL,
           firebaseId: user.uid,
-          isAdmin: true,
+          isAdmin: ADMIN_EMAILS.includes(user.email),
         }
       }))
 
