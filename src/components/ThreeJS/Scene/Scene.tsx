@@ -102,8 +102,9 @@ export const Scene: React.FC = () => {
       <KI />
       <PC />
       <SJ /> */}
-      <SJ />
+      {/* <SJ /> */}
       <GB />
+      {/* <BL /> */}
       {/* <ST /> */}
 
       {/* Floor */}
