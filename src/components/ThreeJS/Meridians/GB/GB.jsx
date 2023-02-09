@@ -59,17 +59,17 @@ export const GB = ({ }) => {
         labelPosition={2} />
 
       <Point
-        positionArray={[-1.95, 12.25, -0.35]}
+        positionArray={[-1.9, 12.25, -0.35]}
         label="GB-10"
         labelPosition={2} />
 
       <Point
-        positionArray={[-1.75, 11.6, -0.4]}
+        positionArray={[-1.7, 11.6, -0.4]}
         label="GB-11"
         labelPosition={2} />
 
       <Point
-        positionArray={[-1.65, 11.2, -0.385]}
+        positionArray={[-1.6, 11.2, -0.385]}
         label="GB-12"
         labelPosition={2} />
 
@@ -101,6 +101,138 @@ export const GB = ({ }) => {
       <Point
         positionArray={[-0.9, 14.65, -0.2]}
         label="GB-18"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-1.1, 12.2, -1.8]}
+        label="GB-19"
+        labelPosition={1}
+        reverse />
+
+      <Point
+        positionArray={[-1.1, 11.45, -1.5]}
+        label="GB-20"
+        labelPosition={1}
+        reverse />
+
+      <Point
+        positionArray={[-3, 8.425, -1.25]}
+        label="GB-21"
+        labelPosition={1} />
+
+      <Point
+        positionArray={[-4.15, 3.1, 1]}
+        label="GB-22"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4, 2.9, 1.5]}
+        label="GB-23"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-2.5, 1, 2.6]}
+        label="GB-24"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-3.75, -0.75, 0]}
+        label="GB-25"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-3.65, -2, 1.5]}
+        label="GB-26"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-2.7, -4.5, 2.5]}
+        label="GB-27"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-2.3, -5, 2.65]}
+        label="GB-28"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.3, -5, 0.25]}
+        label="GB-29"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.15, -7, -1]}
+        label="GB-30"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-5, -12, -0.6875]}
+        label="GB-31"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.95, -13, -0.625]}
+        label="GB-32"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.7, -15, -0.5]}
+        label="GB-33"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.3, -18, -0.5]}
+        label="GB-34"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.6, -23.67, -1.65]}
+        label="GB-35"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.55, -23.67, -1.25]}
+        label="GB-36"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.425, -24.67, -1.25]}
+        label="GB-37"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.35, -25, -1.25]}
+        label="GB-38"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.15, -26, -1.25]}
+        label="GB-39"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.2, -28, -0.8]}
+        label="GB-40"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.6, -28.55, 0.65]}
+        label="GB-41"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-4.7, -28.7, 0.95]}
+        label="GB-42"
+        labelPosition={2} />
+
+      <Point
+        positionArray={[-5.2, -29.2, 2.4]}
+        label="GB-43"
+        labelPosition={1} />
+
+      <Point
+        positionArray={[-5.6, -29.4, 3.2]}
+        label="GB-44"
         labelPosition={2} />
 
       <line geometry={lineGeometry}>
