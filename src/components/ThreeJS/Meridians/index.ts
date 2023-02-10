@@ -9,6 +9,7 @@ import { KI } from "./KI/KI";
 import { PC } from "./PC/PC";
 import { SJ } from "./SJ/SJ";
 import { GB } from "./GB/GB";
+import { Liv } from "./Liv/Liv";
 
 export {
   LU,
@@ -21,5 +22,6 @@ export {
   KI,
   PC,
   SJ,
-  GB
+  GB,
+  Liv
 }
