@@ -8,6 +8,7 @@ import { BL } from "./BL/BL";
 import { KI } from "./KI/KI";
 import { PC } from "./PC/PC";
 import { SJ } from "./SJ/SJ";
+import { GB } from "./GB/GB";
 
 export {
   LU,
@@ -19,5 +20,6 @@ export {
   BL,
   KI,
   PC,
-  SJ
+  SJ,
+  GB
 }

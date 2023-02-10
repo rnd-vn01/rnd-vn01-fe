@@ -42,6 +42,8 @@ export const SJ = ({ }) => {
   points.push(new Vector3(-1.9, 12, 0.5))
   points.push(new Vector3(-1.9, 11.75, 0.45))
   points.push(new Vector3(-1.825, 12, 0.6))
+  points.push(new Vector3(-1.7, 12.25, 1.3))
+  points.push(new Vector3(-1.425, 12.5, 2))
 
   const lineGeometry = new BufferGeometry().setFromPoints(points)
 
@@ -176,6 +178,12 @@ export const SJ = ({ }) => {
       <Point
         positionArray={[-1.825, 12, 0.6]}
         label="SJ-22"
+        labelPosition={2}
+      />
+
+      <Point
+        positionArray={[-1.425, 12.5, 2]}
+        label="SJ-23"
         labelPosition={2}
       />
 
