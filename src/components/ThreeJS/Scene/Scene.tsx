@@ -102,9 +102,9 @@ export const Scene: React.FC = () => {
       <KI />
       <PC />
       <SJ />
-      <GB /> */}
-      <Liv />
-      {/* <ST /> */}
+      <GB />
+      <Liv /> */}
+      <ST />
 
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
