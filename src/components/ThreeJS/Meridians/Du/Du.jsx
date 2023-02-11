@@ -43,7 +43,7 @@ export const Du = ({ }) => {
   points.push(new Vector3(0.075, 14.5, 1.95))
   points.push(new Vector3(0.075, 14.2, 2.25))
   points.push(new Vector3(-0.075, 13.25, 2.71))
-  points.push(new Vector3(-0.075, 12.25, 2.8))
+  points.push(new Vector3(-0.075, 12.25, 2.9))
   points.push(new Vector3(-0.075, 11.5, 3.175))
   points.push(new Vector3(-0.075, 11.25, 3.175))
   points.push(new Vector3(-0.075, 11, 2.8))
@@ -193,7 +193,7 @@ export const Du = ({ }) => {
       <Point
         positionArray={[0.075, 14.2, 2.25]}
         label="Du-24"
-        labelPosition={0} />
+        labelPosition={2} />
 
       <Point
         positionArray={[-0.075, 11.5, 3.175]}

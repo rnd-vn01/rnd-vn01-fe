@@ -193,8 +193,8 @@ export const BL = ({ }) => {
       <Point
         positionArray={[0.8, 4.6, -3.35]}
         label="BL-15"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.8, 3.875, -3.3]}
@@ -223,14 +223,14 @@ export const BL = ({ }) => {
       <Point
         positionArray={[0.8, 0.025, -2.7]}
         label="BL-20"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.8, -0.7, -2.45]}
         label="BL-21"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.8, -1.425, -2.2]}
@@ -283,31 +283,31 @@ export const BL = ({ }) => {
       <Point
         positionArray={[0.9, -6.2, -3.3]}
         label="BL-30"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.45, -4.9, -2.75]}
         label="BL-31"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
         positionArray={[0.45, -5.4, -2.95]}
         label="BL-32"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
         positionArray={[0.45, -5.8, -3.1]}
         label="BL-33"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
         positionArray={[0.45, -6.2, -3.25]}
         label="BL-34"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
@@ -349,8 +349,8 @@ export const BL = ({ }) => {
       <Point
         positionArray={[1.35, 6.775, -3.1]}
         label="BL-41"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[1.35, 6.05, -3.35]}
