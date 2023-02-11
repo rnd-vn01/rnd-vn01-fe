@@ -11,6 +11,7 @@ import { SJ } from "./SJ/SJ";
 import { GB } from "./GB/GB";
 import { Liv } from "./Liv/Liv";
 import { Du } from "./Du/Du";
+import { Ren } from "./Ren/Ren";
 
 export {
   LU,
@@ -25,5 +26,6 @@ export {
   SJ,
   GB,
   Liv,
-  Du
+  Du,
+  Ren
 }
