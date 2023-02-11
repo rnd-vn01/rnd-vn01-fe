@@ -7,11 +7,12 @@ import { SI } from "./SI/SI";
 import { BL } from "./BL/BL";
 import { KI } from "./KI/KI";
 import { PC } from "./PC/PC";
-import { SJ } from "./SJ/SJ";
+import { TE } from "./TE/TE";
 import { GB } from "./GB/GB";
 import { Liv } from "./Liv/Liv";
 import { Du } from "./Du/Du";
 import { Ren } from "./Ren/Ren";
+import { Others } from "./Others/Others";
 
 export {
   LU,
@@ -23,9 +24,10 @@ export {
   BL,
   KI,
   PC,
-  SJ,
+  TE,
   GB,
   Liv,
   Du,
-  Ren
+  Ren,
+  Others
 }

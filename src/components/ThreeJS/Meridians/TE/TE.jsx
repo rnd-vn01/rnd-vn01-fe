@@ -1,8 +1,8 @@
-import './SJ.scss'
+import './TE.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
 
-export const SJ = ({ }) => {
+export const TE = ({ }) => {
   const points = []
   points.push(new Vector3(-16.95, -4.65, 2.55))
   points.push(new Vector3(-16.25, -3.95, 2.05))
@@ -51,139 +51,139 @@ export const SJ = ({ }) => {
     <>
       <Point
         positionArray={[-16.95, -4.65, 2.55]}
-        label="SJ-1"
+        label="TE-1"
         labelPosition={3}
         reverse />
 
       <Point
         positionArray={[-15.65, -3.25, 1.75]}
-        label="SJ-2"
+        label="TE-2"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-15.35, -2.8, 1.65]}
-        label="SJ-3"
+        label="TE-3"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-14.1, -1.6, 1.35]}
-        label="SJ-4"
+        label="TE-4"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-13.479, -1.014, 1.014]}
-        label="SJ-5"
+        label="TE-5"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-13.168, -0.675, 0.846]}
-        label="SJ-6"
+        label="TE-6"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-13.168, -0.721, 0.646]}
-        label="SJ-7"
+        label="TE-7"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-12.857, -0.35, 0.679]}
-        label="SJ-8"
+        label="TE-8"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-11.614, 0.85, -0.5]}
-        label="SJ-9"
+        label="TE-9"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-9.85, 0.5, -1.825]}
-        label="SJ-10"
+        label="TE-10"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-9.5, 0.75, -2]}
-        label="SJ-11"
+        label="TE-11"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-7.5, 2.7, -2.575]}
-        label="SJ-12"
+        label="TE-12"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-5.5, 4.65, -2.9]}
-        label="SJ-13"
+        label="TE-13"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-4.5, 6.1, -3.05]}
-        label="SJ-14"
+        label="TE-14"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-2.325, 7.5, -2.95]}
-        label="SJ-15"
+        label="TE-15"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-1.625, 10.35, -0.1]}
-        label="SJ-16"
+        label="TE-16"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-1.625, 10.9, 0.05]}
-        label="SJ-17"
+        label="TE-17"
         labelPosition={3}
         reverse />
 
       <Point
         positionArray={[-1.65, 11.2, -0.15]}
-        label="SJ-18"
+        label="TE-18"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-1.75, 11.6, -0.21]}
-        label="SJ-19"
+        label="TE-19"
         labelPosition={4}
         reverse />
 
       <Point
         positionArray={[-1.95, 12.25, 0.15]}
-        label="SJ-20"
+        label="TE-20"
         labelPosition={1}
         reverse />
 
       <Point
         positionArray={[-1.9, 11.75, 0.45]}
-        label="SJ-21"
+        label="TE-21"
         labelPosition={2}
       />
 
       <Point
         positionArray={[-1.825, 12, 0.6]}
-        label="SJ-22"
+        label="TE-22"
         labelPosition={2}
       />
 
       <Point
         positionArray={[-1.425, 12.5, 2]}
-        label="SJ-23"
+        label="TE-23"
         labelPosition={2}
       />
 
