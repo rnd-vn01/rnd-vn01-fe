@@ -10,6 +10,7 @@ import { PC } from "./PC/PC";
 import { SJ } from "./SJ/SJ";
 import { GB } from "./GB/GB";
 import { Liv } from "./Liv/Liv";
+import { Du } from "./Du/Du";
 
 export {
   LU,
@@ -23,5 +24,6 @@ export {
   PC,
   SJ,
   GB,
-  Liv
+  Liv,
+  Du
 }

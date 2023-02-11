@@ -18,6 +18,10 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       return [positionArray[0], positionArray[1], positionArray[2] - 0.05]
     } else if (labelPosition === 5) {
       return [positionArray[0] + 0.4, positionArray[1], positionArray[2] - 0.05]
+    } else if (labelPosition === 6) {
+      return [positionArray[0] + 0.15, positionArray[1] + 0.15, positionArray[2] - 0.15]
+    } else if (labelPosition === 7) {
+      return [positionArray[0] + 0.15, positionArray[1] - 0.2, positionArray[2] - 0.15]
     }
   }, [positionArray])
   let position = useMemo(() => {
