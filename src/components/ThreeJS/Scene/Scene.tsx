@@ -14,7 +14,7 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
-import { setStateCameraQuaternion } from 'src/redux/slice/index';
+import { setPointSelected, setStateCameraQuaternion } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 
 export const Scene: React.FC = () => {
@@ -47,6 +47,10 @@ export const Scene: React.FC = () => {
     // }, 2500)
 
     // return () => clearInterval(interval);
+
+    dispatch(setPointSelected({
+      selectedPoint: null
+    }))
   }, []);
 
   return (

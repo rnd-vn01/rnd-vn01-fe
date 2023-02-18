@@ -207,3 +207,10 @@ interface IAboutPageSection {
   information?: string;
   index?: number;
 }
+
+interface ISelectionSlice {
+  selectedLabel?: string | null;
+  selectedType?: 'point' | 'line' | null;
+  isHoveringPoint?: boolean;
+  isHoveringLine?: boolean;
+}

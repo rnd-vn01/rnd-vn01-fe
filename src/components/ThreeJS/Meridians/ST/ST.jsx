@@ -1,8 +1,47 @@
 import './ST.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
+import { useState, useEffect } from "react"
+import { setIsHoveringLine, setLineSelected } from 'src/redux/slice/index';
+import { useAppDispatch } from 'src/redux/store';
+import { useSelector } from 'react-redux';
 
 export const ST = ({ }) => {
+  const LABEL = 'ST'
+  const LINE_BASE_COLOR = '#43A6CC'
+
+  const [color, setColor] = useState(LINE_BASE_COLOR)
+  const dispatch = useAppDispatch();
+  const [isOnHover, setIsOnHover] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const [isInCheckingRange, setIsInCheckingRange] = useState(false);
+
+  const {
+    selectedLabel,
+    selectedType,
+    isHoveringPoint
+  } = useSelector(
+    (state) => state.selectionSlice,
+  );
+
+  useEffect(() => {
+    setIsSelected(LABEL === selectedLabel && selectedType === 'line')
+  }, [selectedLabel])
+
+  useEffect(() => {
+    if (isSelected) {
+      setColor('#FF0000')
+    } else if (isOnHover) {
+      setColor('#000000')
+    } else {
+      setColor(LINE_BASE_COLOR)
+    }
+
+    dispatch(setIsHoveringLine({
+      isHoveringLine: isOnHover
+    }))
+  }, [isOnHover, isSelected])
+
   const points = []
   points.push(new Vector3(-0.8, 12, 2.425))
   points.push(new Vector3(-0.795, 11.71, 2.45))
@@ -306,8 +345,29 @@ export const ST = ({ }) => {
         label="ST-45"
         labelPosition={2} />
 
-      <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={'#43A6CC'} linewidth={2} linecap={'round'} linejoin={'round'} />
+      <line
+        onPointerMove={(e) => {
+          if (isInCheckingRange) {
+            if (e.intersections.length > 3) {
+              setIsOnHover(true);
+            }
+          }
+        }}
+        onPointerEnter={(e) => {
+          setIsInCheckingRange(true);
+        }}
+        onPointerLeave={(e) => {
+          setIsOnHover(false);
+          setIsInCheckingRange(false);
+        }}
+        onClick={(e) => {
+          if (!isHoveringPoint)
+            dispatch(setLineSelected({
+              selectedLabel: LABEL
+            }))
+        }}
+        geometry={lineGeometry}>
+        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );
