@@ -238,9 +238,10 @@ export const KI = ({ }) => {
 
       <line
           onClick={(e) => {
+            console.log(e);
             if (!isHoveringPoint)
               dispatch(setLineSelected({
-                selectedLabel: LABEL
+                selectedLabel: LABEL,
               }))
           }}
           geometry={lineGeometry}>

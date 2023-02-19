@@ -14,6 +14,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [isOnHover, setIsOnHover] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [isInCheckingRange, setIsInCheckingRange] = useState(true);
+  const [isMeridianSelected, setIsMeridianSelected] = useState(false);
 
   const {
     selectedLabel,
@@ -48,12 +49,13 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   useEffect(() => {
     setIsSelected(label === selectedLabel && selectedType === 'point')
+    setIsMeridianSelected(selectedType === 'line' && label.includes(selectedLabel))
   }, [selectedLabel])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
 
   useEffect(() => {
-    if (isOnHover) {
+    if (isOnHover || isSelected) {
       setColor(0xFFFF00)
     } else {
       setColor(0xF9FFB3)
@@ -115,13 +117,13 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         />
       </points>
 
-      <Text
+      {(isOnHover || isSelected || isMeridianSelected) && <Text
         positionArray={textPosition}
         text={label}
         reverse={reverse}
         viewFromBottom={viewFromBottom}
         isOnHover={isOnHover || isSelected}
-      ></Text>
+      ></Text>}
     </>
   );
 };

@@ -362,9 +362,10 @@ export const ST = ({ }) => {
         //   setIsInCheckingRange(false);
         // }}
         onClick={(e) => {
+          console.log(e);
           if (!isHoveringPoint)
             dispatch(setLineSelected({
-              selectedLabel: LABEL
+              selectedLabel: LABEL,
             }))
         }}
         geometry={lineGeometry}>

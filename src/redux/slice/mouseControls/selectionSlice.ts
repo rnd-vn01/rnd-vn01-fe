@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+let timestamp = 0;
+
 export const initialStateSelectionSlice = {
   selectedLabel: null,
   selectedType: null,
@@ -24,8 +26,13 @@ export const selectionSlice = createSlice({
     },
 
     setLineSelected(state, action) {
-      state.selectedLabel = action.payload.selectedLabel;
-      state.selectedType = 'line';
+      //IDEA: Pass the list of points and select the line recorded the point closest to the cursor     
+      const currentTimestamp = Date.now()
+      if (timestamp === 0 || (currentTimestamp - timestamp > 1000)) {
+        state.selectedLabel = action.payload.selectedLabel;
+        state.selectedType = 'line';
+        timestamp = currentTimestamp;
+      }
     },
 
     setIsHoveringPoint(state, action) {
