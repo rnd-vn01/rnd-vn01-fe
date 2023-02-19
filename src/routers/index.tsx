@@ -36,7 +36,7 @@ export function Routers() {
           path="/demo"
           component={DemoPage}
           layout={FullLayout}
-          isPrivate={true}
+          isPrivate={false}
         />
 
         <BasicRoute

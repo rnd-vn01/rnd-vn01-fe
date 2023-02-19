@@ -1,16 +1,47 @@
 import './LU.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
+import { useState, useEffect } from "react"
+import { setIsHoveringLine, setLineSelected } from 'src/redux/slice/index';
+import { useAppDispatch } from 'src/redux/store';
+import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
 
 export const LU = () => {
-  const calculateUnit = (array1, array2) => {
-    let result = 0
-    for (let i = 0; i < 3; i++) {
-      result += Math.pow(array1[i] - array2[i], 2);
+  const LABEL = 'LU'
+  const LINE_BASE_COLOR = MERIDIANS_COLOR[1]
+
+  const [color, setColor] = useState(LINE_BASE_COLOR)
+  const dispatch = useAppDispatch();
+  const [isOnHover, setIsOnHover] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const [isInCheckingRange, setIsInCheckingRange] = useState(false);
+
+  const {
+    selectedLabel,
+    selectedType,
+    isHoveringPoint
+  } = useSelector(
+    (state) => state.selectionSlice,
+  );
+
+  useEffect(() => {
+    setIsSelected(LABEL === selectedLabel && selectedType === 'line')
+  }, [selectedLabel])
+
+  useEffect(() => {
+    if (isSelected) {
+      setColor('#FF0000')
+    } else if (isOnHover) {
+      setColor('#000000')
+    } else {
+      setColor(LINE_BASE_COLOR)
     }
-    return Math.sqrt(result) / 21
-  }
+
+    dispatch(setIsHoveringLine({
+      isHoveringLine: isOnHover
+    }))
+  }, [isOnHover, isSelected])
 
   const points = []
   points.push(new Vector3(-4, 6.4, 1.05))
@@ -79,9 +110,16 @@ export const LU = () => {
         label="LU-11"
         labelPosition={0} />
 
-      <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={MERIDIANS_COLOR[1]} linewidth={2} linecap={'round'} linejoin={'round'} />
-      </line>
+        <line
+          onClick={(e) => {
+            if (!isHoveringPoint)
+              dispatch(setLineSelected({
+                selectedLabel: LABEL
+              }))
+          }}
+          geometry={lineGeometry}>
+          <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        </line>
     </>
   );
 };

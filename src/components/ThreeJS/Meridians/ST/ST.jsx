@@ -5,10 +5,11 @@ import { useState, useEffect } from "react"
 import { setIsHoveringLine, setLineSelected } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
+import { MERIDIANS_COLOR } from 'src/configs/constants';
 
 export const ST = ({ }) => {
   const LABEL = 'ST'
-  const LINE_BASE_COLOR = '#43A6CC'
+  const LINE_BASE_COLOR = MERIDIANS_COLOR[5]
 
   const [color, setColor] = useState(LINE_BASE_COLOR)
   const dispatch = useAppDispatch();
@@ -346,20 +347,20 @@ export const ST = ({ }) => {
         labelPosition={2} />
 
       <line
-        onPointerMove={(e) => {
-          if (isInCheckingRange) {
-            if (e.intersections.length > 3) {
-              setIsOnHover(true);
-            }
-          }
-        }}
-        onPointerEnter={(e) => {
-          setIsInCheckingRange(true);
-        }}
-        onPointerLeave={(e) => {
-          setIsOnHover(false);
-          setIsInCheckingRange(false);
-        }}
+        // onPointerMove={(e) => {
+        //   if (isInCheckingRange) {
+        //     if (e.intersections.length > 3) {
+        //       setIsOnHover(true);
+        //     }
+        //   }
+        // }}
+        // onPointerEnter={(e) => {
+        //   setIsInCheckingRange(true);
+        // }}
+        // onPointerLeave={(e) => {
+        //   setIsOnHover(false);
+        //   setIsInCheckingRange(false);
+        // }}
         onClick={(e) => {
           if (!isHoveringPoint)
             dispatch(setLineSelected({

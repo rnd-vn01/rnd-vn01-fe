@@ -1,5 +1,5 @@
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader, DynamicDrawUsage, Color } from 'three';
+import { TextureLoader, DynamicDrawUsage } from 'three';
 import circleImg from 'src/assets/images/PointCircle.png';
 import circleSelectedImg from 'src/assets/images/PointCircleSelected.png';
 import { useEffect, useMemo, useState } from 'react';
@@ -13,7 +13,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [color, setColor] = useState(0xF9FFB3);
   const [isOnHover, setIsOnHover] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [isInCheckingRange, setIsInCheckingRange] = useState(false);
+  const [isInCheckingRange, setIsInCheckingRange] = useState(true);
 
   const {
     selectedLabel,
@@ -53,7 +53,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
 
   useEffect(() => {
-    if (isOnHover || isSelected) {
+    if (isOnHover) {
       setColor(0xFFFF00)
     } else {
       setColor(0xF9FFB3)
@@ -68,20 +68,25 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     <>
       <points
         onPointerMove={(e) => {
-          if (isInCheckingRange) {
-            if (e.distanceToRay < 0.1) {
-              setIsOnHover(true);
-            } else {
-              setIsOnHover(false);
-            }
+          // if (isInCheckingRange) {
+          //   if (e.distanceToRay < 0.1) {
+          //     setIsOnHover(true);
+          //   } else {
+          //     setIsOnHover(false);
+          //   }
+          // }
+          if (e.distanceToRay < 0.1) {
+            setIsOnHover(true);
+          } else {
+            setIsOnHover(false);
           }
         }}
-        onPointerEnter={(e) => {
-          setIsInCheckingRange(true);
-        }}
-        onPointerLeave={(e) => {
-          setIsInCheckingRange(false);
-        }}
+        // onPointerEnter={(e) => {
+        //   setIsInCheckingRange(true);
+        // }}
+        // onPointerLeave={(e) => {
+        //   setIsInCheckingRange(false);
+        // }}
         onClick={(e) => {
           if (e.distanceToRay < 0.1) {
             dispatch(setPointSelected({

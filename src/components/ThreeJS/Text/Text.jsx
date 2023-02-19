@@ -11,7 +11,7 @@ export const Text = ({ positionArray, text, reverse, viewFromBottom, isOnHover }
   const helvetikerRegular = new FontLoader().parse(helvetiker)
   const textOptions = {
     font: helvetikerRegular,
-    size: 5,
+    size: 1,
     height: 1,
   }
   const {
@@ -21,14 +21,14 @@ export const Text = ({ positionArray, text, reverse, viewFromBottom, isOnHover }
   );
 
   return (
-    <mesh position={positionArray} rotation={[0, 0, 0]} scale={isOnHover? [0.02, 0.02, 0.001] : [0.016, 0.016, 0.0001]}
+    <mesh position={positionArray} rotation={[0, 0, 0]} scale={isOnHover? [0.1, 0.1, 0.005] : [0.0625, 0.0625, 0.0005]}
       quaternion={
         !viewFromBottom ? new Quaternion(x, reverse ? 1 : y, z, w)
           : new Quaternion(0.7, -0.05, 0.05, 0.7)
       }>
       <textGeometry attach='geometry' args={[text || "", textOptions]} />
       <meshLambertMaterial 
-        attach='material' color={isOnHover? 'rgb(0, 0, 0)' : 'rgb(200, 200, 200)'} />
+        attach='material' color={isOnHover? 'rgb(0, 0, 0)' : 'rgb(0, 0, 0)'} />
     </mesh>
   );
 };
