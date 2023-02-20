@@ -9,13 +9,20 @@ import {
 } from "@react-three/drei";
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
-import { DoubleSide, Vector3 } from 'three';
+import { DoubleSide, MOUSE, TOUCH, Vector3 } from 'three';
 import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
 import { setPointSelected, setStateCameraQuaternion } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
+
+enum PAN_DIRECTION {
+  LEFT = 0,
+  RIGHT = 1,
+  UP = 2,
+  DOWN = 3
+}
 
 export const Scene: React.FC = () => {
   const controls = useRef(null);
@@ -51,6 +58,50 @@ export const Scene: React.FC = () => {
     dispatch(setPointSelected({
       selectedPoint: null
     }))
+
+    const move = (direction) => {
+      let _v = new Vector3(0, 0, 0);
+      switch (direction) {
+        case PAN_DIRECTION.LEFT:
+          _v.x = 0.5
+          break
+        case PAN_DIRECTION.RIGHT:
+          _v.x = -0.5
+          break
+        case PAN_DIRECTION.UP:
+          _v.y = -0.5
+          break
+        case PAN_DIRECTION.DOWN:
+          _v.y = 0.5
+          break
+      }
+      controls.current.target.sub(_v)
+    }
+
+    window.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "ArrowLeft":
+          if (controls.current.target.x > -15) {
+            move(PAN_DIRECTION.LEFT)
+          }
+          break
+        case "ArrowRight":
+          if (controls.current.target.x < 15) {
+            move(PAN_DIRECTION.RIGHT)
+          }
+          break
+        case "ArrowUp":
+          if (controls.current.target.y < 15) {
+            move(PAN_DIRECTION.UP)
+          }
+          break
+        case "ArrowDown":
+          if (controls.current.target.y > -30) {
+            move(PAN_DIRECTION.DOWN)
+          }
+          break
+      }
+    });
   }, []);
 
   return (
@@ -79,9 +130,13 @@ export const Scene: React.FC = () => {
         ref={controls}
         target={[1, 5, 0]}
         mouseButtons={{
-          LEFT: 2,
-          MIDDLE: 1,
-          RIGHT: 0
+          LEFT: MOUSE.ROTATE,
+          MIDDLE: MOUSE.DOLLY,
+          RIGHT: MOUSE.PAN
+        }}
+        touches={{
+          ONE: TOUCH.PAN,
+          TWO: TOUCH.ROTATE
         }}
         onChange={(e) => {
           var minPan = new Vector3(-15, -30, 0);
