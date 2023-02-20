@@ -1,11 +1,12 @@
 import './KI.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
-import { useState, useEffect } from "react"
-import { setIsHoveringLine, setLineSelected } from 'src/redux/slice/index';
+import { useState, useEffect, useCallback } from "react"
+import { setIsHoveringLine, setLineSelected, setLineHover } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
+import { debounce } from "lodash"
 
 export const KI = ({ }) => {
   const LABEL = 'KI'
@@ -20,7 +21,8 @@ export const KI = ({ }) => {
   const {
     selectedLabel,
     selectedType,
-    isHoveringPoint
+    isHoveringPoint,
+    hoveringLineLabel
   } = useSelector(
     (state) => state.selectionSlice,
   );
@@ -42,6 +44,18 @@ export const KI = ({ }) => {
       isHoveringLine: isOnHover
     }))
   }, [isOnHover, isSelected])
+
+  useEffect(() => {
+    if (hoveringLineLabel) {
+      setIsOnHover(LABEL === hoveringLineLabel)
+    }
+  }, [hoveringLineLabel])
+
+  const debounceClick = useCallback(
+    debounce((data) => dispatch(setLineSelected(data)), 100), []);
+
+  const debounceHover = useCallback(
+    debounce((data) => dispatch(setLineHover(data)), 5), []);
 
   const points = []
   points.push(new Vector3(-4, -29.8, 1.25))
@@ -94,7 +108,6 @@ export const KI = ({ }) => {
   points.push(new Vector3(-1.4, 5.5, 2.5))
   points.push(new Vector3(-1.4, 6.042, 2.075))
   points.push(new Vector3(-1.4, 6.864, 1.5))
-
   const lineGeometry = new BufferGeometry().setFromPoints(points)
 
   return (
@@ -237,15 +250,12 @@ export const KI = ({ }) => {
         labelPosition={1} />
 
       <line
-          onClick={(e) => {
-            console.log(e);
-            if (!isHoveringPoint)
-              dispatch(setLineSelected({
-                selectedLabel: LABEL,
-              }))
-          }}
-          geometry={lineGeometry}>
-          <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        onClick={(e) => {
+          if (!isHoveringPoint)
+            debounceClick({})
+        }}
+        geometry={lineGeometry}>
+        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );

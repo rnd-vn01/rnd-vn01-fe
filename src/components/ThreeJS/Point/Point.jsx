@@ -48,8 +48,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [positionArray])
 
   useEffect(() => {
-    setIsSelected(label === selectedLabel && selectedType === 'point')
-    setIsMeridianSelected(selectedType === 'line' && label.includes(selectedLabel))
+    setIsSelected(selectedLabel !== "" && label === selectedLabel && selectedType === 'point')
+    setIsMeridianSelected(selectedLabel !== "" && selectedType === 'line' && label.includes(selectedLabel))
   }, [selectedLabel])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
@@ -70,25 +70,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     <>
       <points
         onPointerMove={(e) => {
-          // if (isInCheckingRange) {
-          //   if (e.distanceToRay < 0.1) {
-          //     setIsOnHover(true);
-          //   } else {
-          //     setIsOnHover(false);
-          //   }
-          // }
           if (e.distanceToRay < 0.1) {
             setIsOnHover(true);
           } else {
             setIsOnHover(false);
           }
         }}
-        // onPointerEnter={(e) => {
-        //   setIsInCheckingRange(true);
-        // }}
-        // onPointerLeave={(e) => {
-        //   setIsInCheckingRange(false);
-        // }}
         onClick={(e) => {
           if (e.distanceToRay < 0.1) {
             dispatch(setPointSelected({
@@ -117,7 +104,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         />
       </points>
 
-      {(isOnHover || isSelected || isMeridianSelected) && <Text
+      {(isOnHover || (selectedLabel !== "" && isSelected) || (selectedLabel !== "" && isMeridianSelected)) && <Text
         positionArray={textPosition}
         text={label}
         reverse={reverse}

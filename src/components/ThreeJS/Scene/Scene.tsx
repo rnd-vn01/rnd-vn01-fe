@@ -168,8 +168,7 @@ export const Scene: React.FC = () => {
       <Du />
       <Ren />
       <Others />
-      {/* <ST />
-      <LU /> */}
+      {/* <ST /> */}
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
         <planeGeometry args={[3000, 300]} />

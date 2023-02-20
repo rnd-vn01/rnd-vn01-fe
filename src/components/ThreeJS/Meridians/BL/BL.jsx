@@ -1,12 +1,12 @@
 import './BL.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
-import { useState, useEffect } from "react"
-import { setIsHoveringLine, setLineSelected } from 'src/redux/slice/index';
+import { useState, useEffect, useCallback } from "react"
+import { setIsHoveringLine, setLineSelected, setLineHover } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
-
+import { debounce } from "lodash"
 export const BL = ({ }) => {
   const LABEL = 'BL'
   const LINE_BASE_COLOR = MERIDIANS_COLOR[7]
@@ -20,7 +20,8 @@ export const BL = ({ }) => {
   const {
     selectedLabel,
     selectedType,
-    isHoveringPoint
+    isHoveringPoint,
+    hoveringLineLabel
   } = useSelector(
     (state) => state.selectionSlice,
   );
@@ -42,6 +43,18 @@ export const BL = ({ }) => {
       isHoveringLine: isOnHover
     }))
   }, [isOnHover, isSelected])
+
+  useEffect(() => {
+    if (hoveringLineLabel) {
+      setIsOnHover(LABEL === hoveringLineLabel)
+    }
+  }, [hoveringLineLabel])
+
+  const debounceClick = useCallback(
+    debounce((data) => dispatch(setLineSelected(data)), 100), []);
+
+  const debounceHover = useCallback(
+    debounce((data) => dispatch(setLineHover(data)), 5), []);
 
   const points = []
   points.push(new Vector3(0.35, 12.275, 2.5))
@@ -148,7 +161,6 @@ export const BL = ({ }) => {
   points2.push(new Vector3(5.3, -29.44, 2.1))
   points2.push(new Vector3(5.4, -29.45, 2.4))
   points2.push(new Vector3(5.525, -29.45, 2.95))
-
   const lineGeometry = new BufferGeometry().setFromPoints(points)
   const lineGeometry2 = new BufferGeometry().setFromPoints(points2)
 
@@ -547,19 +559,16 @@ export const BL = ({ }) => {
       <line
         onClick={(e) => {
           if (!isHoveringPoint)
-            dispatch(setLineSelected({
-              selectedLabel: LABEL
-            }))
+            debounceClick({})
         }}
-          geometry={lineGeometry}>
-          <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        geometry={lineGeometry}>
+        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
+
       <line
         onClick={(e) => {
           if (!isHoveringPoint)
-            dispatch(setLineSelected({
-              selectedLabel: LABEL
-            }))
+            debounceClick({})
         }}
         geometry={lineGeometry2}>
         <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />

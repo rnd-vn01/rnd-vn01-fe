@@ -1,12 +1,12 @@
 import './SI.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
-import { useState, useEffect } from "react"
-import { setIsHoveringLine, setLineSelected } from 'src/redux/slice/index';
+import { useState, useEffect, useCallback } from "react"
+import { setIsHoveringLine, setLineSelected, setLineHover } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
-
+import { debounce } from "lodash"
 export const SI = ({ }) => {
   const LABEL = 'SI'
   const LINE_BASE_COLOR = MERIDIANS_COLOR[6]
@@ -20,7 +20,8 @@ export const SI = ({ }) => {
   const {
     selectedLabel,
     selectedType,
-    isHoveringPoint
+    isHoveringPoint,
+    hoveringLineLabel
   } = useSelector(
     (state) => state.selectionSlice,
   );
@@ -42,6 +43,18 @@ export const SI = ({ }) => {
       isHoveringLine: isOnHover
     }))
   }, [isOnHover, isSelected])
+
+  useEffect(() => {
+    if (hoveringLineLabel) {
+      setIsOnHover(LABEL === hoveringLineLabel)
+    }
+  }, [hoveringLineLabel])
+
+  const debounceClick = useCallback(
+    debounce((data) => dispatch(setLineSelected(data)), 100), []);
+
+  const debounceHover = useCallback(
+    debounce((data) => dispatch(setLineHover(data)), 5), []);
 
   const points = []
   points.push(new Vector3(16.625, -4.275, 2.5))
@@ -195,14 +208,12 @@ export const SI = ({ }) => {
         labelPosition={0} />
 
       <line
-          onClick={(e) => {
-            if (!isHoveringPoint)
-              dispatch(setLineSelected({
-                selectedLabel: LABEL
-              }))
-          }}
-          geometry={lineGeometry}>
-          <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        onClick={(e) => {
+          if (!isHoveringPoint)
+            debounceClick({})
+        }}
+        geometry={lineGeometry}>
+        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );

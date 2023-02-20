@@ -1,12 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { LINE_POINTS } from 'src/configs/constants';
 
 let timestamp = 0;
+let currentMinimumDistance = 1000;
 
 export const initialStateSelectionSlice = {
   selectedLabel: null,
   selectedType: null,
   isHoveringPoint: false,
   isHoveringLine: false,
+  currentMousePosition: null,
+  currentMouseMovePosition: null,
+  hoveringLineLabel: null
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -27,11 +32,27 @@ export const selectionSlice = createSlice({
 
     setLineSelected(state, action) {
       //IDEA: Pass the list of points and select the line recorded the point closest to the cursor     
-      const currentTimestamp = Date.now()
-      if (timestamp === 0 || (currentTimestamp - timestamp > 1000)) {
-        state.selectedLabel = action.payload.selectedLabel;
+      const pointer = { ...state.currentMousePosition };
+
+      if (pointer != null) {
+        let minDistance = 1000;
+        let selectedLine = "";
+
+        Object.keys(LINE_POINTS).forEach(meridian => {
+          LINE_POINTS[meridian].forEach(linePoint => {
+            // Only check if in the same side
+            if (linePoint.z * pointer.z >= 0) {
+              const distance = Math.sqrt(Math.pow(linePoint.x - pointer.x, 2) + Math.pow(linePoint.y - pointer.y, 2))
+              if (distance < minDistance) {
+                minDistance = distance
+                selectedLine = meridian
+              }
+            }
+          })
+        })
+
+        state.selectedLabel = selectedLine;
         state.selectedType = 'line';
-        timestamp = currentTimestamp;
       }
     },
 
@@ -41,11 +62,44 @@ export const selectionSlice = createSlice({
 
     setIsHoveringLine(state, action) {
       state.isHoveringLine = action.payload.isHoveringLine;
+    },
+
+    setIsCurrentMousePosition(state, action) {
+      state.currentMousePosition = action.payload.currentMousePosition;
+    },
+
+    setIsCurrentMouseMovePosition(state, action) {
+      state.currentMouseMovePosition = action.payload.currentMouseMovePosition;
+    },
+
+    setLineHover(state, action) {
+      const pointer = { ...state.currentMouseMovePosition };
+
+      if (pointer != null) {
+        let minDistance = 1000;
+        let selectedLine = "";
+
+        Object.keys(LINE_POINTS).forEach(meridian => {
+          LINE_POINTS[meridian].forEach(linePoint => {
+            // Only check if in the same side
+            if (linePoint.z * pointer.z >= 0) {
+              const distance = Math.sqrt(Math.pow(linePoint.x - pointer.x, 2) + Math.pow(linePoint.y - pointer.y, 2))
+              if (distance < minDistance) {
+                minDistance = distance
+                selectedLine = meridian
+              }
+            }
+          })
+        })
+
+        state.hoveringLineLabel = selectedLine;
+      }
     }
   },
 });
 
 const { actions, reducer } = selectionSlice;
 export const { resetToInitialStatePointSelectionSlice, setPointSelected,
-  setLineSelected, setIsHoveringPoint, setIsHoveringLine } = actions;
+  setLineSelected, setIsHoveringPoint, setIsHoveringLine, setIsCurrentMousePosition,
+  setIsCurrentMouseMovePosition, setLineHover } = actions;
 export default reducer;

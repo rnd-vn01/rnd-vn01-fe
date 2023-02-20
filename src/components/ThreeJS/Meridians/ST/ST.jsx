@@ -1,11 +1,12 @@
 import './ST.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
-import { useState, useEffect } from "react"
-import { setIsHoveringLine, setLineSelected } from 'src/redux/slice/index';
+import { useState, useEffect, useCallback } from "react"
+import { setIsHoveringLine, setLineSelected, setLineHover } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
+import { debounce } from "lodash"
 
 export const ST = ({ }) => {
   const LABEL = 'ST'
@@ -20,7 +21,8 @@ export const ST = ({ }) => {
   const {
     selectedLabel,
     selectedType,
-    isHoveringPoint
+    isHoveringPoint,
+    hoveringLineLabel
   } = useSelector(
     (state) => state.selectionSlice,
   );
@@ -42,6 +44,18 @@ export const ST = ({ }) => {
       isHoveringLine: isOnHover
     }))
   }, [isOnHover, isSelected])
+
+  useEffect(() => {
+    if (hoveringLineLabel) {
+      setIsOnHover(LABEL === hoveringLineLabel)
+    }
+  }, [hoveringLineLabel])
+
+  const debounceClick = useCallback(
+    debounce((data) => dispatch(setLineSelected(data)), 100), []);
+
+  const debounceHover = useCallback(
+    debounce((data) => dispatch(setLineHover(data)), 5), []);
 
   const points = []
   points.push(new Vector3(-0.8, 12, 2.425))
@@ -116,7 +130,6 @@ export const ST = ({ }) => {
   points.push(new Vector3(-4.2, -28.4, 1.75))
   points.push(new Vector3(-4.55, -29.05, 3.05))
   points.push(new Vector3(-4.8, -29.35, 3.9))
-
   const lineGeometry = new BufferGeometry().setFromPoints(points)
 
   return (
@@ -350,7 +363,7 @@ export const ST = ({ }) => {
         // onPointerMove={(e) => {
         //   if (isInCheckingRange) {
         //     if (e.intersections.length > 3) {
-        //       setIsOnHover(true);
+        //       debounceHover({})
         //     }
         //   }
         // }}
@@ -362,11 +375,8 @@ export const ST = ({ }) => {
         //   setIsInCheckingRange(false);
         // }}
         onClick={(e) => {
-          console.log(e);
           if (!isHoveringPoint)
-            dispatch(setLineSelected({
-              selectedLabel: LABEL,
-            }))
+            debounceClick({})
         }}
         geometry={lineGeometry}>
         <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />

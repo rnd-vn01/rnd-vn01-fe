@@ -213,4 +213,15 @@ interface ISelectionSlice {
   selectedType?: 'point' | 'line' | null;
   isHoveringPoint?: boolean;
   isHoveringLine?: boolean;
+  currentMousePosition?: {
+    x?: number,
+    y?: number,
+    z?: number,
+  } | null;
+  currentMouseMovePosition?: {
+    x?: number,
+    y?: number,
+    z?: number,
+  } | null;
+  hoveringLineLabel: string | null;
 }
