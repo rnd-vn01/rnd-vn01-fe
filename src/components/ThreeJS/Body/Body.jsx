@@ -11,8 +11,12 @@ import {
 } from 'src/redux/slice/index';
 import { useCallback } from "react";
 import { debounce } from "lodash";
+import { useMediaQuery } from 'react-responsive';
 
 export const Body = () => {
+  //Responsive
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+
   let mesh = useLoader(
     GLTFLoader,
     MALEBODY,
@@ -31,37 +35,51 @@ export const Body = () => {
     debounce((data) => dispatch(setIsCurrentMousePosition(data)), 50), []);
 
   const debounceUpdateMousePosition = useCallback(
-    debounce((data) => dispatch(setIsCurrentMouseMovePosition(data)), 5), []);
+    debounce((data) => dispatch(setIsCurrentMouseMovePosition(data)), 10), []);
 
   return (
     <mesh
       onDoubleClick={(e) => {
-        e.stopPropagation();
-        if (!isHoveringLine && !isHoveringPoint) {
-          dispatch(resetToInitialStatePointSelectionSlice())
+        if (isDesktop) {
+          e.stopPropagation();
+          if (!isHoveringLine && !isHoveringPoint) {
+            dispatch(resetToInitialStatePointSelectionSlice())
+          }
+          debounceClick({
+            currentMousePosition: null
+          })
+        } else {
+          debounceClick({
+            currentMousePosition: {
+              x: e.point.x,
+              y: e.point.y,
+              z: e.point.z
+            }
+          })
         }
-        debounceClick({
-          currentMousePosition: null
-        })
       }}
       onClick={(e) => {
-        debounceClick({
-          currentMousePosition: {
-            x: e.point.x,
-            y: e.point.y,
-            z: e.point.z
-          }
-        })
+        if (isDesktop) {
+          debounceClick({
+            currentMousePosition: {
+              x: e.point.x,
+              y: e.point.y,
+              z: e.point.z
+            }
+          })
+        }
       }}
-    // onPointerMove={(e) => {
-    //   debounceUpdateMousePosition({
-    //     currentMouseMovePosition: {
-    //       x: e.point.x,
-    //       y: e.point.y,
-    //       z: e.point.z
-    //     }
-    //   })
-    // }}
+      onPointerMove={(e) => {
+        if (isDesktop) {
+          debounceUpdateMousePosition({
+            currentMouseMovePosition: {
+              x: e.point.x,
+              y: e.point.y,
+              z: e.point.z
+            }
+          })
+        }
+      }}
     >
       <primitive
         castShadow

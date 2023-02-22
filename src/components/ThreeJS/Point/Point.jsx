@@ -7,6 +7,7 @@ import { Text } from "src/components/ThreeJS/index";
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { setPointSelected, setIsHoveringPoint } from 'src/redux/slice/index';
+import { useMediaQuery } from 'react-responsive';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
@@ -15,6 +16,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [isSelected, setIsSelected] = useState(false);
   const [isInCheckingRange, setIsInCheckingRange] = useState(true);
   const [isMeridianSelected, setIsMeridianSelected] = useState(false);
+  //Responsive
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const {
     selectedLabel,
@@ -70,10 +73,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     <>
       <points
         onPointerMove={(e) => {
-          if (e.distanceToRay < 0.1) {
-            setIsOnHover(true);
-          } else {
-            setIsOnHover(false);
+          if (isDesktop) {
+            if (e.distanceToRay < 0.1) {
+              setIsOnHover(true);
+            } else {
+              setIsOnHover(false);
+            }
           }
         }}
         onClick={(e) => {

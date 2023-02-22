@@ -1,5 +1,5 @@
 export const MERIDIANS_COLOR = {
-  1: "#F38342",
+  1: "#4C922D",
   2: "#B4CB3C",
   3: "#CCA443",
   4: "#C5CC43",

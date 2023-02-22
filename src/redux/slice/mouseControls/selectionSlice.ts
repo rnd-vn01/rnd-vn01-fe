@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LINE_POINTS } from 'src/configs/constants';
 
-let timestamp = 0;
-let currentMinimumDistance = 1000;
-
 export const initialStateSelectionSlice = {
   selectedLabel: null,
   selectedType: null,
@@ -51,8 +48,10 @@ export const selectionSlice = createSlice({
           })
         })
 
-        state.selectedLabel = selectedLine;
-        state.selectedType = 'line';
+        if (minDistance < 0.5) {
+          state.selectedLabel = selectedLine;
+          state.selectedType = 'line';
+        }
       }
     },
 
@@ -70,6 +69,30 @@ export const selectionSlice = createSlice({
 
     setIsCurrentMouseMovePosition(state, action) {
       state.currentMouseMovePosition = action.payload.currentMouseMovePosition;
+      let pointer = action.payload.currentMouseMovePosition
+      if (pointer != null) {
+        let minDistance = 1000;
+        let selectedLine = "";
+
+        Object.keys(LINE_POINTS).forEach(meridian => {
+          LINE_POINTS[meridian].forEach(linePoint => {
+            // Only check if in the same side
+            if (linePoint.z * pointer.z >= 0) {
+              const distance = Math.sqrt(Math.pow(linePoint.x - pointer.x, 2) + Math.pow(linePoint.y - pointer.y, 2))
+              if (distance < minDistance) {
+                minDistance = distance
+                selectedLine = meridian
+              }
+            }
+          })
+        })
+
+        if (minDistance < 0.5) {
+          state.hoveringLineLabel = selectedLine;
+        } else {
+          state.hoveringLineLabel = null;
+        }
+      }
     },
 
     setLineHover(state, action) {
@@ -92,7 +115,9 @@ export const selectionSlice = createSlice({
           })
         })
 
-        state.hoveringLineLabel = selectedLine;
+        if (minDistance < 0.5) {
+          state.hoveringLineLabel = selectedLine;
+        }
       }
     }
   },

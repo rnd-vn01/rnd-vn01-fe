@@ -47,6 +47,8 @@ export const TE = ({ }) => {
   useEffect(() => {
     if (hoveringLineLabel) {
       setIsOnHover(LABEL === hoveringLineLabel)
+    } else {
+      setIsOnHover(false);
     }
   }, [hoveringLineLabel])
 
@@ -246,7 +248,7 @@ export const TE = ({ }) => {
             debounceClick({})
         }}
         geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );

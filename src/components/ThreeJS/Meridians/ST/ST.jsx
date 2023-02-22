@@ -48,14 +48,13 @@ export const ST = ({ }) => {
   useEffect(() => {
     if (hoveringLineLabel) {
       setIsOnHover(LABEL === hoveringLineLabel)
+    } else {
+      setIsOnHover(false);
     }
   }, [hoveringLineLabel])
 
   const debounceClick = useCallback(
     debounce((data) => dispatch(setLineSelected(data)), 100), []);
-
-  const debounceHover = useCallback(
-    debounce((data) => dispatch(setLineHover(data)), 5), []);
 
   const points = []
   points.push(new Vector3(-0.8, 12, 2.425))
@@ -360,26 +359,12 @@ export const ST = ({ }) => {
         labelPosition={2} />
 
       <line
-        // onPointerMove={(e) => {
-        //   if (isInCheckingRange) {
-        //     if (e.intersections.length > 3) {
-        //       debounceHover({})
-        //     }
-        //   }
-        // }}
-        // onPointerEnter={(e) => {
-        //   setIsInCheckingRange(true);
-        // }}
-        // onPointerLeave={(e) => {
-        //   setIsOnHover(false);
-        //   setIsInCheckingRange(false);
-        // }}
         onClick={(e) => {
           if (!isHoveringPoint)
             debounceClick({})
         }}
         geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );

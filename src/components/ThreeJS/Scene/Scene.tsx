@@ -134,10 +134,6 @@ export const Scene: React.FC = () => {
           MIDDLE: MOUSE.DOLLY,
           RIGHT: MOUSE.PAN
         }}
-        touches={{
-          ONE: TOUCH.PAN,
-          TWO: TOUCH.ROTATE
-        }}
         onChange={(e) => {
           var minPan = new Vector3(-15, -30, 0);
           var maxPan = new Vector3(15, 15, 0);

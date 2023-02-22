@@ -47,6 +47,8 @@ export const BL = ({ }) => {
   useEffect(() => {
     if (hoveringLineLabel) {
       setIsOnHover(LABEL === hoveringLineLabel)
+    } else {
+      setIsOnHover(false);
     }
   }, [hoveringLineLabel])
 
@@ -562,7 +564,7 @@ export const BL = ({ }) => {
             debounceClick({})
         }}
         geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
       </line>
 
       <line
@@ -571,7 +573,7 @@ export const BL = ({ }) => {
             debounceClick({})
         }}
         geometry={lineGeometry2}>
-        <lineBasicMaterial attach="material" color={color} linewidth={2} linecap={'round'} linejoin={'round'} />
+        <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
       </line>
     </>
   );
