@@ -14,6 +14,8 @@ import { RootState } from 'src/redux/store';
 import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
 import Highlighter from 'react-highlight-words';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => {
   const history = useHistory();
@@ -81,6 +83,20 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
       ${!isLoading && Object.keys(results).length > 0 ? "quick-search-results--showing" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
+      <div
+        className={`quick-search-results__block--advanced-search flex justify-between`}
+        onClick={() => {
+          history.push(`/advanced-search?query=${query}`)
+        }}
+      >
+        <span>
+          {t('advanced_search_page.title')}{` "${query}"`}
+        </span>
+
+        <div className='inline-flex items-center justify-center' style={{ transform: "rotate(45deg)" }}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </div>
+      </div>
       {!isLoading && Object.keys(results).length > 0 &&
         Object.keys(results).map((category: any, index: number) => {
           if (results[category].length > 0) {

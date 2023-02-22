@@ -4,6 +4,7 @@
   width: 100vw;
   margin: 0 auto;
   height: 100vh;
+  position: relative;
 
   &__section {
     height: 100%;
@@ -12,6 +13,13 @@
       background: var(--theme-background);
       flex-direction: column;
       border-left: 1px solid black;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: calc(100% / 3.5);
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
     }
 
     &--main-content {
@@ -19,6 +27,18 @@
       max-height: calc(100vh - 60px * 3);
       border-bottom: 1px solid black;
       overflow-y: auto;
+    }
+
+    &--model {
+      height: 100vh;
+    }
+
+    &--menu {
+      flex-direction: column;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: calc(100% / 3);
     }
   }
 }

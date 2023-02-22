@@ -7,6 +7,8 @@ import Logo from "src/assets/images/Logo.svg";
 import { logout } from 'src/configs/firebase';
 import { resetToInitialStateAuthSlice } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faE, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
 export const AuthBar: React.FC = ({ }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
@@ -43,6 +45,13 @@ export const AuthBar: React.FC = ({ }) => {
       selectable: user
     },
     {
+      item: t('auth_bar.menu.about_us'),
+      onClick: () => {
+        history.push("/about")
+      },
+      selectable: true
+    },
+    {
       item: t('auth_bar.menu.log_out'),
       onClick: () => {
         logout();
@@ -53,38 +62,61 @@ export const AuthBar: React.FC = ({ }) => {
     }
   ]
 
+  const GUEST_MENU_ITEMS = [
+    {
+      item: t('auth_bar.sign_up'),
+      onClick: () => {
+        history.push("/signup")
+      },
+      selectable: true
+    },
+    {
+      item: t('auth_bar.log_in'),
+      onClick: () => {
+        history.push("/login")
+      },
+      selectable: true
+    },
+    {
+      item: t('auth_bar.menu.about_us'),
+      onClick: () => {
+        history.push("/about")
+      },
+      selectable: true
+    },
+  ]
+
   return (
     <div
       role="div"
       aria-label="auth-bar"
       className="auth-bar">
-      {!isLoggedIn ?
-        <div className="grid grid-cols-2 auth-bar__not-logged-in w-full h-full">
+      <div className="auth-bar__logged-in w-full h-full inline-flex items-center justify-start">
+        <span className="auth-bar__menu pr-2">
+          <p className="auth-bar__menu--name inline-block">{user?.name}</p>
           <div
-            className="auth-bar__option flex items-center justify-center col-span-1"
-            onClick={() => history.push("/signup")}>
-            {t('auth_bar.sign_up')}
+            className="auth-bar__menu--button-logo inline-flex w-fit h-full flex-center"
+            onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
+            {isLoggedIn ? <img src={Logo} className="auth-bar__menu--image-logo"></img> :
+              <FontAwesomeIcon className="auth-bar__menu--icon" icon={faEllipsisVertical} />}
           </div>
+        </span>
 
-          <div
-            className="auth-bar__option flex items-center justify-center col-span-1"
-            onClick={() => history.push("/login")}>
-            {t('auth_bar.log_in')}
-          </div>
-        </div> :
-        <div className="auth-bar__logged-in w-full h-full inline-flex items-center justify-end">
-          <span className="auth-bar__menu pr-2">
-            <p className="auth-bar__menu--name inline-block">{user?.name}</p>
-            <div
-              className="auth-bar__menu--button-logo inline-flex w-fit h-full flex-center"
-              onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
-              <img src={Logo} className="auth-bar__menu--image-logo"></img>
-            </div>
-          </span>
-
-          <div className={`auth-bar__dropdown w-fit h-fit flex flex-col items-end justify-center
+        <div className={`auth-bar__dropdown w-fit h-fit flex flex-col items-end justify-center
           p-1 ${!isOpenDropdown && "auth-bar__dropdown--hide"}`}>
-            {MENU_ITEMS.map((item, index) => {
+          {isLoggedIn ? MENU_ITEMS.map((item, index) => {
+            if (item.selectable) {
+              return (
+                <div
+                  className="auth-bar__dropdown--item w-fit"
+                  onClick={item.onClick}
+                  key={`menu-${index}`}>
+                  {item.item}
+                </div>
+              )
+            }
+          }) :
+            GUEST_MENU_ITEMS.map((item, index) => {
               if (item.selectable) {
                 return (
                   <div
@@ -95,10 +127,10 @@ export const AuthBar: React.FC = ({ }) => {
                   </div>
                 )
               }
-            })}
-          </div>
-        </div>}
-
+            })
+          }
+        </div>
+      </div>
     </div>
   );
 };

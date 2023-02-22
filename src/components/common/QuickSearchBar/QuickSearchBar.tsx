@@ -36,11 +36,11 @@ export const QuickSearchBar: React.FC = ({ }) => {
         value={query}
         onChange={e => setQuery(e.target.value)}></input>
 
-      <div
+      {/* <div
         className="quick-search__logo--advanced-search"
         onClick={() => history.push("/advanced-search")}>
         <img src={AdvancedSearchIcon}></img>
-      </div>
+      </div> */}
 
       <QuickSearchResults
         query={query}

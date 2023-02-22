@@ -11,6 +11,7 @@ import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { APP_NAME } from 'src/configs/constants';
+import { LanguagePicker } from 'src/components/common/FooterBar/LanguagePicker/LanguagePicker';
 
 export const HomePage: React.FC = () => {
   const [isViewingItemInformation, setIsViewItemInformation] = useState<boolean>(false);
@@ -39,23 +40,35 @@ export const HomePage: React.FC = () => {
     <div
       role="div"
       aria-label="home-page"
-      className="home-page grid grid-cols-7">
+      className="home-page grid">
       <div
         onClick={() => getRandomPointInfo()}
-        className="home-page__section home-page__section--model col-span-5">
-        {/* <Canvas shadows>
+        className="home-page__section home-page__section--model">
+        <Canvas shadows>
           <Scene />
-        </Canvas> */}
-        <img
+        </Canvas>
+        {/* <img
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover"
           }}
-          src={DemoImage}></img>
+          src={DemoImage}></img> */}
       </div>
 
-      <div className="home-page__section home-page__section--side-bar col-span-2">
+      <div className="home-page__section--side-bar">
+        <QuickSearchBar />
+      </div>
+
+      <div className="home-page__section--menu">
+        <AuthBar />
+      </div>
+
+      <div className="home-page__section--language">
+        <LanguagePicker />
+      </div>
+
+      {/* <div className="home-page__section home-page__section--side-bar">
         <AuthBar />
         <QuickSearchBar />
         <div className="home-page__section--main-content">
@@ -70,7 +83,7 @@ export const HomePage: React.FC = () => {
           }
         </div>
         <FooterBar />
-      </div>
+      </div> */}
     </div>
   );
 };

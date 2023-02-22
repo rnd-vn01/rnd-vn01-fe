@@ -1,7 +1,6 @@
 .auth-bar {
   height: 60px;
   width: 100%;
-  border-bottom: 1px solid black;
 
   &__option {
     font-size: 1.5rem;
@@ -39,18 +38,25 @@
       width: 35px;
     }
 
+    &--icon {
+      height: 20px;
+      width: 20px;
+      padding: 7.5px;
+    }
+
     &--button-logo {
-      background: var(--theme-gray);
+      background: var(--theme-background);
       padding: 5px;
       border-radius: 50px;
       cursor: pointer;
+      border: 1px solid black;
     }
   }
 
   &__dropdown {
     position: absolute;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    border: 1px solid black;
+    left: 10px;
     top: calc(100% + 1px);
     background: var(--theme-background);
     z-index: 100;

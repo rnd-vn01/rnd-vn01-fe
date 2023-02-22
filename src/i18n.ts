@@ -31,7 +31,8 @@ i18n
               personal_records: "Personal Records",
               data_management: "Data Management",
               log_out: "Log Out",
-              edit_profile: "Edit Profile"
+              edit_profile: "Edit Profile",
+              about_us: "About Us"
             }
           },
           create_account_page: {
@@ -306,7 +307,8 @@ i18n
               personal_records: "Dữ liệu Cá nhân",
               data_management: "Quản lý Dữ liệu",
               log_out: "Đăng xuất",
-              edit_profile: "Cập nhật thông tin"
+              edit_profile: "Cập nhật thông tin",
+              about_us: "Về Chúng tôi"
             }
           },
           create_account_page: {
