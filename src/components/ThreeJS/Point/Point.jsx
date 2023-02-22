@@ -1,5 +1,5 @@
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader, DynamicDrawUsage, Color } from 'three';
+import { TextureLoader, DynamicDrawUsage } from 'three';
 import circleImg from 'src/assets/images/PointCircle.png';
 import circleSelectedImg from 'src/assets/images/PointCircleSelected.png';
 import { useEffect, useMemo, useState } from 'react';
@@ -7,13 +7,17 @@ import { Text } from "src/components/ThreeJS/index";
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { setPointSelected, setIsHoveringPoint } from 'src/redux/slice/index';
+import { useMediaQuery } from 'react-responsive';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
   const [color, setColor] = useState(0xF9FFB3);
   const [isOnHover, setIsOnHover] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [isInCheckingRange, setIsInCheckingRange] = useState(false);
+  const [isInCheckingRange, setIsInCheckingRange] = useState(true);
+  const [isMeridianSelected, setIsMeridianSelected] = useState(false);
+  //Responsive
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const {
     selectedLabel,
@@ -47,7 +51,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [positionArray])
 
   useEffect(() => {
-    setIsSelected(label === selectedLabel && selectedType === 'point')
+    setIsSelected(selectedLabel !== "" && label === selectedLabel && selectedType === 'point')
+    setIsMeridianSelected(selectedLabel !== "" && selectedType === 'line' && label.includes(selectedLabel))
   }, [selectedLabel])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
@@ -68,19 +73,13 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     <>
       <points
         onPointerMove={(e) => {
-          if (isInCheckingRange) {
+          if (isDesktop) {
             if (e.distanceToRay < 0.1) {
               setIsOnHover(true);
             } else {
               setIsOnHover(false);
             }
           }
-        }}
-        onPointerEnter={(e) => {
-          setIsInCheckingRange(true);
-        }}
-        onPointerLeave={(e) => {
-          setIsInCheckingRange(false);
         }}
         onClick={(e) => {
           if (e.distanceToRay < 0.1) {
@@ -110,13 +109,13 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         />
       </points>
 
-      <Text
+      {(isOnHover || (selectedLabel !== "" && isSelected) || (selectedLabel !== "" && isMeridianSelected)) && <Text
         positionArray={textPosition}
         text={label}
         reverse={reverse}
         viewFromBottom={viewFromBottom}
         isOnHover={isOnHover || isSelected}
-      ></Text>
+      ></Text>}
     </>
   );
 };
