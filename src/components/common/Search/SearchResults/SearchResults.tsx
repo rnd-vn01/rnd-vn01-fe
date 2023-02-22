@@ -143,8 +143,9 @@ export const SearchResults: React.FC<ISearchResults> = ({
               }
 
               <div className="search-results__results">
-                {filteredResults.map((result) =>
+                {filteredResults.map((result, index) =>
                   <SearchResultItem
+                    key={index}
                     item={result}
                     query={[query]}
                     usingLanguage={currentLanguage}
@@ -152,6 +153,12 @@ export const SearchResults: React.FC<ISearchResults> = ({
                   />)}
               </div>
             </>}
+
+          {!currentIsLoading && filteredResults?.length === 0 &&
+            <h1
+              className="search-results__no-results">
+              {t('no_results')}
+            </h1>}
 
           <div className="search-results__filters">
             <h1 className="search-results__filters--category">{t('search_bar.filters.categories.search')}</h1>

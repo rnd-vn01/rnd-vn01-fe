@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup } from 'firebase/auth';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
+import HomeIcon from "src/assets/images/HomeIcon.svg";
 
 import { Button } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
@@ -193,6 +194,11 @@ export const CreateAccountPage: React.FC = () => {
       aria-label="create-account-page"
       className="create-account-page grid grid-cols-5">
       <div className="create-account-page__section create-account-page__section--main col-span-2 flex-center">
+        <div className="create-account-page__home-icon"
+          onClick={() => history.push("/")}>
+          <img src={HomeIcon}></img>
+        </div>
+
         <img className="create-account-page__image--logo" src={Logo}
           onClick={() => history.push("/")}></img>
 

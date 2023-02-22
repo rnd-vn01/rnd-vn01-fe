@@ -30,17 +30,27 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
     const DEMO_DATA_MERIDIAN = currentLanguage === "EN" ? DEMO_DATA_MERIDIAN_EN : DEMO_DATA_MERIDIAN_VI
 
     let results = []
-    DEMO_DATA.forEach((point) => {
-      if (passFilter(point, query, true, SEARCH_BY.ALL)) {
-        results.push(point)
-      }
-    })
+    if (query !== "") {
+      DEMO_DATA.forEach((point) => {
+        if (passFilter(point, query, true, SEARCH_BY.ALL)) {
+          results.push(point)
+        }
+      })
 
-    DEMO_DATA_MERIDIAN.forEach((meridian) => {
-      if (passFilter(meridian, query, false, SEARCH_BY.ALL)) {
+      DEMO_DATA_MERIDIAN.forEach((meridian) => {
+        if (passFilter(meridian, query, false, SEARCH_BY.ALL)) {
+          results.push(meridian)
+        }
+      })
+    } else {
+      DEMO_DATA.forEach((point) => {
+        results.push(point)
+      })
+
+      DEMO_DATA_MERIDIAN.forEach((meridian) => {
         results.push(meridian)
-      }
-    })
+      })
+    }
 
     setResults(results);
     setIsLoading(false);
@@ -54,7 +64,7 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
       setIsLoading(true);
       debounceFetchResult(query)
     } else {
-      setResults([]);
+      fetchResults("")
       setIsLoading(false);
     }
   }, [query])

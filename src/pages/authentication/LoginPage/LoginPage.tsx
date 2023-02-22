@@ -1,9 +1,10 @@
 import './LoginPage.scss'
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
-import { signInWithGoogle, logInWithEmailAndPassword, registerWithEmailAndPassword, logout, onAuthStateChanged, auth, googleProvider } from 'src/configs/firebase';
+import { logInWithEmailAndPassword, logout, auth, googleProvider } from 'src/configs/firebase';
 import { useHistory, useLocation } from 'react-router-dom';
 import { signInWithPopup } from 'firebase/auth';
+import HomeIcon from "src/assets/images/HomeIcon.svg";
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
@@ -186,6 +187,11 @@ export const LoginPage: React.FC = () => {
       aria-label="login-page"
       className="login-page grid grid-cols-5">
       <div className="login-page__section login-page__section--main col-span-2 flex-center">
+        <div className="login-page__home-icon"
+          onClick={() => history.push("/")}>
+          <img src={HomeIcon}></img>
+        </div>
+
         <img className="login-page__image--logo" src={Logo}
           onClick={() => history.push("/")}></img>
 

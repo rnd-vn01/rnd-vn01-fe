@@ -10,9 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'src/helpers/hooks/useQuery';
 
-export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({
-
-}) => {
+export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const { t } = useTranslation();
   let hookQuery = useQuery();
   document.title = `${APP_NAME} | ${t('advanced_search_page.title')}`

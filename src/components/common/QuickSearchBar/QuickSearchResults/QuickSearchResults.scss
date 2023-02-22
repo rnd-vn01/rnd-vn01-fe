@@ -42,4 +42,9 @@
   &__highlighted {
     background: var(--theme-highlight)
   }
+
+  &__no-results {
+    font-size: 2rem;
+    padding: 10px;
+  }
 }
