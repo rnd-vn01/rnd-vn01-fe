@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
 import Highlighter from 'react-highlight-words';
+import { useTranslation } from 'react-i18next';
 
 export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => {
   const history = useHistory();
@@ -21,6 +22,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+  const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState<any>(false)
   const [results, setResults] = useState<any>({})
@@ -116,6 +118,12 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
             )
           }
         })
+      }
+
+      {!isLoading && results["points"]?.length === 0 && results["meridians"]?.length === 0 &&
+        <h1
+          className='quick-search-results__no-results'
+        >{t('no_results')}</h1>
       }
     </div>
   );

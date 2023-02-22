@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import { sendPasswordReset, auth } from 'src/configs/firebase';
 import { useHistory, useLocation } from 'react-router-dom';
+import HomeIcon from "src/assets/images/HomeIcon.svg";
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
@@ -102,6 +103,11 @@ export const ChangePasswordPage: React.FC = () => {
       aria-label="password-reset-page"
       className="password-reset-page grid grid-cols-5">
       <div className="password-reset-page__section password-reset-page__section--main col-span-2 flex-center">
+        <div className="password-reset-page__home-icon"
+          onClick={() => history.push("/")}>
+          <img src={HomeIcon}></img>
+        </div>
+
         <img className="password-reset-page__image--logo" src={Logo}
           onClick={() => history.push("/")}></img>
 

@@ -44,4 +44,22 @@
     font-size: 1rem;
     margin-bottom: 10px;
   }
+
+  &__home-icon {
+    border: 1px solid transparent;
+    position: absolute;
+    padding: 5px;
+    top: 12.5px;
+    left: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--theme-primary);
+      border: 1px solid black;
+    }
+
+    img {
+      width: 35px;
+    }
+  }
 }

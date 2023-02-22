@@ -278,7 +278,8 @@ i18n
             button_captions: {
               update_profile: "Update"
             }
-          }
+          },
+          no_results: "No results found"
         }
       },
       vi: {
@@ -550,7 +551,8 @@ i18n
             button_captions: {
               update_profile: "Cập nhật"
             }
-          }
+          },
+          no_results: "Không tìm thấy kết quả"
         }
       }
     }

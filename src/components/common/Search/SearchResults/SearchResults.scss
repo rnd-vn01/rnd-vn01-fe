@@ -50,4 +50,12 @@
   &__option {
     text-align: right;
   }
+
+  &__no-results {
+    font-size: 3rem;
+    width: fit-content;
+    line-height: 3rem;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
 }
