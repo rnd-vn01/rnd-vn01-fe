@@ -11,13 +11,15 @@ import {
 } from "@react-three/drei";
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
-import { DoubleSide, MOUSE, TOUCH, Vector3 } from 'three';
+import { MOUSE, MathUtils, Vector3 } from 'three';
 import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { useAppDispatch } from 'src/redux/store';
 import { setPointSelected, setStateCameraQuaternion } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
+import { useSelector } from 'react-redux';
+import { FOCUS_OPTIONS } from 'src/configs/constants';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -30,6 +32,14 @@ export const Scene = forwardRef((props, ref) => {
   const controls = useRef(null);
   const camera = useRef(null);
   const dispatch = useAppDispatch();
+  const {
+    selectedLabel,
+    selectedType,
+    pointPosition,
+    isSelectingFromMenu
+  } = useSelector(
+    (state) => (state as any).selectionSlice,
+  );
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
@@ -125,7 +135,7 @@ export const Scene = forwardRef((props, ref) => {
 
     panCenter() {
       controls.current.reset();
-      let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.zoom);
+      let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
       controls.current.target.sub(_v)
       camera.current.zoom = 1.5
       camera.current.updateProjectionMatrix();
@@ -143,6 +153,45 @@ export const Scene = forwardRef((props, ref) => {
       }
     },
   }));
+
+  useEffect(() => {
+    if (isSelectingFromMenu && selectedType === "line" && controls.current) {
+      //Get the first point of line
+      const point = FOCUS_OPTIONS[selectedLabel]["point"];
+      controls.current.reset();
+
+      let _v = new Vector3(controls.current.target.x - point["x"],
+        controls.current.target.y - point["y"],
+        controls.current.target.z - point["z"]);
+      controls.current.target.sub(_v)
+      camera.current.zoom = 3.5;
+      camera.current.updateProjectionMatrix();
+
+      const rad = MathUtils.degToRad(FOCUS_OPTIONS[selectedLabel]["rotate"]);
+
+      //Need rotation
+      const cx1 = camera.current.position.x;
+      const cy1 = camera.current.position.y;
+      const cz1 = camera.current.position.z;
+
+      // 4. Calculate new camera position:
+      const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
+      const cy2 = cy1;
+      const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
+
+      // 5. Set new camera position:
+      camera.current.position.set(cx2, cy2, cz2);
+
+      camera.current.updateProjectionMatrix();
+
+    } else if (selectedType === "point" && camera.current) {
+      /* 
+      camera.current.lookAt(pointPosition["x"], pointPosition["y"], pointPosition["z"]);
+      camera.current.zoom = 2.5;
+      camera.current.updateProjectionMatrix();
+      */
+    }
+  }, [selectedLabel, selectedType]);
 
   return (
     <Suspense fallback={<Loader />}>

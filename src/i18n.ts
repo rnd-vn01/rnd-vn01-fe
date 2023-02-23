@@ -280,7 +280,23 @@ i18n
               update_profile: "Update"
             }
           },
-          no_results: "No results found"
+          no_results: "No results found",
+          meridian_tooltips: {
+            "BL": "Bladder",
+            "LU": "Lungs",
+            "HT": "Heart",
+            "ST": "Stomach",
+            "KI": "Kidneys",
+            "GB": "Gallbladder",
+            "LI": "Large Intestine",
+            "SI": "Small Intestine",
+            "Liv": "Liver",
+            "PC": "Pericardium",
+            "TE": "Triple Energizer",
+            "SP": "Spleen",
+            "Du": "Governing Vessel",
+            "Ren": "Conception Vessel",
+          }
         }
       },
       vi: {
@@ -554,7 +570,23 @@ i18n
               update_profile: "Cập nhật"
             }
           },
-          no_results: "Không tìm thấy kết quả"
+          no_results: "Không tìm thấy kết quả",
+          meridian_tooltips: {
+            "BL": "Bàng quang",
+            "LU": "Phổi",
+            "HT": "Tim",
+            "ST": "Dạ dày",
+            "KI": "Thận",
+            "GB": "Mật",
+            "LI": "Ruột già",
+            "SI": "Ruột non",
+            "Liv": "Gan",
+            "PC": "Màng ngoài tim",
+            "TE": "Tam tiêu",
+            "SP": "Lá lách",
+            "Du": "Đốc mạch",
+            "Ren": "Nhâm mạch",
+          }
         }
       }
     }

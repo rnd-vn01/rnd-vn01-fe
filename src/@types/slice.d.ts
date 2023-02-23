@@ -224,6 +224,9 @@ interface ISelectionSlice {
     z?: number,
   } | null;
   hoveringLineLabel: string | null;
+  firstSelected?: boolean;
+  isSelectingFromMenu?: boolean;
+  pointPosition?: any;
 }
 
 interface IModelInteractionControl {

@@ -8,7 +8,10 @@ export const initialStateSelectionSlice = {
   isHoveringLine: false,
   currentMousePosition: null,
   currentMouseMovePosition: null,
-  hoveringLineLabel: null
+  hoveringLineLabel: null,
+  firstSelected: false,
+  isSelectingFromMenu: false,
+  pointPosition: null
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -23,6 +26,7 @@ export const selectionSlice = createSlice({
     },
 
     setPointSelected(state, action) {
+      state.pointPosition = action.payload.pointPosition;
       state.selectedLabel = action.payload.selectedLabel;
       state.selectedType = 'point';
     },
@@ -51,6 +55,7 @@ export const selectionSlice = createSlice({
         if (minDistance < 0.5) {
           state.selectedLabel = selectedLine;
           state.selectedType = 'line';
+          state.isSelectingFromMenu = false;
         }
       }
     },
@@ -119,12 +124,19 @@ export const selectionSlice = createSlice({
           state.hoveringLineLabel = selectedLine;
         }
       }
-    }
+    },
+
+    setLineSelectedByLabel(state, action) {
+      state.firstSelected = true;
+      state.isSelectingFromMenu = true;
+      state.selectedLabel = action.payload.selectedLine;
+      state.selectedType = 'line';
+    },
   },
 });
 
 const { actions, reducer } = selectionSlice;
 export const { resetToInitialStatePointSelectionSlice, setPointSelected,
   setLineSelected, setIsHoveringPoint, setIsHoveringLine, setIsCurrentMousePosition,
-  setIsCurrentMouseMovePosition, setLineHover } = actions;
+  setIsCurrentMouseMovePosition, setLineHover, setLineSelectedByLabel } = actions;
 export default reducer;

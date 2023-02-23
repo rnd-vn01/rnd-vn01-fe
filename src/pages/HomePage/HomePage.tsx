@@ -39,10 +39,6 @@ export const HomePage: React.FC = () => {
     }
   }, [currentLanguage])
 
-  useEffect(() => {
-    console.log(sceneRef.current)
-  }, [sceneRef.current])
-
   return (
     <div
       role="div"
