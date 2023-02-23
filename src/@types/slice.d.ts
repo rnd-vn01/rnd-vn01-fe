@@ -225,3 +225,17 @@ interface ISelectionSlice {
   } | null;
   hoveringLineLabel: string | null;
 }
+
+interface IModelInteractionControl {
+  callbackPanLeft?: () => void;
+  callbackPanRight?: () => void;
+  callbackPanUp?: () => void;
+  callbackPanDown?: () => void;
+  callbackPanCenter?: () => void;
+  callbackZoomIn?: () => void;
+  callbackZoomOut?: () => void;
+}
+
+interface IHomePageControl extends IModelInteractionControl {
+
+}

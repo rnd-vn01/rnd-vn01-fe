@@ -28,7 +28,7 @@ export const LanguagePicker: React.FC = () => {
     <div
       role="div"
       aria-label="language-picker"
-      className="language-picker flex flex-col items-end justify-center">
+      className="language-picker flex flex-col items-start justify-center">
       {isShowingDropdown &&
         <div className="language-picker__dropdown w-fit h-fit flex flex-col items-end justify-center">
           {LANGUAGES_LIST.map((language, index) => (

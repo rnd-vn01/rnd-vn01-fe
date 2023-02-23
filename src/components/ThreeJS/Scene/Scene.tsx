@@ -1,5 +1,7 @@
 import './Scene.scss'
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, {
+  forwardRef, Suspense, useEffect, useImperativeHandle, useRef
+} from 'react';
 import {
   Environment,
   Html,
@@ -24,7 +26,7 @@ enum PAN_DIRECTION {
   DOWN = 3
 }
 
-export const Scene: React.FC = () => {
+export const Scene = forwardRef((props, ref) => {
   const controls = useRef(null);
   const camera = useRef(null);
   const dispatch = useAppDispatch();
@@ -39,6 +41,25 @@ export const Scene: React.FC = () => {
       <h3 style={{ display: "inline", fontSize: 24 }}>{`${Math.round(progress)}% loaded`}</h3>
       <progress id="file" value={progress} max="100"></progress>
     </Html>
+  }
+
+  const move = (direction) => {
+    let _v = new Vector3(0, 0, 0);
+    switch (direction) {
+      case PAN_DIRECTION.LEFT:
+        _v.x = 0.5
+        break
+      case PAN_DIRECTION.RIGHT:
+        _v.x = -0.5
+        break
+      case PAN_DIRECTION.UP:
+        _v.y = -0.5
+        break
+      case PAN_DIRECTION.DOWN:
+        _v.y = 0.5
+        break
+    }
+    controls.current.target.sub(_v)
   }
 
   useEffect(() => {
@@ -58,25 +79,6 @@ export const Scene: React.FC = () => {
     dispatch(setPointSelected({
       selectedPoint: null
     }))
-
-    const move = (direction) => {
-      let _v = new Vector3(0, 0, 0);
-      switch (direction) {
-        case PAN_DIRECTION.LEFT:
-          _v.x = 0.5
-          break
-        case PAN_DIRECTION.RIGHT:
-          _v.x = -0.5
-          break
-        case PAN_DIRECTION.UP:
-          _v.y = -0.5
-          break
-        case PAN_DIRECTION.DOWN:
-          _v.y = 0.5
-          break
-      }
-      controls.current.target.sub(_v)
-    }
 
     window.addEventListener("keydown", (e) => {
       switch (e.key) {
@@ -103,6 +105,44 @@ export const Scene: React.FC = () => {
       }
     });
   }, []);
+
+  useImperativeHandle(ref, () => ({
+    panUp() {
+      move(PAN_DIRECTION.UP)
+    },
+
+    panDown() {
+      move(PAN_DIRECTION.DOWN)
+    },
+
+    panLeft() {
+      move(PAN_DIRECTION.LEFT)
+    },
+
+    panRight() {
+      move(PAN_DIRECTION.RIGHT)
+    },
+
+    panCenter() {
+      controls.current.reset();
+      let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.zoom);
+      controls.current.target.sub(_v)
+      camera.current.zoom = 1.5
+      camera.current.updateProjectionMatrix();
+    },
+
+    zoomIn() {
+      camera.current.zoom += 0.25
+      camera.current.updateProjectionMatrix();
+    },
+
+    zoomOut() {
+      if (camera.current.zoom >= 1) {
+        camera.current.zoom -= 0.25
+        camera.current.updateProjectionMatrix();
+      }
+    },
+  }));
 
   return (
     <Suspense fallback={<Loader />}>
@@ -173,4 +213,4 @@ export const Scene: React.FC = () => {
 
     </Suspense >
   );
-};
+});

@@ -8,7 +8,7 @@ import { logout } from 'src/configs/firebase';
 import { resetToInitialStateAuthSlice } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faE, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
 export const AuthBar: React.FC = ({ }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
@@ -93,11 +93,15 @@ export const AuthBar: React.FC = ({ }) => {
       className="auth-bar">
       <div className="auth-bar__logged-in w-full h-full inline-flex items-center justify-start">
         <span className="auth-bar__menu pr-2">
-          <p className="auth-bar__menu--name inline-block">{user?.name}</p>
           <div
             className="auth-bar__menu--button-logo inline-flex w-fit h-full flex-center"
             onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
-            {isLoggedIn ? <img src={Logo} className="auth-bar__menu--image-logo"></img> :
+            {isLoggedIn ?
+              <>
+                <img src={Logo} className="auth-bar__menu--image-logo"></img>
+                <FontAwesomeIcon className="auth-bar__menu--icon-gear" icon={faGear} />
+              </>
+              :
               <FontAwesomeIcon className="auth-bar__menu--icon" icon={faEllipsisVertical} />}
           </div>
         </span>

@@ -44,12 +44,22 @@
       padding: 7.5px;
     }
 
+    &--icon-gear {
+      position: absolute;
+      right: 2.5px;
+      bottom: -2.5px;
+      height: 12px;
+      width: 12px;
+    }
+
     &--button-logo {
       background: var(--theme-background);
       padding: 5px;
       border-radius: 50px;
       cursor: pointer;
       border: 1px solid black;
+      margin-left: 5px;
+      position: relative;
     }
   }
 

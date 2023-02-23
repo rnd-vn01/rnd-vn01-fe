@@ -1,6 +1,8 @@
 import './HomePage.scss'
-import React, { useEffect, useState } from 'react';
-import { AuthBar, FooterBar, HomeTitle, InformationBlock, QuickSearchBar } from 'src/components/common';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  AuthBar, FooterBar, HomePageControl, HomeTitle, InformationBlock, QuickSearchBar
+} from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
 import { Scene } from 'src/components/index';
@@ -21,6 +23,7 @@ export const HomePage: React.FC = () => {
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+  const sceneRef = useRef();
 
   document.title = `${APP_NAME}`
 
@@ -36,6 +39,10 @@ export const HomePage: React.FC = () => {
     }
   }, [currentLanguage])
 
+  useEffect(() => {
+    console.log(sceneRef.current)
+  }, [sceneRef.current])
+
   return (
     <div
       role="div"
@@ -45,7 +52,9 @@ export const HomePage: React.FC = () => {
         onClick={() => getRandomPointInfo()}
         className="home-page__section home-page__section--model">
         <Canvas shadows>
-          <Scene />
+          <Scene
+            ref={sceneRef}
+          />
         </Canvas>
         {/* <img
           style={{
@@ -66,6 +75,18 @@ export const HomePage: React.FC = () => {
 
       <div className="home-page__section--language">
         <LanguagePicker />
+      </div>
+
+      <div className="home-page__section--controls">
+        <HomePageControl
+          callbackPanCenter={() => (sceneRef.current as any).panCenter()}
+          callbackPanDown={() => (sceneRef.current as any).panDown()}
+          callbackPanLeft={() => (sceneRef.current as any).panLeft()}
+          callbackPanRight={() => (sceneRef.current as any).panRight()}
+          callbackPanUp={() => (sceneRef.current as any).panUp()}
+          callbackZoomIn={() => (sceneRef.current as any).zoomIn()}
+          callbackZoomOut={() => (sceneRef.current as any).zoomOut()}
+        />
       </div>
 
       {/* <div className="home-page__section home-page__section--side-bar">

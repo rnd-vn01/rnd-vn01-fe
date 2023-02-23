@@ -7,6 +7,7 @@ import store, { persistor } from 'src/redux/store/index';
 import App from './App';
 import { PersistGate } from 'redux-persist/integration/react'
 import './i18n';
+import 'react-tooltip/dist/react-tooltip.css'
 
 ReactDOM.render(
   <Provider store={store}>
