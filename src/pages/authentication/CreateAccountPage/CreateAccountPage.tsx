@@ -109,7 +109,7 @@ export const CreateAccountPage: React.FC = () => {
                 .then(() => {
                   logout();
                   dispatch(resetToInitialStateAuthSlice())
-                  history.push("/");
+                  history.push("/", { isRedirect: true });
                   return;
                 })
             })
@@ -178,7 +178,7 @@ export const CreateAccountPage: React.FC = () => {
         }
       }))
 
-      history.push("/")
+      history.push("/", { isRedirect: true })
     } catch (err: any) {
       MySwal.fire({
         icon: 'error',
@@ -195,12 +195,12 @@ export const CreateAccountPage: React.FC = () => {
       className="create-account-page grid grid-cols-5">
       <div className="create-account-page__section create-account-page__section--main col-span-2 flex-center">
         <div className="create-account-page__home-icon"
-          onClick={() => history.push("/")}>
+          onClick={() => history.push("/", { isRedirect: true })}>
           <img src={HomeIcon}></img>
         </div>
 
         <img className="create-account-page__image--logo" src={Logo}
-          onClick={() => history.push("/")}></img>
+          onClick={() => history.push("/", { isRedirect: true })}></img>
 
         <h1 className="create-account-page__title">{t('create_account_page.title')}</h1>
 

@@ -56,7 +56,7 @@ export const AuthBar: React.FC = ({ }) => {
       onClick: () => {
         logout();
         dispatch(resetToInitialStateAuthSlice());
-        history.push("/")
+        history.push("/", { isRedirect: true })
       },
       selectable: true
     }

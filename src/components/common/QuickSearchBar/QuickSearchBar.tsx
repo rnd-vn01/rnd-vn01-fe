@@ -1,17 +1,26 @@
 import './QuickSearchBar.scss';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SearchIconGray from "src/assets/images/SearchIconGray.svg"
 import SearchIconBlack from "src/assets/images/SearchIconBlack.svg"
 import AdvancedSearchIcon from "src/assets/images/AdvancedSearchIcon.svg"
 import { useHistory } from 'react-router-dom';
 import { QuickSearchResults } from './QuickSearchResults/QuickSearchResults';
+import { useAppDispatch } from 'src/redux/store';
+import { setShowingQuickInformation } from 'src/redux/slice';
 
 export const QuickSearchBar: React.FC = ({ }) => {
   const inputBoxRef = useRef()
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const [usingQuickSearchIconImage, setUsingQuickSearchIconImage] = useState<any>(SearchIconGray)
   const [query, setQuery] = useState<string>("");
+
+  useEffect(() => {
+    dispatch(setShowingQuickInformation({
+      quickInformation: null
+    }))
+  }, [query]);
 
   return (
     <div

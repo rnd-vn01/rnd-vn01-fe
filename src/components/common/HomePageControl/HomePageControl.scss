@@ -4,6 +4,7 @@
   bottom: 0;
   height: 150px;
   width: 150px;
+  z-index: 200;
 
   &__control {
     background: var(--theme-background);

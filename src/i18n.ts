@@ -296,7 +296,8 @@ i18n
             "SP": "Spleen",
             "Du": "Governing Vessel",
             "Ren": "Conception Vessel",
-          }
+          },
+          view_details: "View details"
         }
       },
       vi: {
@@ -586,7 +587,8 @@ i18n
             "SP": "Lá lách",
             "Du": "Đốc mạch",
             "Ren": "Nhâm mạch",
-          }
+          },
+          view_details: "Xem chi tiết"
         }
       }
     }

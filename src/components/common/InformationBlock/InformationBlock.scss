@@ -1,5 +1,8 @@
 .information-block {
   height: fit-content;
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   &__category {
     padding: 5px;
@@ -36,5 +39,10 @@
       color: var(--theme-danger);
       font-weight: bold;
     }
+  }
+
+  &__view-details {
+    cursor: pointer;
+    padding: 7.5px 5px;
   }
 }

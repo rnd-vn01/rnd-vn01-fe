@@ -71,7 +71,7 @@ export const ChangePasswordPage: React.FC = () => {
           text: t('password_reset_page.messages.reset_email_sent'),
         })
           .then(() => {
-            history.push("/");
+            history.push("/", { isRedirect: true });
             return;
           })
       })
@@ -104,12 +104,12 @@ export const ChangePasswordPage: React.FC = () => {
       className="password-reset-page grid grid-cols-5">
       <div className="password-reset-page__section password-reset-page__section--main col-span-2 flex-center">
         <div className="password-reset-page__home-icon"
-          onClick={() => history.push("/")}>
+          onClick={() => history.push("/", { isRedirect: true })}>
           <img src={HomeIcon}></img>
         </div>
 
         <img className="password-reset-page__image--logo" src={Logo}
-          onClick={() => history.push("/")}></img>
+          onClick={() => history.push("/", { isRedirect: true })}></img>
 
         <h1 className="password-reset-page__title">{t('password_reset_page.title')}</h1>
 

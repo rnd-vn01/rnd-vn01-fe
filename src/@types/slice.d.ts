@@ -227,6 +227,10 @@ interface ISelectionSlice {
   firstSelected?: boolean;
   isSelectingFromMenu?: boolean;
   pointPosition?: any;
+  isShowingQuickInformation?: {
+    type?: string;
+    content?: IMeridian | IAcupuncturePoint;
+  } | null;
 }
 
 interface IModelInteractionControl {
@@ -241,4 +245,8 @@ interface IModelInteractionControl {
 
 interface IHomePageControl extends IModelInteractionControl {
 
+}
+
+interface IGlobalSlice {
+  modelLoaded: boolean;
 }

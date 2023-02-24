@@ -53,7 +53,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       onClick: () => {
         logout();
         dispatch(resetToInitialStateAuthSlice());
-        history.push("/")
+        history.push("/", { isRedirect: true })
       },
       selectable: isLoggedIn,
       code: "log_out"
@@ -82,7 +82,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       aria-label="title-bar"
       className="title-bar">
       <div className="title-bar__home-icon"
-        onClick={() => history.push("/")}>
+        onClick={() => history.push("/", { isRedirect: true })}>
         <img src={HomeIcon}></img>
       </div>
 

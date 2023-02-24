@@ -111,7 +111,7 @@ export const LoginPage: React.FC = () => {
               isAdmin: ADMIN_EMAILS.includes(user.email)
             }
           }))
-          history.push("/")
+          history.push("/", { isRedirect: true })
         }
       })
       .catch((error: any) => {
@@ -171,7 +171,7 @@ export const LoginPage: React.FC = () => {
         }
       }))
 
-      history.push("/")
+      history.push("/", { isRedirect: true })
     } catch (err: any) {
       MySwal.fire({
         icon: 'error',
@@ -188,12 +188,12 @@ export const LoginPage: React.FC = () => {
       className="login-page grid grid-cols-5">
       <div className="login-page__section login-page__section--main col-span-2 flex-center">
         <div className="login-page__home-icon"
-          onClick={() => history.push("/")}>
+          onClick={() => history.push("/", { isRedirect: true })}>
           <img src={HomeIcon}></img>
         </div>
 
         <img className="login-page__image--logo" src={Logo}
-          onClick={() => history.push("/")}></img>
+          onClick={() => history.push("/", { isRedirect: true })}></img>
 
         <h1 className="login-page__title">{t('login_page.title')}</h1>
 
