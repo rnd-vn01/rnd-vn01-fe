@@ -19,8 +19,8 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
       {itemInformation &&
         <>
           <div className="information-block__title flex flex-col items-center justify-center">
-            <span className="px-2">
-              <h1 className="information-block__title--code">{itemInformation.code.toUpperCase()}</h1>
+            <span className="px-2 text-center">
+              <h1 className="information-block__title--code">{itemInformation.code}</h1>
               <h1 className="information-block__title--name">{capitalizeEachWord(itemInformation.name)}</h1>
             </span>
           </div>
