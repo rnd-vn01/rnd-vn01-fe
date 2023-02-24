@@ -12,7 +12,7 @@ import withReactContent from 'sweetalert2-react-content';
 import { Button } from 'src/components/common';
 
 // Assets
-import DemoImage from "src/assets/images/Demo.png";
+import DemoImage from "src/assets/images/DemoBackground.png";
 import Logo from "src/assets/images/Logo.svg";
 import GoogleLogo from "src/assets/images/GoogleLogo.svg";
 import { ADMIN_EMAILS, APP_NAME } from 'src/configs/constants';

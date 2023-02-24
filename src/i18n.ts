@@ -32,7 +32,8 @@ i18n
               data_management: "Data Management",
               log_out: "Log Out",
               edit_profile: "Edit Profile",
-              about_us: "About Us"
+              about_us: "About Us",
+              start_quiz: "Start Quiz"
             }
           },
           create_account_page: {
@@ -241,7 +242,8 @@ i18n
                 title: "Users",
                 description: "Medical University students at Ho Chi Minh City Medicine and Pharmacy University"
               },
-              references: "References"
+              resources: "Resources",
+              model: "Study Human Male Sculpt 3D Model"
             },
             description: {
               project: `
@@ -325,7 +327,8 @@ i18n
               data_management: "Quản lý Dữ liệu",
               log_out: "Đăng xuất",
               edit_profile: "Cập nhật thông tin",
-              about_us: "Về Chúng tôi"
+              about_us: "Về Chúng tôi",
+              start_quiz: "Kiểm tra"
             }
           },
           create_account_page: {
@@ -534,7 +537,8 @@ i18n
                 title: "Người dùng",
                 description: "Nhóm Sinh viên Y học Cổ truyền tại Đại học Y Dược TP.HCM"
               },
-              references: "Tài liệu tham khảo"
+              resources: "Tài nguyên",
+              model: "Mô hình 3D cơ thể người học điêu khắc"
             },
             description: {
               project: `

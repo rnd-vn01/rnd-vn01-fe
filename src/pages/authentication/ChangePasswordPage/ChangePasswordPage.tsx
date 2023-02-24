@@ -11,12 +11,10 @@ import withReactContent from 'sweetalert2-react-content';
 import { Button } from 'src/components/common';
 
 // Assets
-import DemoImage from "src/assets/images/Demo.png";
+import DemoImage from "src/assets/images/DemoBackground.png";
 import Logo from "src/assets/images/Logo.svg";
-import GoogleLogo from "src/assets/images/GoogleLogo.svg";
 import { APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
-import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 
