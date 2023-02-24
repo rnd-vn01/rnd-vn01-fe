@@ -17,6 +17,10 @@
     margin: 0 auto;
     text-align: left;
     margin-top: 2rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   &__correct {
@@ -25,5 +29,17 @@
 
   &__wrong {
     color: var(--theme-danger)
+  }
+
+  &__view-stats {
+    margin-top: 2rem;
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--theme-highlight);
+
+    &:hover {
+      color: var(--theme-highlight-hover)
+    }
   }
 }

@@ -244,9 +244,13 @@ interface IModelInteractionControl {
 }
 
 interface IHomePageControl extends IModelInteractionControl {
-
+  isQuizPage?: boolean;
 }
 
 interface IGlobalSlice {
   modelLoaded: boolean;
+}
+
+interface IQuizTitleBar {
+  title?: string;
 }

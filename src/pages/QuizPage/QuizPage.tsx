@@ -1,6 +1,8 @@
 import './QuizPage.scss'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  AuthBar,
+  HomePageControl,
   QuizManager
 } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
@@ -13,6 +15,7 @@ import { APP_NAME } from 'src/configs/constants';
 
 export const QuizPage: React.FC = () => {
   const { t, i18n } = useTranslation();
+  const sceneRef = useRef();
 
   document.title = `${APP_NAME} | ${t('quiz_page.title')}`
 
@@ -24,7 +27,9 @@ export const QuizPage: React.FC = () => {
       <div
         className="quiz-page__section quiz-page__section--model col-span-5">
         {/* <Canvas shadows>
-          <Scene />
+          <Scene
+            ref={sceneRef}
+          />
         </Canvas> */}
         <img
           style={{
@@ -37,6 +42,23 @@ export const QuizPage: React.FC = () => {
 
       <div className="quiz-page__section quiz-page__section--side-bar col-span-2">
         <QuizManager></QuizManager>
+      </div>
+
+      <div className="quiz-page__section--menu">
+        <AuthBar />
+      </div>
+
+      <div className="quiz-page__section--controls">
+        <HomePageControl
+          isQuizPage={true}
+          callbackPanCenter={() => (sceneRef.current as any).panCenter()}
+          callbackPanDown={() => (sceneRef.current as any).panDown()}
+          callbackPanLeft={() => (sceneRef.current as any).panLeft()}
+          callbackPanRight={() => (sceneRef.current as any).panRight()}
+          callbackPanUp={() => (sceneRef.current as any).panUp()}
+          callbackZoomIn={() => (sceneRef.current as any).zoomIn()}
+          callbackZoomOut={() => (sceneRef.current as any).zoomOut()}
+        />
       </div>
     </div>
   );

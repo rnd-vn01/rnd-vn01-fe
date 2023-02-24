@@ -9,25 +9,19 @@ export const QuizStatusBar: React.FC<IQuizStatusBar> = ({
     <div
       role="div"
       aria-label="quiz-status-bar"
-      className="quiz-status-bar w-full h-full inline-flex items-center justify-end">
-      <span className="quiz-status-bar__menu pr-2 flex items-center justify-center">
+      className="quiz-status-bar inline-flex">
+      <div className='quiz-status-bar__section quiz-status-bar__section--border-right'>
         <p className="quiz-status-bar__menu--point inline-block">
-          <span style={{ color: "black", marginRight: "5px" }}> Point:</span>
-          {totalCorrect}
+          {totalCorrect} pts
         </p>
-        {isPlus && <p className="quiz-status-bar__menu--plus inline-block">
-          +1
-        </p>}
+      </div>
+      <div className='quiz-status-bar__section quiz-status-bar__section--border-left'>
         <p className="quiz-status-bar__menu--count inline-block">
           <span className="quiz-status-bar__menu--current">{currentQuest}</span>
           /
           <span className="quiz-status-bar__menu--total">{totalQuest}</span>
         </p>
-        <div
-          className="quiz-status-bar__menu--button-logo inline-flex w-fit h-full flex-center">
-          <img src={Logo} className="quiz-status-bar__menu--image-logo"></img>
-        </div>
-      </span>
+      </div>
     </div>
   );
 };

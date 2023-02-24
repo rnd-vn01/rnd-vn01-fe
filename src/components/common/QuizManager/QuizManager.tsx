@@ -1,6 +1,5 @@
 import './QuizManager.scss';
 import React, { useEffect, useRef, useState } from 'react';
-import { AuthBar } from '../AuthBar/AuthBar';
 import { useTranslation } from 'react-i18next';
 import { QuizOptions } from './QuizOptions/QuizOptions';
 import { useSelector } from 'react-redux';
@@ -9,7 +8,7 @@ import { QuizButton } from './QuizButton/QuizButton';
 import { useHistory } from 'react-router-dom';
 import { QuizStatusBar } from './QuizStatusBar/QuizStatusBar';
 import { QuizQuestion } from './QuizQuestion/QuizQuestion';
-import { QUIZ_QUESTION_TYPE } from 'src/configs/constants';
+import { MERIDIAN_POINTS, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 import { QuizTimer } from './QuizTimer/QuizTimer';
 
 import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
@@ -22,11 +21,19 @@ import mainSound from "src/assets/sounds/main.mp3"
 import correctSound from "src/assets/sounds/right.mp3"
 import wrongSound from "src/assets/sounds/wrong.mp3"
 import { QuizSummary } from './QuizSummary/QuizSummary';
+import { QuizTitleBar } from './QuizTitleBar/QuizTitleBar';
 
 enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
   IN_PROGRESS = 1,
   ENDED = 2
+}
+
+enum QUESTION_TYPE {
+  DESCRIPTION = 0,
+  FUNCTIONALITIES = 1,
+  CHOOSE_FROM_LOCATION = 2,
+  NAVIGATE = 3
 }
 
 export const QuizManager: React.FC<IQuizManager> = ({ }) => {
@@ -40,7 +47,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
 
   const [quizState, setQuizState] = useState<number>(QUIZ_STATE["SELECT_OPTIONS"]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const [field, setField] = useState<number>(0);
+  const [field, setField] = useState<any>(0);
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(5);
   const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
   const currentTime = useRef<number>(60);
@@ -52,7 +59,11 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
   const [isPlus, setIsPlus] = useState<boolean>(false);
   const [questionContent, setQuestionContent] = useState<string>("");
   const [answersList, setAnswersList] = useState<Array<any>>([]);
+  const DEMO_QUESTION_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+  const [numberOfQuestionsOptionsList, setNumberOfQuestionsOptionsList] = useState<Array<number>>(DEMO_QUESTION_COUNT_OPTIONS)
 
+
+  const pointCurrentFieldIndexes = useRef<any>([]);
   const usedPointIndexes = useRef<any>([]);
   const quizHistory = useRef<any>({});
   const temporarilyStoredQuestionContent = useRef<any>({
@@ -62,6 +73,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
     correctAnswer: null,
     time: 60
   });
+  const [isFinished, setIsFinished] = useState<boolean>(false);
 
   // Sounds
   const mainSoundPlayer = useRef<any>(new Audio(mainSound))
@@ -82,7 +94,6 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
         : `${t('quiz_page.options.meridian_only')} ${meridian}`
     })
   })
-  const DEMO_QUESTION_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30]
 
   const startQuiz = () => {
     usedPointIndexes.current = []
@@ -93,6 +104,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
         numberOfQuestions: numberOfQuestions
       }
     }
+    updatePointsCurrentField();
     generateQuestion();
     setCurrentQuestion(1);
     setQuizState(QUIZ_STATE["IN_PROGRESS"]);
@@ -139,6 +151,9 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
     clearInterval(timer.current)
     setIsShowingAnswer(true);
     timer.current = null
+    if (currentQuestion === numberOfQuestions) {
+      setIsFinished(true);
+    }
   }
 
   const startTimer = () => {
@@ -173,19 +188,115 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
     startTimer();
   }
 
-  const generateQuestion = (option = null) => {
-    let used = []
-    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+  const skip = () => {
+    temporarilyStoredQuestionContent.current = {
+      ...temporarilyStoredQuestionContent.current,
+      answer: null,
+      time: -1
+    }
 
-    while (used.length < 4) {
-      const random = Math.floor(Math.random() * DEMO_DATA.length)
-      if (!used.includes(random) && !usedPointIndexes.current.includes(random)) {
-        used.push(random)
+    quizHistory.current.questions.push(temporarilyStoredQuestionContent.current)
+
+    endAnswerTime();
+    mainSoundPlayer.current?.pause();
+  }
+
+  //Maintain quiz contents
+  const generateQuestion = (option = null) => {
+    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+    let used = []
+
+    if (parseInt(field) === 0) {
+      //Get the point for this question
+      //Case all mode
+      let random = -1;
+      let usingPoint = {
+        code: "",
+        index: -1
+      }
+
+      while (true) {
+        random = Math.floor(Math.random() * DEMO_DATA.length)
+
+        if (!usedPointIndexes.current.includes(DEMO_DATA[random].code)) {
+          usingPoint = {
+            code: DEMO_DATA[random].code,
+            index: random
+          }
+
+          used.push(random)
+          usedPointIndexes.current.push(random)
+          break;
+        }
+      }
+
+      while (used.length < 4) {
+        random = Math.floor(Math.random() * DEMO_DATA.length)
+        if (!used.includes(random)) {
+          used.push(random)
+        }
+      }
+    } else {
+      //Get the point for this question
+      //Case 1 meridian
+      let random = -1;
+      let usingPoint = {
+        code: "",
+        index: -1
+      }
+      const thisMeridianIndexes = pointCurrentFieldIndexes.current
+
+      while (true) {
+        random = Math.floor(Math.random() * thisMeridianIndexes.length)
+
+        if (!usedPointIndexes.current.includes(thisMeridianIndexes[random].code)) {
+          usingPoint = {
+            code: DEMO_DATA[thisMeridianIndexes[random]].code,
+            index: thisMeridianIndexes[random]
+          }
+
+          used.push(thisMeridianIndexes[random])
+          usedPointIndexes.current.push(thisMeridianIndexes[random])
+          break;
+        }
+      }
+
+      while (used.length < 4) {
+        random = Math.floor(Math.random() * thisMeridianIndexes.length)
+        if (!used.includes(thisMeridianIndexes[random])) {
+          used.push(thisMeridianIndexes[random])
+        }
       }
     }
 
-    const correct = Math.floor(Math.random() * used.length)
-    usedPointIndexes.current.push(used[correct])
+    let shuffleIndexes = [0, 1, 2, 3].sort((a, b) => 0.5 - Math.random()).sort((a, b) => 0.5 - Math.random());
+    const correct = shuffleIndexes[0]
+
+    let newUsed = [0, 0, 0, 0]
+    shuffleIndexes.forEach((newIndex, oldIndex) => {
+      newUsed[newIndex] = used[oldIndex]
+    })
+    used = newUsed;
+
+    const questionType = Math.floor(Math.random() * 2)
+    let questionContent = "";
+    switch (questionType) {
+      case QUESTION_TYPE.DESCRIPTION:
+        questionContent = `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`
+        break
+      case QUESTION_TYPE.FUNCTIONALITIES:
+        questionContent = `${t('quiz_page.questions.functionalities')}`
+        DEMO_DATA[used[correct]].functionalities.forEach((functionality, index) => {
+          questionContent += `${functionality}`
+
+          if (!(index === DEMO_DATA[used[correct]].functionalities.length - 1)) {
+            questionContent += `, `
+          } else {
+            questionContent += "?"
+          }
+        })
+        break
+    }
 
     let TEST_ANSWERS_LIST = [];
     used.forEach((point, index) => {
@@ -195,7 +306,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
       })
     })
     setAnswersList(TEST_ANSWERS_LIST)
-    setQuestionContent(`${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`)
+    setQuestionContent(questionContent)
     setCorrectAnswer(correct)
 
     temporarilyStoredQuestionContent.current = {
@@ -207,26 +318,72 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
     }
   }
 
+  useEffect(() => {
+    if (parseInt(field) !== 0) {
+      const numberOfPoints = MERIDIAN_POINTS[MERIDIANS[field - 1]].length;
+      let options = []
+
+      for (let i = 5; i < numberOfPoints; i += 5) {
+        options.push(i)
+      }
+      if (options[options.length - 1] !== numberOfPoints) {
+        options.push(numberOfPoints)
+      }
+
+      setNumberOfQuestionsOptionsList(options)
+      updatePointsCurrentField();
+    } else {
+      setNumberOfQuestionsOptionsList(DEMO_QUESTION_COUNT_OPTIONS)
+    }
+  }, [field]);
+
+  const updatePointsCurrentField = () => {
+    if (parseInt(field) !== 0) {
+      const points = MERIDIAN_POINTS[MERIDIANS[field - 1]];
+      let indexes = []
+      const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+
+      points.forEach(point => {
+        DEMO_DATA.forEach((item, index) => {
+          if (item.code === point) {
+            indexes.push(index)
+          }
+        })
+      })
+
+      pointCurrentFieldIndexes.current = indexes;
+    }
+  }
+
   return (
     <div
       role="div"
       aria-label="quiz-manager"
       className="quiz-manager">
-      <div className="quiz-manager__section quiz-manager__section--top">
+      <div className={`quiz-manager__section quiz-manager__section--top
+        ${quizState === QUIZ_STATE["IN_PROGRESS"] ? "" : "quiz-manager__section--top--wide"}
+      `}>
         {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
-          <AuthBar /> : <QuizStatusBar
-            currentQuest={currentQuestion}
-            totalQuest={numberOfQuestions}
-            isPlus={isPlus}
-            totalCorrect={numberOfCorrectQuestions}
-          />}
+          <QuizTitleBar
+            title={t('quiz_page.title')}
+          /> :
+          quizState === QUIZ_STATE["IN_PROGRESS"] ?
+            <QuizTimer
+              data-render={renderTime}
+              currentTime={currentTime.current}
+              totalTime={60}
+            /> : <QuizTitleBar
+              title={t('quiz_page.end')}
+            />}
       </div>
 
-      <div className="quiz-manager__section quiz-manager__section--main">
+      <div className={`quiz-manager__section quiz-manager__section--main
+        ${quizState === QUIZ_STATE["IN_PROGRESS"] ? "" : "quiz-manager__section--main--wide"}
+      `}>
         {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
           <QuizOptions
             fieldOptionsList={DEMO_FIELD_OPTIONS}
-            numberOfQuestionsOptionsList={DEMO_QUESTION_COUNT_OPTIONS}
+            numberOfQuestionsOptionsList={numberOfQuestionsOptionsList}
             field={field}
             numberOfQuestions={numberOfQuestions}
             setField={setField}
@@ -253,33 +410,18 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
             fallbackCaption="Start"
             translateKey="quiz_page.buttons.start"
             onClick={() => startQuiz()}
-          /> :
-          quizState === QUIZ_STATE["ENDED"] ?
-            <QuizButton
-              fallbackCaption="Close"
-              translateKey="quiz_page.buttons.close"
-              onClick={() => history.push("/", { isRedirect: true })}
-            />
-            :
-            currentQuestion !== numberOfQuestions ?
-              <QuizButton
-                fallbackCaption="Next"
-                translateKey="quiz_page.buttons.next"
-                onClick={() => {
-                  reset();
-                }}
-                isDisabled={!isShowingAnswer}
-              />
-              :
-              <QuizButton
-                fallbackCaption="End"
-                translateKey="quiz_page.buttons.end"
-                onClick={() => {
-                  //HANDLE END QUIZ
-                  endQuiz()
-                }}
-                isDisabled={!isShowingAnswer}
-              />}
+          />
+          :
+          quizState === QUIZ_STATE["IN_PROGRESS"] ? <QuizStatusBar
+            currentQuest={currentQuestion}
+            totalQuest={numberOfQuestions}
+            isPlus={isPlus}
+            totalCorrect={numberOfCorrectQuestions}
+          /> : <QuizButton
+            fallbackCaption="New Quiz"
+            translateKey="quiz_page.buttons.new_quiz"
+            onClick={() => location.reload()}
+          />}
       </div>
 
       <div className="quiz-manager__section quiz-manager__section--button quiz-manager__no-border">
@@ -288,12 +430,40 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
             fallbackCaption="Close"
             translateKey="quiz_page.buttons.close"
             onClick={() => history.push("/", { isRedirect: true })}
-          /> :
-          <QuizTimer
-            data-render={renderTime}
-            currentTime={currentTime.current}
-            totalTime={60}
-          />}
+          /> : quizState === QUIZ_STATE["ENDED"] ?
+            <QuizButton
+              fallbackCaption="Close"
+              translateKey="quiz_page.buttons.close"
+              onClick={() => history.push("/", { isRedirect: true })}
+            />
+            :
+            isFinished ?
+              <QuizButton
+                fallbackCaption="End"
+                translateKey="quiz_page.buttons.end"
+                onClick={() => {
+                  //HANDLE END QUIZ
+                  endQuiz()
+                }}
+                isDisabled={!isShowingAnswer}
+              />
+              :
+              isShowingAnswer ? <QuizButton
+                fallbackCaption="Next"
+                translateKey="quiz_page.buttons.next"
+                onClick={() => {
+                  reset();
+                }}
+                isDisabled={!isShowingAnswer}
+              /> : <QuizButton
+                fallbackCaption="Skip"
+                translateKey="quiz_page.buttons.skip"
+                onClick={() => {
+                  skip();
+                }}
+                isDisabled={isShowingAnswer}
+              />
+        }
       </div>
     </div>
   );

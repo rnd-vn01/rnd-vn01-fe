@@ -10,5 +10,16 @@
     background: var(--theme-background);
     border-left: 1px solid black;
     border-top: 1px solid black;
+
+    &--quiz {
+      border-left: unset;
+      border-right: 1px solid black;
+    }
+  }
+
+  &--quiz {
+    left: 0;
+    right: unset;
+    height: 75px;
   }
 }

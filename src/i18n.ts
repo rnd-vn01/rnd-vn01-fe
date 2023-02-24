@@ -85,6 +85,7 @@ i18n
           },
           quiz_page: {
             title: "Quiz",
+            end: "Finished",
             options: {
               testing: "testing",
               questions: "questions",
@@ -95,7 +96,9 @@ i18n
               start: "Start",
               close: "Close",
               next: "Next",
-              end: "End"
+              end: "End",
+              skip: "Skip",
+              new_quiz: "New Quiz"
             },
             captions: {
               result: "Quiz Result",
@@ -105,10 +108,12 @@ i18n
               correct: "Correct",
               wrong: "Wrong",
               seconds: "Seconds",
-              time_over: "Time Over"
+              time_over: "Time Over / Skipped",
+              view_stats: "view personal records"
             },
             questions: {
-              description: "Which acupuncture point has the following description: "
+              description: "Which acupuncture point has the following description: ",
+              functionalities: "The following symptoms and diseases are normally cured using which acupuncture point: "
             }
           },
           title_bar: {
@@ -380,6 +385,7 @@ i18n
           },
           quiz_page: {
             title: "Kiểm tra",
+            end: "Kết thúc",
             options: {
               testing: "kiểm tra",
               questions: "câu hỏi",
@@ -390,7 +396,9 @@ i18n
               start: "Bắt đầu",
               close: "Đóng",
               next: "Tiếp theo",
-              end: "Kết thúc"
+              end: "Kết thúc",
+              skip: "Bỏ qua",
+              new_quiz: "Kiểm tra mới"
             },
             captions: {
               result: "Kết quả bài Kiểm tra",
@@ -400,10 +408,12 @@ i18n
               correct: "Đúng",
               wrong: "Sai",
               seconds: "Giây",
-              time_over: "Hết giờ"
+              time_over: "Hết giờ / Bỏ qua",
+              view_stats: "xem thành tích cá nhân"
             },
             questions: {
-              description: "Huyệt đạo nào có mô tả sau: "
+              description: "Huyệt đạo nào có mô tả sau: ",
+              functionalities: "Những triệu chứng và bệnh sau thường được chữa bởi huyệt đạo nào: "
             }
           },
           title_bar: {

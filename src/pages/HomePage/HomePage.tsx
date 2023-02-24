@@ -78,6 +78,7 @@ export const HomePage: React.FC = () => {
 
       <div className="home-page__section--controls">
         <HomePageControl
+          isQuizPage={false}
           callbackPanCenter={() => (sceneRef.current as any).panCenter()}
           callbackPanDown={() => (sceneRef.current as any).panDown()}
           callbackPanLeft={() => (sceneRef.current as any).panLeft()}

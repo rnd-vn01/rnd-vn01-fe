@@ -1,19 +1,21 @@
 import './QuizSummary.scss';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 export const QuizSummary: React.FC<IQuizSummary> = ({
   data
 }) => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   return (
     <div
       role="div"
       aria-label="quiz-summary"
       className="quiz-summary flex flex-col items-center justify-center">
-      <h1
-        className="quiz-summary__title">{t('quiz_page.captions.result')}</h1>
+      {/* <h1
+        className="quiz-summary__title">{t('quiz_page.captions.result')}</h1> */}
 
       <div className="quiz-summary__options">
         <h1
@@ -26,7 +28,9 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
         <h1
           className="quiz-summary__sub-title">{t('quiz_page.captions.details')}</h1>
         {data?.questions?.map((question, index) => (
-          <p className="quiz-summary__detail">
+          <p
+            key={index}
+            className="quiz-summary__detail">
             <b>{t('quiz_page.captions.question')} {index + 1}: </b>
             {question.options[question.correctAnswer].answer}
             {` - `}
@@ -37,6 +41,11 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
           </p>
         ))}
       </div>
+
+      <p
+        className='quiz-summary__view-stats'
+        onClick={() => history.push("/records")}
+      >{t('quiz_page.captions.view_stats')}</p>
     </div >
   );
 };
