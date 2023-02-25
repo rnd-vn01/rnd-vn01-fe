@@ -98,7 +98,8 @@ i18n
               next: "Next",
               end: "End",
               skip: "Skip",
-              new_quiz: "New Quiz"
+              new_quiz: "New Quiz",
+              confirmation: "Confirm"
             },
             captions: {
               result: "Quiz Result",
@@ -116,6 +117,9 @@ i18n
               functionalities: "The following symptoms and diseases are normally cured using which acupuncture point: ",
               choose_from_location: "The marked location on the model is of which of the following acupuncture points?",
               navigate: "Find the position of acupuncture point {POINT_NAME} on the model besides? (Click on the selected location on the model)"
+            },
+            alerts: {
+              select_one: "Please select a point on the model to submit the answer."
             }
           },
           title_bar: {
@@ -400,7 +404,8 @@ i18n
               next: "Tiếp theo",
               end: "Kết thúc",
               skip: "Bỏ qua",
-              new_quiz: "Kiểm tra mới"
+              new_quiz: "Kiểm tra mới",
+              confirmation: "Xác nhận"
             },
             captions: {
               result: "Kết quả bài Kiểm tra",
@@ -418,6 +423,9 @@ i18n
               functionalities: "Những triệu chứng và bệnh sau thường được chữa bởi huyệt đạo nào: ",
               choose_from_location: "Vị trí được đánh dấu trong ảnh là của huyệt đạo nào trong các huyệt đạo dưới đây?",
               navigate: "Tìm vị trí của huyệt đạo {POINT_NAME} trong mô hình bên cạnh? (Chọn vào huyệt đạo ứng với vị trí muốn lựa chọn)"
+            },
+            alerts: {
+              select_one: "Vui lòng chọn một huyệt đạo trong mô hình để xác nhận câu trả lời."
             }
           },
           title_bar: {

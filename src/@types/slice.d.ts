@@ -60,8 +60,7 @@ interface IModel {
 }
 
 interface IQuizManager {
-  callbackSetIsModelQuestion?: (boolean) => void;
-  callbackSetQuestionIndex?: (number) => void;
+  callbackSetQuestionType?: (number) => void;
 }
 
 interface IQuizOptions {
@@ -262,4 +261,10 @@ interface IQuizSlice {
   showingPoints?: Array<string>;
   selectedPoint?: string | null;
   markedPoint?: string | null;
+  isShowingLabelOnClick?: boolean;
+  isQuizMode?: boolean;
+  isNavigateQuest?: boolean;
+  navigateQuestSelectable?: boolean;
+  quizField?: number;
+  showingCorrectPoint?: string | null
 }

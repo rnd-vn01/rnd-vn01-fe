@@ -32,7 +32,8 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
             key={index}
             className="quiz-summary__detail">
             <b>{t('quiz_page.captions.question')} {index + 1}: </b>
-            {question.options[question.correctAnswer].answer}
+            {typeof question.correctAnswer === "number" ?
+              question.options[question.correctAnswer].answer : question.correctAnswer}
             {` - `}
             <span className={`${question.answer === question.correctAnswer ? "quiz-summary__correct" : "quiz-summary__wrong"}`}>
               {question.answer === question.correctAnswer ? t('quiz_page.captions.correct') : t('quiz_page.captions.wrong')}

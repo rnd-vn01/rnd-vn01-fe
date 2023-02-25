@@ -6,7 +6,9 @@ import { QuizQuestion } from './QuizQuestion';
 describe('QuizQuestion', () => {
   beforeEach(() => {
     render(<Provider store={store}>
-      <QuizQuestion />
+      <QuizQuestion
+        optionsList={[]}
+      />
     </Provider>)
   })
 

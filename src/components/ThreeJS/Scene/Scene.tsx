@@ -16,7 +16,7 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { setModalLoaded, setPointSelected, setStateCameraQuaternion } from 'src/redux/slice/index';
+import { resetToInitialStateQuizSlice, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setModalLoaded, setPointSelected, setStateCameraQuaternion, unsetStrictMode } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS } from 'src/configs/constants';
@@ -124,6 +124,9 @@ export const Scene = forwardRef((props, ref) => {
           break
       }
     });
+
+    dispatch(unsetStrictMode())
+    dispatch(resetToInitialStateQuizSlice())
   }, []);
 
   useImperativeHandle(ref, () => ({

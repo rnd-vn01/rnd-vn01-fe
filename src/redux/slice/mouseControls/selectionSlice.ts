@@ -24,6 +24,13 @@ export const selectionSlice = createSlice({
       state.selectedType = null;
       state.isHoveringPoint = false;
       state.isHoveringLine = false;
+      state.currentMouseMovePosition = null;
+      state.currentMousePosition = null;
+      state.hoveringLineLabel = null;
+      state.firstSelected = false;
+      state.isSelectingFromMenu = false;
+      state.pointPosition = null;
+      state.isShowingQuickInformation = null;
     },
 
     setPointSelected(state, action) {

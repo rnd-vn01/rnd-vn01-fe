@@ -21,8 +21,10 @@ export const EXTRA_MERIDIAN_COLORS = {
 export const APP_NAME = "Acupuncture 3D"
 
 export enum QUIZ_QUESTION_TYPE {
-  MULTIPLE_CHOICE = 0,
-  PRACTICAL = 1
+  DESCRIPTION = 0,
+  FUNCTIONALITIES = 1,
+  CHOOSE_FROM_LOCATION = 2,
+  NAVIGATE = 3,
 }
 
 export const ALPHABET_LISTS = {

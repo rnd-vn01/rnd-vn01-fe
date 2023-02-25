@@ -13,8 +13,6 @@ import { QuizTimer } from './QuizTimer/QuizTimer';
 
 import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
-import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 
 // Sounds
 import mainSound from "src/assets/sounds/main.mp3"
@@ -22,7 +20,11 @@ import correctSound from "src/assets/sounds/right.mp3"
 import wrongSound from "src/assets/sounds/wrong.mp3"
 import { QuizSummary } from './QuizSummary/QuizSummary';
 import { QuizTitleBar } from './QuizTitleBar/QuizTitleBar';
-import { highlightPoint } from 'src/redux/slice';
+import {
+  highlightPoint, resetToInitialStatePointSelectionSlice, setIsNavigateQuest,
+  setNavigateQuestSelectable, setNavigateQuestSelectedPoint,
+  setQuizField, setShowingCorrectPoint, setStrictMode, unsetStrictMode
+} from 'src/redux/slice';
 
 enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
@@ -30,21 +32,19 @@ enum QUIZ_STATE {
   ENDED = 2
 }
 
-enum QUESTION_TYPE {
-  DESCRIPTION = 0,
-  FUNCTIONALITIES = 1,
-  CHOOSE_FROM_LOCATION = 2,
-  NAVIGATE = 3,
-}
-
 export const QuizManager: React.FC<IQuizManager> = ({
-  callbackSetIsModelQuestion, callbackSetQuestionIndex }) => {
+  callbackSetQuestionType }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const {
     currentLanguage
   } = useSelector(
     (state: RootState) => state.languageSlice,
+  );
+  const {
+    selectedPoint
+  } = useSelector(
+    (state: RootState) => state.quizSlice,
   );
   const dispatch = useAppDispatch();
 
@@ -64,6 +64,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
   const [answersList, setAnswersList] = useState<Array<any>>([]);
   const DEMO_QUESTION_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
   const [numberOfQuestionsOptionsList, setNumberOfQuestionsOptionsList] = useState<Array<number>>(DEMO_QUESTION_COUNT_OPTIONS)
+  const [questionType, setQuestionType] = useState<number>(QUIZ_QUESTION_TYPE.DESCRIPTION)
 
   const pointCurrentFieldIndexes = useRef<any>([]);
   const usedPointIndexes = useRef<any>([]);
@@ -76,6 +77,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
     time: 60
   });
   const [isFinished, setIsFinished] = useState<boolean>(false);
+  const usedQuestionType = useRef<Array<number>>([]);
 
   // Sounds
   const mainSoundPlayer = useRef<any>(new Audio(mainSound))
@@ -102,10 +104,20 @@ export const QuizManager: React.FC<IQuizManager> = ({
     quizHistory.current = {
       questions: [],
       options: {
-        field: DEMO_FIELD_OPTIONS.filter(item => item.value === field),
+        field: DEMO_FIELD_OPTIONS.filter(item => item.value === parseInt(field)),
         numberOfQuestions: numberOfQuestions
       }
     }
+
+    // Question types
+    let questionTypes = [0, 1, 2, 3];
+    while (questionTypes.length < numberOfQuestions) {
+      questionTypes.push(Math.floor(Math.random() * 4))
+    }
+    usedQuestionType.current = questionTypes.map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value)
+
     updatePointsCurrentField();
     generateQuestion();
     setCurrentQuestion(1);
@@ -128,18 +140,46 @@ export const QuizManager: React.FC<IQuizManager> = ({
   }, [selectedAnswer, correctAnswer])
 
   const submitAnswer = (answer) => {
-    quizHistory.current.questions.push({
-      question: questionContent,
-      options: answersList,
-      answer: answer,
-      correctAnswer: correctAnswer,
-      time: Math.max(60 - currentTime.current, 0)
-    })
+    let getAnswer = "" as any;
+    let getCorrectAnswer = "" as any;
+
+    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+      if (selectedPoint === null || selectedPoint === undefined) {
+        alert(t('quiz_page.alerts.select_one'))
+        return;
+      }
+
+      getAnswer = selectedPoint
+      getCorrectAnswer = answersList[correctAnswer].answer.substring(0, answersList[correctAnswer].answer.indexOf(" "))
+
+      quizHistory.current.questions.push({
+        question: questionContent,
+        options: answersList,
+        answer: getAnswer,
+        correctAnswer: getCorrectAnswer,
+        time: Math.max(60 - currentTime.current, 0)
+      })
+
+      dispatch(setNavigateQuestSelectable({
+        selectable: false
+      }))
+    } else {
+      quizHistory.current.questions.push({
+        question: questionContent,
+        options: answersList,
+        answer: answer,
+        correctAnswer: correctAnswer,
+        time: Math.max(60 - currentTime.current, 0)
+      })
+
+      getAnswer = answer;
+      getCorrectAnswer = correctAnswer;
+    }
 
     endAnswerTime()
     setSelectedAnswer(answer)
     mainSoundPlayer.current?.pause();
-    if (answer === correctAnswer) {
+    if (getAnswer === getCorrectAnswer) {
       setNumberOfCorrectQuestions(numberOfCorrectQuestions + 1);
       (correctSoundPlayer.current as HTMLAudioElement).currentTime = 0;
       correctSoundPlayer.current.play();
@@ -155,6 +195,21 @@ export const QuizManager: React.FC<IQuizManager> = ({
     timer.current = null
     if (currentQuestion === numberOfQuestions) {
       setIsFinished(true);
+    }
+    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+      dispatch(setNavigateQuestSelectable({
+        selectable: false
+      }))
+      dispatch(unsetStrictMode())
+      dispatch(setShowingCorrectPoint({
+        correctPoint: temporarilyStoredQuestionContent.current.correctAnswer
+      }))
+    } else if (questionType === QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
+      let correctAnswer = temporarilyStoredQuestionContent.current.options[temporarilyStoredQuestionContent.current.correctAnswer].answer
+      let correctPointCode = correctAnswer.substring(0, correctAnswer.indexOf(" "))
+      dispatch(setShowingCorrectPoint({
+        correctPoint: correctPointCode
+      }))
     }
   }
 
@@ -262,13 +317,14 @@ export const QuizManager: React.FC<IQuizManager> = ({
     })
     used = newUsed;
 
-    const questionType = Math.floor(Math.random() * 3)
+    const questionType = usedQuestionType.current[currentQuestion]
+
     let questionContent = "";
     switch (questionType) {
-      case QUESTION_TYPE.DESCRIPTION:
+      case QUIZ_QUESTION_TYPE.DESCRIPTION:
         questionContent = `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`
         break
-      case QUESTION_TYPE.FUNCTIONALITIES:
+      case QUIZ_QUESTION_TYPE.FUNCTIONALITIES:
         questionContent = `${t('quiz_page.questions.functionalities')}`
         DEMO_DATA[used[correct]].functionalities.forEach((functionality, index) => {
           questionContent += `${functionality}`
@@ -280,25 +336,35 @@ export const QuizManager: React.FC<IQuizManager> = ({
           }
         })
         break
-      case QUESTION_TYPE.CHOOSE_FROM_LOCATION:
+      case QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION:
         questionContent = `${t('quiz_page.questions.choose_from_location')}`
         break
-      case QUESTION_TYPE.NAVIGATE:
+      case QUIZ_QUESTION_TYPE.NAVIGATE:
         questionContent = `${t('quiz_page.questions.navigate')}`.replace("{POINT_NAME}",
-          `${DEMO_DATA[used[correct]].code} (${DEMO_DATA[used[correct]].name})`)
+          `${DEMO_DATA[used[correct]].name}`)
         break
     }
 
-    callbackSetIsModelQuestion((questionType === QUESTION_TYPE.CHOOSE_FROM_LOCATION) || (questionType === QUESTION_TYPE.NAVIGATE))
+    setQuestionType(questionType)
+    callbackSetQuestionType(questionType)
 
-    if (questionType !== QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
-      callbackSetQuestionIndex(currentQuestion + 1)
+    if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
       dispatch(highlightPoint({
-        markedPoint: null
+        markedPoint: undefined
       }))
     } else {
       dispatch(highlightPoint({
         markedPoint: DEMO_DATA[used[correct]].code
+      }))
+    }
+
+    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+      dispatch(setIsNavigateQuest({
+        isNavigate: true
+      }))
+    } else {
+      dispatch(setIsNavigateQuest({
+        isNavigate: false
       }))
     }
 
@@ -312,13 +378,31 @@ export const QuizManager: React.FC<IQuizManager> = ({
     setAnswersList(TEST_ANSWERS_LIST)
     setQuestionContent(questionContent)
     setCorrectAnswer(correct)
+    dispatch(setStrictMode())
+    dispatch(setShowingCorrectPoint({
+      correctPoint: null
+    }))
+    dispatch(setNavigateQuestSelectedPoint({
+      selectedPoint: null
+    }))
+    dispatch(resetToInitialStatePointSelectionSlice())
 
-    temporarilyStoredQuestionContent.current = {
-      question: `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`,
-      options: TEST_ANSWERS_LIST,
-      answer: null,
-      correctAnswer: correct,
-      time: 60
+    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+      temporarilyStoredQuestionContent.current = {
+        question: `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`,
+        options: TEST_ANSWERS_LIST,
+        answer: null,
+        correctAnswer: TEST_ANSWERS_LIST[correct].answer.substring(0, TEST_ANSWERS_LIST[correct].answer.indexOf(" ")),
+        time: 60
+      }
+    } else {
+      temporarilyStoredQuestionContent.current = {
+        question: `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`,
+        options: TEST_ANSWERS_LIST,
+        answer: null,
+        correctAnswer: correct,
+        time: 60
+      }
     }
   }
 
@@ -338,6 +422,12 @@ export const QuizManager: React.FC<IQuizManager> = ({
       updatePointsCurrentField();
     } else {
       setNumberOfQuestionsOptionsList(DEMO_QUESTION_COUNT_OPTIONS)
+    }
+
+    if (field !== null && field !== undefined && parseInt(field) >= 0) {
+      dispatch(setQuizField({
+        field: parseInt(field)
+      }))
     }
   }, [field]);
 
@@ -395,7 +485,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
           /> : quizState === QUIZ_STATE["IN_PROGRESS"] ?
             <QuizQuestion
               questionContent={questionContent}
-              type={QUIZ_QUESTION_TYPE["MULTIPLE_CHOICE"]}
+              type={questionType}
               optionsList={answersList}
               correctAnswer={correctAnswer}
               isShowingAnswer={isShowingAnswer}

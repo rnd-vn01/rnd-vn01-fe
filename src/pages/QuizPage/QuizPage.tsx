@@ -11,27 +11,20 @@ import { SceneQuiz } from 'src/components/index';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
-import { APP_NAME } from 'src/configs/constants';
+import { APP_NAME, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 
 export const QuizPage: React.FC = () => {
   const { t, i18n } = useTranslation();
   const sceneRef = useRef();
-  const [isModelQuestion, setIsModelQuestion] = useState<boolean>(false);
-  const [questionIndex, setQuestionIndex] = useState<number>(0);
+  const [questionType, setQuestionType] = useState<number>(QUIZ_QUESTION_TYPE.DESCRIPTION);
 
   document.title = `${APP_NAME} | ${t('quiz_page.title')}`
 
   useEffect(() => {
-    // if (isModelQuestion) {
-    //   (sceneRef.current as any).panCenter();
-    // }
-  }, [isModelQuestion]);
-
-  useEffect(() => {
-    // if (sceneRef.current) {
-    //   (sceneRef.current as any).panCenter();
-    // }
-  }, [questionIndex])
+    if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION && sceneRef.current) {
+      (sceneRef.current as any).panCenter();
+    }
+  }, [questionType]);
 
   return (
     <div
@@ -60,8 +53,7 @@ export const QuizPage: React.FC = () => {
 
       <div className="quiz-page__section quiz-page__section--side-bar col-span-2">
         <QuizManager
-          callbackSetIsModelQuestion={setIsModelQuestion}
-          callbackSetQuestionIndex={setQuestionIndex}
+          callbackSetQuestionType={setQuestionType}
         ></QuizManager>
       </div>
 

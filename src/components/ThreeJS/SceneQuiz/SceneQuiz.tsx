@@ -15,10 +15,10 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { highlightPoint, setModalLoaded, setPointSelected, setStateCameraQuaternion, setStrictMode } from 'src/redux/slice/index';
+import { highlightPoint, resetToInitialStatePointSelectionSlice, resetToInitialStateSceneQuiz, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setModalLoaded, setNavigateQuestSelectedPoint, setPointSelected, setStateCameraQuaternion, setStrictMode } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
-import { FOCUS_OPTIONS, POINT_LOCATIONS } from 'src/configs/constants';
+import { FOCUS_OPTIONS, MERIDIANS, POINT_LOCATIONS } from 'src/configs/constants';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -32,7 +32,8 @@ export const SceneQuiz = forwardRef((props, ref) => {
   const camera = useRef(null);
   const dispatch = useAppDispatch();
   const {
-    markedPoint
+    markedPoint,
+    quizField
   } = useSelector(
     (state: RootState) => state.quizSlice,
   );
@@ -110,10 +111,9 @@ export const SceneQuiz = forwardRef((props, ref) => {
       }
     });
 
+    dispatch(resetToInitialStateSceneQuiz())
     dispatch(setStrictMode())
-    dispatch(highlightPoint({
-      markedPoint: null
-    }))
+    dispatch(resetToInitialStatePointSelectionSlice())
   }, []);
 
   useImperativeHandle(ref, () => ({
@@ -155,8 +155,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
   }));
 
   useEffect(() => {
-    console.log(markedPoint)
-    if (markedPoint !== null && controls.current && camera.current) {
+    if (markedPoint !== null && markedPoint !== undefined && controls.current && camera.current) {
       const point = POINT_LOCATIONS[markedPoint]
       const pointPosition = {
         x: point[0],
@@ -195,6 +194,14 @@ export const SceneQuiz = forwardRef((props, ref) => {
       }
     }
   }, [markedPoint]);
+
+  useEffect(() => {
+    if (quizField === undefined || quizField === null || quizField === 0) {
+      setIsShowingLine(false);
+    } else {
+      setIsShowingLine(true);
+    }
+  }, [quizField])
 
   return (
     <Suspense fallback={<Loader />}>
@@ -243,37 +250,37 @@ export const SceneQuiz = forwardRef((props, ref) => {
       <Body
         isQuizMode={true}
       />
-      <LU
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "LU") && <LU
         showLine={isShowingLine}
-      />
-      <LI
-        showLine={isShowingLine} />
-      <ST
-        showLine={isShowingLine} />
-      <SP
-        showLine={isShowingLine} />
-      <HT
-        showLine={isShowingLine} />
-      <SI
-        showLine={isShowingLine} />
-      <BL
-        showLine={isShowingLine} />
-      <KI
-        showLine={isShowingLine} />
-      <PC
-        showLine={isShowingLine} />
-      <TE
-        showLine={isShowingLine} />
-      <GB
-        showLine={isShowingLine} />
-      <Liv
-        showLine={isShowingLine} />
-      <Du
-        showLine={isShowingLine} />
-      <Ren
-        showLine={isShowingLine} />
-      <Others
-        showLine={isShowingLine} />
+      />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "LI") && <LI
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "ST") && <ST
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "SP") && <SP
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "HT") && <HT
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "SI") && <SI
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "BL") && <BL
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "KI") && <KI
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "PC") && <PC
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "TE") && <TE
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "GB") && <GB
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "Liv") && <Liv
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "Du") && <Du
+        showLine={isShowingLine} />}
+      {(quizField === 0 || MERIDIANS[quizField - 1] === "Ren") && <Ren
+        showLine={isShowingLine} />}
+      {quizField === 0 && <Others
+        showLine={isShowingLine} />}
       {/* <ST /> */}
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
