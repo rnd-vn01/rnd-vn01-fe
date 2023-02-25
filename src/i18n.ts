@@ -113,7 +113,9 @@ i18n
             },
             questions: {
               description: "Which acupuncture point has the following description: ",
-              functionalities: "The following symptoms and diseases are normally cured using which acupuncture point: "
+              functionalities: "The following symptoms and diseases are normally cured using which acupuncture point: ",
+              choose_from_location: "The marked location on the model is of which of the following acupuncture points?",
+              navigate: "Find the position of acupuncture point {POINT_NAME} on the model besides? (Click on the selected location on the model)"
             }
           },
           title_bar: {
@@ -413,7 +415,9 @@ i18n
             },
             questions: {
               description: "Huyệt đạo nào có mô tả sau: ",
-              functionalities: "Những triệu chứng và bệnh sau thường được chữa bởi huyệt đạo nào: "
+              functionalities: "Những triệu chứng và bệnh sau thường được chữa bởi huyệt đạo nào: ",
+              choose_from_location: "Vị trí được đánh dấu trong ảnh là của huyệt đạo nào trong các huyệt đạo dưới đây?",
+              navigate: "Tìm vị trí của huyệt đạo {POINT_NAME} trong mô hình bên cạnh? (Chọn vào huyệt đạo ứng với vị trí muốn lựa chọn)"
             }
           },
           title_bar: {

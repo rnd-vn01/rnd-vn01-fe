@@ -60,7 +60,8 @@ interface IModel {
 }
 
 interface IQuizManager {
-
+  callbackSetIsModelQuestion?: (boolean) => void;
+  callbackSetQuestionIndex?: (number) => void;
 }
 
 interface IQuizOptions {
@@ -253,4 +254,12 @@ interface IGlobalSlice {
 
 interface IQuizTitleBar {
   title?: string;
+}
+
+interface IQuizSlice {
+  isShowingLabelOnHovering?: boolean;
+  isHoverable?: boolean;
+  showingPoints?: Array<string>;
+  selectedPoint?: string | null;
+  markedPoint?: string | null;
 }

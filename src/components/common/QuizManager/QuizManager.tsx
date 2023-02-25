@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { QuizOptions } from './QuizOptions/QuizOptions';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState, useAppDispatch } from 'src/redux/store';
 import { QuizButton } from './QuizButton/QuizButton';
 import { useHistory } from 'react-router-dom';
 import { QuizStatusBar } from './QuizStatusBar/QuizStatusBar';
@@ -22,6 +22,7 @@ import correctSound from "src/assets/sounds/right.mp3"
 import wrongSound from "src/assets/sounds/wrong.mp3"
 import { QuizSummary } from './QuizSummary/QuizSummary';
 import { QuizTitleBar } from './QuizTitleBar/QuizTitleBar';
+import { highlightPoint } from 'src/redux/slice';
 
 enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
@@ -33,10 +34,11 @@ enum QUESTION_TYPE {
   DESCRIPTION = 0,
   FUNCTIONALITIES = 1,
   CHOOSE_FROM_LOCATION = 2,
-  NAVIGATE = 3
+  NAVIGATE = 3,
 }
 
-export const QuizManager: React.FC<IQuizManager> = ({ }) => {
+export const QuizManager: React.FC<IQuizManager> = ({
+  callbackSetIsModelQuestion, callbackSetQuestionIndex }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const {
@@ -44,6 +46,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+  const dispatch = useAppDispatch();
 
   const [quizState, setQuizState] = useState<number>(QUIZ_STATE["SELECT_OPTIONS"]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
@@ -61,7 +64,6 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
   const [answersList, setAnswersList] = useState<Array<any>>([]);
   const DEMO_QUESTION_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
   const [numberOfQuestionsOptionsList, setNumberOfQuestionsOptionsList] = useState<Array<number>>(DEMO_QUESTION_COUNT_OPTIONS)
-
 
   const pointCurrentFieldIndexes = useRef<any>([]);
   const usedPointIndexes = useRef<any>([]);
@@ -210,20 +212,11 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
       //Get the point for this question
       //Case all mode
       let random = -1;
-      let usingPoint = {
-        code: "",
-        index: -1
-      }
 
       while (true) {
         random = Math.floor(Math.random() * DEMO_DATA.length)
 
         if (!usedPointIndexes.current.includes(DEMO_DATA[random].code)) {
-          usingPoint = {
-            code: DEMO_DATA[random].code,
-            index: random
-          }
-
           used.push(random)
           usedPointIndexes.current.push(random)
           break;
@@ -240,21 +233,12 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
       //Get the point for this question
       //Case 1 meridian
       let random = -1;
-      let usingPoint = {
-        code: "",
-        index: -1
-      }
       const thisMeridianIndexes = pointCurrentFieldIndexes.current
 
       while (true) {
         random = Math.floor(Math.random() * thisMeridianIndexes.length)
 
         if (!usedPointIndexes.current.includes(thisMeridianIndexes[random].code)) {
-          usingPoint = {
-            code: DEMO_DATA[thisMeridianIndexes[random]].code,
-            index: thisMeridianIndexes[random]
-          }
-
           used.push(thisMeridianIndexes[random])
           usedPointIndexes.current.push(thisMeridianIndexes[random])
           break;
@@ -278,7 +262,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
     })
     used = newUsed;
 
-    const questionType = Math.floor(Math.random() * 2)
+    const questionType = Math.floor(Math.random() * 3)
     let questionContent = "";
     switch (questionType) {
       case QUESTION_TYPE.DESCRIPTION:
@@ -296,6 +280,26 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
           }
         })
         break
+      case QUESTION_TYPE.CHOOSE_FROM_LOCATION:
+        questionContent = `${t('quiz_page.questions.choose_from_location')}`
+        break
+      case QUESTION_TYPE.NAVIGATE:
+        questionContent = `${t('quiz_page.questions.navigate')}`.replace("{POINT_NAME}",
+          `${DEMO_DATA[used[correct]].code} (${DEMO_DATA[used[correct]].name})`)
+        break
+    }
+
+    callbackSetIsModelQuestion((questionType === QUESTION_TYPE.CHOOSE_FROM_LOCATION) || (questionType === QUESTION_TYPE.NAVIGATE))
+
+    if (questionType !== QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
+      callbackSetQuestionIndex(currentQuestion + 1)
+      dispatch(highlightPoint({
+        markedPoint: null
+      }))
+    } else {
+      dispatch(highlightPoint({
+        markedPoint: DEMO_DATA[used[correct]].code
+      }))
     }
 
     let TEST_ANSWERS_LIST = [];

@@ -1,6 +1,5 @@
-import './Scene.scss'
 import React, {
-  forwardRef, Suspense, useEffect, useImperativeHandle, useRef
+  forwardRef, Suspense, useEffect, useImperativeHandle, useRef, useState
 } from 'react';
 import {
   Environment,
@@ -16,10 +15,10 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { setModalLoaded, setPointSelected, setStateCameraQuaternion } from 'src/redux/slice/index';
+import { highlightPoint, setModalLoaded, setPointSelected, setStateCameraQuaternion, setStrictMode } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
-import { FOCUS_OPTIONS } from 'src/configs/constants';
+import { FOCUS_OPTIONS, POINT_LOCATIONS } from 'src/configs/constants';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -28,18 +27,16 @@ enum PAN_DIRECTION {
   DOWN = 3
 }
 
-export const Scene = forwardRef((props, ref) => {
+export const SceneQuiz = forwardRef((props, ref) => {
   const controls = useRef(null);
   const camera = useRef(null);
   const dispatch = useAppDispatch();
   const {
-    selectedLabel,
-    selectedType,
-    pointPosition,
-    isSelectingFromMenu
+    markedPoint
   } = useSelector(
-    (state: RootState) => state.selectionSlice,
+    (state: RootState) => state.quizSlice,
   );
+  const [isShowingLine, setIsShowingLine] = useState<boolean>(false);
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
@@ -83,18 +80,6 @@ export const Scene = forwardRef((props, ref) => {
     dispatch(setModalLoaded({
       modelLoaded: false
     }))
-    // const interval = setInterval(() => {
-    //   if (camera.current) {
-    //     dispatch(setStateCameraQuaternion({
-    //       x: camera.current.quaternion._x,
-    //       y: camera.current.quaternion._y,
-    //       z: camera.current.quaternion._z,
-    //       w: camera.current.quaternion._w,
-    //     }))
-    //   }
-    // }, 2500)
-
-    // return () => clearInterval(interval);
 
     dispatch(setPointSelected({
       selectedPoint: null
@@ -124,6 +109,11 @@ export const Scene = forwardRef((props, ref) => {
           break
       }
     });
+
+    dispatch(setStrictMode())
+    dispatch(highlightPoint({
+      markedPoint: null
+    }))
   }, []);
 
   useImperativeHandle(ref, () => ({
@@ -165,36 +155,15 @@ export const Scene = forwardRef((props, ref) => {
   }));
 
   useEffect(() => {
-    if (isSelectingFromMenu && selectedType === "line" && controls.current) {
-      //Get the first point of line
-      const point = FOCUS_OPTIONS[selectedLabel]["point"];
-      controls.current.reset();
+    console.log(markedPoint)
+    if (markedPoint !== null && controls.current && camera.current) {
+      const point = POINT_LOCATIONS[markedPoint]
+      const pointPosition = {
+        x: point[0],
+        y: point[1],
+        z: point[2]
+      }
 
-      let _v = new Vector3(controls.current.target.x - point["x"],
-        controls.current.target.y - point["y"],
-        controls.current.target.z - point["z"]);
-      controls.current.target.sub(_v)
-      camera.current.zoom = 3.5;
-      camera.current.updateProjectionMatrix();
-
-      const rad = MathUtils.degToRad(FOCUS_OPTIONS[selectedLabel]["rotate"]);
-
-      //Need rotation
-      const cx1 = camera.current.position.x;
-      const cy1 = camera.current.position.y;
-      const cz1 = camera.current.position.z;
-
-      // 4. Calculate new camera position:
-      const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
-      const cy2 = cy1;
-      const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
-
-      // 5. Set new camera position:
-      camera.current.position.set(cx2, cy2, cz2);
-
-      camera.current.updateProjectionMatrix();
-
-    } else if (isSelectingFromMenu && selectedType === "point" && controls.current && camera.current) {
       //Get the first point of line
       controls.current.reset();
 
@@ -202,7 +171,7 @@ export const Scene = forwardRef((props, ref) => {
         controls.current.target.y - pointPosition["y"],
         controls.current.target.z - pointPosition["z"]);
       controls.current.target.sub(_v)
-      camera.current.zoom = 3.5;
+      camera.current.zoom = 4;
       camera.current.updateProjectionMatrix();
 
       const rad = MathUtils.degToRad(180);
@@ -225,7 +194,7 @@ export const Scene = forwardRef((props, ref) => {
         camera.current.updateProjectionMatrix();
       }
     }
-  }, [selectedLabel, selectedType]);
+  }, [markedPoint]);
 
   return (
     <Suspense fallback={<Loader />}>
@@ -272,38 +241,39 @@ export const Scene = forwardRef((props, ref) => {
       ></OrbitControls>
 
       <Body
-        isQuizMode={false}
+        isQuizMode={true}
       />
       <LU
-        showLine={true} />
+        showLine={isShowingLine}
+      />
       <LI
-        showLine={true} />
+        showLine={isShowingLine} />
       <ST
-        showLine={true} />
+        showLine={isShowingLine} />
       <SP
-        showLine={true} />
+        showLine={isShowingLine} />
       <HT
-        showLine={true} />
+        showLine={isShowingLine} />
       <SI
-        showLine={true} />
+        showLine={isShowingLine} />
       <BL
-        showLine={true} />
+        showLine={isShowingLine} />
       <KI
-        showLine={true} />
+        showLine={isShowingLine} />
       <PC
-        showLine={true} />
+        showLine={isShowingLine} />
       <TE
-        showLine={true} />
+        showLine={isShowingLine} />
       <GB
-        showLine={true} />
+        showLine={isShowingLine} />
       <Liv
-        showLine={true} />
+        showLine={isShowingLine} />
       <Du
-        showLine={true} />
+        showLine={isShowingLine} />
       <Ren
-        showLine={true} />
+        showLine={isShowingLine} />
       <Others
-        showLine={true} />
+        showLine={isShowingLine} />
       {/* <ST /> */}
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>

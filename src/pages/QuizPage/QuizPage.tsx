@@ -7,7 +7,7 @@ import {
 } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
-import { Scene } from 'src/components/index';
+import { SceneQuiz } from 'src/components/index';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
@@ -16,8 +16,22 @@ import { APP_NAME } from 'src/configs/constants';
 export const QuizPage: React.FC = () => {
   const { t, i18n } = useTranslation();
   const sceneRef = useRef();
+  const [isModelQuestion, setIsModelQuestion] = useState<boolean>(false);
+  const [questionIndex, setQuestionIndex] = useState<number>(0);
 
   document.title = `${APP_NAME} | ${t('quiz_page.title')}`
+
+  useEffect(() => {
+    // if (isModelQuestion) {
+    //   (sceneRef.current as any).panCenter();
+    // }
+  }, [isModelQuestion]);
+
+  useEffect(() => {
+    // if (sceneRef.current) {
+    //   (sceneRef.current as any).panCenter();
+    // }
+  }, [questionIndex])
 
   return (
     <div
@@ -26,25 +40,36 @@ export const QuizPage: React.FC = () => {
       className="quiz-page grid grid-cols-7">
       <div
         className="quiz-page__section quiz-page__section--model col-span-5">
-        {/* <Canvas shadows>
-          <Scene
+        <Canvas shadows>
+          <SceneQuiz
             ref={sceneRef}
           />
-        </Canvas> */}
-        <img
+        </Canvas>
+        {/* {!isModelQuestion && <img
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "cover"
+            objectFit: "cover",
+            zIndex: 201,
+            position: "absolute",
+            top: 0,
+            left: 0,
           }}
-          src={DemoImage}></img>
+          src={DemoImage}></img>} */}
       </div>
 
       <div className="quiz-page__section quiz-page__section--side-bar col-span-2">
-        <QuizManager></QuizManager>
+        <QuizManager
+          callbackSetIsModelQuestion={setIsModelQuestion}
+          callbackSetQuestionIndex={setQuestionIndex}
+        ></QuizManager>
       </div>
 
-      <div className="quiz-page__section--menu">
+      <div
+        style={{
+          zIndex: 202
+        }}
+        className="quiz-page__section--menu">
         <AuthBar />
       </div>
 

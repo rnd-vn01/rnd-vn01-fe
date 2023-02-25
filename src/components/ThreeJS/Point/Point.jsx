@@ -16,6 +16,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [isSelected, setIsSelected] = useState(false);
   const [isInCheckingRange, setIsInCheckingRange] = useState(true);
   const [isMeridianSelected, setIsMeridianSelected] = useState(false);
+  const [isSelectedOnQuizFocus, setIsSelectedOnQuizFocus] = useState(false);
+
   //Responsive
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
@@ -24,6 +26,16 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     selectedType
   } = useSelector(
     (state) => state.selectionSlice,
+  );
+
+  const {
+    isShowingLabelOnHovering,
+    isHoverable,
+    showingPoints,
+    selectedPoint,
+    markedPoint
+  } = useSelector(
+    (state) => state.quizSlice,
   );
 
   let textPosition = useMemo(() => {
@@ -53,7 +65,15 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   useEffect(() => {
     setIsSelected(selectedLabel !== "" && label === selectedLabel && selectedType === 'point')
     setIsMeridianSelected(selectedLabel !== "" && selectedType === 'line' && label.includes(selectedLabel))
+    setIsSelectedOnQuizFocus(false);
   }, [selectedLabel])
+
+  useEffect(() => {
+    if (markedPoint) {
+      setIsSelected(markedPoint === label)
+      setIsSelectedOnQuizFocus(true);
+    }
+  }, [markedPoint])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
 
@@ -73,11 +93,13 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     <>
       <points
         onPointerMove={(e) => {
-          if (isDesktop) {
-            if (e.distanceToRay < 0.1) {
-              setIsOnHover(true);
-            } else {
-              setIsOnHover(false);
+          if (isHoverable) {
+            if (isDesktop) {
+              if (e.distanceToRay < 0.1) {
+                setIsOnHover(true);
+              } else {
+                setIsOnHover(false);
+              }
             }
           }
         }}
@@ -114,13 +136,16 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         />
       </points>
 
-      {(isOnHover || (selectedLabel !== "" && isSelected) || (selectedLabel !== "" && isMeridianSelected)) && <Text
-        positionArray={textPosition}
-        text={label}
-        reverse={reverse}
-        viewFromBottom={viewFromBottom}
-        isOnHover={isOnHover || isSelected}
-      ></Text>}
+      {((isOnHover || isShowingLabelOnHovering) ||
+        (!isSelectedOnQuizFocus && selectedLabel !== "" && isSelected) ||
+        (!isSelectedOnQuizFocus && selectedLabel !== "" && isMeridianSelected)) &&
+        <Text
+          positionArray={textPosition}
+          text={label}
+          reverse={reverse}
+          viewFromBottom={viewFromBottom}
+          isOnHover={isOnHover || isSelected}
+        ></Text>}
     </>
   );
 };
