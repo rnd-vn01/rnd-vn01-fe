@@ -12,6 +12,7 @@ export const initialStateQuizSlice = {
   navigateQuestSelectable: false,
   isQuizField: 0,
   showingCorrectPoint: null,
+  isShowing4Labels: false
 } as IQuizSlice;
 
 export const quizSlice = createSlice({
@@ -29,6 +30,7 @@ export const quizSlice = createSlice({
       state.navigateQuestSelectable = false;
       state.quizField = 0;
       state.showingCorrectPoint = null;
+      state.isShowing4Labels = false;
     },
 
     resetToInitialStateSceneQuiz(state) {
@@ -42,6 +44,7 @@ export const quizSlice = createSlice({
       state.navigateQuestSelectable = false;
       state.quizField = 0;
       state.showingCorrectPoint = null;
+      state.isShowing4Labels = false;
     },
 
     setStrictMode(state) {
@@ -86,11 +89,20 @@ export const quizSlice = createSlice({
     setShowingCorrectPoint(state, action) {
       state.showingCorrectPoint = action.payload.correctPoint;
     },
+
+    setShowingPoints(state, action) {
+      state.showingPoints = action.payload.showingPoints;
+    },
+
+    setIsShowing4Labels(state, action) {
+      state.isShowing4Labels = action.payload.isShowingResults;
+    }
   },
 });
 
 const { actions, reducer } = quizSlice;
 export const { resetToInitialStateQuizSlice, setStrictMode, unsetStrictMode, highlightPoint,
   setIsShowingLabelOnClick, setIsQuizMode, setIsNavigateQuest, setNavigateQuestSelectedPoint,
-  setNavigateQuestSelectable, resetToInitialStateSceneQuiz, setQuizField, setShowingCorrectPoint } = actions;
+  setNavigateQuestSelectable, resetToInitialStateSceneQuiz, setQuizField, setShowingCorrectPoint,
+  setShowingPoints, setIsShowing4Labels } = actions;
 export default reducer;

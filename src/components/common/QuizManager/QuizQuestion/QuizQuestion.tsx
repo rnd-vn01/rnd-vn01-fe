@@ -32,8 +32,11 @@ export const QuizQuestion: React.FC<IQuizQuestion> = ({
               if (!isShowingAnswer)
                 onSubmitAnswer(option.index)
             }}>
-            {type !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION ? `${option.answer}`
-              : `${option.answer.substring(option.answer.indexOf("(") + 1, option.answer.indexOf(")"))}`}
+            {type === QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION ?
+              `${option.answer.substring(option.answer.indexOf("(") + 1, option.answer.indexOf(")"))}`
+              : type === QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION ?
+                `P${option.index + 1}` : `${option.answer}`
+            }
           </div>
           )}
         </div> :

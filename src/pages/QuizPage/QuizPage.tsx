@@ -22,7 +22,8 @@ export const QuizPage: React.FC = () => {
 
   useEffect(() => {
     if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION
-      && questionType !== QUIZ_QUESTION_TYPE.NAVIGATE && sceneRef.current) {
+      && questionType !== QUIZ_QUESTION_TYPE.NAVIGATE
+      && questionType !== QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION && sceneRef.current) {
       (sceneRef.current as any).panCenter();
     } else if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
       (sceneRef.current as any).focusForNavigateQuestion();

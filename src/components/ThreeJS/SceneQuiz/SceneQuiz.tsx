@@ -38,7 +38,8 @@ export const SceneQuiz = forwardRef((props, ref) => {
   const dispatch = useAppDispatch();
   const {
     markedPoint,
-    quizField
+    quizField,
+    showingPoints
   } = useSelector(
     (state: RootState) => state.quizSlice,
   );
@@ -243,6 +244,46 @@ export const SceneQuiz = forwardRef((props, ref) => {
       camera.current.updateProjectionMatrix();
     }
   }, [markedPoint]);
+
+  useEffect(() => {
+    if (showingPoints.length && controls.current && camera.current) {
+      const point = POINT_LOCATIONS[showingPoints[0]]["position"]
+      const pointPosition = {
+        x: point[0],
+        y: point[1],
+        z: point[2]
+      }
+
+      controls.current.reset();
+
+      let _v = new Vector3(controls.current.target.x - pointPosition["x"],
+        controls.current.target.y - pointPosition["y"],
+        controls.current.target.z - pointPosition["z"]);
+      controls.current.target.sub(_v)
+
+      const rad = MathUtils.degToRad(POINT_LOCATIONS[showingPoints[0]]["reverse"]);
+      const rad90 = MathUtils.degToRad(90)
+
+      const cx1 = camera.current.position.x;
+      const cy1 = camera.current.position.y;
+      const cz1 = camera.current.position.z;
+
+      // 4. Calculate new camera position:
+      const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
+      const cy2 = POINT_LOCATIONS[showingPoints[0]]["viewFromBottom"] ? -180 : cy1;
+      const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
+
+      // 5. Set new camera position:
+      camera.current.position.set(cx2, cy2, cz2);
+
+      if (!POINT_LOCATIONS[showingPoints[0]]["viewFromBottom"])
+        camera.current.zoom = 2.5;
+      else
+        camera.current.zoom = 7.5;
+
+      camera.current.updateProjectionMatrix();
+    }
+  }, [showingPoints]);
 
   useEffect(() => {
     if (quizField === undefined || quizField === null || quizField === 0) {

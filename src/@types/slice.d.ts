@@ -267,4 +267,5 @@ interface IQuizSlice {
   navigateQuestSelectable?: boolean;
   quizField?: number;
   showingCorrectPoint?: string | null;
+  isShowing4Labels?: boolean;
 }

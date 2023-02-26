@@ -8,6 +8,8 @@ import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint } from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
+import { useTranslation } from 'react-i18next';
+import { capitalize } from 'src/helpers/capitalize';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
@@ -19,6 +21,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [isSelectedOnQuizFocus, setIsSelectedOnQuizFocus] = useState(false);
   const [isShowingLabel, setIsShowingLabel] = useState(false);
   const [isAnswerPoint, setIsAnswerPoint] = useState(false);
+  const [isInShowingPoints, setIsInShowingPoints] = useState(false);
+  const { t } = useTranslation();
 
   //Responsive
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
@@ -41,6 +45,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     isNavigateQuest,
     navigateQuestSelectable,
     showingCorrectPoint,
+    isShowing4Labels
   } = useSelector(
     (state) => state.quizSlice,
   );
@@ -102,9 +107,31 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         setColor(0xF9FFB3)
         setIsShowingLabel(false);
         setIsAnswerPoint(false);
+        if (!markedPoint) {
+          setIsSelected(false)
+        }
       }
     }
   }, [showingCorrectPoint])
+
+  useEffect(() => {
+    if (showingPoints.length) {
+      setIsSelected(showingPoints.includes(label))
+      setIsSelectedOnQuizFocus(true);
+      setIsInShowingPoints(showingPoints.includes(label))
+
+      if (showingPoints.includes(label)) {
+        setIsShowingLabel(true);
+        setColor(0xFFFF00)
+      } else {
+        setIsShowingLabel(false);
+        setColor(0xF9FFB3)
+      }
+    } else {
+      setIsInShowingPoints(false);
+      setIsShowingLabel(false);
+    }
+  }, [showingPoints])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
 
@@ -121,7 +148,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [isOnHover, isSelected])
 
   useEffect(() => {
-    if (isAnswerPoint) {
+    if (isAnswerPoint || isInShowingPoints) {
       setIsShowingLabel(true)
     } else if (isOnHover && isShowingLabelOnHovering) {
       setIsShowingLabel(true);
@@ -197,10 +224,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
       {isShowingLabel && <Text
         positionArray={textPosition}
-        text={label}
+        text={isInShowingPoints ? (isShowing4Labels ? `${(showingPoints.indexOf(label) + 1).toString()}. ${label}` :
+          `P` + (showingPoints.indexOf(label) + 1).toString()) :
+          label}
         reverse={reverse}
         viewFromBottom={viewFromBottom}
-        isOnHover={isOnHover || isSelected}
+        isOnHover={isOnHover || isSelected || isAnswerPoint}
       ></Text>}
     </>
   );

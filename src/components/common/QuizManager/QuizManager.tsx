@@ -22,8 +22,9 @@ import { QuizSummary } from './QuizSummary/QuizSummary';
 import { QuizTitleBar } from './QuizTitleBar/QuizTitleBar';
 import {
   highlightPoint, resetToInitialStatePointSelectionSlice, setIsNavigateQuest,
+  setIsShowing4Labels,
   setNavigateQuestSelectable, setNavigateQuestSelectedPoint,
-  setQuizField, setShowingCorrectPoint, setStrictMode, unsetStrictMode
+  setQuizField, setShowingCorrectPoint, setShowingPoints, setStrictMode, unsetStrictMode
 } from 'src/redux/slice';
 
 enum QUIZ_STATE {
@@ -110,9 +111,14 @@ export const QuizManager: React.FC<IQuizManager> = ({
     }
 
     // Question types
-    let questionTypes = [0, 1, 2, 3];
+    let questionTypes = [0, 1, 2, 3, 4];
     while (questionTypes.length < numberOfQuestions) {
-      questionTypes.push(Math.floor(Math.random() * 4))
+      const randomQuestTypeGroup = Math.floor(Math.random() * 2)
+      if (randomQuestTypeGroup === 0) {
+        questionTypes.push(Math.floor(Math.random() * 2))
+      } else {
+        questionTypes.push(Math.floor(Math.random() * 3) + 2)
+      }
     }
     usedQuestionType.current = questionTypes.map(value => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
@@ -209,6 +215,15 @@ export const QuizManager: React.FC<IQuizManager> = ({
       let correctPointCode = correctAnswer.substring(0, correctAnswer.indexOf(" "))
       dispatch(setShowingCorrectPoint({
         correctPoint: correctPointCode
+      }))
+    } else if (questionType === QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION) {
+      let correctAnswer = temporarilyStoredQuestionContent.current.options[temporarilyStoredQuestionContent.current.correctAnswer].answer
+      let correctPointCode = correctAnswer.substring(0, correctAnswer.indexOf(" "))
+      dispatch(setShowingCorrectPoint({
+        correctPoint: correctPointCode
+      }))
+      dispatch(setIsShowing4Labels({
+        isShowingResults: true
       }))
     }
   }
@@ -343,6 +358,10 @@ export const QuizManager: React.FC<IQuizManager> = ({
         questionContent = `${t('quiz_page.questions.navigate')}`.replace("{POINT_NAME}",
           `${DEMO_DATA[used[correct]].name}`)
         break
+      case QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION:
+        questionContent = `${t('quiz_page.questions.identify_location')}`.replace("{POINT_NAME}",
+          `${DEMO_DATA[used[correct]].name}`)
+        break
     }
 
     setQuestionType(questionType)
@@ -368,6 +387,17 @@ export const QuizManager: React.FC<IQuizManager> = ({
       }))
     }
 
+    if (questionType === QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION) {
+      const points = used.map((index) => DEMO_DATA[index].code)
+      dispatch(setShowingPoints({
+        showingPoints: points
+      }))
+    } else {
+      dispatch(setShowingPoints({
+        showingPoints: []
+      }))
+    }
+
     let TEST_ANSWERS_LIST = [];
     used.forEach((point, index) => {
       TEST_ANSWERS_LIST.push({
@@ -385,7 +415,11 @@ export const QuizManager: React.FC<IQuizManager> = ({
     dispatch(setNavigateQuestSelectedPoint({
       selectedPoint: null
     }))
+    dispatch(setIsShowing4Labels({
+      isShowingResults: false
+    }))
     dispatch(resetToInitialStatePointSelectionSlice())
+
 
     if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
       temporarilyStoredQuestionContent.current = {
