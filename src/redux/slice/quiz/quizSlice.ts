@@ -11,7 +11,7 @@ export const initialStateQuizSlice = {
   isNavigateQuest: false,
   navigateQuestSelectable: false,
   isQuizField: 0,
-  showingCorrectPoint: null
+  showingCorrectPoint: null,
 } as IQuizSlice;
 
 export const quizSlice = createSlice({
@@ -85,7 +85,7 @@ export const quizSlice = createSlice({
 
     setShowingCorrectPoint(state, action) {
       state.showingCorrectPoint = action.payload.correctPoint;
-    }
+    },
   },
 });
 

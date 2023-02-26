@@ -150,7 +150,7 @@ export const Scene = forwardRef((props, ref) => {
       controls.current.reset();
       let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
       controls.current.target.sub(_v)
-      camera.current.zoom = 1.25
+      camera.current.zoom = 1.5
       camera.current.updateProjectionMatrix();
     },
 
@@ -208,25 +208,27 @@ export const Scene = forwardRef((props, ref) => {
       camera.current.zoom = 3.5;
       camera.current.updateProjectionMatrix();
 
-      const rad = MathUtils.degToRad(180);
+      const rad = MathUtils.degToRad(pointPosition["reverse"]);
+      const rad90 = MathUtils.degToRad(90)
 
       //Need rotation
-      if (pointPosition["z"] < 0) {
-        //Need rotation
-        const cx1 = camera.current.position.x;
-        const cy1 = camera.current.position.y;
-        const cz1 = camera.current.position.z;
+      const cx1 = camera.current.position.x;
+      const cy1 = camera.current.position.y;
+      const cz1 = camera.current.position.z;
 
-        // 4. Calculate new camera position:
-        const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
-        const cy2 = cy1;
-        const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
+      // 4. Calculate new camera position:
+      const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
+      const cy2 = pointPosition["viewFromBottom"] ? -180 : cy1;
+      const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
 
-        // 5. Set new camera position:
-        camera.current.position.set(cx2, cy2, cz2);
+      // 5. Set new camera position:
+      camera.current.position.set(cx2, cy2, cz2);
 
-        camera.current.updateProjectionMatrix();
+      if (pointPosition["viewFromBottom"]) {
+        camera.current.zoom = 7.5;
       }
+
+      camera.current.updateProjectionMatrix();
     }
   }, [selectedLabel, selectedType]);
 
@@ -248,7 +250,7 @@ export const Scene = forwardRef((props, ref) => {
         ref={camera}
         makeDefault
         position={[-1.75, 10.85, 40]}
-        zoom={1.25}
+        zoom={1.5}
       >
       </PerspectiveCamera>
 

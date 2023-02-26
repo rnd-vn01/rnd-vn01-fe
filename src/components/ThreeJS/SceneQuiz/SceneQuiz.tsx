@@ -15,7 +15,12 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { highlightPoint, resetToInitialStatePointSelectionSlice, resetToInitialStateSceneQuiz, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setModalLoaded, setNavigateQuestSelectedPoint, setPointSelected, setStateCameraQuaternion, setStrictMode } from 'src/redux/slice/index';
+import {
+  highlightPoint, resetToInitialStatePointSelectionSlice, resetToInitialStateSceneQuiz,
+  setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setModalLoaded,
+  setNavigateQuestSelectedPoint, setPointSelected, setStateCameraQuaternion,
+  setStrictMode
+} from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS, MERIDIANS, POINT_LOCATIONS } from 'src/configs/constants';
@@ -137,7 +142,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
       controls.current.reset();
       let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
       controls.current.target.sub(_v)
-      camera.current.zoom = 1.25
+      camera.current.zoom = 1.75
       camera.current.updateProjectionMatrix();
     },
 
@@ -152,46 +157,90 @@ export const SceneQuiz = forwardRef((props, ref) => {
         camera.current.updateProjectionMatrix();
       }
     },
+
+    focusForNavigateQuestion() {
+      if (quizField !== null && quizField !== undefined) {
+        if (quizField === 0) {
+          controls.current.reset();
+          let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
+          controls.current.target.sub(_v);
+          camera.current.zoom = 2.5;
+          camera.current.updateProjectionMatrix();
+        } else {
+          controls.current.reset();
+          let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
+          controls.current.target.sub(_v)
+          camera.current.zoom = 2.5
+          camera.current.updateProjectionMatrix();
+
+          const selectedLabel = MERIDIANS[quizField - 1]
+
+          //Get the first point of line
+          const point = FOCUS_OPTIONS[selectedLabel]["point"];
+
+          _v = new Vector3(controls.current.target.x - point["x"],
+            controls.current.target.y - point["y"],
+            controls.current.target.z - point["z"]);
+          controls.current.target.sub(_v)
+
+          const rad = MathUtils.degToRad(FOCUS_OPTIONS[selectedLabel]["rotate"]);
+
+          //Need rotation
+          const cx1 = camera.current.position.x;
+          const cy1 = camera.current.position.y;
+          const cz1 = camera.current.position.z;
+
+          // 4. Calculate new camera position:
+          const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
+          const cy2 = cy1;
+          const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
+
+          // 5. Set new camera position:
+          camera.current.position.set(cx2, cy2, cz2);
+
+          camera.current.updateProjectionMatrix();
+        }
+      }
+    }
   }));
 
   useEffect(() => {
     if (markedPoint !== null && markedPoint !== undefined && controls.current && camera.current) {
-      const point = POINT_LOCATIONS[markedPoint]
+      const point = POINT_LOCATIONS[markedPoint]["position"]
       const pointPosition = {
         x: point[0],
         y: point[1],
         z: point[2]
       }
 
-      //Get the first point of line
       controls.current.reset();
 
       let _v = new Vector3(controls.current.target.x - pointPosition["x"],
         controls.current.target.y - pointPosition["y"],
         controls.current.target.z - pointPosition["z"]);
       controls.current.target.sub(_v)
-      camera.current.zoom = 4;
+
+      const rad = MathUtils.degToRad(POINT_LOCATIONS[markedPoint]["reverse"]);
+      const rad90 = MathUtils.degToRad(90)
+
+      const cx1 = camera.current.position.x;
+      const cy1 = camera.current.position.y;
+      const cz1 = camera.current.position.z;
+
+      // 4. Calculate new camera position:
+      const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
+      const cy2 = POINT_LOCATIONS[markedPoint]["viewFromBottom"] ? -180 : cy1;
+      const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
+
+      // 5. Set new camera position:
+      camera.current.position.set(cx2, cy2, cz2);
+
+      if (!POINT_LOCATIONS[markedPoint]["viewFromBottom"])
+        camera.current.zoom = 2.5;
+      else
+        camera.current.zoom = 7.5;
+
       camera.current.updateProjectionMatrix();
-
-      const rad = MathUtils.degToRad(180);
-
-      //Need rotation
-      if (pointPosition["z"] < 0) {
-        //Need rotation
-        const cx1 = camera.current.position.x;
-        const cy1 = camera.current.position.y;
-        const cz1 = camera.current.position.z;
-
-        // 4. Calculate new camera position:
-        const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
-        const cy2 = cy1;
-        const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
-
-        // 5. Set new camera position:
-        camera.current.position.set(cx2, cy2, cz2);
-
-        camera.current.updateProjectionMatrix();
-      }
     }
   }, [markedPoint]);
 
@@ -221,7 +270,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
         ref={camera}
         makeDefault
         position={[-1.75, 10.85, 40]}
-        zoom={1.25}
+        zoom={1.75}
       >
       </PerspectiveCamera>
 
@@ -281,7 +330,6 @@ export const SceneQuiz = forwardRef((props, ref) => {
         showLine={isShowingLine} />}
       {quizField === 0 && <Others
         showLine={isShowingLine} />}
-      {/* <ST /> */}
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
         <planeGeometry args={[3000, 300]} />

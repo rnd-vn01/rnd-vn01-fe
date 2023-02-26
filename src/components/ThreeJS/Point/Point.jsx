@@ -40,7 +40,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     isQuizMode,
     isNavigateQuest,
     navigateQuestSelectable,
-    showingCorrectPoint
+    showingCorrectPoint,
   } = useSelector(
     (state) => state.quizSlice,
   );
@@ -187,8 +187,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
           attach="material"
           map={imgTex}
           color={color}
-          size={isOnHover || isSelected ? 0.5 : isAnswerPoint ? 0.75 : 0.375}
-          sizeAttenuation
+          size={isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375))}
+          sizeAttenuation={false}
           transparent={false}
           alphaTest={0.5}
           opacity={isOnHover || isSelected || isAnswerPoint ? 1.0 : 0.5}

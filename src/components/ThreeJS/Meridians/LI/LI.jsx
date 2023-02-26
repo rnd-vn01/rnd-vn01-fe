@@ -155,7 +155,8 @@ export const LI = ({ showLine }) => {
       <Point
         positionArray={[4.9, 7.15, -1.75]}
         label="LI-16"
-        labelPosition={0} />
+        labelPosition={5}
+        reverse />
       <Point
         positionArray={[1.5, 9, 0.55]}
         label="LI-17"
