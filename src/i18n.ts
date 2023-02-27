@@ -33,7 +33,8 @@ i18n
               log_out: "Log Out",
               edit_profile: "Edit Profile",
               about_us: "About Us",
-              start_quiz: "Start Quiz"
+              start_quiz: "Start Quiz",
+              advanced_search: "Advanced Search"
             }
           },
           create_account_page: {
@@ -85,6 +86,7 @@ i18n
           },
           quiz_page: {
             title: "Quiz",
+            end: "Finished",
             options: {
               testing: "testing",
               questions: "questions",
@@ -95,7 +97,10 @@ i18n
               start: "Start",
               close: "Close",
               next: "Next",
-              end: "End"
+              end: "End",
+              skip: "Skip",
+              new_quiz: "New Quiz",
+              confirmation: "Confirm"
             },
             captions: {
               result: "Quiz Result",
@@ -105,10 +110,18 @@ i18n
               correct: "Correct",
               wrong: "Wrong",
               seconds: "Seconds",
-              time_over: "Time Over"
+              time_over: "Time Over / Skipped",
+              view_stats: "view personal records"
             },
             questions: {
-              description: "Which acupuncture point has the following description: "
+              description: "Which acupuncture point has the following description: ",
+              functionalities: "The following symptoms and diseases are normally cured using which acupuncture point: ",
+              choose_from_location: "The marked location on the model is of which of the following acupuncture points?",
+              navigate: "Find the position of acupuncture point {POINT_NAME} on the model besides? (Click on the selected location on the model)",
+              identify_location: "Which of the 4 marked acupuncture point locations on the model besides is of point {POINT_NAME}?",
+            },
+            alerts: {
+              select_one: "Please select a point on the model to submit the answer."
             }
           },
           title_bar: {
@@ -328,7 +341,8 @@ i18n
               log_out: "Đăng xuất",
               edit_profile: "Cập nhật thông tin",
               about_us: "Về Chúng tôi",
-              start_quiz: "Kiểm tra"
+              start_quiz: "Kiểm tra",
+              advanced_search: "Tìm kiếm nâng cao"
             }
           },
           create_account_page: {
@@ -380,6 +394,7 @@ i18n
           },
           quiz_page: {
             title: "Kiểm tra",
+            end: "Kết thúc",
             options: {
               testing: "kiểm tra",
               questions: "câu hỏi",
@@ -390,7 +405,10 @@ i18n
               start: "Bắt đầu",
               close: "Đóng",
               next: "Tiếp theo",
-              end: "Kết thúc"
+              end: "Kết thúc",
+              skip: "Bỏ qua",
+              new_quiz: "Kiểm tra mới",
+              confirmation: "Xác nhận"
             },
             captions: {
               result: "Kết quả bài Kiểm tra",
@@ -400,10 +418,18 @@ i18n
               correct: "Đúng",
               wrong: "Sai",
               seconds: "Giây",
-              time_over: "Hết giờ"
+              time_over: "Hết giờ / Bỏ qua",
+              view_stats: "xem thành tích cá nhân"
             },
             questions: {
-              description: "Huyệt đạo nào có mô tả sau: "
+              description: "Huyệt đạo nào có mô tả sau: ",
+              functionalities: "Những triệu chứng và bệnh sau thường được chữa bởi huyệt đạo nào: ",
+              choose_from_location: "Vị trí được đánh dấu trong ảnh là của huyệt đạo nào trong các huyệt đạo dưới đây?",
+              navigate: "Tìm vị trí của huyệt đạo {POINT_NAME} trong mô hình bên cạnh? (Chọn vào huyệt đạo ứng với vị trí muốn lựa chọn)",
+              identify_location: "Vị trí nào trong 4 vị trí đánh dấu trong mô hình bên cạnh là của huyệt đạo {POINT_NAME}?",
+            },
+            alerts: {
+              select_one: "Vui lòng chọn một huyệt đạo trong mô hình để xác nhận câu trả lời."
             }
           },
           title_bar: {

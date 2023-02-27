@@ -7,7 +7,7 @@ import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
 import { debounce } from "lodash"
-export const LI = ({ }) => {
+export const LI = ({ showLine }) => {
   const LABEL = 'LI'
   const LINE_BASE_COLOR = MERIDIANS_COLOR[2]
 
@@ -155,7 +155,8 @@ export const LI = ({ }) => {
       <Point
         positionArray={[4.9, 7.15, -1.75]}
         label="LI-16"
-        labelPosition={0} />
+        labelPosition={5}
+        reverse />
       <Point
         positionArray={[1.5, 9, 0.55]}
         label="LI-17"
@@ -173,14 +174,14 @@ export const LI = ({ }) => {
         label="LI-20"
         labelPosition={0} />
 
-      <line
+      {showLine && <line
         onClick={(e) => {
           if (!isHoveringPoint)
             debounceClick({})
         }}
         geometry={lineGeometry}>
         <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
-      </line>
+      </line>}
     </>
   );
 };

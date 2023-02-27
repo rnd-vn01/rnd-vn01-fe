@@ -12,8 +12,6 @@ export const QuizOptions: React.FC<IQuizOptions> = ({
       role="div"
       aria-label="quiz-options"
       className="quiz-options flex flex-col items-center justify-center">
-      <h1
-        className="quiz-options__title">{t('quiz_page.title')}</h1>
 
       <span
         className="quiz-options__option--testing mt-5">

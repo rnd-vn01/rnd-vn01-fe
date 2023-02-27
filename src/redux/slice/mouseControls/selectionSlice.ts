@@ -24,6 +24,13 @@ export const selectionSlice = createSlice({
       state.selectedType = null;
       state.isHoveringPoint = false;
       state.isHoveringLine = false;
+      state.currentMouseMovePosition = null;
+      state.currentMousePosition = null;
+      state.hoveringLineLabel = null;
+      state.firstSelected = false;
+      state.isSelectingFromMenu = false;
+      state.pointPosition = null;
+      state.isShowingQuickInformation = null;
     },
 
     setPointSelected(state, action) {
@@ -141,11 +148,13 @@ export const selectionSlice = createSlice({
     },
 
     setPointSelectedByLabel(state, action) {
-      const pointPosition = POINT_LOCATIONS[action.payload.selectedPoint];
+      const pointPosition = POINT_LOCATIONS[action.payload.selectedPoint]["position"];
       state.pointPosition = {
         x: pointPosition[0],
         y: pointPosition[1],
-        z: pointPosition[2]
+        z: pointPosition[2],
+        reverse: POINT_LOCATIONS[action.payload.selectedPoint]["reverse"],
+        viewFromBottom: POINT_LOCATIONS[action.payload.selectedPoint]["viewFromBottom"]
       }
       state.firstSelected = true;
       state.isSelectingFromMenu = true;

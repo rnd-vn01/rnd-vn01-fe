@@ -29,6 +29,14 @@ export const AuthBar: React.FC = ({ }) => {
         history.push("/data")
       },
       selectable: user && user?.isAdmin,
+      divider: false,
+    },
+    {
+      item: t('auth_bar.menu.advanced_search'),
+      onClick: () => {
+        history.push("/advanced-search")
+      },
+      selectable: true,
       divider: true,
     },
     {
@@ -93,6 +101,14 @@ export const AuthBar: React.FC = ({ }) => {
       divider: true
     },
     {
+      item: t('auth_bar.menu.advanced_search'),
+      onClick: () => {
+        history.push("/advanced-search")
+      },
+      selectable: true,
+      divider: true,
+    },
+    {
       item: t('auth_bar.menu.about_us'),
       onClick: () => {
         history.push("/about")
@@ -127,30 +143,32 @@ export const AuthBar: React.FC = ({ }) => {
           {isLoggedIn ? MENU_ITEMS.map((item, index) => {
             if (item.selectable) {
               return (
-                <>
+                <div
+                  className='w-full'
+                  key={`menu-${index}`}>
                   <div
                     className="auth-bar__dropdown--item w-fit"
-                    onClick={item.onClick}
-                    key={`menu-${index}`}>
+                    onClick={item.onClick}>
                     {item.item}
                   </div>
                   {item.divider && <hr className='auth-bar__dropdown--divider w-100' />}
-                </>
+                </div>
               )
             }
           }) :
             GUEST_MENU_ITEMS.map((item, index) => {
               if (item.selectable) {
                 return (
-                  <>
+                  <div
+                    className='w-full'
+                    key={`menu-${index}`}>
                     <div
                       className="auth-bar__dropdown--item w-fit"
-                      onClick={item.onClick}
-                      key={`menu-${index}`}>
+                      onClick={item.onClick}>
                       {item.item}
                     </div>
                     {item.divider && <hr className='auth-bar__dropdown--divider w-100' />}
-                  </>
+                  </div>
                 )
               }
             })

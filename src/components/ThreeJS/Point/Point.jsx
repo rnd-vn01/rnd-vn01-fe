@@ -6,8 +6,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { Text } from "src/components/ThreeJS/index";
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
-import { setPointSelected, setIsHoveringPoint } from 'src/redux/slice/index';
+import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint } from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
+import { useTranslation } from 'react-i18next';
+import { capitalize } from 'src/helpers/capitalize';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
@@ -16,6 +18,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [isSelected, setIsSelected] = useState(false);
   const [isInCheckingRange, setIsInCheckingRange] = useState(true);
   const [isMeridianSelected, setIsMeridianSelected] = useState(false);
+  const [isSelectedOnQuizFocus, setIsSelectedOnQuizFocus] = useState(false);
+  const [isShowingLabel, setIsShowingLabel] = useState(false);
+  const [isAnswerPoint, setIsAnswerPoint] = useState(false);
+  const [isInShowingPoints, setIsInShowingPoints] = useState(false);
+  const { t } = useTranslation();
+
   //Responsive
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
@@ -24,6 +32,22 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     selectedType
   } = useSelector(
     (state) => state.selectionSlice,
+  );
+
+  const {
+    isShowingLabelOnHovering,
+    isHoverable,
+    showingPoints,
+    selectedPoint,
+    markedPoint,
+    isShowingLabelOnClick,
+    isQuizMode,
+    isNavigateQuest,
+    navigateQuestSelectable,
+    showingCorrectPoint,
+    isShowing4Labels
+  } = useSelector(
+    (state) => state.quizSlice,
   );
 
   let textPosition = useMemo(() => {
@@ -53,7 +77,61 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   useEffect(() => {
     setIsSelected(selectedLabel !== "" && label === selectedLabel && selectedType === 'point')
     setIsMeridianSelected(selectedLabel !== "" && selectedType === 'line' && label.includes(selectedLabel))
+    setIsSelectedOnQuizFocus(false);
   }, [selectedLabel])
+
+  useEffect(() => {
+    if (markedPoint) {
+      setIsSelected(markedPoint === label)
+      setIsSelectedOnQuizFocus(true);
+    } else {
+      setIsSelected(false);
+      setIsSelectedOnQuizFocus(false);
+    }
+  }, [markedPoint])
+
+  useEffect(() => {
+    if (isQuizMode) {
+      if (showingCorrectPoint !== null && showingCorrectPoint !== undefined) {
+        if (showingCorrectPoint === label) {
+          setColor(0x93895E)
+          setIsAnswerPoint(true);
+        }
+
+        if (showingCorrectPoint !== selectedPoint && selectedPoint !== null && selectedPoint !== undefined
+          && selectedPoint === label) {
+          setColor(0x834E46)
+          setIsAnswerPoint(true);
+        }
+      } else {
+        setColor(0xF9FFB3)
+        setIsShowingLabel(false);
+        setIsAnswerPoint(false);
+        if (!markedPoint) {
+          setIsSelected(false)
+        }
+      }
+    }
+  }, [showingCorrectPoint])
+
+  useEffect(() => {
+    if (showingPoints.length) {
+      setIsSelected(showingPoints.includes(label))
+      setIsSelectedOnQuizFocus(true);
+      setIsInShowingPoints(showingPoints.includes(label))
+
+      if (showingPoints.includes(label)) {
+        setIsShowingLabel(true);
+        setColor(0xFFFF00)
+      } else {
+        setIsShowingLabel(false);
+        setColor(0xF9FFB3)
+      }
+    } else {
+      setIsInShowingPoints(false);
+      setIsShowingLabel(false);
+    }
+  }, [showingPoints])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
 
@@ -69,28 +147,58 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     }))
   }, [isOnHover, isSelected])
 
+  useEffect(() => {
+    if (isAnswerPoint || isInShowingPoints) {
+      setIsShowingLabel(true)
+    } else if (isOnHover && isShowingLabelOnHovering) {
+      setIsShowingLabel(true);
+    } else if (!isSelectedOnQuizFocus && selectedLabel !== "" && isSelected) {
+      if (!isShowingLabelOnClick)
+        setIsShowingLabel(false);
+      else
+        setIsShowingLabel(true);
+    } else if (!isSelectedOnQuizFocus && selectedLabel !== "" && isMeridianSelected) {
+      if (!isShowingLabelOnClick)
+        setIsShowingLabel(false);
+      else
+        setIsShowingLabel(true);
+    } else {
+      setIsShowingLabel(false);
+    }
+  }, [isOnHover, isShowingLabelOnHovering, isSelectedOnQuizFocus, selectedLabel, isSelected, isMeridianSelected, isAnswerPoint])
+
   return (
     <>
       <points
         onPointerMove={(e) => {
-          if (isDesktop) {
-            if (e.distanceToRay < 0.1) {
-              setIsOnHover(true);
-            } else {
-              setIsOnHover(false);
+          if (isHoverable && !isAnswerPoint) {
+            if (isDesktop) {
+              if (e.distanceToRay < 0.1) {
+                setIsOnHover(true);
+              } else {
+                setIsOnHover(false);
+              }
             }
           }
         }}
         onClick={(e) => {
-          if (e.distanceToRay < 0.1) {
-            dispatch(setPointSelected({
-              selectedLabel: label,
-              pointPosition: {
-                x: position[0],
-                y: position[1],
-                z: position[2]
+          if (!isQuizMode || (isNavigateQuest && navigateQuestSelectable)) {
+            if (e.distanceToRay < 0.1) {
+              dispatch(setPointSelected({
+                selectedLabel: label,
+                pointPosition: {
+                  x: position[0],
+                  y: position[1],
+                  z: position[2]
+                }
+              }))
+
+              if (isNavigateQuest && navigateQuestSelectable) {
+                dispatch(setNavigateQuestSelectedPoint({
+                  selectedPoint: label,
+                }))
               }
-            }))
+            }
           }
         }}>
         <bufferGeometry attach="geometry">
@@ -106,20 +214,22 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
           attach="material"
           map={imgTex}
           color={color}
-          size={isOnHover || isSelected ? 0.5 : 0.375}
-          sizeAttenuation
+          size={isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375))}
+          sizeAttenuation={false}
           transparent={false}
           alphaTest={0.5}
-          opacity={isOnHover || isSelected ? 1.0 : 0.5}
+          opacity={isOnHover || isSelected || isAnswerPoint ? 1.0 : 0.5}
         />
       </points>
 
-      {(isOnHover || (selectedLabel !== "" && isSelected) || (selectedLabel !== "" && isMeridianSelected)) && <Text
+      {isShowingLabel && <Text
         positionArray={textPosition}
-        text={label}
+        text={isInShowingPoints ? (isShowing4Labels ? `${(showingPoints.indexOf(label) + 1).toString()}. ${label}` :
+          `P` + (showingPoints.indexOf(label) + 1).toString()) :
+          label}
         reverse={reverse}
         viewFromBottom={viewFromBottom}
-        isOnHover={isOnHover || isSelected}
+        isOnHover={isOnHover || isSelected || isAnswerPoint}
       ></Text>}
     </>
   );

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { EXTRA_MERIDIAN_COLORS } from 'src/configs/constants';
 import { debounce } from "lodash";
 
-export const Du = ({ }) => {
+export const Du = ({ showLine }) => {
   const LABEL = 'Du'
   const LINE_BASE_COLOR = EXTRA_MERIDIAN_COLORS[1]
 
@@ -271,14 +271,14 @@ export const Du = ({ }) => {
         label="Du-28"
         labelPosition={2} />
 
-      <line
+      {showLine && <line
         onClick={(e) => {
           if (!isHoveringPoint)
             debounceClick({})
         }}
         geometry={lineGeometry}>
         <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
-      </line>
+      </line>}
     </>
   );
 };

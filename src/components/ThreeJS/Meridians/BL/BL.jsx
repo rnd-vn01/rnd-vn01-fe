@@ -7,7 +7,7 @@ import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
 import { debounce } from "lodash"
-export const BL = ({ }) => {
+export const BL = ({ showLine }) => {
   const LABEL = 'BL'
   const LINE_BASE_COLOR = MERIDIANS_COLOR[7]
 
@@ -558,23 +558,25 @@ export const BL = ({ }) => {
         label="BL-67"
         labelPosition={0} />
 
-      <line
-        onClick={(e) => {
-          if (!isHoveringPoint)
-            debounceClick({})
-        }}
-        geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
-      </line>
+      {showLine && <>
+        <line
+          onClick={(e) => {
+            if (!isHoveringPoint)
+              debounceClick({})
+          }}
+          geometry={lineGeometry}>
+          <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
+        </line>
 
-      <line
-        onClick={(e) => {
-          if (!isHoveringPoint)
-            debounceClick({})
-        }}
-        geometry={lineGeometry2}>
-        <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
-      </line>
+        <line
+          onClick={(e) => {
+            if (!isHoveringPoint)
+              debounceClick({})
+          }}
+          geometry={lineGeometry2}>
+          <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
+        </line>
+      </>}
     </>
   );
 };

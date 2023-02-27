@@ -60,7 +60,7 @@ interface IModel {
 }
 
 interface IQuizManager {
-
+  callbackSetQuestionType?: (number) => void;
 }
 
 interface IQuizOptions {
@@ -244,9 +244,28 @@ interface IModelInteractionControl {
 }
 
 interface IHomePageControl extends IModelInteractionControl {
-
+  isQuizPage?: boolean;
 }
 
 interface IGlobalSlice {
   modelLoaded: boolean;
+}
+
+interface IQuizTitleBar {
+  title?: string;
+}
+
+interface IQuizSlice {
+  isShowingLabelOnHovering?: boolean;
+  isHoverable?: boolean;
+  showingPoints?: Array<string>;
+  selectedPoint?: string | null;
+  markedPoint?: string | null;
+  isShowingLabelOnClick?: boolean;
+  isQuizMode?: boolean;
+  isNavigateQuest?: boolean;
+  navigateQuestSelectable?: boolean;
+  quizField?: number;
+  showingCorrectPoint?: string | null;
+  isShowing4Labels?: boolean;
 }

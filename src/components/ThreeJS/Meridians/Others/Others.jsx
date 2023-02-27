@@ -1,7 +1,7 @@
 import './Others.scss'
 import { Point } from "src/components/ThreeJS/index";
 
-export const Others = ({ }) => {
+export const Others = ({ showLine }) => {
   return (
     <>
       <Point
