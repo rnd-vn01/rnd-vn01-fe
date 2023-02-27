@@ -96,7 +96,7 @@ export const EditProfilePage: React.FC = ({
     // TODO: CALL API
 
     MySwal.close();
-    history.push("/")
+    history.push("/", { isRedirect: true })
   }
 
 

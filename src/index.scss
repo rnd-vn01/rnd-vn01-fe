@@ -104,3 +104,27 @@ option {
 a {
   color: var(--theme-highlight) !important;
 }
+
+.swal2 {
+  &-modal {
+    background: var(--theme-background) !important;
+  }
+
+  &-title,
+  &-html-container {
+    color: black !important;
+  }
+
+  &-confirm {
+    background: var(--theme-primary) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
+    &:hover {
+      background: var(--theme-dark-primary) !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+  }
+}

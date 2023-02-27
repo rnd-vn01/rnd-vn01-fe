@@ -84,7 +84,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         onClick={(e) => {
           if (e.distanceToRay < 0.1) {
             dispatch(setPointSelected({
-              selectedLabel: label
+              selectedLabel: label,
+              pointPosition: {
+                x: position[0],
+                y: position[1],
+                z: position[2]
+              }
             }))
           }
         }}>

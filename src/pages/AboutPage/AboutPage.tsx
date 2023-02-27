@@ -21,6 +21,7 @@ import PhotoDrVan from "src/assets/images/about/doctors/DrVan.png"
 import PhotoDHYD from "src/assets/images/about/University.jpg"
 import PhotoEngBook from "src/assets/images/about/EngBook.jpg"
 import PhotoViBook from "src/assets/images/about/ViBook.jpg"
+import PhotoModel from "src/assets/images/about/Model.png"
 
 export const AboutPage: React.FC<IAboutPage> = ({
 
@@ -151,7 +152,6 @@ export const AboutPage: React.FC<IAboutPage> = ({
                   }}
                   src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }} />
               </h1>
-
               <p>
                 {t('about_page.sections.roles.quality_engineer')}
               </p>
@@ -210,9 +210,18 @@ export const AboutPage: React.FC<IAboutPage> = ({
               <h1
               >Anatomical atlas of Chinese acupuncture points</h1>
             </div>
+            <div className='about-page-section__reference mr-4'>
+              <img
+                onClick={() => {
+                  window.open(`https://sketchfab.com/3d-models/study-human-male-sculpt-65836fbba6974f3cbe8fbd7bc6bebc4d`, "_blank").focus()
+                }}
+                src={PhotoModel} />
+              <h1
+              >{t('about_page.sections.model')}</h1>
+            </div>
           </div>}
           isCollapsable={true}
-          sectionName={`${t('about_page.sections.references')}:`}
+          sectionName={`${t('about_page.sections.resources')}:`}
           information={``}
           index={4}
         />

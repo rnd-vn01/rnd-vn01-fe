@@ -31,7 +31,9 @@ i18n
               personal_records: "Personal Records",
               data_management: "Data Management",
               log_out: "Log Out",
-              edit_profile: "Edit Profile"
+              edit_profile: "Edit Profile",
+              about_us: "About Us",
+              start_quiz: "Start Quiz"
             }
           },
           create_account_page: {
@@ -240,7 +242,8 @@ i18n
                 title: "Users",
                 description: "Medical University students at Ho Chi Minh City Medicine and Pharmacy University"
               },
-              references: "References"
+              resources: "Resources",
+              model: "Study Human Male Sculpt 3D Model"
             },
             description: {
               project: `
@@ -279,7 +282,24 @@ i18n
               update_profile: "Update"
             }
           },
-          no_results: "No results found"
+          no_results: "No results found",
+          meridian_tooltips: {
+            "BL": "Bladder",
+            "LU": "Lungs",
+            "HT": "Heart",
+            "ST": "Stomach",
+            "KI": "Kidneys",
+            "GB": "Gallbladder",
+            "LI": "Large Intestine",
+            "SI": "Small Intestine",
+            "Liv": "Liver",
+            "PC": "Pericardium",
+            "TE": "Triple Energizer",
+            "SP": "Spleen",
+            "Du": "Governing Vessel",
+            "Ren": "Conception Vessel",
+          },
+          view_details: "View details"
         }
       },
       vi: {
@@ -306,7 +326,9 @@ i18n
               personal_records: "Dữ liệu Cá nhân",
               data_management: "Quản lý Dữ liệu",
               log_out: "Đăng xuất",
-              edit_profile: "Cập nhật thông tin"
+              edit_profile: "Cập nhật thông tin",
+              about_us: "Về Chúng tôi",
+              start_quiz: "Kiểm tra"
             }
           },
           create_account_page: {
@@ -515,7 +537,8 @@ i18n
                 title: "Người dùng",
                 description: "Nhóm Sinh viên Y học Cổ truyền tại Đại học Y Dược TP.HCM"
               },
-              references: "Tài liệu tham khảo"
+              resources: "Tài nguyên",
+              model: "Mô hình 3D cơ thể người học điêu khắc"
             },
             description: {
               project: `
@@ -552,7 +575,24 @@ i18n
               update_profile: "Cập nhật"
             }
           },
-          no_results: "Không tìm thấy kết quả"
+          no_results: "Không tìm thấy kết quả",
+          meridian_tooltips: {
+            "BL": "Bàng quang",
+            "LU": "Phổi",
+            "HT": "Tim",
+            "ST": "Dạ dày",
+            "KI": "Thận",
+            "GB": "Mật",
+            "LI": "Ruột già",
+            "SI": "Ruột non",
+            "Liv": "Gan",
+            "PC": "Màng ngoài tim",
+            "TE": "Tam tiêu",
+            "SP": "Lá lách",
+            "Du": "Đốc mạch",
+            "Ren": "Nhâm mạch",
+          },
+          view_details: "Xem chi tiết"
         }
       }
     }

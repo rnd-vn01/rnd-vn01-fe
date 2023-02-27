@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LINE_POINTS } from 'src/configs/constants';
+import { LINE_POINTS, POINT_LOCATIONS } from 'src/configs/constants';
 
 export const initialStateSelectionSlice = {
   selectedLabel: null,
@@ -8,7 +8,11 @@ export const initialStateSelectionSlice = {
   isHoveringLine: false,
   currentMousePosition: null,
   currentMouseMovePosition: null,
-  hoveringLineLabel: null
+  hoveringLineLabel: null,
+  firstSelected: false,
+  isSelectingFromMenu: false,
+  pointPosition: null,
+  isShowingQuickInformation: null
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -23,6 +27,9 @@ export const selectionSlice = createSlice({
     },
 
     setPointSelected(state, action) {
+      state.firstSelected = false;
+      state.isSelectingFromMenu = false;
+      state.pointPosition = action.payload.pointPosition;
       state.selectedLabel = action.payload.selectedLabel;
       state.selectedType = 'point';
     },
@@ -51,6 +58,7 @@ export const selectionSlice = createSlice({
         if (minDistance < 0.5) {
           state.selectedLabel = selectedLine;
           state.selectedType = 'line';
+          state.isSelectingFromMenu = false;
         }
       }
     },
@@ -119,6 +127,30 @@ export const selectionSlice = createSlice({
           state.hoveringLineLabel = selectedLine;
         }
       }
+    },
+
+    setLineSelectedByLabel(state, action) {
+      state.firstSelected = true;
+      state.isSelectingFromMenu = true;
+      state.selectedLabel = action.payload.selectedLine;
+      state.selectedType = 'line';
+    },
+
+    setShowingQuickInformation(state, action) {
+      state.isShowingQuickInformation = action.payload.quickInformation
+    },
+
+    setPointSelectedByLabel(state, action) {
+      const pointPosition = POINT_LOCATIONS[action.payload.selectedPoint];
+      state.pointPosition = {
+        x: pointPosition[0],
+        y: pointPosition[1],
+        z: pointPosition[2]
+      }
+      state.firstSelected = true;
+      state.isSelectingFromMenu = true;
+      state.selectedLabel = action.payload.selectedPoint;
+      state.selectedType = 'point';
     }
   },
 });
@@ -126,5 +158,6 @@ export const selectionSlice = createSlice({
 const { actions, reducer } = selectionSlice;
 export const { resetToInitialStatePointSelectionSlice, setPointSelected,
   setLineSelected, setIsHoveringPoint, setIsHoveringLine, setIsCurrentMousePosition,
-  setIsCurrentMouseMovePosition, setLineHover } = actions;
+  setIsCurrentMouseMovePosition, setLineHover, setLineSelectedByLabel,
+  setShowingQuickInformation, setPointSelectedByLabel } = actions;
 export default reducer;

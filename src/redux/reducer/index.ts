@@ -4,10 +4,12 @@ import cameraQuaternionSlice from 'src/redux/slice/camera/cameraQuaternionSlice'
 import authSlice from 'src/redux/slice/auth/authSlice';
 import languageSlice from 'src/redux/slice/settings/languageSlice';
 import selectionSlice from 'src/redux/slice/mouseControls/selectionSlice';
+import globalSlice from 'src/redux/slice/global/globalSlice';
 
 export const rootReducer = combineReducers({
   cameraQuaternionSlice,
   authSlice,
   languageSlice,
-  selectionSlice
+  selectionSlice,
+  globalSlice
 });

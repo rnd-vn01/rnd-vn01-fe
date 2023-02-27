@@ -1,75 +1,114 @@
 import './HomePage.scss'
-import React, { useEffect, useState } from 'react';
-import { AuthBar, FooterBar, HomeTitle, InformationBlock, QuickSearchBar } from 'src/components/common';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  AuthBar, FooterBar, HomePageControl, HomeTitle, InformationBlock, QuickSearchBar
+} from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
 import { Scene } from 'src/components/index';
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
-import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { APP_NAME } from 'src/configs/constants';
+import { LanguagePicker } from 'src/components/common/FooterBar/LanguagePicker/LanguagePicker';
+import { QuickInformationMiddleware } from 'src/components/middleware';
+import { useLocation } from 'react-router-dom';
 
 export const HomePage: React.FC = () => {
-  const [isViewingItemInformation, setIsViewItemInformation] = useState<boolean>(false);
-  const [itemInformation, setItemInformation] = useState<any>({});
+  const [isShowingLanding, setIsShowingLanding] = useState<boolean>(true);
+  const location = useLocation() as any;
+
   const {
     currentLanguage
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+  const {
+    isShowingQuickInformation
+  } = useSelector(
+    (state: RootState) => state.selectionSlice,
+  );
+  const {
+    modelLoaded
+  } = useSelector(
+    (state: RootState) => state.globalSlice,
+  );
+
+  const sceneRef = useRef();
 
   document.title = `${APP_NAME}`
 
-  const getRandomPointInfo = () => {
-    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
-    setItemInformation(DEMO_DATA[Math.floor(Math.random() * DEMO_DATA.length)]);
-    setIsViewItemInformation(true);
-  };
-
   useEffect(() => {
-    if (isViewingItemInformation) {
-      getRandomPointInfo();
+    if (location?.state?.isRedirect) {
+      setIsShowingLanding(false);
     }
-  }, [currentLanguage])
+  }, [])
 
   return (
     <div
       role="div"
       aria-label="home-page"
-      className="home-page grid grid-cols-7">
+      className="home-page grid">
       <div
-        onClick={() => getRandomPointInfo()}
-        className="home-page__section home-page__section--model col-span-5">
-        {/* <Canvas shadows>
-          <Scene />
-        </Canvas> */}
-        <img
+        className="home-page__section home-page__section--model">
+        <Canvas shadows>
+          <Scene
+            ref={sceneRef}
+          />
+        </Canvas>
+        {/* <img
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover"
           }}
-          src={DemoImage}></img>
+          src={DemoImage}></img> */}
       </div>
 
-      <div className="home-page__section home-page__section--side-bar col-span-2">
-        <AuthBar />
+      <div className="home-page__section--side-bar">
         <QuickSearchBar />
-        <div className="home-page__section--main-content">
-          {
-            isViewingItemInformation ?
-              <InformationBlock
-                isPoint={true}
-                itemInformation={itemInformation}
-                usingLanguage={currentLanguage}
-              /> :
-              <HomeTitle />
-          }
+      </div>
+
+      <div className="home-page__section--menu">
+        <AuthBar />
+      </div>
+
+      <div className="home-page__section--language">
+        <LanguagePicker />
+      </div>
+
+      <div className="home-page__section--controls">
+        <HomePageControl
+          callbackPanCenter={() => (sceneRef.current as any).panCenter()}
+          callbackPanDown={() => (sceneRef.current as any).panDown()}
+          callbackPanLeft={() => (sceneRef.current as any).panLeft()}
+          callbackPanRight={() => (sceneRef.current as any).panRight()}
+          callbackPanUp={() => (sceneRef.current as any).panUp()}
+          callbackZoomIn={() => (sceneRef.current as any).zoomIn()}
+          callbackZoomOut={() => (sceneRef.current as any).zoomOut()}
+        />
+      </div>
+
+      {isShowingQuickInformation != null && <div className="home-page__section--information">
+        <InformationBlock
+          isPoint={isShowingQuickInformation?.type === "point"}
+          itemInformation={isShowingQuickInformation?.content}
+          usingLanguage={currentLanguage}
+        />
+      </div>}
+
+      {/* Middleware */}
+      <QuickInformationMiddleware />
+
+      {/* Landing page */}
+      <div className={`home-page__landing ${!isShowingLanding ? "home-page__landing--hidden" : ""}`}
+        onClick={() => {
+          if (modelLoaded)
+            setIsShowingLanding(false)
+        }}
+      >
+        <div className='home-page__landing--container'>
+          {modelLoaded && <HomeTitle />}
         </div>
-        <FooterBar />
       </div>
     </div>
   );

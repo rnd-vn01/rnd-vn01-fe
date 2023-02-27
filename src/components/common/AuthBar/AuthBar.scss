@@ -1,7 +1,6 @@
 .auth-bar {
   height: 60px;
   width: 100%;
-  border-bottom: 1px solid black;
 
   &__option {
     font-size: 1.5rem;
@@ -39,18 +38,35 @@
       width: 35px;
     }
 
+    &--icon {
+      height: 20px;
+      width: 20px;
+      padding: 7.5px;
+    }
+
+    &--icon-gear {
+      position: absolute;
+      right: 2.5px;
+      bottom: -2.5px;
+      height: 12px;
+      width: 12px;
+    }
+
     &--button-logo {
-      background: var(--theme-gray);
+      background: var(--theme-background);
       padding: 5px;
       border-radius: 50px;
       cursor: pointer;
+      border: 1px solid black;
+      margin-left: 5px;
+      position: relative;
     }
   }
 
   &__dropdown {
     position: absolute;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    border: 1px solid black;
+    left: 10px;
     top: calc(100% + 1px);
     background: var(--theme-background);
     z-index: 100;
@@ -67,6 +83,16 @@
       &:hover {
         background: var(--theme-primary)
       }
+    }
+
+    &--divider {
+      border: 0;
+      clear: both;
+      display: block;
+      width: 96%;
+      background-color: black;
+      height: 1px;
+      margin: 2px 0;
     }
   }
 }

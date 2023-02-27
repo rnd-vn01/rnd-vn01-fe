@@ -11,12 +11,10 @@ import withReactContent from 'sweetalert2-react-content';
 import { Button } from 'src/components/common';
 
 // Assets
-import DemoImage from "src/assets/images/Demo.png";
+import DemoImage from "src/assets/images/DemoBackground.png";
 import Logo from "src/assets/images/Logo.svg";
-import GoogleLogo from "src/assets/images/GoogleLogo.svg";
 import { APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
-import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 
@@ -71,7 +69,7 @@ export const ChangePasswordPage: React.FC = () => {
           text: t('password_reset_page.messages.reset_email_sent'),
         })
           .then(() => {
-            history.push("/");
+            history.push("/", { isRedirect: true });
             return;
           })
       })
@@ -104,12 +102,12 @@ export const ChangePasswordPage: React.FC = () => {
       className="password-reset-page grid grid-cols-5">
       <div className="password-reset-page__section password-reset-page__section--main col-span-2 flex-center">
         <div className="password-reset-page__home-icon"
-          onClick={() => history.push("/")}>
+          onClick={() => history.push("/", { isRedirect: true })}>
           <img src={HomeIcon}></img>
         </div>
 
         <img className="password-reset-page__image--logo" src={Logo}
-          onClick={() => history.push("/")}></img>
+          onClick={() => history.push("/", { isRedirect: true })}></img>
 
         <h1 className="password-reset-page__title">{t('password_reset_page.title')}</h1>
 

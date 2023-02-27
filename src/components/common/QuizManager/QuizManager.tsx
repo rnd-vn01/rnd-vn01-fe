@@ -258,7 +258,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
             <QuizButton
               fallbackCaption="Close"
               translateKey="quiz_page.buttons.close"
-              onClick={() => history.push("/")}
+              onClick={() => history.push("/", { isRedirect: true })}
             />
             :
             currentQuestion !== numberOfQuestions ?
@@ -287,7 +287,7 @@ export const QuizManager: React.FC<IQuizManager> = ({ }) => {
           <QuizButton
             fallbackCaption="Close"
             translateKey="quiz_page.buttons.close"
-            onClick={() => history.push("/")}
+            onClick={() => history.push("/", { isRedirect: true })}
           /> :
           <QuizTimer
             data-render={renderTime}

@@ -16,6 +16,7 @@ import {
   RecordsChart, RecordsProgressLog, RecordsSummary
 } from "./Records";
 import { AboutPageSection } from "./AboutPageSection/AboutPageSection"
+import { HomePageControl } from "./HomePageControl/HomePageControl"
 
 export {
   Button,
@@ -36,5 +37,6 @@ export {
   RecordsChart,
   RecordsProgressLog,
   RecordsSummary,
-  AboutPageSection
+  AboutPageSection,
+  HomePageControl
 }

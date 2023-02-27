@@ -224,4 +224,29 @@ interface ISelectionSlice {
     z?: number,
   } | null;
   hoveringLineLabel: string | null;
+  firstSelected?: boolean;
+  isSelectingFromMenu?: boolean;
+  pointPosition?: any;
+  isShowingQuickInformation?: {
+    type?: string;
+    content?: IMeridian | IAcupuncturePoint;
+  } | null;
+}
+
+interface IModelInteractionControl {
+  callbackPanLeft?: () => void;
+  callbackPanRight?: () => void;
+  callbackPanUp?: () => void;
+  callbackPanDown?: () => void;
+  callbackPanCenter?: () => void;
+  callbackZoomIn?: () => void;
+  callbackZoomOut?: () => void;
+}
+
+interface IHomePageControl extends IModelInteractionControl {
+
+}
+
+interface IGlobalSlice {
+  modelLoaded: boolean;
 }

@@ -62,7 +62,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
       setIsPoint(pathParts[2] === "point")
       setItemCode(pathParts[3])
     } else {
-      history.push("/")
+      history.push("/", { isRedirect: true })
     }
     setIsEdit(hookQuery.get("edit") === "")
   }, [location])
