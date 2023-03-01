@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import Highlighter from "react-highlight-words";
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
+import { useTranslation } from 'react-i18next';
 
 export const ItemDetail: React.FC<IItemDetail> = ({
   item,
@@ -21,6 +22,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
   } = useSelector(
     (state: RootState) => state.authSlice,
   );
+  const { t } = useTranslation();
 
   return (
     <div
@@ -135,6 +137,18 @@ export const ItemDetail: React.FC<IItemDetail> = ({
             )
           }
         })}
+      </div>
+
+      <div className='flex-center'>
+        <div
+          className='item-detail__buttons--button'
+          onClick={() => {
+            history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
+              isRedirect: true
+            })
+          }}>
+          {t('view_on_model')}
+        </div>
       </div>
     </div>
   );

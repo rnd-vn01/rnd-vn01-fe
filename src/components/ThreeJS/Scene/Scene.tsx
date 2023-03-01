@@ -16,10 +16,11 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { resetToInitialStateQuizSlice, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setModalLoaded, setPointSelected, setStateCameraQuaternion, unsetStrictMode } from 'src/redux/slice/index';
+import { resetToInitialStateQuizSlice, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setLineSelectedByLabel, setModalLoaded, setPointSelected, setPointSelectedByLabel, setStateCameraQuaternion, unsetStrictMode } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS } from 'src/configs/constants';
+import { useLocation } from 'react-router-dom';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -40,6 +41,7 @@ export const Scene = forwardRef((props, ref) => {
   } = useSelector(
     (state: RootState) => state.selectionSlice,
   );
+  const location = useLocation() as any;
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
@@ -48,6 +50,29 @@ export const Scene = forwardRef((props, ref) => {
       dispatch(setModalLoaded({
         modelLoaded: true
       }))
+
+      setTimeout(() => {
+        // Check if a point is selected from redirect
+        if (location?.state?.isRedirect) {
+          const param = location.search;
+          if (param.includes("?")) {
+            const getParams = param.substring(1, param.length).split("&")
+              .map(item => {
+                return item.split("=")[1]
+              })
+
+            if (getParams[0] === "point") {
+              dispatch(setPointSelectedByLabel({
+                selectedPoint: getParams[1]
+              }))
+            } else {
+              dispatch(setLineSelectedByLabel({
+                selectedLine: getParams[1]
+              }))
+            }
+          }
+        }
+      }, 1000)
     }
 
     return <Html prepend center
@@ -168,6 +193,10 @@ export const Scene = forwardRef((props, ref) => {
   }));
 
   useEffect(() => {
+    resetCameraFocus();
+  }, [selectedLabel, selectedType]);
+
+  const resetCameraFocus = () => {
     if (isSelectingFromMenu && selectedType === "line" && controls.current) {
       //Get the first point of line
       const point = FOCUS_OPTIONS[selectedLabel]["point"];
@@ -230,7 +259,7 @@ export const Scene = forwardRef((props, ref) => {
 
       camera.current.updateProjectionMatrix();
     }
-  }, [selectedLabel, selectedType]);
+  }
 
   return (
     <Suspense fallback={<Loader />}>
@@ -279,37 +308,80 @@ export const Scene = forwardRef((props, ref) => {
       <Body
         isQuizMode={false}
       />
-      <LU
-        showLine={true} />
-      <LI
-        showLine={true} />
-      <ST
-        showLine={true} />
-      <SP
-        showLine={true} />
-      <HT
-        showLine={true} />
-      <SI
-        showLine={true} />
-      <BL
-        showLine={true} />
-      <KI
-        showLine={true} />
-      <PC
-        showLine={true} />
-      <TE
-        showLine={true} />
-      <GB
-        showLine={true} />
-      <Liv
-        showLine={true} />
-      <Du
-        showLine={true} />
-      <Ren
-        showLine={true} />
-      <Others
-        showLine={true} />
-      {/* <ST /> */}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "LU")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <LU
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "LI")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <LI
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "ST")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <ST
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "SP")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <SP
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "HT")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <HT
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "SI")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <SI
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "BL")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <BL
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "KI")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <KI
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "PC")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <PC
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "TE")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <TE
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "GB")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <GB
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Liv")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <Liv
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Du")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <Du
+          showLine={true}
+        />}
+      {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Ren")
+        || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <Ren
+          showLine={true}
+        />}
+      {(selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
+        && <Others
+          showLine={true}
+        />}
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
         <planeGeometry args={[3000, 300]} />

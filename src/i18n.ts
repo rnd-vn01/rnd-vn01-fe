@@ -312,7 +312,8 @@ i18n
             "Du": "Governing Vessel",
             "Ren": "Conception Vessel",
           },
-          view_details: "View details"
+          view_details: "View details",
+          view_on_model: "View location on model",
         }
       },
       vi: {
@@ -618,7 +619,8 @@ i18n
             "Du": "Đốc mạch",
             "Ren": "Nhâm mạch",
           },
-          view_details: "Xem chi tiết"
+          view_details: "Xem chi tiết",
+          view_on_model: "Xem vị trí trên mô hình",
         }
       }
     }

@@ -108,4 +108,24 @@
       background: var(--theme-highlight);
     }
   }
+
+  &__buttons {
+    &--button {
+      border: 1px solid black;
+      padding: 10px;
+      height: 100%;
+      cursor: pointer;
+      text-align: center;
+      width: fit-content;
+
+      svg {
+        height: 20px;
+        width: 20px;
+      }
+
+      &:hover {
+        background: var(--theme-primary);
+      }
+    }
+  }
 }
