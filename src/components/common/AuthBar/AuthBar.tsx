@@ -74,9 +74,9 @@ export const AuthBar: React.FC = ({ }) => {
     {
       item: t('auth_bar.menu.log_out'),
       onClick: () => {
+        history.push("/", { isRedirect: true })
         logout();
         dispatch(resetToInitialStateAuthSlice());
-        history.push("/", { isRedirect: true })
       },
       selectable: true,
       divider: false
@@ -127,6 +127,8 @@ export const AuthBar: React.FC = ({ }) => {
         <span className="auth-bar__menu pr-2">
           <div
             className="auth-bar__menu--button-logo inline-flex w-fit h-full flex-center"
+            role="menu-button"
+            aria-label="auth-bar-menu-button"
             onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
             {isLoggedIn ?
               <>
@@ -139,15 +141,21 @@ export const AuthBar: React.FC = ({ }) => {
         </span>
 
         <div className={`auth-bar__dropdown w-fit h-fit flex flex-col items-start justify-center
-          p-1 ${!isOpenDropdown && "auth-bar__dropdown--hide"}`}>
+          p-1 ${!isOpenDropdown && "auth-bar__dropdown--hide"}`}
+          role="div"
+          aria-label="auth-bar-dropdown">
           {isLoggedIn ? MENU_ITEMS.map((item, index) => {
             if (item.selectable) {
               return (
                 <div
                   className='w-full'
+                  role="menu-item"
+                  aria-label={`menu-item-${item.item}`}
                   key={`menu-${index}`}>
                   <div
                     className="auth-bar__dropdown--item w-fit"
+                    role="menu-item-dropdown"
+                    aria-label={`menu-item-dropdown-${item.item}`}
                     onClick={item.onClick}>
                     {item.item}
                   </div>
@@ -157,20 +165,22 @@ export const AuthBar: React.FC = ({ }) => {
             }
           }) :
             GUEST_MENU_ITEMS.map((item, index) => {
-              if (item.selectable) {
-                return (
+              return (
+                <div
+                  className='w-full'
+                  role="menu-item"
+                  aria-label={`menu-item-${item.item}`}
+                  key={`menu-${index}`}>
                   <div
-                    className='w-full'
-                    key={`menu-${index}`}>
-                    <div
-                      className="auth-bar__dropdown--item w-fit"
-                      onClick={item.onClick}>
-                      {item.item}
-                    </div>
-                    {item.divider && <hr className='auth-bar__dropdown--divider w-100' />}
+                    className="auth-bar__dropdown--item w-fit"
+                    role="menu-item-dropdown"
+                    aria-label={`menu-item-dropdown-${item.item}`}
+                    onClick={item.onClick}>
+                    {item.item}
                   </div>
-                )
-              }
+                  {item.divider && <hr className='auth-bar__dropdown--divider w-100' />}
+                </div>
+              )
             })
           }
         </div>

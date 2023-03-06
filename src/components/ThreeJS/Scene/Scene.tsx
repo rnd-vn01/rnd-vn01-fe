@@ -50,29 +50,6 @@ export const Scene = forwardRef((props, ref) => {
       dispatch(setModalLoaded({
         modelLoaded: true
       }))
-
-      setTimeout(() => {
-        // Check if a point is selected from redirect
-        if (location?.state?.isRedirect) {
-          const param = location.search;
-          if (param.includes("?")) {
-            const getParams = param.substring(1, param.length).split("&")
-              .map(item => {
-                return item.split("=")[1]
-              })
-
-            if (getParams[0] === "point") {
-              dispatch(setPointSelectedByLabel({
-                selectedPoint: getParams[1]
-              }))
-            } else {
-              dispatch(setLineSelectedByLabel({
-                selectedLine: getParams[1]
-              }))
-            }
-          }
-        }
-      }, 1000)
     }
 
     return <Html prepend center
@@ -152,6 +129,29 @@ export const Scene = forwardRef((props, ref) => {
 
     dispatch(unsetStrictMode())
     dispatch(resetToInitialStateQuizSlice())
+
+    setTimeout(() => {
+      // Check if a point is selected from redirect
+      if (location?.state?.isRedirect) {
+        const param = location.search;
+        if (param.includes("?")) {
+          const getParams = param.substring(1, param.length).split("&")
+            .map(item => {
+              return item.split("=")[1]
+            })
+
+          if (getParams[0] === "point") {
+            dispatch(setPointSelectedByLabel({
+              selectedPoint: getParams[1]
+            }))
+          } else {
+            dispatch(setLineSelectedByLabel({
+              selectedLine: getParams[1]
+            }))
+          }
+        }
+      }
+    }, 1000)
   }, []);
 
   useImperativeHandle(ref, () => ({

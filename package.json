@@ -90,7 +90,8 @@
       "BasicRoute.tsx",
       "getAccessToken.ts",
       "libraries",
-      "RecordsChart.tsx"
+      "RecordsChart.tsx",
+      "ThreeJS/"
     ]
   }
 }
