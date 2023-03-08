@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
-
 export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInformation, usingLanguage }) => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -27,6 +26,8 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
 
           <div
             className={`information-block__view-details flex justify-between`}
+            role="div"
+            aria-label="information-block-view-details"
             onClick={() => {
               history.push(`/detail/${isPoint ? "point" : "meridian"}/${itemInformation.code}`)
             }}

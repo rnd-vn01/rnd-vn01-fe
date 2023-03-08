@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-export const Input: React.FC<IInput> = ({ 
-  value, placeholder, type, onChange, required, label, name, error, readonly 
+export const Input: React.FC<IInput> = ({
+  value, placeholder, type, onChange, required, label, name, error, readonly
 }) => {
   const [isShowingPassword, setIsShowingPassword] = useState<boolean>(false);
   const [inputType, setInputType] = useState<string>("");
@@ -23,8 +23,14 @@ export const Input: React.FC<IInput> = ({
   return (
     <>
       <div className="d-flex flex-row justify-content-between">
-        {label ? <label className="input__label">{label}</label> : null}
-        {error ? <p className="input__error-text">{error}</p> : null}
+        {label ? <label
+          role="label"
+          aria-label="label"
+          className="input__label">{label}</label> : null}
+        {error ? <p
+          role="p"
+          aria-label="error"
+          className="input__error-text">{error}</p> : null}
       </div>
 
       <div className="input__container">
@@ -43,6 +49,8 @@ export const Input: React.FC<IInput> = ({
         {type === "password" && value && value.length > 0 &&
           <div
             onClick={() => { setIsShowingPassword(!isShowingPassword) }}
+            role="div"
+            aria-label="show-password-icon"
             className="input__eye-icon">
             <FontAwesomeIcon
               icon={isShowingPassword ? faEye : faEyeSlash} />

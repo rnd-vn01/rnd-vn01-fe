@@ -121,7 +121,10 @@ export const MeridianControl: React.FC = ({ }) => {
       role="div"
       aria-label="meridian-control"
       className="meridian-control">
-      <div className="inline-flex meridian-control__selected--container"
+      <div
+        className="inline-flex meridian-control__selected--container"
+        role="div"
+        aria-label="meridian-control-icon"
         onClick={() => setIsDropdown(!isDropdown)}>
         <div
           style={{ background: OPTIONS[selectedMeridian].color }}
@@ -133,13 +136,18 @@ export const MeridianControl: React.FC = ({ }) => {
         <FontAwesomeIcon icon={faCaretUp}></FontAwesomeIcon>
       </div>
 
-      <div className={`meridian-control__dropdown ${isDropdown ? "meridian-control__dropdown--show" : ""}`}>
+      <div
+        role="div"
+        aria-label="meridian-control-dropdown"
+        className={`meridian-control__dropdown ${isDropdown ? "meridian-control__dropdown--show" : ""}`}>
         {Object.keys(OPTIONS).map((meridian, index) => (
           <div
             key={index}
             className={`m-2 w-100 text-center meridian-control__dropdown--option
               ${meridian === selectedMeridian ? "meridian-control__dropdown--option-selected" : ""}
             `}
+            role="div"
+            aria-label={`meridian-control-item-${index}`}
             onClick={() => {
               setSelectedMeridian(meridian);
               setIsDropdown(false);

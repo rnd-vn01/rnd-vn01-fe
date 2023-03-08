@@ -81,7 +81,10 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       role="div"
       aria-label="title-bar"
       className="title-bar">
-      <div className="title-bar__home-icon"
+      <div
+        role="div"
+        aria-label="title-bar-home-icon"
+        className="title-bar__home-icon"
         onClick={() => history.push("/", { isRedirect: true })}>
         <img src={HomeIcon}></img>
       </div>
@@ -92,19 +95,26 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
             t(`title_bar.pages.${translateCode || "default"}`).split(" ").map((word, index) => {
               return <h1
                 key={`word-${index}`}
+                role={"h1"}
+                aria-label={`word-${index}`}
                 className={`${index === 0 ? "title-bar__page-title--bg" : ""}`}>{index !== 0 && " "} {word}</h1>
             })
           }
         </h1>
         <span className="title-bar__menu">
           <div
+            role="div"
+            aria-label="title-bar-logo"
             className="title-bar__menu--button-logo inline-flex w-fit h-full flex-center"
             onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
             <img src={Logo} className="title-bar__menu--image-logo"></img>
           </div>
         </span>
 
-        <div className={`title-bar__dropdown w-fit h-fit flex flex-col items-end justify-center
+        <div
+          role="div"
+          aria-label="title-bar-dropdown"
+          className={`title-bar__dropdown w-fit h-fit flex flex-col items-end justify-center
                 p-1 ${!isOpenDropdown && "title-bar__dropdown--hide"}`}>
           {MENU_ITEMS.map((item, index) => {
             if (item.selectable) {
@@ -113,6 +123,8 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
                   className={`title-bar__dropdown--item w-fit 
                   ${item.code === translateCode ? "title-bar__dropdown--selected-item" : ""}`}
                   onClick={item.onClick}
+                  role="menu-item"
+                  aria-label={`menu-item-${item.item}`}
                   key={`menu - ${index} `}>
                   {item.item}
                 </div>
@@ -121,7 +133,6 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
           })}
         </div>
       </div>
-
     </div>
   );
 };

@@ -8,17 +8,18 @@ import skinMode from "src/assets/images/homeControls/modelMode/skinMode.svg";
 import anatomyMode from "src/assets/images/homeControls/modelMode/anatomyMode.svg";
 
 export const ModelViewModeControl: React.FC = ({ }) => {
-	const dispatch = useDispatch();
-	const { t, i18n } = useTranslation();
-	const [isSkinMode, setIsSkinMode] = useState<boolean>(true);
+  const [isSkinMode, setIsSkinMode] = useState<boolean>(true);
 
-	return (
-		<div
-			role="div"
-			aria-label="model-view-mode-control"
-			className="model-view-mode-control"
-			onClick={() => setIsSkinMode(!isSkinMode)}>
-			<img className="model-view-mode-control__icon" src={isSkinMode ? skinMode : anatomyMode} />
-		</div>
-	);
+  return (
+    <div
+      role="div"
+      aria-label="model-view-mode-control"
+      className="model-view-mode-control"
+      onClick={() => setIsSkinMode(!isSkinMode)}>
+      <img
+        role="img"
+        aria-label="model-view-mode-control-icon"
+        className="model-view-mode-control__icon" src={isSkinMode ? skinMode : anatomyMode} />
+    </div>
+  );
 };

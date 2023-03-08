@@ -1,7 +1,7 @@
 import './HomePage.scss'
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  AuthBar, FooterBar, HomePageControl, HomeTitle, InformationBlock, QuickSearchBar
+  AuthBar, HomePageControl, HomeTitle, InformationBlock, QuickSearchBar
 } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
@@ -9,7 +9,7 @@ import { Scene } from 'src/components/index';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { APP_NAME } from 'src/configs/constants';
-import { LanguagePicker } from 'src/components/common/FooterBar/LanguagePicker/LanguagePicker';
+import { LanguagePicker } from 'src/components/common';
 import { QuickInformationMiddleware } from 'src/components/middleware';
 import { useLocation } from 'react-router-dom';
 

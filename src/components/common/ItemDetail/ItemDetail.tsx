@@ -38,7 +38,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
               highlightClassName='item-detail__highlighted'
               searchWords={[]}
               autoEscape={true}
-              textToHighlight={item?.code || ""}
+              textToHighlight={item?.code}
             >
             </Highlighter>}
           </h1>
@@ -47,7 +47,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
               highlightClassName='item-detail__highlighted'
               searchWords={[]}
               autoEscape={true}
-              textToHighlight={item?.name || ""}
+              textToHighlight={item?.name}
             >
             </Highlighter>}
           </h1>
@@ -56,6 +56,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
         <FontAwesomeIcon
           className="item-detail__header--back"
           icon={faChevronLeft}
+          data-testid="back-icon"
           onClick={(e) => {
             e.stopPropagation();
             history.push(`${query ? `/advanced-search?query=${query}` : "/advanced-search"}`)
@@ -64,6 +65,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
         {isLoggedIn && user?.isAdmin && <FontAwesomeIcon
           className="item-detail__header--edit"
           icon={faEdit}
+          data-testid="edit-icon"
           onClick={(e) => {
             e.stopPropagation();
             history.push(location.pathname + "?edit")
@@ -91,7 +93,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
                             highlightClassName='item-detail__highlighted'
                             searchWords={[]}
                             autoEscape={true}
-                            textToHighlight={`${itemIndex + 1}. ${functionality}` || ""}
+                            textToHighlight={`${itemIndex + 1}. ${functionality}`}
                           >
                           </Highlighter>}
                         </p>
@@ -106,13 +108,15 @@ export const ItemDetail: React.FC<IItemDetail> = ({
                               <p
                                 key={`meridian-points-${itemIndex}`}
                                 className={"item-detail__meridian-point"}
+                                role="p"
+                                aria-label={`meridian-point-${itemIndex}`}
                                 onClick={() => location.pathname = `/detail/point/${point}`}
                               >
                                 {point && <Highlighter
                                   highlightClassName='item-detail__highlighted'
                                   searchWords={[]}
                                   autoEscape={true}
-                                  textToHighlight={`${point}` || ""}
+                                  textToHighlight={`${point}`}
                                 >
                                 </Highlighter>}
                               </p>
@@ -125,7 +129,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
                               highlightClassName='item-detail__highlighted'
                               searchWords={[]}
                               autoEscape={true}
-                              textToHighlight={item[field] || ""}
+                              textToHighlight={item[field]}
                             >
                             </Highlighter>}
                           </p>
@@ -142,6 +146,8 @@ export const ItemDetail: React.FC<IItemDetail> = ({
       <div className='flex-center'>
         <div
           className='item-detail__buttons--button'
+          role="div"
+          aria-label="view-on-model"
           onClick={() => {
             history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
               isRedirect: true

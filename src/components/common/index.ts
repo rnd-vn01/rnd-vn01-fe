@@ -1,7 +1,6 @@
 import { Button } from "./Button/Button"
 import { AuthBar } from './AuthBar/AuthBar'
 import { QuickSearchBar } from "./QuickSearchBar/QuickSearchBar"
-import { FooterBar } from "./FooterBar/FooterBar"
 import { HomeTitle } from "./HomeTitle/HomeTitle"
 import { InformationBlock } from "./InformationBlock/InformationBlock"
 import { QuizManager } from "./QuizManager/QuizManager"
@@ -17,12 +16,12 @@ import {
 } from "./Records";
 import { AboutPageSection } from "./AboutPageSection/AboutPageSection"
 import { HomePageControl } from "./HomePageControl/HomePageControl"
+import { LanguagePicker } from "./LanguagePicker/LanguagePicker"
 
 export {
   Button,
   AuthBar,
   QuickSearchBar,
-  FooterBar,
   HomeTitle,
   InformationBlock,
   QuizManager,
@@ -38,5 +37,6 @@ export {
   RecordsProgressLog,
   RecordsSummary,
   AboutPageSection,
-  HomePageControl
+  HomePageControl,
+  LanguagePicker
 }
