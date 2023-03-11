@@ -9,8 +9,6 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
   const { t } = useTranslation();
   const history = useHistory();
 
-  console.log(data);
-
   return (
     <div
       role="div"

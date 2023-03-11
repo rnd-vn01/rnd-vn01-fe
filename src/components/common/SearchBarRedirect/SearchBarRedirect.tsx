@@ -17,14 +17,14 @@ export const SearchBarRedirect: React.FC = ({ }) => {
       aria-label="search-bar-redirect"
       className="search-bar-redirect"
       onClick={() => {
-        if (inputBoxRef.current) {
-          (inputBoxRef.current as HTMLInputElement).focus()
-        }
+        (inputBoxRef.current as HTMLInputElement)?.focus()
       }}>
 
       <img
         src={usingQuickSearchIconImage}
-        className="search-bar-redirect__logo--search"></img>
+        className="search-bar-redirect__logo--search"
+        role="img"
+        aria-label="search-bar-icon"></img>
 
       <span className="search-bar-redirect__input--span">
         <input
@@ -38,7 +38,9 @@ export const SearchBarRedirect: React.FC = ({ }) => {
             if (e.key === "Enter") {
               history.push(`/advanced-search?query=${query}`)
             }
-          }}></input>
+          }}
+          role="input"
+          aria-label="search-input"></input>
 
       </span>
     </div>
