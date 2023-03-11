@@ -28,6 +28,7 @@ export const QuizQuestion: React.FC<IQuizQuestion> = ({
               ${option.index !== correctAnswer && option.index === selectedAnswer ? "quiz-question__answer--false" : ""}`}
             key={`option-${index}`}
             id={`option-${index}`}
+            role="quiz-options"
             onClick={() => {
               if (!isShowingAnswer)
                 onSubmitAnswer(option.index)
@@ -48,7 +49,9 @@ export const QuizQuestion: React.FC<IQuizQuestion> = ({
             onClick={() => {
               if (!isShowingAnswer)
                 onSubmitAnswer(0)
-            }}>
+            }}
+            role="button"
+            aria-label="quiz-confirmation">
             {t('quiz_page.buttons.confirmation')}
           </div>
         </div>}

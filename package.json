@@ -93,7 +93,8 @@
       "getAccessToken.ts",
       "libraries",
       "RecordsChart.tsx",
-      "ThreeJS/"
+      "ThreeJS/",
+      "QuizManager.tsx"
     ]
   }
 }

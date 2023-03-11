@@ -18,6 +18,8 @@ export const QuizOptions: React.FC<IQuizOptions> = ({
         {t('quiz_page.options.testing')}
         <select
           className="quiz-options__select"
+          role="select"
+          aria-label="quiz-field-select"
           onChange={(e) => setField(e.target.value)}
           value={field}
         >
@@ -26,6 +28,8 @@ export const QuizOptions: React.FC<IQuizOptions> = ({
               className="quiz-options__select--option"
               value={option.value}
               key={`field-option-${index}`}
+              role="select-option"
+              aria-label={`quiz-field-select-option-${index}`}
             >{option.caption}</option>
           ))}
         </select>
@@ -39,12 +43,16 @@ export const QuizOptions: React.FC<IQuizOptions> = ({
             setNumberOfQuestion(parseInt(e.target.value))
           }}
           value={numberOfQuestions}
+          role="select"
+          aria-label="quiz-number-of-quests-select"
         >
           {numberOfQuestionsOptionsList?.map((option, index) => (
             <option
               className="quiz-options__select--option"
               value={option}
               key={`number-of-quest-option-${index}`}
+              role="select-option"
+              aria-label="quiz-number-of-quests-select-option"
             >{option}</option>
           ))}
         </select>
