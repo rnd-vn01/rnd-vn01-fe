@@ -94,7 +94,14 @@
       "libraries",
       "RecordsChart.tsx",
       "ThreeJS/",
-      "QuizManager.tsx"
+      "QuizManager.tsx",
+      "RecordsLog.tsx",
+      "SearchProcessor.tsx",
+      "SearchResultItem.tsx",
+      "pages/",
+      "redux/",
+      "helpers/",
+      "configs/"
     ]
   }
 }

@@ -1,5 +1,5 @@
 import './SearchResultItem.scss';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
@@ -13,17 +13,21 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
   query,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const firstTriggered = useRef<boolean>(false);
   const history = useHistory();
 
   useEffect(() => {
-    if (isCollapsed) {
+    if (firstTriggered.current) {
       var growDiv = document.querySelector(`#search-result-${item?.code}`) as HTMLElement;
-      if (growDiv.clientHeight) {
-        growDiv.style.height = "0px";
-        growDiv.style.overflow = "hidden";
-      } else {
-        growDiv.style.height = growDiv.scrollHeight + "px";
-        growDiv.style.overflow = "auto";
+
+      if (growDiv) {
+        if (growDiv.clientHeight) {
+          growDiv.style.height = "0px";
+          growDiv.style.overflow = "hidden";
+        } else {
+          growDiv.style.height = growDiv.scrollHeight + "px";
+          growDiv.style.overflow = "auto";
+        }
       }
     }
   }, [isCollapsed])
@@ -36,7 +40,13 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
     >
       <div
         className="search-result__header"
-        onClick={(e) => { setIsCollapsed(!isCollapsed) }}>
+        onClick={(e) => {
+          {
+            if (!firstTriggered.current)
+              firstTriggered.current = true
+            setIsCollapsed(!isCollapsed)
+          }
+        }}>
         <div className="search-result__flex-block flex justify-between">
           <h1 className="search-result__header--code">
             <Highlighter
@@ -67,7 +77,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
           }}></FontAwesomeIcon>
       </div>
 
-      {isCollapsed && item &&
+      {item &&
         <div className="search-result__information"
           id={`search-result-${item?.code}`}>
           {Object.keys(item).map((field, index) => {
