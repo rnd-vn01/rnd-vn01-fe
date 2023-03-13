@@ -87,7 +87,6 @@
     "fsevents": "^2.3.2"
   },
   "jest": {
-    "transformIgnorePatterns": [],
     "coveragePathIgnorePatterns": [
       "index.ts",
       "mocks",
@@ -101,7 +100,8 @@
       "SearchProcessor.tsx",
       "SearchResultItem.tsx",
       "DetailPage.tsx",
-      "pages/authentication/"
+      "pages/authentication/",
+      "redux/axios/axiosClient/"
     ]
   }
 }
