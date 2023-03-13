@@ -103,8 +103,8 @@
       "pages/authentication/",
       "components/",
       "pages/",
-      "redux/",
-      "configs/"
+      "configs/",
+      "helpers/"
     ]
   }
 }

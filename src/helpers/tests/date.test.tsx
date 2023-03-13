@@ -2,17 +2,28 @@ import { faker } from '@faker-js/faker';
 import {
   getCurrentDateShortString,
   getCurrentDateTimeFullString,
+  getMonday,
   getMonthNameFromIndex,
-  getShortMonthNameFromIndex
+  getShortMonthNameFromIndex,
+  getWeekNumber
 } from 'src/helpers/date';
 
 test("getCurrentDateTimeFullString", () => {
   const randomDate = faker.date.past()
+
+  //Format hours
+  let hourReminder = randomDate.getHours() % 12;
+  let stringHourReminder = "";
+  if (hourReminder === 0)
+    stringHourReminder = "12"
+  else
+    stringHourReminder = hourReminder < 10 ? "0" + hourReminder.toString() : hourReminder.toString()
+
   const dateInfo = {
     date: randomDate.getDate() < 10 ? "0" + randomDate.getDate().toString() : randomDate.getDate(),
     month: randomDate.getMonth() + 1 < 10 ? "0" + (randomDate.getMonth() + 1).toString() : randomDate.getMonth() + 1,
     year: randomDate.getFullYear(),
-    hour: randomDate.getHours() % 12 < 10 ? "0" + (randomDate.getHours() % 12).toString() : randomDate.getHours() % 12,
+    hour: stringHourReminder,
     minute: randomDate.getMinutes() < 10 ? "0" + randomDate.getMinutes().toString() : randomDate.getMinutes()
   }
 
@@ -47,4 +58,17 @@ test("getShortMonthNameFromIndex", () => {
   array.forEach((month, index) => {
     expect(getShortMonthNameFromIndex(index)).toBe(month.substring(0, 3))
   })
+})
+
+test("getWeekNumber", () => {
+  const date = new Date(2023, 0, 4)
+  expect(getWeekNumber(date)).toBe(1)
+})
+
+test("getMonday", () => {
+  const date = new Date(2023, 0, 4)
+  const monday = getMonday(date)
+  expect(monday.getDate()).toBe(2)
+  expect(monday.getMonth()).toBe(0)
+  expect(monday.getFullYear()).toBe(2023)
 })

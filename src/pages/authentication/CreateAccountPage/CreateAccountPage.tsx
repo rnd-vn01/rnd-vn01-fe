@@ -1,7 +1,7 @@
 import './CreateAccountPage.scss'
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
-import { signInWithGoogle, logInWithEmailAndPassword, registerWithEmailAndPassword, logout, onAuthStateChanged, auth, googleProvider } from 'src/configs/firebase';
+import { logout, auth, googleProvider } from 'src/configs/firebase';
 import { useHistory } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup } from 'firebase/auth';
 import Swal from 'sweetalert2'

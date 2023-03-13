@@ -41,3 +41,20 @@ export const getMidnight = (date: Date) => {
   result.setHours(0, 0, 0, 0);
   return result;
 }
+
+export const getWeekNumber = (date: Date) => {
+  let cloneDate = new Date(date.getTime())
+  return moment(getMonday(cloneDate)).isoWeek();
+}
+
+export const getMonday = (d: Date) => {
+  var day = d.getDay(),
+    diff = d.getDate() - day + (day == 0 ? -6 : 1);
+
+  let dateToReturn = new Date(d.setDate(diff));
+  dateToReturn.setHours(0);
+  dateToReturn.setMinutes(0);
+  dateToReturn.setSeconds(0);
+
+  return dateToReturn;
+}
