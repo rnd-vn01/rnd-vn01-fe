@@ -87,6 +87,7 @@
     "fsevents": "^2.3.2"
   },
   "jest": {
+    "transformIgnorePatterns": [],
     "coveragePathIgnorePatterns": [
       "index.ts",
       "mocks",
@@ -100,11 +101,7 @@
       "SearchProcessor.tsx",
       "SearchResultItem.tsx",
       "DetailPage.tsx",
-      "pages/authentication/",
-      "components/",
-      "pages/",
-      "configs/",
-      "helpers/"
+      "pages/authentication/"
     ]
   }
 }

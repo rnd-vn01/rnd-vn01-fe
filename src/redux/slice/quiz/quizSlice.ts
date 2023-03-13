@@ -10,7 +10,7 @@ export const initialStateQuizSlice = {
   isQuizMode: false,
   isNavigateQuest: false,
   navigateQuestSelectable: false,
-  isQuizField: 0,
+  quizField: 0,
   showingCorrectPoint: null,
   isShowing4Labels: false
 } as IQuizSlice;
