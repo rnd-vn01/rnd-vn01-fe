@@ -98,7 +98,9 @@
       "RecordsLog.tsx",
       "SearchProcessor.tsx",
       "SearchResultItem.tsx",
-      "pages/",
+      "DetailPage.tsx",
+      "pages/authentication/",
+      "components/",
       "redux/",
       "helpers/",
       "configs/"

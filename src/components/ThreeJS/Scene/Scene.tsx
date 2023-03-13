@@ -16,7 +16,7 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { resetToInitialStateQuizSlice, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setLineSelectedByLabel, setModalLoaded, setPointSelected, setPointSelectedByLabel, setStateCameraQuaternion, unsetStrictMode } from 'src/redux/slice/index';
+import { resetToInitialStateQuizSlice, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setLineSelectedByLabel, setModelLoaded, setPointSelected, setPointSelectedByLabel, setStateCameraQuaternion, unsetStrictMode } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS } from 'src/configs/constants';
@@ -47,7 +47,7 @@ export const Scene = forwardRef((props, ref) => {
     const { active, progress, errors, item, loaded, total } = useProgress()
 
     if (progress === 100) {
-      dispatch(setModalLoaded({
+      dispatch(setModelLoaded({
         modelLoaded: true
       }))
     }
@@ -82,7 +82,7 @@ export const Scene = forwardRef((props, ref) => {
   }
 
   useEffect(() => {
-    dispatch(setModalLoaded({
+    dispatch(setModelLoaded({
       modelLoaded: false
     }))
     // const interval = setInterval(() => {

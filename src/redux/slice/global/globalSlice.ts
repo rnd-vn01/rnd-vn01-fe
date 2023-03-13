@@ -12,12 +12,12 @@ export const globalSlice = createSlice({
       state.modelLoaded = false;
     },
 
-    setModalLoaded(state, action) {
+    setModelLoaded(state, action) {
       state.modelLoaded = action.payload.modelLoaded;
     }
   },
 });
 
 const { actions, reducer } = globalSlice;
-export const { resetToInitialStateGlobalSlice, setModalLoaded } = actions;
+export const { resetToInitialStateGlobalSlice, setModelLoaded } = actions;
 export default reducer;

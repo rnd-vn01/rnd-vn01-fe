@@ -96,7 +96,8 @@ export const AboutPage: React.FC<IAboutPage> = ({
                   onClick={() => {
                     window.open(`https://www.linkedin.com/in/nhannguyen2712/`, "_blank").focus()
                   }}
-                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }} />
+                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }}
+                  data-testid="logo-linkedin-member1" />
               </h1>
 
               <p>
@@ -115,7 +116,8 @@ export const AboutPage: React.FC<IAboutPage> = ({
                   onClick={() => {
                     window.open(`https://www.linkedin.com/in/tanleeb01/`, "_blank").focus()
                   }}
-                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }} />
+                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }}
+                  data-testid="logo-linkedin-member2" />
               </h1>
 
               <p>
@@ -134,7 +136,8 @@ export const AboutPage: React.FC<IAboutPage> = ({
                   onClick={() => {
                     window.open(`https://www.linkedin.com/in/h%E1%BB%93-trang-956940210/`, "_blank").focus()
                   }}
-                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }} />
+                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }}
+                  data-testid="logo-linkedin-member3" />
               </h1>
 
               <p>
@@ -150,7 +153,8 @@ export const AboutPage: React.FC<IAboutPage> = ({
                   onClick={() => {
                     window.open(`https://www.facebook.com/profile.php?id=100086637858961`, "_blank").focus()
                   }}
-                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }} />
+                  src={LogoLinkedIn} style={{ width: "12px", display: "inline-block" }}
+                  data-testid="logo-linkedin-member4" />
               </h1>
               <p>
                 {t('about_page.sections.roles.quality_engineer')}
@@ -215,7 +219,8 @@ export const AboutPage: React.FC<IAboutPage> = ({
                 onClick={() => {
                   window.open(`https://sketchfab.com/3d-models/study-human-male-sculpt-65836fbba6974f3cbe8fbd7bc6bebc4d`, "_blank").focus()
                 }}
-                src={PhotoModel} />
+                src={PhotoModel}
+                data-testid="img-model-asset" />
               <h1
               >{t('about_page.sections.model')}</h1>
             </div>
