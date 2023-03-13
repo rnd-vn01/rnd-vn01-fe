@@ -1,4 +1,3 @@
-
 import moment from 'moment';
 
 export const getCurrentDateTimeFullString = (date: Date) => {
@@ -27,23 +26,6 @@ export const getShortMonthNameFromIndex = (i: number) => {
 
 export const getTimeText = (date: Date) => {
   return moment(date).format('HH:mm');
-}
-
-export const getWeekNumber = (date: Date) => {
-  let cloneDate = new Date(date.getTime())
-  return moment(getMonday(cloneDate)).isoWeek();
-}
-
-export const getMonday = (d: Date) => {
-  var day = d.getDay(),
-    diff = d.getDate() - day + (day == 0 ? -6 : 1);
-
-  let dateToReturn = new Date(d.setDate(diff));
-  dateToReturn.setHours(0);
-  dateToReturn.setMinutes(0);
-  dateToReturn.setSeconds(0);
-
-  return dateToReturn;
 }
 
 export const getInputDateFormat = (date: Date) => {
