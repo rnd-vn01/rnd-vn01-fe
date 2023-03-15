@@ -1,6 +1,4 @@
 import './Body.scss'
-import { useLoader } from "@react-three/fiber";
-import { GLTFLoader } from 'src/assets/libraries/GLTFLoader';
 import MALEBODY from 'src/assets/models/MaleBody.glb';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'src/redux/store';
@@ -12,15 +10,13 @@ import {
 import { useCallback } from "react";
 import { debounce } from "lodash";
 import { useMediaQuery } from 'react-responsive';
+import { useGLTF } from '@react-three/drei';
 
 export const Body = ({ isQuizMode }) => {
   //Responsive
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
-  let mesh = useLoader(
-    GLTFLoader,
-    MALEBODY,
-  );
+  const model = useGLTF(MALEBODY)
 
   const {
     isHoveringPoint,
@@ -93,9 +89,11 @@ export const Body = ({ isQuizMode }) => {
     >
       <primitive
         castShadow
-        object={mesh.scene}
+        object={model.scene}
         rotation-y={-0.025}
         position={[0, -30, 0]} />
     </mesh>
   );
 };
+
+useGLTF.preload(MALEBODY)

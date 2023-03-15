@@ -11,8 +11,8 @@ export const Text = ({ positionArray, text, reverse, viewFromBottom, isOnHover }
   const helvetikerRegular = new FontLoader().parse(helvetiker)
   const textOptions = {
     font: helvetikerRegular,
-    size: 1,
-    height: 1,
+    size: 0.1,
+    height: 0.1,
   }
   const {
     x, y, z, w
@@ -21,7 +21,7 @@ export const Text = ({ positionArray, text, reverse, viewFromBottom, isOnHover }
   );
 
   return (
-    <mesh position={positionArray} rotation={[0, 0, 0]} scale={isOnHover? [0.1, 0.1, 0.005] : [0.0625, 0.0625, 0.0005]}
+    <mesh position={positionArray} rotation={[0, 0, 0]} scale={isOnHover? [1, 1, 0.05] : [0.625, 0.625, 0.005]}
       quaternion={
         !viewFromBottom ? new Quaternion(x, reverse ? 1 : y, z, w)
           : new Quaternion(0.7, -0.05, 0.05, 0.7)
