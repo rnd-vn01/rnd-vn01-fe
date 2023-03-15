@@ -127,13 +127,15 @@ export const ChangePasswordPage: React.FC = () => {
           type="email"
           fullWidth
           error={emailError !== ""}
-          helperText={emailError} />
-
+          helperText={emailError}
+          inputProps={{
+            "data-testid": "input-email",
+          }} />
 
         <Button
           theme="filled"
           caption={t('password_reset_page.button_captions.reset_password')}
-          name="login"
+          name="change-password"
           onClick={() => {
             validate();
           }}

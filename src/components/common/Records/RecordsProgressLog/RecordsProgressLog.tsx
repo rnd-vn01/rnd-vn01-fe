@@ -144,23 +144,29 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
           {isProgress &&
             <>
               <h1
-                onClick={() => setIsProgress(true)}
-                className={`inline records-progress__title ${isProgress ? "records-progress__title--selected" : ""}`}>
+                role="h1"
+                aria-label="title-progress"
+                className={`inline records-progress__title records-progress__title--selected`}>
                 {t('records.progress_log.options.progress')}</h1>
               <h1
                 onClick={() => setIsProgress(false)}
-                className={`inline ml-2 records-progress__title ${!isProgress ? "records-progress__title--selected" : ""}`}>
+                role="h1"
+                aria-label="title-log"
+                className={`inline ml-2 records-progress__title`}>
                 {t('records.progress_log.options.log')}</h1>
             </>}
           {!isProgress &&
             <>
               <h1
-                onClick={() => setIsProgress(false)}
-                className={`inline records-progress__title ${!isProgress ? "records-progress__title--selected" : ""}`}>
+                role="h1"
+                aria-label="title-log"
+                className={`inline records-progress__title records-progress__title--selected`}>
                 {t('records.progress_log.options.log')}</h1>
               <h1
                 onClick={() => setIsProgress(true)}
-                className={`inline ml-2 records-progress__title ${isProgress ? "records-progress__title--selected" : ""}`}>
+                role="h1"
+                aria-label="title-progress"
+                className={`inline ml-2 records-progress__title`}>
                 {t('records.progress_log.options.progress')}</h1>
             </>}
         </span>
@@ -170,6 +176,9 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
           <select
             className="records-progress__select"
             value={showingTypeOption}
+            role="select"
+            aria-label="records-progress-select"
+            data-testid="records-progress-select"
             onChange={(e) => setShowingTypeOption(parseInt(e.target.value))}
           >
             {SUMMARY_SHOWING_TIME_TYPES.map(option => (

@@ -17,7 +17,7 @@ import {
 import { RootState, useAppDispatch } from 'src/redux/store';
 import {
   highlightPoint, resetToInitialStatePointSelectionSlice, resetToInitialStateSceneQuiz,
-  setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setModalLoaded,
+  setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setModelLoaded,
   setNavigateQuestSelectedPoint, setPointSelected, setStateCameraQuaternion,
   setStrictMode
 } from 'src/redux/slice/index';
@@ -49,7 +49,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
     const { active, progress, errors, item, loaded, total } = useProgress()
 
     if (progress === 100) {
-      dispatch(setModalLoaded({
+      dispatch(setModelLoaded({
         modelLoaded: true
       }))
     }
@@ -84,7 +84,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
   }
 
   useEffect(() => {
-    dispatch(setModalLoaded({
+    dispatch(setModelLoaded({
       modelLoaded: false
     }))
 

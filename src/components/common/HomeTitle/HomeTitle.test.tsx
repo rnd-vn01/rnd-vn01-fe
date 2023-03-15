@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { HomeTitle } from './HomeTitle';
 
-describe('FooterBar', () => {
+describe('HomeTitle', () => {
   beforeEach(() => {
     render(<HomeTitle />)
   })

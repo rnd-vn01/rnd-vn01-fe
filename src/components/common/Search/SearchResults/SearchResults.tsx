@@ -81,7 +81,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
     if (isChoosingAlphabet) {
       setIsChoosingAlphabet(false);
     }
-  }, [choosingAlphabetOption])
+  }, [choosingAlphabetOption, allAlphabetFilteredResults])
 
   useEffect(() => {
     setChoosingAlphabetOption(-1);
@@ -134,6 +134,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
               {filteredResults.length > 0 &&
                 <h1
                   onClick={() => setIsChoosingAlphabet(true)}
+                  role="h1"
+                  aria-label="search-results-alphabet"
                   className="search-results__letter">
                   {choosingAlphabetOption !== -1 ?
                     ALPHABET_LISTS[currentLanguage][choosingAlphabetOption] :
@@ -156,6 +158,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
 
           {!currentIsLoading && filteredResults?.length === 0 &&
             <h1
+              role="h1"
+              aria-label="no-results"
               className="search-results__no-results">
               {t('no_results')}
             </h1>}
@@ -173,6 +177,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
                   ...currentFilterOptions,
                   searchBy: parseInt(e.target.value),
                 })}
+                role="select"
+                aria-label="select-search-by"
               >
                 {filters["searchBy"] && filters["searchBy"].map((option, index) => (
                   <option
@@ -194,6 +200,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
                   ...currentFilterOptions,
                   searchOn: parseInt(e.target.value),
                 })}
+                role="select"
+                aria-label="select-search-on"
               >
                 {filters["searchOn"] && filters["searchOn"].map((option, index) => (
                   <option
@@ -217,6 +225,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
                   ...currentFilterOptions,
                   show: parseInt(e.target.value),
                 })}
+                role="select"
+                aria-label="select-show"
               >
                 {filters["show"] && filters["show"].map((option, index) => (
                   <option

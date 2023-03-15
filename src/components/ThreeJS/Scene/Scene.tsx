@@ -16,7 +16,7 @@ import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { resetToInitialStateQuizSlice, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setLineSelectedByLabel, setModalLoaded, setPointSelected, setPointSelectedByLabel, setStateCameraQuaternion, unsetStrictMode } from 'src/redux/slice/index';
+import { resetToInitialStateQuizSlice, setIsNavigateQuest, setIsQuizMode, setIsShowingLabelOnClick, setLineSelectedByLabel, setModelLoaded, setPointSelected, setPointSelectedByLabel, setStateCameraQuaternion, unsetStrictMode } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS } from 'src/configs/constants';
@@ -47,32 +47,9 @@ export const Scene = forwardRef((props, ref) => {
     const { active, progress, errors, item, loaded, total } = useProgress()
 
     if (progress === 100) {
-      dispatch(setModalLoaded({
+      dispatch(setModelLoaded({
         modelLoaded: true
       }))
-
-      setTimeout(() => {
-        // Check if a point is selected from redirect
-        if (location?.state?.isRedirect) {
-          const param = location.search;
-          if (param.includes("?")) {
-            const getParams = param.substring(1, param.length).split("&")
-              .map(item => {
-                return item.split("=")[1]
-              })
-
-            if (getParams[0] === "point") {
-              dispatch(setPointSelectedByLabel({
-                selectedPoint: getParams[1]
-              }))
-            } else {
-              dispatch(setLineSelectedByLabel({
-                selectedLine: getParams[1]
-              }))
-            }
-          }
-        }
-      }, 1000)
     }
 
     return <Html prepend center
@@ -105,7 +82,7 @@ export const Scene = forwardRef((props, ref) => {
   }
 
   useEffect(() => {
-    dispatch(setModalLoaded({
+    dispatch(setModelLoaded({
       modelLoaded: false
     }))
     // const interval = setInterval(() => {
@@ -152,6 +129,29 @@ export const Scene = forwardRef((props, ref) => {
 
     dispatch(unsetStrictMode())
     dispatch(resetToInitialStateQuizSlice())
+
+    setTimeout(() => {
+      // Check if a point is selected from redirect
+      if (location?.state?.isRedirect) {
+        const param = location.search;
+        if (param.includes("?")) {
+          const getParams = param.substring(1, param.length).split("&")
+            .map(item => {
+              return item.split("=")[1]
+            })
+
+          if (getParams[0] === "point") {
+            dispatch(setPointSelectedByLabel({
+              selectedPoint: getParams[1]
+            }))
+          } else {
+            dispatch(setLineSelectedByLabel({
+              selectedLine: getParams[1]
+            }))
+          }
+        }
+      }
+    }, 1000)
   }, []);
 
   useImperativeHandle(ref, () => ({

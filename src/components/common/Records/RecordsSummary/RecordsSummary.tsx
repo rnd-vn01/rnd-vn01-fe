@@ -71,6 +71,8 @@ export const RecordsSummary: React.FC<IRecordsSummary> = ({
             className="records-summary__select"
             value={showingTypeOption}
             onChange={(e) => setShowingTypeOption(parseInt(e.target.value))}
+            role="select"
+            aria-label="records-summary-type-select"
           >
             {SUMMARY_SHOWING_TIME_TYPES.map(option => (
               <option
@@ -85,22 +87,22 @@ export const RecordsSummary: React.FC<IRecordsSummary> = ({
 
       <div className='flex justify-between pt-3 pb-2'>
         <div className='records-summary__item'>
-          <h1>{showingData?.points}</h1>
+          <h1 data-testid="record-summary-points">{showingData?.points}</h1>
           <h3>{t('general.points')} {' '} {t('records.summary.caption.learnt')}</h3>
         </div>
 
         <div className='records-summary__item'>
-          <h1>{showingData?.meridians}</h1>
+          <h1 data-testid="record-summary-meridians">{showingData?.meridians}</h1>
           <h3>{t('general.meridians')} {' '} {t('records.summary.caption.learnt')}</h3>
         </div>
 
         <div className='records-summary__item'>
-          <h1>{showingData?.quizzes}</h1>
+          <h1 data-testid="record-summary-quizzes">{showingData?.quizzes}</h1>
           <h3>{t('records.summary.caption.quiz_attempted')}</h3>
         </div>
 
         <div className='records-summary__item'>
-          <h1>{showingData?.accuracy}%</h1>
+          <h1 data-testid="record-summary-accuracy">{showingData?.accuracy}%</h1>
           <h3>{t('records.summary.caption.accuracy_rate')}</h3>
         </div>
       </div>

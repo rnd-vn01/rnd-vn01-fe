@@ -14,9 +14,6 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
       role="div"
       aria-label="quiz-summary"
       className="quiz-summary flex flex-col items-center justify-center">
-      {/* <h1
-        className="quiz-summary__title">{t('quiz_page.captions.result')}</h1> */}
-
       <div className="quiz-summary__options">
         <h1
           className="quiz-summary__sub-title">{t('quiz_page.captions.options')}</h1>
@@ -44,6 +41,8 @@ export const QuizSummary: React.FC<IQuizSummary> = ({
       </div>
 
       <p
+        role="p"
+        aria-label="view-personal-records"
         className='quiz-summary__view-stats'
         onClick={() => history.push("/records")}
       >{t('quiz_page.captions.view_stats')}</p>

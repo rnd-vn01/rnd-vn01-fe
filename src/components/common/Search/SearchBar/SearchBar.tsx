@@ -48,12 +48,12 @@ export const SearchBar: React.FC<ISearchBar> = ({
       aria-label="search-bar"
       className="search-bar"
       onClick={() => {
-        if (inputBoxRef.current) {
-          (inputBoxRef.current as HTMLInputElement).focus()
-        }
+        (inputBoxRef.current as HTMLInputElement)?.focus()
       }}>
 
       <img
+        role="img"
+        aria-label="search-bar-icon"
         src={usingQuickSearchIconImage}
         className="search-bar__logo--search"></img>
 
@@ -65,9 +65,13 @@ export const SearchBar: React.FC<ISearchBar> = ({
           onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
           value={query}
           disabled={isChoosingAlphabet}
-          onChange={e => setQuery(e.target.value)}></input>
+          onChange={e => setQuery(e.target.value)}
+          role="input"
+          aria-label="search-input"></input>
 
         {!isLoading && query !== "" && <span className="search-bar__number-of-results"
+          role="span"
+          aria-label="number-of-results"
           onClick={(e) => e.stopPropagation()}>
           {numberOfMatchingResults}
           {` `}

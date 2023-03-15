@@ -13,8 +13,8 @@ export const RecordsLog: React.FC<IRecordsLog> = ({
   const [showingLogResult, setShowingLogResult] = useState<any>({});
 
   useEffect(() => {
-    if (isCollapsed) {
-      var growDiv = document.querySelector(`#records-log-${index}`) as HTMLElement;
+    var growDiv = document.querySelector(`#records-log-${index}`) as HTMLElement;
+    if (growDiv) {
       if (growDiv.clientHeight) {
         growDiv.style.height = "0px";
         growDiv.style.overflow = "hidden";
@@ -79,6 +79,8 @@ export const RecordsLog: React.FC<IRecordsLog> = ({
     >
       <div
         className="records-log__header"
+        role="div"
+        aria-label="records-log-header"
         onClick={(e) => { setIsCollapsed(!isCollapsed) }}>
         <div className="records-log__flex-block flex justify-between">
           <h1 className="records-log__header--timestamp">
@@ -94,8 +96,11 @@ export const RecordsLog: React.FC<IRecordsLog> = ({
         </div>
       </div>
 
-      {isCollapsed && showingLogResult?.points &&
+      {showingLogResult?.points &&
         <div className="records-log__information"
+          role="div"
+          aria-label="records-log-information"
+          data-testid="records-log-information"
           id={`records-log-${index}`}>
           {Object.keys(showingLogResult.points).map(meridian =>
             <div

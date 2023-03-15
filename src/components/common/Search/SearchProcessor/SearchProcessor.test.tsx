@@ -9,6 +9,7 @@ describe('SearchProcessor', () => {
       <SearchProcessor
         callbackSetResults={jest.fn()}
         callbackSetLoading={jest.fn()}
+        query={"a"}
       />
     </Provider>)
   })

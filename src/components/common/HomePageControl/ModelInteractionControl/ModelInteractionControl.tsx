@@ -27,28 +27,42 @@ export const ModelInteractionControl: React.FC<IModelInteractionControl> = ({
       <div className='model-interaction-control__main'>
         <img className='model-interaction-control__control 
         model-interaction-control__control--center' src={controlCenter}
-          onClick={callbackPanCenter}></img>
+          onClick={callbackPanCenter}
+          role="model-interaction-control"
+          aria-label="model-interaction-control-center"></img>
         <img className='model-interaction-control__control 
         model-interaction-control__control--left' src={controlLeft}
-          onClick={callbackPanLeft}></img>
+          onClick={callbackPanLeft}
+          role="model-interaction-control"
+          aria-label="model-interaction-control-left"></img>
         <img className='model-interaction-control__control 
         model-interaction-control__control--right' src={controlRight}
-          onClick={callbackPanRight}></img>
+          onClick={callbackPanRight}
+          role="model-interaction-control"
+          aria-label="model-interaction-control-right"></img>
         <img className='model-interaction-control__control 
         model-interaction-control__control--up' src={controlUp}
-          onClick={callbackPanUp}></img>
+          onClick={callbackPanUp}
+          role="model-interaction-control"
+          aria-label="model-interaction-control-up"></img>
         <img className='model-interaction-control__control 
         model-interaction-control__control--down' src={controlDown}
-          onClick={callbackPanDown}></img>
+          onClick={callbackPanDown}
+          role="model-interaction-control"
+          aria-label="model-interaction-control-down"></img>
       </div>
 
       <div className='model-interaction-control__zoom'>
         <img className='model-interaction-control__control 
         model-interaction-control__control--zoom-in' src={controlZoomIn}
-          onClick={callbackZoomIn}></img>
+          onClick={callbackZoomIn}
+          role="model-interaction-control"
+          aria-label="model-interaction-control-zoom-in"></img>
         <img className='model-interaction-control__control 
         model-interaction-control__control--zoom-out' src={controlZoomOut}
-          onClick={callbackZoomOut}></img>
+          onClick={callbackZoomOut}
+          role="model-interaction-control"
+          aria-label="model-interaction-control-zoom-out"></img>
       </div>
     </div>
   );

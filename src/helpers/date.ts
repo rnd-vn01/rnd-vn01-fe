@@ -1,4 +1,3 @@
-
 import moment from 'moment';
 
 export const getCurrentDateTimeFullString = (date: Date) => {
@@ -29,6 +28,20 @@ export const getTimeText = (date: Date) => {
   return moment(date).format('HH:mm');
 }
 
+export const getInputDateFormat = (date: Date) => {
+  return moment(date).format('YYYY-MM-DD');
+}
+
+export const generateRandomDate = (start, end) => {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+export const getMidnight = (date: Date) => {
+  let result = new Date(date.getTime())
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
 export const getWeekNumber = (date: Date) => {
   let cloneDate = new Date(date.getTime())
   return moment(getMonday(cloneDate)).isoWeek();
@@ -44,18 +57,4 @@ export const getMonday = (d: Date) => {
   dateToReturn.setSeconds(0);
 
   return dateToReturn;
-}
-
-export const getInputDateFormat = (date: Date) => {
-  return moment(date).format('YYYY-MM-DD');
-}
-
-export const generateRandomDate = (start, end) => {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
-export const getMidnight = (date: Date) => {
-  let result = new Date(date.getTime())
-  result.setHours(0, 0, 0, 0);
-  return result;
 }

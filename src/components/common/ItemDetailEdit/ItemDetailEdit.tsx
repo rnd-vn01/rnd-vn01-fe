@@ -106,6 +106,8 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
               className='item-detail-edit__input'
               value={itemDetail?.code}
               placeholder={t(`placeholders.code`)}
+              role="input"
+              aria-label="input-code"
               onChange={(e) => updateInformation(e.target.value, "code", -1)} />
           </h1>
           <h1 className="item-detail-edit__header--name col-span-1">
@@ -114,13 +116,15 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
               value={itemDetail?.name}
               placeholder={t(`placeholders.name`)}
               onChange={(e) => updateInformation(e.target.value, "name", -1)}
+              role="input"
+              aria-label="input-name"
               style={{ textAlign: "right" }} />
           </h1>
         </div>
       </div>
 
       <div className="item-detail-edit__information">
-        {Object.keys(itemDetail || item).map((field, index) => {
+        {Object.keys(itemDetail).map((field, index) => {
           if (field !== "name" && field !== "code") {
             return (
               <div key={`point-information-${index}`}>
@@ -143,10 +147,13 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
                                 className='item-detail-edit__input item-detail-edit__input--inline'
                                 value={itemDetail?.functionalities?.[itemIndex]}
                                 placeholder={t(`placeholders.functionality`)}
+                                role="point-functionality"
+                                aria-label={`point-functionality-${itemIndex}`}
                                 onChange={(e) => updateInformation(e.target.value, "functionalities", itemIndex)} />
                               <FontAwesomeIcon
                                 className="item-detail-edit__icon-delete"
                                 icon={faTrashCan}
+                                data-testid={`remove-icon-${itemIndex}`}
                                 onClick={() => removeSubItem(itemIndex, field)}></FontAwesomeIcon>
                             </span>
                           </p>
@@ -155,6 +162,8 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
                       <span className="mt-4">
                         <button
                           className='item-detail-edit__btn-add-subitem px-1'
+                          role="button"
+                          aria-label="button-add-subitem"
                           onClick={(e) => {
                             if (newItemValue.trim() !== "") {
                               addSubItem(newItemValue.trim(), field)
@@ -173,16 +182,21 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
                           placeholder={t(`placeholders.add_new_functionality`)}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
-                              addSubItem(newItemValue.trim(), field)
-                              setNewItemValue("");
+                              if (newItemValue.trim() !== "") {
+                                addSubItem(newItemValue.trim(), field)
+                                setNewItemValue("");
+                              }
                             }
                           }}
+                          role="input"
+                          aria-label="input-add-subitem"
+                          id="input-add-subitem"
                         />
                       </span>
                     </>
                     : <>
                       {
-                        !isPoint && field === "points" ?
+                        (!isPoint && field === "points") ?
                           <>
                             <div className="pb-2 pt-1">
                               {(itemDetail[field] || []).map((point, itemIndex) =>
@@ -195,11 +209,14 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
                                     <input
                                       className='item-detail-edit__input item-detail-edit__input--inline'
                                       value={itemDetail?.points?.[itemIndex]}
+                                      role="meridian-point"
+                                      aria-label={`meridian-point-${itemIndex}`}
                                       placeholder={t(`placeholders.point`)}
                                       onChange={(e) => updateInformation(e.target.value, "points", itemIndex)} />
                                     <FontAwesomeIcon
                                       className="item-detail-edit__icon-delete"
                                       icon={faTrashCan}
+                                      data-testid={`remove-point-${itemIndex}`}
                                       onClick={() => removeSubItem(itemIndex, field)}></FontAwesomeIcon>
                                   </span>
                                 </p>
@@ -208,6 +225,8 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
                             <span className="mt-4">
                               <button
                                 className='item-detail-edit__btn-add-subitem px-1'
+                                role="button"
+                                aria-label="button-add-point"
                                 onClick={(e) => {
                                   if (newItemValue.trim() !== "") {
                                     addSubItem(newItemValue.trim(), field)
@@ -226,10 +245,15 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
                                 placeholder={t(`placeholders.add_new_point`)}
                                 onKeyDown={(e) => {
                                   if (e.key === "Enter") {
-                                    addSubItem(newItemValue.trim(), field)
-                                    setNewItemValue("");
+                                    if (newItemValue.trim() !== "") {
+                                      addSubItem(newItemValue.trim(), field)
+                                      setNewItemValue("");
+                                    }
                                   }
                                 }}
+                                role="input"
+                                aria-label="input-add-point"
+                                id="input-add-point"
                               />
                             </span>
                           </>
@@ -243,6 +267,8 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
                               onChange={(e) => {
                                 updateInformation(e.target.value, field, -1);
                               }}
+                              role="textarea"
+                              aria-label={`textarea-${field}`}
                               value={itemDetail[field]}>
                             </textarea>
                           </p>
@@ -261,6 +287,8 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
       <div className='item-detail-edit__buttons flex items-center justify-center mt-3'>
         <div
           className='item-detail-edit__buttons--button item-detail-edit__buttons--button-check'
+          role="div"
+          aria-label="button-submit"
           onClick={() => updateItemDetail()}>
           <FontAwesomeIcon
             icon={faCheck}
@@ -268,6 +296,8 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
         </div>
         <div
           className='item-detail-edit__buttons--button item-detail-edit__buttons--button-multiply'
+          role="div"
+          aria-label="button-cancel"
           onClick={() => {
             history.push(location.pathname.replace("?edit", ""))
           }}>

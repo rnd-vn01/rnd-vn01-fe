@@ -28,12 +28,12 @@ export const QuickSearchBar: React.FC = ({ }) => {
       aria-label="quick-search"
       className="quick-search"
       onClick={() => {
-        if (inputBoxRef.current) {
-          (inputBoxRef.current as HTMLInputElement).focus()
-        }
+        (inputBoxRef.current as HTMLInputElement)?.focus()
       }}>
 
       <img
+        role="img"
+        aria-label="quick-search-icon"
         src={usingQuickSearchIconImage}
         className="quick-search__logo--search"></img>
 
@@ -43,13 +43,9 @@ export const QuickSearchBar: React.FC = ({ }) => {
         onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
         onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
         value={query}
-        onChange={e => setQuery(e.target.value)}></input>
-
-      {/* <div
-        className="quick-search__logo--advanced-search"
-        onClick={() => history.push("/advanced-search")}>
-        <img src={AdvancedSearchIcon}></img>
-      </div> */}
+        onChange={e => setQuery(e.target.value)}
+        role="input"
+        aria-label="quick-search-input"></input>
 
       <QuickSearchResults
         query={query}

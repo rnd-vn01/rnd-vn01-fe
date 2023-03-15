@@ -2,15 +2,13 @@ import { initializeApp } from "firebase/app";
 import {
   GoogleAuthProvider,
   getAuth,
-  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
   sendEmailVerification,
   onAuthStateChanged
-}
-  from "firebase/auth";
+} from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -33,44 +31,9 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('email');
 
-const signInWithGoogle = async () => {
-  try {
-    const res = await signInWithPopup(auth, googleProvider);
-    const user = res.user;
-  } catch (err: any) {
-    MySwal.fire({
-      icon: 'error',
-      title: 'Error...',
-      text: err.message,
-    })
-  }
-};
-
 const logInWithEmailAndPassword = async (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
-
-const registerWithEmailAndPassword = async (email: string, password: string) => {
-  return createUserWithEmailAndPassword(auth, email, password)
-    .then((user: any) => {
-      if (auth.currentUser) {
-        sendEmailVerification(auth.currentUser)
-          .then((result: any) => {
-          })
-          .catch((err: any) => {
-            MySwal.fire({
-              icon: 'error',
-              title: 'Error...',
-              text: err.message,
-            })
-          });
-      }
-    });
-};
-
-const sendVerificationEmail = async (user: any) => {
-  return sendEmailVerification(user);
-}
 
 const sendPasswordReset = async (email: string) => {
   await sendPasswordResetEmail(auth, email);
@@ -84,12 +47,9 @@ const storage = getStorage(app);
 
 export {
   auth,
-  signInWithGoogle,
   logInWithEmailAndPassword,
-  registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
-  sendVerificationEmail,
   onAuthStateChanged,
   storage,
   googleProvider

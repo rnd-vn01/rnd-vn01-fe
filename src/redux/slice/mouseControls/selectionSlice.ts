@@ -45,7 +45,7 @@ export const selectionSlice = createSlice({
       //IDEA: Pass the list of points and select the line recorded the point closest to the cursor     
       const pointer = { ...state.currentMousePosition };
 
-      if (pointer != null) {
+      if (Object.keys(pointer).length > 0) {
         let minDistance = 1000;
         let selectedLine = "";
 
@@ -113,7 +113,7 @@ export const selectionSlice = createSlice({
     setLineHover(state, action) {
       const pointer = { ...state.currentMouseMovePosition };
 
-      if (pointer != null) {
+      if (Object.keys(pointer).length > 0) {
         let minDistance = 1000;
         let selectedLine = "";
 

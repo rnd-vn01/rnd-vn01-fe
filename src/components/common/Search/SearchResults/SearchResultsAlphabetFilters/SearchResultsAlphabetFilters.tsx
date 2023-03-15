@@ -43,6 +43,7 @@ export const SearchResultsAlphabetFilters: React.FC<ISearchResultsAlphabetFilter
 
     results?.forEach((item) => {
       const letter = replaceVietnameseNotation(item.name.toUpperCase()[0])
+
       if (!alphabetsIncluded.includes(letter)) {
         alphabetsIncluded.push(letter)
       }
@@ -62,6 +63,9 @@ export const SearchResultsAlphabetFilters: React.FC<ISearchResultsAlphabetFilter
         className={`search-results-alphabet-filters__alphabet col-span-1 text-center
           ${alphabet.isAvailable ? "search-results-alphabet-filters__alphabet--available" : ""}`}
         onClick={() => callbackSetAlphabetFilteringOption(alphabet.index)}
+        role="h1"
+        aria-label={`search-results-alphabet-${alphabet.letter}`}
+        data-testid={`search-results-alphabet-${alphabet.index}`}
       >
         {alphabet.letter}
       </h1>)}

@@ -1,7 +1,7 @@
 import './HomePage.scss'
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  AuthBar, FooterBar, HomePageControl, HomeTitle, InformationBlock, QuickSearchBar
+  AuthBar, HomePageControl, HomeTitle, InformationBlock, QuickSearchBar
 } from 'src/components/common';
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
@@ -9,7 +9,7 @@ import { Scene } from 'src/components/index';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { APP_NAME } from 'src/configs/constants';
-import { LanguagePicker } from 'src/components/common/FooterBar/LanguagePicker/LanguagePicker';
+import { LanguagePicker } from 'src/components/common';
 import { QuickInformationMiddleware } from 'src/components/middleware';
 import { useLocation } from 'react-router-dom';
 
@@ -79,29 +79,36 @@ export const HomePage: React.FC = () => {
       <div className="home-page__section--controls">
         <HomePageControl
           isQuizPage={false}
-          callbackPanCenter={() => (sceneRef.current as any).panCenter()}
-          callbackPanDown={() => (sceneRef.current as any).panDown()}
-          callbackPanLeft={() => (sceneRef.current as any).panLeft()}
-          callbackPanRight={() => (sceneRef.current as any).panRight()}
-          callbackPanUp={() => (sceneRef.current as any).panUp()}
-          callbackZoomIn={() => (sceneRef.current as any).zoomIn()}
-          callbackZoomOut={() => (sceneRef.current as any).zoomOut()}
+          callbackPanCenter={() => (sceneRef.current as any)?.panCenter()}
+          callbackPanDown={() => (sceneRef.current as any)?.panDown()}
+          callbackPanLeft={() => (sceneRef.current as any)?.panLeft()}
+          callbackPanRight={() => (sceneRef.current as any)?.panRight()}
+          callbackPanUp={() => (sceneRef.current as any)?.panUp()}
+          callbackZoomIn={() => (sceneRef.current as any)?.zoomIn()}
+          callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
         />
       </div>
 
-      {isShowingQuickInformation != null && <div className="home-page__section--information">
-        <InformationBlock
-          isPoint={isShowingQuickInformation?.type === "point"}
-          itemInformation={isShowingQuickInformation?.content}
-          usingLanguage={currentLanguage}
-        />
-      </div>}
+      {(isShowingQuickInformation != null) &&
+        <div
+          role="div"
+          aria-label="home-page-information"
+          className="home-page__section--information">
+          <InformationBlock
+            isPoint={isShowingQuickInformation?.type === "point"}
+            itemInformation={isShowingQuickInformation?.content}
+            usingLanguage={currentLanguage}
+          />
+        </div>}
 
       {/* Middleware */}
       <QuickInformationMiddleware />
 
       {/* Landing page */}
-      <div className={`home-page__landing ${!isShowingLanding ? "home-page__landing--hidden" : ""}`}
+      <div
+        role="div"
+        aria-label="home-page-landing"
+        className={`home-page__landing ${!isShowingLanding ? "home-page__landing--hidden" : ""}`}
         onClick={() => {
           if (modelLoaded)
             setIsShowingLanding(false)

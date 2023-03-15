@@ -29,22 +29,29 @@ export const LanguagePicker: React.FC = () => {
       role="div"
       aria-label="language-picker"
       className="language-picker flex flex-col items-start justify-center">
-      {isShowingDropdown &&
-        <div className="language-picker__dropdown w-fit h-fit flex flex-col items-end justify-center">
-          {LANGUAGES_LIST.map((language, index) => (
-            <div
-              className={`language-picker__dropdown--item w-full 
+      <div
+        role="div"
+        aria-label="language-picker-dropdown"
+        className={`language-picker__dropdown w-fit h-fit flex flex-col items-end justify-center
+        ${!isShowingDropdown ? "language-picker__dropdown--hide" : ""}`}>
+        {LANGUAGES_LIST.map((language, index) => (
+          <div
+            className={`language-picker__dropdown--item w-full 
               ${language === currentLanguage ? "language-picker__dropdown--selected" : ""}`}
-              onClick={() => {
-                setLanguage(language);
-                history.go(0)
-              }}
-              key={`language-${index}`}>
-              {language}
-            </div>
-          ))}
-        </div>}
-      <div className="language-picker__current flex items-center justify-center cursor-pointer"
+            role="language-picker-dropdown-item"
+            onClick={() => {
+              setLanguage(language);
+              history.go(0)
+            }}
+            key={`language-${index}`}>
+            {language}
+          </div>
+        ))}
+      </div>
+      <div
+        role="div"
+        aria-label="language-picker-icon"
+        className="language-picker__current flex items-center justify-center cursor-pointer"
         onClick={() => setIsShowingDropdown(!isShowingDropdown)}>
         {currentLanguage}
       </div>

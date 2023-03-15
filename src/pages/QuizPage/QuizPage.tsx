@@ -24,9 +24,9 @@ export const QuizPage: React.FC = () => {
     if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION
       && questionType !== QUIZ_QUESTION_TYPE.NAVIGATE
       && questionType !== QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION && sceneRef.current) {
-      (sceneRef.current as any).panCenter();
+      (sceneRef.current as any)?.panCenter();
     } else if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
-      (sceneRef.current as any).focusForNavigateQuestion();
+      (sceneRef.current as any)?.focusForNavigateQuestion();
     }
   }, [questionType]);
 
@@ -72,13 +72,13 @@ export const QuizPage: React.FC = () => {
       <div className="quiz-page__section--controls">
         <HomePageControl
           isQuizPage={true}
-          callbackPanCenter={() => (sceneRef.current as any).panCenter()}
-          callbackPanDown={() => (sceneRef.current as any).panDown()}
-          callbackPanLeft={() => (sceneRef.current as any).panLeft()}
-          callbackPanRight={() => (sceneRef.current as any).panRight()}
-          callbackPanUp={() => (sceneRef.current as any).panUp()}
-          callbackZoomIn={() => (sceneRef.current as any).zoomIn()}
-          callbackZoomOut={() => (sceneRef.current as any).zoomOut()}
+          callbackPanCenter={() => (sceneRef.current as any)?.panCenter()}
+          callbackPanDown={() => (sceneRef.current as any)?.panDown()}
+          callbackPanLeft={() => (sceneRef.current as any)?.panLeft()}
+          callbackPanRight={() => (sceneRef.current as any)?.panRight()}
+          callbackPanUp={() => (sceneRef.current as any)?.panUp()}
+          callbackZoomIn={() => (sceneRef.current as any)?.zoomIn()}
+          callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
         />
       </div>
     </div>

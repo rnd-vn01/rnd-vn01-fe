@@ -87,6 +87,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
     >
       <div
         className={`quick-search-results__block--advanced-search flex justify-between`}
+        role="div"
+        aria-label="quick-search-advanced-search"
         onClick={() => {
           history.push(`/advanced-search?query=${query}`)
         }}
@@ -106,6 +108,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
               <div
                 className={`quick-search-results__block`}
                 key={`quick-search-category-${index}`}
+                role="div"
+                aria-label="quick-search-results-block"
               >
                 <div className="quick-search-results__block--category">
                   <span className="quick-search-results__result-block">
@@ -120,6 +124,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
                 {results[category].map((item: any, subIndex: number) => (
                   <div
                     className="quick-search-results__item"
+                    role="quick-search-result-item"
+                    aria-label={`quick-search-result-item-${item}`}
                     onClick={() => {
                       const getCode = item.name.substring(item.name.indexOf("(") + 1, item.name.indexOf(")"))
                       if (category === "meridians") {
