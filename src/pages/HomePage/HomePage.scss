@@ -6,6 +6,10 @@
   height: 100vh;
   position: relative;
 
+  @include smallscreen {
+    height: calc(100vh - 55px);
+  }
+
   &__section {
     height: 100%;
 

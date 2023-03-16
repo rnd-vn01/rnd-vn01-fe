@@ -135,6 +135,16 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
 
+  const getPointSize = () => {
+    let desktopSize = isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375));
+
+    if (!isDesktop) {
+      desktopSize *= 2
+    }
+
+    return desktopSize
+  }
+
   useEffect(() => {
     if (isOnHover || isSelected) {
       setColor(0xFFFF00)
@@ -214,7 +224,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
           attach="material"
           map={imgTex}
           color={color}
-          size={isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375))}
+          size={getPointSize()}
           sizeAttenuation={false}
           transparent={false}
           alphaTest={0.5}
