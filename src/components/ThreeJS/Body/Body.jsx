@@ -70,6 +70,10 @@ export const Body = ({ isQuizMode }) => {
             if (!isHoveringLine && !isHoveringPoint) {
               dispatch(resetToInitialStatePointSelectionSlice())
             }
+          } else {
+            if (!isHoveringPoint) {
+              dispatch(resetToInitialStatePointSelectionSlice())
+            }
           }
         }
       }}
