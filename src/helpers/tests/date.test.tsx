@@ -72,3 +72,11 @@ test("getMonday", () => {
   expect(monday.getMonth()).toBe(0)
   expect(monday.getFullYear()).toBe(2023)
 })
+
+test("getMonday of a date where monday is of previous month or year", () => {
+  const date = new Date(2023, 0, 1)
+  const monday = getMonday(date)
+  expect(monday.getDate()).toBe(26)
+  expect(monday.getMonth()).toBe(11)
+  expect(monday.getFullYear()).toBe(2022)
+})

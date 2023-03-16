@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { resetToInitialStatePointSelectionSlice, setShowingQuickInformation } from 'src/redux/slice';
 import store from 'src/redux/store';
 import { InformationBlock } from './InformationBlock';
 
@@ -18,6 +19,16 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe('InformationBlock', () => {
+  afterEach(() => {
+    store.dispatch(resetToInitialStatePointSelectionSlice());
+  })
+
+  beforeEach(() => {
+    store.dispatch(setShowingQuickInformation({
+      quickInformation: true
+    }));
+  })
+
   it("to be rendered successfully", async () => {
     render(<Provider store={store}>
       <InformationBlock />
@@ -67,6 +78,26 @@ describe('InformationBlock', () => {
 
     await waitFor(() => {
       expect(mockHistoryPush).toHaveBeenCalledWith("/detail/meridian/LU")
+    })
+  })
+
+  it("should hide the information block if clicked on the icon", async () => {
+    render(<Provider store={store}>
+      <InformationBlock
+        isPoint={false}
+        itemInformation={{
+          code: "LU",
+          name: "Lung",
+          description: "Description for Lung",
+          diseases: "",
+        }}
+      />
+    </Provider>)
+
+    fireEvent.click(screen.getByRole("div", { name: "information-block-hide-icon" }))
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("information-block-title")).toBeNull()
     })
   })
 });

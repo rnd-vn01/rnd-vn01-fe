@@ -60,4 +60,14 @@ describe('SearchBar', () => {
       expect(searchInput.getAttribute("value")).toBe("aa")
     })
   })
+
+  it("should reset the query as null if clicked on the input box", async () => {
+    const searchInput = screen.getByRole("input", { name: "search-input" })
+    fireEvent.change(searchInput, { target: { value: "aa" } })
+    fireEvent.click(searchInput)
+
+    await waitFor(() => {
+      expect(searchInput.getAttribute("value")).toBe("")
+    })
+  })
 });

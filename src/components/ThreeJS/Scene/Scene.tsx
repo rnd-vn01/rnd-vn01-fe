@@ -58,9 +58,11 @@ export const Scene = forwardRef((props, ref) => {
     const { active, progress, errors, item, loaded, total } = useProgress()
 
     if (progress === 100) {
-      dispatch(setModelLoaded({
-        modelLoaded: true
-      }))
+      setTimeout(() => {
+        dispatch(setModelLoaded({
+          modelLoaded: true
+        }))
+      }, 350)
     }
 
     return <Html prepend center

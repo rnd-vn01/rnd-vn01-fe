@@ -124,7 +124,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
     >
       {isChoosingAlphabet ?
         <SearchResultsAlphabetFilters
-          results={allAlphabetFilteredResults.length > 0 ? allAlphabetFilteredResults : filteredResults}
+          results={allAlphabetFilteredResults.length > 0 ? allAlphabetFilteredResults : filteredResults} /* NOT_TESTED */
           callbackSetAlphabetFilteringOption={setChoosingAlphabetOption}
         />
         :

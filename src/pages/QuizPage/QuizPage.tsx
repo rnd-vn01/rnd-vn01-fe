@@ -21,6 +21,7 @@ export const QuizPage: React.FC = () => {
   document.title = `${APP_NAME} | ${t('quiz_page.title')}`
 
   useEffect(() => {
+    {/* NOT_TESTED */ }
     if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION
       && questionType !== QUIZ_QUESTION_TYPE.NAVIGATE
       && questionType !== QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION && sceneRef.current) {
@@ -28,6 +29,7 @@ export const QuizPage: React.FC = () => {
     } else if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
       (sceneRef.current as any)?.focusForNavigateQuestion();
     }
+    {/* NOT_TESTED */ }
   }, [questionType]);
 
   return (

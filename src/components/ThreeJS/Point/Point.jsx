@@ -26,6 +26,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   //Responsive
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isTablet = useMediaQuery({ query: '(min-width: 768px)' });
 
   const {
     selectedLabel,
@@ -138,7 +139,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const getPointSize = () => {
     let desktopSize = isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375));
 
-    if (!isDesktop) {
+    if (!isTablet) {
       desktopSize *= 2
     }
 

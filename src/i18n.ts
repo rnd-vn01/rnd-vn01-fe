@@ -19,7 +19,7 @@ i18n
           hometitle: {
             sub: "welcome to",
             project_name: "3D Acupuncture Healthcare Data Management And Treatment System",
-            instruction: "interact with the model to start"
+            instruction: "click to start"
           },
           footer_bar: {
             start_quiz: "Start Quiz"
@@ -157,7 +157,8 @@ i18n
                 search_by: "search by",
                 show: "show"
               }
-            }
+            },
+            placeholder: "Search..."
           },
           data_management_page: {
             title: "Data Management",
@@ -195,7 +196,7 @@ i18n
               },
               showing: "showing",
               caption: {
-                learnt: "learnt",
+                learnt: "quized",
                 quiz_attempted: "quizzes",
                 accuracy_rate: "accuracy rate"
               }
@@ -218,7 +219,7 @@ i18n
               },
               caution: "\"From\" date must be before or equal to \"to\" date",
               total: "total",
-              learnt: "learnt so far"
+              learnt: "quized so far"
             }
           },
           about_page: {
@@ -328,7 +329,7 @@ i18n
           hometitle: {
             sub: "chào mừng đến với",
             project_name: "Hệ Thống Điều Trị Và Quản Lý Dữ Liệu Châm Cứu 3D",
-            instruction: "tương tác với mô hình để bắt đầu"
+            instruction: "bấm để bắt đầu"
           },
           footer_bar: {
             start_quiz: "Kiểm tra"
@@ -466,7 +467,8 @@ i18n
                 search_by: "tìm theo",
                 show: "hiển thị"
               }
-            }
+            },
+            placeholder: "Tìm kiếm..."
           },
           data_management_page: {
             title: "Quản lý Dữ liệu",
@@ -504,7 +506,7 @@ i18n
               },
               showing: "hiển thị",
               caption: {
-                learnt: "đã học",
+                learnt: "đã kiểm tra",
                 quiz_attempted: "bài kiểm tra",
                 accuracy_rate: "tỉ lệ trả lời đúng"
               }
@@ -527,7 +529,7 @@ i18n
               },
               caution: "Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.",
               total: "tổng",
-              learnt: "đã học tích luỹ"
+              learnt: "đã kiểm tra tích luỹ"
             }
           },
           about_page: {

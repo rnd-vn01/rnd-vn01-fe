@@ -48,12 +48,6 @@ export const SceneQuiz = forwardRef((props, ref) => {
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
 
-    if (progress === 100) {
-      dispatch(setModelLoaded({
-        modelLoaded: true
-      }))
-    }
-
     return <Html prepend center
       style={{
         display: "flex", width: "100vw", justifyContent: "center",

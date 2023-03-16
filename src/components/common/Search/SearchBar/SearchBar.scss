@@ -22,6 +22,9 @@
     font-size: 1.75rem;
     width: calc(100% - 120px);
     margin-right: 10px;
+    font-family: 'header-light' !important;
+    transform: translateY(5px);
+    line-height: 2.5rem;
 
     &--span {
       width: calc(100% - 60px);

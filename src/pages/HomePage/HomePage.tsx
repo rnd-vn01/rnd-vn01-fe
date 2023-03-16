@@ -43,6 +43,14 @@ export const HomePage: React.FC = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (modelLoaded) {
+      setTimeout(() => {
+        setIsShowingLanding(false)
+      }, 2000);
+    }
+  }, [modelLoaded])
+
   return (
     <div
       role="div"

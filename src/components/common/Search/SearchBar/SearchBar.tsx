@@ -66,13 +66,15 @@ export const SearchBar: React.FC<ISearchBar> = ({
           value={query}
           disabled={isChoosingAlphabet}
           onChange={e => setQuery(e.target.value)}
+          onClick={() => setQuery("")}
           role="input"
-          aria-label="search-input"></input>
+          aria-label="search-input"
+          placeholder={t('search_bar.placeholder')}></input>
 
         {!isLoading && query !== "" && <span className="search-bar__number-of-results"
           role="span"
           aria-label="number-of-results"
-          onClick={(e) => e.stopPropagation()}>
+          onClick={(e) => e.stopPropagation()}> {/* NOT_TESTED */}
           {numberOfMatchingResults}
           {` `}
           {t('search_bar.matches')}

@@ -8,7 +8,8 @@ import { logout } from 'src/configs/firebase';
 import { resetToInitialStateAuthSlice } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import IconAdmin from 'src/assets/images/IconAdmin.svg';
 
 export const AuthBar: React.FC = ({ }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
@@ -133,7 +134,7 @@ export const AuthBar: React.FC = ({ }) => {
             {isLoggedIn ?
               <>
                 <img src={Logo} className="auth-bar__menu--image-logo"></img>
-                <FontAwesomeIcon className="auth-bar__menu--icon-gear" icon={faGear} />
+                {user.isAdmin && <img src={IconAdmin} className="auth-bar__menu--icon-gear"></img>}
               </>
               :
               <FontAwesomeIcon className="auth-bar__menu--icon" icon={faEllipsisVertical} />}

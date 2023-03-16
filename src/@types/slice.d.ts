@@ -20,6 +20,7 @@ interface IAuthSlice {
 
 interface IQuickSearchResults {
   query: string;
+  isShowing?: boolean;
 }
 
 interface ILanguageSlice {
