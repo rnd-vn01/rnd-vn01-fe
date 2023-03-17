@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint } from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
-import { IMPORTANT_POINTS } from 'src/configs/constants';
+import { IMPORTANT_POINTS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
@@ -49,6 +49,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     isShowing4Labels
   } = useSelector(
     (state) => state.quizSlice,
+  );
+
+  const {
+    isInCloseZoomMode
+  } = useSelector(
+    (state) => state.zoomControlSlice,
   );
 
   let textPosition = useMemo(() => {
@@ -183,7 +189,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [])
 
   return (
-    <>
+    (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) || isMeridianSelected) ? (<>
       <points
         onPointerMove={(e) => {
           if (isHoverable && !isAnswerPoint) {
@@ -246,6 +252,6 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         viewFromBottom={viewFromBottom}
         isOnHover={isOnHover || isSelected || isAnswerPoint}
       ></Text>}
-    </>
+    </>) : (<></>)
   );
 };

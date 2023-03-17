@@ -270,3 +270,7 @@ interface IQuizSlice {
   showingCorrectPoint?: string | null;
   isShowing4Labels?: boolean;
 }
+
+interface IZoomControlSlice {
+  isInCloseZoomMode: ZOOM_CONTROL_LEVEL;
+}

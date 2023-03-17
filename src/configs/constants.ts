@@ -28,6 +28,13 @@ export enum QUIZ_QUESTION_TYPE {
   IDENTIFY_CORRECT_LOCATION = 4
 }
 
+export enum ZOOM_CONTROL_LEVEL {
+  FAR = 0,
+  SHOW_LINE = 1,
+  SHOW_ALL = 2,
+  SHOW_LABEL = 3
+}
+
 export const ALPHABET_LISTS = {
   VI: ["A", "Ă", "Â", "B", "C", "D", "Đ", "E", "Ê", "G", "H", "I", "K", "L", "M", "N", "O", "Ô", "Ơ",
     "P", "Q", "R", "S", "T", "U", "Ư", "V", "X", "Y"],
