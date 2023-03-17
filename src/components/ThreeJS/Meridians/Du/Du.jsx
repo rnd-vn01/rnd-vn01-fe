@@ -2,7 +2,7 @@ import './Du.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
 import { useState, useEffect, useCallback } from "react"
-import { setIsHoveringLine, setLineSelected, setLineHover } from 'src/redux/slice/index';
+import { setIsHoveringLine, setLineSelected, setLineHover, resetToInitialStatePointSelectionSlice } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { EXTRA_MERIDIAN_COLORS } from 'src/configs/constants';
@@ -273,8 +273,13 @@ export const Du = ({ showLine }) => {
 
       {showLine && <line
         onClick={(e) => {
-          if (!isHoveringPoint)
+          if (!isHoveringPoint && selectedType !== "line") {
             debounceClick({})
+          } else {
+            if (selectedType === "line") {
+              dispatch(resetToInitialStatePointSelectionSlice())
+            }
+          }
         }}
         geometry={lineGeometry}>
         <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
