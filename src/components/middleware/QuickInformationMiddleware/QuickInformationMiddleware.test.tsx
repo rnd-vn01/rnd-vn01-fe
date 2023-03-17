@@ -96,7 +96,7 @@ describe('QuickInformationMiddleware', () => {
     </Provider>)
 
     await waitFor(() => {
-      expect(store.getState().selectionSlice.isShowingQuickInformation.content.name).toBe("Thủ thái âm phế")
+      expect(store.getState().selectionSlice.isShowingQuickInformation.content.name).toBe("Thủ Thái Âm Phế")
     })
   })
 });

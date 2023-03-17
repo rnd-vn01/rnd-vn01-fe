@@ -9,19 +9,19 @@ import { useSelector } from 'react-redux';
 import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint } from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
-import { capitalize } from 'src/helpers/capitalize';
+import { IMPORTANT_POINTS } from 'src/configs/constants';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
   const [color, setColor] = useState(0xF9FFB3);
   const [isOnHover, setIsOnHover] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [isInCheckingRange, setIsInCheckingRange] = useState(true);
   const [isMeridianSelected, setIsMeridianSelected] = useState(false);
   const [isSelectedOnQuizFocus, setIsSelectedOnQuizFocus] = useState(false);
   const [isShowingLabel, setIsShowingLabel] = useState(false);
   const [isAnswerPoint, setIsAnswerPoint] = useState(false);
   const [isInShowingPoints, setIsInShowingPoints] = useState(false);
+  const [isImportantPoint, setIsImportantPoint] = useState(false);
   const { t } = useTranslation();
 
   //Responsive
@@ -74,6 +74,18 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   let position = useMemo(() => {
     return new Float32Array(positionArray);
   }, [positionArray])
+
+  const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
+
+  const getPointSize = () => {
+    let desktopSize = isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375));
+
+    if (!isTablet) {
+      desktopSize *= 2
+    }
+
+    return desktopSize
+  }
 
   useEffect(() => {
     setIsSelected(selectedLabel !== "" && label === selectedLabel && selectedType === 'point')
@@ -134,18 +146,6 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     }
   }, [showingPoints])
 
-  const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
-
-  const getPointSize = () => {
-    let desktopSize = isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375));
-
-    if (!isTablet) {
-      desktopSize *= 2
-    }
-
-    return desktopSize
-  }
-
   useEffect(() => {
     if (isOnHover || isSelected) {
       setColor(0xFFFF00)
@@ -177,6 +177,10 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       setIsShowingLabel(false);
     }
   }, [isOnHover, isShowingLabelOnHovering, isSelectedOnQuizFocus, selectedLabel, isSelected, isMeridianSelected, isAnswerPoint])
+
+  useEffect(() => {
+    setIsImportantPoint(IMPORTANT_POINTS.includes(label))
+  }, [])
 
   return (
     <>
