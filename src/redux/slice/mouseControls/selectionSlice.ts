@@ -69,6 +69,7 @@ export const selectionSlice = createSlice({
           state.selectedLabel = selectedLine;
           state.selectedType = 'line';
           state.isSelectingFromMenu = false;
+          state.preSelectLine = null;
         }
       }
     },
@@ -144,6 +145,7 @@ export const selectionSlice = createSlice({
       state.isSelectingFromMenu = true;
       state.selectedLabel = action.payload.selectedLine;
       state.selectedType = 'line';
+      state.preSelectLine = null;
     },
 
     setLinePreSelectByLabel(state, action) {

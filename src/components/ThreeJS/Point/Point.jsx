@@ -17,6 +17,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [isOnHover, setIsOnHover] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [isMeridianSelected, setIsMeridianSelected] = useState(false);
+  const [isSameMeridianSelected, setIsSameMeridianSelected] = useState(false);
   const [isSelectedOnQuizFocus, setIsSelectedOnQuizFocus] = useState(false);
   const [isShowingLabel, setIsShowingLabel] = useState(false);
   const [isAnswerPoint, setIsAnswerPoint] = useState(false);
@@ -114,6 +115,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   useEffect(() => {
     setIsSelected(selectedLabel !== "" && label === selectedLabel && selectedType === 'point')
     setIsMeridianSelected(selectedLabel !== "" && selectedType === 'line' && label.includes(selectedLabel))
+    setIsSameMeridianSelected(selectedLabel !== "" && selectedType === 'point' && label.includes(selectedLabel?.split("-")[0]))
     setIsSelectedOnQuizFocus(false);
   }, [selectedLabel])
 
@@ -205,6 +207,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         setIsShowingLabel(false);
       else
         setIsShowingLabel(true);
+    } else if (!isSelectedOnQuizFocus && selectedLabel !== "" && isSameMeridianSelected) {
+      setIsShowingLabel(false);
     } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
       const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
       setIsShowingLabel(frustum.containsPoint(coor))
@@ -233,7 +237,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [frustum])
 
   return (
-    (isMeridianSelected || isQuizMode || isSelected ||
+    (isMeridianSelected || isQuizMode || isSelected || isSameMeridianSelected ||
       (!preSelectLine && (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL)))) ? (<>
         <points
           onPointerMove={(e) => {

@@ -459,85 +459,99 @@ export const Scene = forwardRef((props, ref) => {
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <LU
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "LU")
-            || (preSelectLine && preSelectLine === "LU")}
+            || (preSelectLine && preSelectLine === "LU")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "LU")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "LI")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <LI
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "LI")
-            || (preSelectLine && preSelectLine === "LI")}
+            || (preSelectLine && preSelectLine === "LI")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "LI")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "ST")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <ST
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "ST")
-            || (preSelectLine && preSelectLine === "ST")}
+            || (preSelectLine && preSelectLine === "ST")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "ST")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "SP")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <SP
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "SP")
-            || (preSelectLine && preSelectLine === "SP")}
+            || (preSelectLine && preSelectLine === "SP")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "SP")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "HT")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <HT
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "HT")
-            || (preSelectLine && preSelectLine === "HT")}
+            || (preSelectLine && preSelectLine === "HT")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "HT")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "SI")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <SI
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "SI")
-            || (preSelectLine && preSelectLine === "SI")}
+            || (preSelectLine && preSelectLine === "SI")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "SI")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "BL")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <BL
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "BL")
-            || (preSelectLine && preSelectLine === "BL")}
+            || (preSelectLine && preSelectLine === "BL")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "BL")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "KI")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <KI
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "KI")
-            || (preSelectLine && preSelectLine === "KI")}
+            || (preSelectLine && preSelectLine === "KI")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "KI")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "PC")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <PC
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "PC")
-            || (preSelectLine && preSelectLine === "PC")}
+            || (preSelectLine && preSelectLine === "PC")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "PC")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "TE")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <TE
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "TE")
-            || (preSelectLine && preSelectLine === "TE")}
+            || (preSelectLine && preSelectLine === "TE")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "TE")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "GB")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <GB
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "GB")
-            || (preSelectLine && preSelectLine === "GB")}
+            || (preSelectLine && preSelectLine === "GB")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "GB")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Liv")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Liv
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "Liv")
-            || (preSelectLine && preSelectLine === "Liv")}
+            || (preSelectLine && preSelectLine === "Liv")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "Liv")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Du")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Du
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "Du")
-            || (preSelectLine && preSelectLine === "Du")}
+            || (preSelectLine && preSelectLine === "Du")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "Du")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Ren")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Ren
           showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "Ren")
-            || (preSelectLine && preSelectLine === "Ren")}
+            || (preSelectLine && preSelectLine === "Ren")
+            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "Ren")}
         />}
       {(selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Others
