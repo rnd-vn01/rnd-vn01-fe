@@ -31,7 +31,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   const {
     selectedLabel,
-    selectedType
+    selectedType,
+    preSelectLine
   } = useSelector(
     (state) => state.selectionSlice,
   );
@@ -47,7 +48,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     isNavigateQuest,
     navigateQuestSelectable,
     showingCorrectPoint,
-    isShowing4Labels
+    isShowing4Labels,
   } = useSelector(
     (state) => state.quizSlice,
   );
@@ -115,6 +116,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     setIsMeridianSelected(selectedLabel !== "" && selectedType === 'line' && label.includes(selectedLabel))
     setIsSelectedOnQuizFocus(false);
   }, [selectedLabel])
+
+  useEffect(() => {
+    if (preSelectLine) {
+      setIsMeridianSelected(label.includes(preSelectLine))
+    }
+  }, [preSelectLine])
 
   useEffect(() => {
     if (markedPoint) {
@@ -226,69 +233,72 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [frustum])
 
   return (
-    (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) || isMeridianSelected || isQuizMode) ? (<>
-      <points
-        onPointerMove={(e) => {
-          if (isHoverable && !isAnswerPoint) {
-            if (isDesktop) {
-              if (e.distanceToRay < 0.1) {
-                setIsOnHover(true);
-              } else {
-                setIsOnHover(false);
-              }
-            }
-          }
-        }}
-        onClick={(e) => {
-          if (!isQuizMode || (isNavigateQuest && navigateQuestSelectable)) {
-            if (e.distanceToRay < 0.1) {
-              dispatch(setPointSelected({
-                selectedLabel: label,
-                pointPosition: {
-                  x: position[0],
-                  y: position[1],
-                  z: position[2]
+    (isMeridianSelected || isQuizMode || isSelected ||
+      (!preSelectLine && (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL)))) ? (<>
+        <points
+          onPointerMove={(e) => {
+            if (isHoverable && !isAnswerPoint) {
+              if (isDesktop) {
+                if (e.distanceToRay < 0.1) {
+                  setIsOnHover(true);
+                } else {
+                  setIsOnHover(false);
                 }
-              }))
-
-              if (isNavigateQuest && navigateQuestSelectable) {
-                dispatch(setNavigateQuestSelectedPoint({
-                  selectedPoint: label,
-                }))
               }
             }
-          }
-        }}>
-        <bufferGeometry attach="geometry">
-          <bufferAttribute
-            attach="attributes-position"
-            count={position.length / 3}
-            array={position}
-            itemSize={3}
-            usage={DynamicDrawUsage}
-          />
-        </bufferGeometry>
-        <pointsMaterial
-          attach="material"
-          map={imgTex}
-          color={color}
-          size={getPointSize()}
-          sizeAttenuation={false}
-          transparent={false}
-          alphaTest={0.5}
-          opacity={isOnHover || isSelected || isAnswerPoint ? 1.0 : 0.5}
-        />
-      </points>
+          }}
+          onClick={(e) => {
+            if (!isQuizMode || (isNavigateQuest && navigateQuestSelectable)) {
+              if (e.distanceToRay < 0.1) {
+                setTimeout(() => {
+                  dispatch(setPointSelected({
+                    selectedLabel: label,
+                    pointPosition: {
+                      x: position[0],
+                      y: position[1],
+                      z: position[2]
+                    }
+                  }))
+                }, 100)
 
-      {isShowingLabel && <Text
-        positionArray={textPosition}
-        text={isInShowingPoints ? (isShowing4Labels ? `${(showingPoints.indexOf(label) + 1).toString()}. ${label}` :
-          `P` + (showingPoints.indexOf(label) + 1).toString()) :
-          label}
-        reverse={reverse}
-        viewFromBottom={viewFromBottom}
-        isOnHover={isOnHover || isSelected || isAnswerPoint}
-      ></Text>}
-    </>) : (<></>)
+                if (isNavigateQuest && navigateQuestSelectable) {
+                  dispatch(setNavigateQuestSelectedPoint({
+                    selectedPoint: label,
+                  }))
+                }
+              }
+            }
+          }}>
+          <bufferGeometry attach="geometry">
+            <bufferAttribute
+              attach="attributes-position"
+              count={position.length / 3}
+              array={position}
+              itemSize={3}
+              usage={DynamicDrawUsage}
+            />
+          </bufferGeometry>
+          <pointsMaterial
+            attach="material"
+            map={imgTex}
+            color={color}
+            size={getPointSize()}
+            sizeAttenuation={false}
+            transparent={false}
+            alphaTest={0.5}
+            opacity={isOnHover || isSelected || isAnswerPoint ? 1.0 : 0.5}
+          />
+        </points>
+
+        {isShowingLabel && <Text
+          positionArray={textPosition}
+          text={isInShowingPoints ? (isShowing4Labels ? `${(showingPoints.indexOf(label) + 1).toString()}. ${label}` :
+            `P` + (showingPoints.indexOf(label) + 1).toString()) :
+            label}
+          reverse={reverse}
+          viewFromBottom={viewFromBottom}
+          isOnHover={isOnHover || isSelected || isAnswerPoint}
+        ></Text>}
+      </>) : (<></>)
   );
 };

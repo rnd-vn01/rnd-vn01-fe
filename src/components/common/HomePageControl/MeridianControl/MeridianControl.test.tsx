@@ -55,7 +55,7 @@ describe('MeridianControl', () => {
       expect(meridianControlDropdown).not.toHaveClass("meridian-control__dropdown--show")
 
       //Expect the selected line to be updated
-      expect(store.getState().selectionSlice.selectedLabel).toBe("LI")
+      expect(store.getState().selectionSlice.preSelectLine).toBe("LI")
     })
   })
 });

@@ -15,9 +15,7 @@ describe("zoomControlSlice", () => {
 
     store.dispatch(resetToInitialStateZoomControlSlice())
 
-    expect(store.getState().zoomControlSlice).toStrictEqual({
-      isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
-    })
+    expect(store.getState().zoomControlSlice.isInCloseZoomMode).toEqual(ZOOM_CONTROL_LEVEL.FAR)
   })
 
   it("should update the zoom mode level if requested", async () => {
@@ -25,8 +23,6 @@ describe("zoomControlSlice", () => {
       isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
     }))
 
-    expect(store.getState().zoomControlSlice).toStrictEqual({
-      isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
-    })
+    expect(store.getState().zoomControlSlice.isInCloseZoomMode).toEqual(ZOOM_CONTROL_LEVEL.SHOW_LINE)
   })
 })

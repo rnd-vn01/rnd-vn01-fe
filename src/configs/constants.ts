@@ -3254,11 +3254,12 @@ export const FOCUS_OPTIONS = {
   },
   "LI": {
     "point": {
-      "x": 8.3,
-      "y": 3.75,
-      "z": -0.85,
+      "x": 8.5,
+      "y": 2.75,
+      "z": -1,
     },
-    "rotate": 225
+    "rotate": 315,
+    "zoom": 2
   },
   "Liv": {
     "point": {
@@ -3270,11 +3271,12 @@ export const FOCUS_OPTIONS = {
   },
   "LU": {
     "point": {
-      "x": -6.6,
-      "y": 4.2,
+      "x": -7.5,
+      "y": 3,
       "z": 0.35,
     },
-    "rotate": 0
+    "rotate": 0,
+    "zoom": 3
   },
   "PC": {
     "point": {
