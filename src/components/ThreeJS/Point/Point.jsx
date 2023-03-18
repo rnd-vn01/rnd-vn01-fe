@@ -1,8 +1,8 @@
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader, DynamicDrawUsage } from 'three';
+import { TextureLoader, DynamicDrawUsage, Vector3 } from 'three';
 import circleImg from 'src/assets/images/PointCircle.png';
 import circleSelectedImg from 'src/assets/images/PointCircleSelected.png';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Text } from "src/components/ThreeJS/index";
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
@@ -22,6 +22,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const [isAnswerPoint, setIsAnswerPoint] = useState(false);
   const [isInShowingPoints, setIsInShowingPoints] = useState(false);
   const [isImportantPoint, setIsImportantPoint] = useState(false);
+  const isInZoomedLabelShowMode = useRef(false);
   const { t } = useTranslation();
 
   //Responsive
@@ -52,7 +53,9 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   );
 
   const {
-    isInCloseZoomMode
+    isInCloseZoomMode,
+    frustum,
+    cameraZoom
   } = useSelector(
     (state) => state.zoomControlSlice,
   );
@@ -88,6 +91,20 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
     if (!isTablet) {
       desktopSize *= 2
+    } else {
+      if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
+        desktopSize *= 2.75
+        if (cameraZoom === 1.5)
+          desktopSize *= 2
+      } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
+        desktopSize *= 2
+        if (cameraZoom === 1.5)
+          desktopSize *= 2
+      } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) {
+        desktopSize *= 1.5
+        if (cameraZoom === 1.5)
+          desktopSize *= 1.25
+      }
     }
 
     return desktopSize
@@ -165,6 +182,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [isOnHover, isSelected])
 
   useEffect(() => {
+    isInZoomedLabelShowMode.current = false;
+
     if (isAnswerPoint || isInShowingPoints) {
       setIsShowingLabel(true)
     } else if (isOnHover && isShowingLabelOnHovering) {
@@ -179,17 +198,35 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         setIsShowingLabel(false);
       else
         setIsShowingLabel(true);
+    } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
+      const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
+      setIsShowingLabel(frustum.containsPoint(coor))
+      isInZoomedLabelShowMode.current = true;
     } else {
       setIsShowingLabel(false);
     }
-  }, [isOnHover, isShowingLabelOnHovering, isSelectedOnQuizFocus, selectedLabel, isSelected, isMeridianSelected, isAnswerPoint])
+  }, [isOnHover,
+    isInCloseZoomMode,
+    isShowingLabelOnHovering,
+    isSelectedOnQuizFocus,
+    selectedLabel,
+    isSelected,
+    isMeridianSelected,
+    isAnswerPoint])
 
   useEffect(() => {
     setIsImportantPoint(IMPORTANT_POINTS.includes(label))
   }, [])
 
+  useEffect(() => {
+    if (isInZoomedLabelShowMode.current) {
+      const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
+      setIsShowingLabel(frustum.containsPoint(coor))
+    }
+  }, [frustum])
+
   return (
-    (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) || isMeridianSelected) ? (<>
+    (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) || isMeridianSelected || isQuizMode) ? (<>
       <points
         onPointerMove={(e) => {
           if (isHoverable && !isAnswerPoint) {

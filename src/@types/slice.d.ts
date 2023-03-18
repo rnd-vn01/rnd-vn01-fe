@@ -232,6 +232,7 @@ interface ISelectionSlice {
     type?: string;
     content?: IMeridian | IAcupuncturePoint;
   } | null;
+  preSelectLine?: null;
 }
 
 interface IModelInteractionControl {
@@ -273,4 +274,6 @@ interface IQuizSlice {
 
 interface IZoomControlSlice {
   isInCloseZoomMode: ZOOM_CONTROL_LEVEL;
+  frustum: any;
+  cameraZoom?: number;
 }

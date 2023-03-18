@@ -11,24 +11,22 @@ import {
 } from "@react-three/drei";
 import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
-import { MOUSE, MathUtils, Vector3 } from 'three';
+import { MOUSE, MathUtils, Vector3, Frustum, Matrix4, Object3D } from 'three';
 import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import {
   resetToInitialStateQuizSlice,
-  setIsNavigateQuest,
-  setIsQuizMode,
-  setIsShowingLabelOnClick,
   setLineSelectedByLabel,
   setModelLoaded,
   setPointSelected,
   setPointSelectedByLabel,
-  setStateCameraQuaternion,
   unsetStrictMode,
   resetToInitialStateZoomControlSlice,
-  setInCloseZoomMode
+  setInCloseZoomMode,
+  setFrustum,
+  setCameraZoom
 } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
@@ -184,14 +182,17 @@ export const Scene = forwardRef((props, ref) => {
 
     panDown() {
       move(PAN_DIRECTION.DOWN)
+      defineAndRestateFrustum();
     },
 
     panLeft() {
       move(PAN_DIRECTION.LEFT)
+      defineAndRestateFrustum();
     },
 
     panRight() {
       move(PAN_DIRECTION.RIGHT)
+      defineAndRestateFrustum();
     },
 
     panCenter() {
@@ -202,12 +203,21 @@ export const Scene = forwardRef((props, ref) => {
       camera.current.updateProjectionMatrix();
 
       dispatch(resetToInitialStateZoomControlSlice())
+      defineAndRestateFrustum();
     },
 
     zoomIn() {
       camera.current.zoom += 0.25
       camera.current.updateProjectionMatrix();
-      if (camera.current.zoom >= 2.5) {
+      if (camera.current.zoom >= 4) {
+        dispatch(setInCloseZoomMode({
+          isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
+        }))
+      } else if (camera.current.zoom >= 4) {
+        dispatch(setInCloseZoomMode({
+          isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
+        }))
+      } else if (camera.current.zoom >= 2.5) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
         }))
@@ -220,6 +230,8 @@ export const Scene = forwardRef((props, ref) => {
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
         }))
       }
+
+      defineAndRestateFrustum();
     },
 
     zoomOut() {
@@ -228,7 +240,15 @@ export const Scene = forwardRef((props, ref) => {
         camera.current.updateProjectionMatrix();
       }
 
-      if (camera.current.zoom >= 2.5) {
+      if (camera.current.zoom >= 4) {
+        dispatch(setInCloseZoomMode({
+          isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
+        }))
+      } else if (camera.current.zoom >= 4) {
+        dispatch(setInCloseZoomMode({
+          isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
+        }))
+      } else if (camera.current.zoom >= 2.5) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
         }))
@@ -241,6 +261,8 @@ export const Scene = forwardRef((props, ref) => {
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
         }))
       }
+
+      defineAndRestateFrustum();
     },
   }));
 
@@ -312,6 +334,19 @@ export const Scene = forwardRef((props, ref) => {
     }
   }
 
+  const defineAndRestateFrustum = () => {
+    var frustum = new Frustum();
+    var cameraViewProjectionMatrix = new Matrix4();
+    cameraViewProjectionMatrix.multiplyMatrices(camera.current.projectionMatrix, camera.current.matrixWorldInverse);
+    frustum.setFromProjectionMatrix(cameraViewProjectionMatrix);
+    dispatch(setFrustum({
+      frustum: frustum
+    }))
+    dispatch(setCameraZoom({
+      cameraZoom: camera.current.zoom
+    }))
+  }
+
   return (
     <Suspense fallback={<Loader />}>
       <Environment
@@ -353,19 +388,30 @@ export const Scene = forwardRef((props, ref) => {
           camera.current.position.sub(_v);
 
           const distanceToCenter = controls.current.object.position.distanceTo(controls.current.target);
-          if (distanceToCenter < 20) {
-            dispatch(setInCloseZoomMode({
-              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
-            }))
-          } else if (distanceToCenter < 30) {
-            dispatch(setInCloseZoomMode({
-              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
-            }))
-          } else {
+
+          if (distanceToCenter >= 30) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
             }))
+          } else if (distanceToCenter < 10) {
+            dispatch(setInCloseZoomMode({
+              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
+            }))
+          } else if (distanceToCenter < 12.5) {
+            dispatch(setInCloseZoomMode({
+              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
+            }))
+          } else if (distanceToCenter < 20) {
+            dispatch(setInCloseZoomMode({
+              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
+            }))
+          } else {
+            dispatch(setInCloseZoomMode({
+              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
+            }))
           }
+
+          defineAndRestateFrustum();
         }}
         minDistance={0}
         maxDistance={75}

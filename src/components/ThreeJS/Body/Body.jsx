@@ -39,9 +39,7 @@ export const Body = ({ isQuizMode }) => {
         if (!isQuizMode) {
           if (isDesktop) {
             e.stopPropagation();
-            if (!isHoveringLine && !isHoveringPoint) {
-              dispatch(resetToInitialStatePointSelectionSlice())
-            }
+            dispatch(resetToInitialStatePointSelectionSlice())
             debounceClick({
               currentMousePosition: null
             })
@@ -66,10 +64,6 @@ export const Body = ({ isQuizMode }) => {
                 z: e.point.z
               }
             })
-
-            if (!isHoveringLine && !isHoveringPoint) {
-              dispatch(resetToInitialStatePointSelectionSlice())
-            }
           } else {
             if (!isHoveringPoint) {
               dispatch(resetToInitialStatePointSelectionSlice())

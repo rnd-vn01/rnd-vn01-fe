@@ -32,7 +32,8 @@ export enum ZOOM_CONTROL_LEVEL {
   FAR = 0,
   SHOW_LINE = 1,
   SHOW_ALL = 2,
-  SHOW_LABEL = 3
+  SHOW_LABEL = 3,
+  EXTRA_LARGE = 4
 }
 
 export const ALPHABET_LISTS = {
