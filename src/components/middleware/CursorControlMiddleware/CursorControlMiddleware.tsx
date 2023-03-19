@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 
 export const CursorControlMiddleware: React.FC = ({ }) => {
-  const dispatch = useAppDispatch();
   const {
     isHoveringPoint,
     isHoveringLine,
