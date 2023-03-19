@@ -32,6 +32,7 @@ import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
 import { useLocation } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -59,6 +60,8 @@ export const Scene = forwardRef((props, ref) => {
   } = useSelector(
     (state: RootState) => state.zoomControlSlice,
   );
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const location = useLocation() as any;
 
@@ -183,17 +186,17 @@ export const Scene = forwardRef((props, ref) => {
 
     panDown() {
       move(PAN_DIRECTION.DOWN)
-      defineAndRestateFrustum();
+      //defineAndRestateFrustum();
     },
 
     panLeft() {
       move(PAN_DIRECTION.LEFT)
-      defineAndRestateFrustum();
+      //defineAndRestateFrustum();
     },
 
     panRight() {
       move(PAN_DIRECTION.RIGHT)
-      defineAndRestateFrustum();
+      //defineAndRestateFrustum();
     },
 
     panCenter() {
@@ -204,7 +207,7 @@ export const Scene = forwardRef((props, ref) => {
       camera.current.updateProjectionMatrix();
 
       dispatch(resetToInitialStateZoomControlSlice())
-      defineAndRestateFrustum();
+      //defineAndRestateFrustum();
     },
 
     zoomIn() {
@@ -232,7 +235,7 @@ export const Scene = forwardRef((props, ref) => {
         }))
       }
 
-      defineAndRestateFrustum();
+      //defineAndRestateFrustum();
     },
 
     zoomOut() {
@@ -263,7 +266,7 @@ export const Scene = forwardRef((props, ref) => {
         }))
       }
 
-      defineAndRestateFrustum();
+      //defineAndRestateFrustum();
     },
   }));
 
@@ -382,6 +385,18 @@ export const Scene = forwardRef((props, ref) => {
     }))
   }
 
+  const defineLineShowing = (label: string) => {
+    if (preSelectLine) {
+      return preSelectLine === label
+    } else {
+      if (selectedType && selectedLabel) {
+        return (selectedLabel === label) || (selectedType === 'point' && selectedLabel?.split("-")[0] === label)
+      } else {
+        return isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE
+      }
+    }
+  }
+
   return (
     <Suspense fallback={<Loader />}>
       <Environment
@@ -424,19 +439,19 @@ export const Scene = forwardRef((props, ref) => {
 
           const distanceToCenter = controls.current.object.position.distanceTo(controls.current.target);
 
-          if (distanceToCenter >= 25) {
+          if (distanceToCenter >= (isDesktop ? 25 : 40)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
             }))
-          } else if (distanceToCenter < 10) {
+          } else if (distanceToCenter < (isDesktop ? 5 : 10)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
             }))
-          } else if (distanceToCenter < 12.5) {
+          } else if (distanceToCenter < (isDesktop ? 12.5 : 20)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
             }))
-          } else if (distanceToCenter < 20) {
+          } else if (distanceToCenter < (isDesktop ? 20 : 30)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
             }))
@@ -446,7 +461,7 @@ export const Scene = forwardRef((props, ref) => {
             }))
           }
 
-          defineAndRestateFrustum();
+          //defineAndRestateFrustum();
         }}
         minDistance={0}
         maxDistance={75}
@@ -458,100 +473,72 @@ export const Scene = forwardRef((props, ref) => {
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "LU")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <LU
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "LU")
-            || (preSelectLine && preSelectLine === "LU")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "LU")}
+          showLine={defineLineShowing("LU")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "LI")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <LI
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "LI")
-            || (preSelectLine && preSelectLine === "LI")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "LI")}
+          showLine={defineLineShowing("LI")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "ST")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <ST
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "ST")
-            || (preSelectLine && preSelectLine === "ST")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "ST")}
+          showLine={defineLineShowing("ST")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "SP")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <SP
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "SP")
-            || (preSelectLine && preSelectLine === "SP")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "SP")}
+          showLine={defineLineShowing("SP")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "HT")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <HT
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "HT")
-            || (preSelectLine && preSelectLine === "HT")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "HT")}
+          showLine={defineLineShowing("HT")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "SI")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <SI
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "SI")
-            || (preSelectLine && preSelectLine === "SI")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "SI")}
+          showLine={defineLineShowing("SI")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "BL")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <BL
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "BL")
-            || (preSelectLine && preSelectLine === "BL")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "BL")}
+          showLine={defineLineShowing("BL")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "KI")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <KI
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "KI")
-            || (preSelectLine && preSelectLine === "KI")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "KI")}
+          showLine={defineLineShowing("KI")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "PC")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <PC
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "PC")
-            || (preSelectLine && preSelectLine === "PC")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "PC")}
+          showLine={defineLineShowing("PC")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "TE")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <TE
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "TE")
-            || (preSelectLine && preSelectLine === "TE")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "TE")}
+          showLine={defineLineShowing("TE")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "GB")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <GB
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "GB")
-            || (preSelectLine && preSelectLine === "GB")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "GB")}
+          showLine={defineLineShowing("GB")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Liv")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Liv
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "Liv")
-            || (preSelectLine && preSelectLine === "Liv")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "Liv")}
+          showLine={defineLineShowing("Liv")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Du")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Du
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "Du")
-            || (preSelectLine && preSelectLine === "Du")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "Du")}
+          showLine={defineLineShowing("Du")}
         />}
       {((selectedLabel !== "" && selectedType === 'line' && selectedLabel === "Ren")
         || selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Ren
-          showLine={((isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE) || selectedLabel === "Ren")
-            || (preSelectLine && preSelectLine === "Ren")
-            || (selectedType === 'point' && selectedLabel?.split("-")[0] === "Ren")}
+          showLine={defineLineShowing("Ren")}
         />}
       {(selectedLabel === undefined || selectedLabel === null || selectedType === 'point')
         && <Others

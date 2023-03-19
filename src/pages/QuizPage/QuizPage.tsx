@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 import { APP_NAME, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
+import { CursorControlMiddleware } from 'src/components/middleware';
 
 export const QuizPage: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -83,6 +84,9 @@ export const QuizPage: React.FC = () => {
           callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
         />
       </div>
+
+      {/* Middleware */}
+      <CursorControlMiddleware />
     </div>
   );
 };

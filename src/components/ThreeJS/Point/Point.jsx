@@ -90,26 +90,46 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   const getPointSize = () => {
     let desktopSize = isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375));
+    let mobileSize = isOnHover ? 10.5 : (isSelected ? 12.5 : (isAnswerPoint ? 15 : 8.5));
 
     if (!isTablet) {
-      desktopSize *= 2
+      mobileSize *= 1.5
+      if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
+        mobileSize *= 2
+        if (cameraZoom === 1.5)
+          mobileSize *= 1.5
+      } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
+        mobileSize *= 1.5
+        if (cameraZoom === 1.5)
+          mobileSize *= 1.5
+      } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) {
+        mobileSize *= 1.25
+        if (cameraZoom === 1.5)
+          mobileSize *= 1.25
+      }
+
+      return mobileSize
     } else {
       if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
         desktopSize *= 2.75
         if (cameraZoom === 1.5)
-          desktopSize *= 2
+          desktopSize *= 1.5
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
         desktopSize *= 2
         if (cameraZoom === 1.5)
-          desktopSize *= 2
+          desktopSize *= 1.5
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) {
         desktopSize *= 1.5
         if (cameraZoom === 1.5)
           desktopSize *= 1.25
+      } else {
+        if (cameraZoom === 1.5) {
+          desktopSize *= 1.25
+        }
       }
-    }
 
-    return desktopSize
+      return desktopSize
+    }
   }
 
   useEffect(() => {
@@ -122,6 +142,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   useEffect(() => {
     if (preSelectLine) {
       setIsMeridianSelected(label.includes(preSelectLine))
+    } else {
+      setIsMeridianSelected(selectedLabel !== "" && selectedType === 'line' && label.includes(selectedLabel))
     }
   }, [preSelectLine])
 
@@ -210,9 +232,10 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     } else if (!isSelectedOnQuizFocus && selectedLabel !== "" && isSameMeridianSelected) {
       setIsShowingLabel(false);
     } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
-      const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
-      setIsShowingLabel(frustum.containsPoint(coor))
+      // const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
+      // setIsShowingLabel(frustum.containsPoint(coor))
       isInZoomedLabelShowMode.current = true;
+      setIsShowingLabel(isImportantPoint)
     } else {
       setIsShowingLabel(false);
     }
@@ -229,12 +252,12 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     setIsImportantPoint(IMPORTANT_POINTS.includes(label))
   }, [])
 
-  useEffect(() => {
-    if (isInZoomedLabelShowMode.current) {
-      const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
-      setIsShowingLabel(frustum.containsPoint(coor))
-    }
-  }, [frustum])
+  // useEffect(() => {
+  //   if (isInZoomedLabelShowMode.current) {
+  //     const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
+  //     setIsShowingLabel(frustum.containsPoint(coor))
+  //   }
+  // }, [frustum, preSelectLine])
 
   return (
     (isMeridianSelected || isQuizMode || isSelected || isSameMeridianSelected ||
