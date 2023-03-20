@@ -1,8 +1,8 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
 import {
   getAccessToken,
   refreshAccessToken
-} from 'src/helpers/getAccessToken';
+} from 'src/api/getAccessToken';
 
 const apiClientJWT = axios.create({
   baseURL: process.env.REACT_APP_API_ENDPOINT,

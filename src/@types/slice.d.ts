@@ -21,6 +21,7 @@ interface IAuthSlice {
 interface IQuickSearchResults {
   query: string;
   isShowing?: boolean;
+  callbackIsReadyForSearch?: (boolean) => void;
 }
 
 interface ILanguageSlice {
@@ -121,6 +122,7 @@ interface ISearchProcessor {
   query?: query;
   callbackSetResults?: (any) => void;
   callbackSetLoading?: (boolean) => void;
+  callbackIsReadyForSearch?: (boolean) => void;
 }
 
 interface IAdvancedSearchPage {
@@ -278,4 +280,9 @@ interface IZoomControlSlice {
   isInCloseZoomMode: ZOOM_CONTROL_LEVEL;
   frustum: any;
   cameraZoom?: number;
+}
+
+interface IDataSlice {
+  acupuncturePoints: Array<IAcupuncturePoint>,
+  meridians: Array<IMeridian>
 }
