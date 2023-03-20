@@ -11,9 +11,6 @@ import { QuizQuestion } from './QuizQuestion/QuizQuestion';
 import { MERIDIAN_POINTS, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 import { QuizTimer } from './QuizTimer/QuizTimer';
 
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-
 // Sounds
 import mainSound from "src/assets/sounds/main.mp3"
 import correctSound from "src/assets/sounds/right.mp3"
@@ -21,11 +18,20 @@ import wrongSound from "src/assets/sounds/wrong.mp3"
 import { QuizSummary } from './QuizSummary/QuizSummary';
 import { QuizTitleBar } from './QuizTitleBar/QuizTitleBar';
 import {
-  highlightPoint, resetToInitialStatePointSelectionSlice, setIsNavigateQuest,
+  highlightPoint,
+  resetToInitialStatePointSelectionSlice,
+  setAcupuncturePoints,
+  setIsNavigateQuest,
   setIsShowing4Labels,
-  setNavigateQuestSelectable, setNavigateQuestSelectedPoint,
-  setQuizField, setShowingCorrectPoint, setShowingPoints, setStrictMode, unsetStrictMode
+  setNavigateQuestSelectable,
+  setNavigateQuestSelectedPoint,
+  setQuizField,
+  setShowingCorrectPoint,
+  setShowingPoints,
+  setStrictMode,
+  unsetStrictMode
 } from 'src/redux/slice';
+import { getAcupuncturePoints } from 'src/helpers/api/items';
 
 enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
@@ -47,6 +53,11 @@ export const QuizManager: React.FC<IQuizManager> = ({
   } = useSelector(
     (state: RootState) => state.quizSlice,
   );
+  const {
+    acupuncturePoints
+  } = useSelector(
+    (state: RootState) => state.dataSlice,
+  );
   const dispatch = useAppDispatch();
 
   const [quizState, setQuizState] = useState<number>(QUIZ_STATE["SELECT_OPTIONS"]);
@@ -66,6 +77,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
   const DEMO_QUESTION_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
   const [numberOfQuestionsOptionsList, setNumberOfQuestionsOptionsList] = useState<Array<number>>(DEMO_QUESTION_COUNT_OPTIONS)
   const [questionType, setQuestionType] = useState<number>(QUIZ_QUESTION_TYPE.DESCRIPTION)
+  const [fetchingData, setFetchingData] = useState<boolean>(true);
 
   const pointCurrentFieldIndexes = useRef<any>([]);
   const usedPointIndexes = useRef<any>([]);
@@ -273,9 +285,22 @@ export const QuizManager: React.FC<IQuizManager> = ({
     mainSoundPlayer.current?.pause();
   }
 
+  useEffect(() => {
+    const updateInitial = async () => {
+      setFetchingData(true);
+
+      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
+      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
+
+      setFetchingData(false);
+    }
+
+    updateInitial();
+  }, [])
+
   //Maintain quiz contents
   const generateQuestion = (option = null) => {
-    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+    const DEMO_DATA = acupuncturePoints
     let used = []
 
     if (parseInt(field) === 0) {
@@ -469,7 +494,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
     if (parseInt(field) !== 0) {
       const points = MERIDIAN_POINTS[MERIDIANS[field - 1]];
       let indexes = []
-      const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+      const DEMO_DATA = acupuncturePoints
 
       points.forEach(point => {
         DEMO_DATA.forEach((item, index) => {
@@ -509,14 +534,23 @@ export const QuizManager: React.FC<IQuizManager> = ({
         ${quizState === QUIZ_STATE["IN_PROGRESS"] ? "" : "quiz-manager__section--main--wide"}
       `}>
         {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
-          <QuizOptions
-            fieldOptionsList={DEMO_FIELD_OPTIONS}
-            numberOfQuestionsOptionsList={numberOfQuestionsOptionsList}
-            field={field}
-            numberOfQuestions={numberOfQuestions}
-            setField={setField}
-            setNumberOfQuestion={setNumberOfQuestions}
-          /> : quizState === QUIZ_STATE["IN_PROGRESS"] ?
+          (fetchingData ?
+            <div className='flex-center h-full'>
+              <div role="status">
+                <svg aria-hidden="true" className="w-10 h-10 mt-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                  <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                </svg>
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div> : <QuizOptions
+              fieldOptionsList={DEMO_FIELD_OPTIONS}
+              numberOfQuestionsOptionsList={numberOfQuestionsOptionsList}
+              field={field}
+              numberOfQuestions={numberOfQuestions}
+              setField={setField}
+              setNumberOfQuestion={setNumberOfQuestions}
+            />) : quizState === QUIZ_STATE["IN_PROGRESS"] ?
             <QuizQuestion
               questionContent={questionContent}
               type={questionType}

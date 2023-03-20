@@ -44,5 +44,10 @@
       font-family: 'header-light' !important;
       transform: translateY(5px);
       line-height: 2.5rem;
+      cursor: pointer;
+
+      &--loading {
+         cursor: wait;
+      }
    }
 }

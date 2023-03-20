@@ -102,7 +102,7 @@
       "SearchResultItem.tsx",
       "DetailPage.tsx",
       "pages/authentication/",
-      "redux/axios/axiosClient/"
+      "api/axios/"
     ]
   }
 }

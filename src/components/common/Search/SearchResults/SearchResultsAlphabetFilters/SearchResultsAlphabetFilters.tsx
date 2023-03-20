@@ -32,7 +32,7 @@ export const SearchResultsAlphabetFilters: React.FC<ISearchResultsAlphabetFilter
 
     alphabetStates.push({
       index: -1,
-      letter: currentLanguage === "EN" ? "All" : "Tất cả",
+      letter: "All",
       isAvailable: true
     })
     setCurrentAlphabetState(alphabetStates)

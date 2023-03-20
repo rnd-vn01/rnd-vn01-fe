@@ -64,14 +64,4 @@ describe('SearchResultsAlphabetFilters', () => {
       expect(screen.getByRole("div", { name: "search-results-alphabet-filters" })).toBeInTheDocument();
     })
   })
-
-  it("should update the first option to Tất cả if change language to Vietnamese", async () => {
-    store.dispatch(setStateLanguage({
-      currentLanguage: "VI"
-    }))
-
-    await waitFor(() => {
-      expect(screen.getByTestId("search-results-alphabet--1").innerHTML).toBe("Tất cả");
-    })
-  })
 });
