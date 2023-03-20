@@ -17,6 +17,7 @@ export const QuickSearchBar: React.FC = ({ }) => {
   const [usingQuickSearchIconImage, setUsingQuickSearchIconImage] = useState<any>(SearchIconGray)
   const [query, setQuery] = useState<string>("");
   const [isInFocus, setIsInFocus] = useState<boolean>(false);
+  const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -58,18 +59,21 @@ export const QuickSearchBar: React.FC = ({ }) => {
 
       <input
         ref={inputBoxRef}
-        className="quick-search__input"
+        className={`quick-search__input ${!isReadyForSearch && "quick-search__input--loading"}`}
         onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
         onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
         value={query}
         onChange={e => setQuery(e.target.value)}
         role="input"
         aria-label="quick-search-input"
-        placeholder={t('search_bar.placeholder')}></input>
+        placeholder={t('search_bar.placeholder')}
+        disabled={!isReadyForSearch}
+      ></input>
 
       <QuickSearchResults
         query={query}
         isShowing={isInFocus}
+        callbackIsReadyForSearch={setIsReadyForSearch}
       />
     </div>
   );

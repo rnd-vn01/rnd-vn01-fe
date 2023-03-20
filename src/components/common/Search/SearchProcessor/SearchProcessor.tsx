@@ -2,18 +2,17 @@ import './SearchProcessor.scss';
 import React, { useState, useCallback, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { debounce } from "lodash"
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
-import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState, useAppDispatch } from 'src/redux/store';
 import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
+import { setAcupuncturePoints, setMeridians } from 'src/redux/slice';
+import { getAcupuncturePoints, getMeridians } from 'src/helpers/api/items';
 
 export const SearchProcessor: React.FC<ISearchProcessor> = ({
   query,
   callbackSetResults,
-  callbackSetLoading
+  callbackSetLoading,
+  callbackIsReadyForSearch
 }) => {
   const history = useHistory();
 
@@ -24,30 +23,37 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+  const {
+    acupuncturePoints,
+    meridians
+  } = useSelector(
+    (state: RootState) => state.dataSlice,
+  );
+  const dispatch = useAppDispatch();
 
   const fetchResults = (query: string) => {
-    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
-    const DEMO_DATA_MERIDIAN = currentLanguage === "EN" ? DEMO_DATA_MERIDIAN_EN : DEMO_DATA_MERIDIAN_VI
+    const ACUPUNCTURE_POINTS = acupuncturePoints;
+    const MERIDIANS = meridians;
 
     let results = []
     if (query !== "") {
-      DEMO_DATA.forEach((point) => {
+      ACUPUNCTURE_POINTS.forEach((point) => {
         if (passFilter(point, query, true, SEARCH_BY.ALL)) {
           results.push(point)
         }
       })
 
-      DEMO_DATA_MERIDIAN.forEach((meridian) => {
+      MERIDIANS.forEach((meridian) => {
         if (passFilter(meridian, query, false, SEARCH_BY.ALL)) {
           results.push(meridian)
         }
       })
     } else {
-      DEMO_DATA.forEach((point) => {
+      ACUPUNCTURE_POINTS.forEach((point) => {
         results.push(point)
       })
 
-      DEMO_DATA_MERIDIAN.forEach((meridian) => {
+      MERIDIANS.forEach((meridian) => {
         results.push(meridian)
       })
     }
@@ -76,6 +82,22 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
   useEffect(() => {
     callbackSetLoading(isLoading)
   }, [isLoading])
+
+  useEffect(() => {
+    const updateInitial = async () => {
+      callbackIsReadyForSearch(false);
+
+      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
+      const dataMeridians = await getMeridians(currentLanguage);
+
+      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
+      dispatch(setMeridians(dataMeridians))
+
+      callbackIsReadyForSearch(true);
+    }
+
+    updateInitial();
+  }, [])
 
   return (
     <div
