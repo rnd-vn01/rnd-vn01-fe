@@ -28,24 +28,27 @@ export const SearchBar: React.FC<ISearchBar> = ({
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
 
   useEffect(() => {
     callbackSetResults(searchResults)
   }, [searchResults])
 
   useEffect(() => {
-    callbackSetLoading(isLoading)
-  }, [isLoading])
+    callbackSetLoading(isLoading || !isReadyForSearch)
+  }, [isLoading, isReadyForSearch])
 
   useEffect(() => {
     callbackSetQuery(query)
   }, [query])
 
   useEffect(() => {
-    if (passedQuery && passedQuery !== query) {
-      setQuery(passedQuery)
+    if (isReadyForSearch) {
+      if (passedQuery && passedQuery !== query) {
+        setQuery(passedQuery)
+      }
     }
-  }, [passedQuery])
+  }, [isReadyForSearch])
 
   useEffect(() => {
     setIsFilter(paramPassedIsFilter)
@@ -71,11 +74,11 @@ export const SearchBar: React.FC<ISearchBar> = ({
         <span className="search-bar__input--span">
           <input
             ref={inputBoxRef}
-            className="search-bar__input"
+            className={`search-bar__input ${!isReadyForSearch && "search-bar__input--loading"}`}
             onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
             onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
             value={query}
-            disabled={isChoosingAlphabet}
+            disabled={isChoosingAlphabet || !isReadyForSearch}
             onChange={e => setQuery(e.target.value)}
             role="input"
             aria-label="search-input"
@@ -101,12 +104,13 @@ export const SearchBar: React.FC<ISearchBar> = ({
             }}
           >
           </img>
-        </span>
+        </span >
 
         <SearchProcessor
-          query={query}
+          query={isReadyForSearch ? query : ""}
           callbackSetResults={setSearchResults}
           callbackSetLoading={setIsLoading}
+          callbackIsReadyForSearch={setIsReadyForSearch}
         />
       </div>
     </div>

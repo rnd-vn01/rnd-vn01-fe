@@ -40,5 +40,5 @@ export {
   RecordsSummaryDesktop,
   AboutPageSection,
   HomePageControl,
-  LanguagePicker
+  LanguagePicker,
 }

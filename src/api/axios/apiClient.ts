@@ -5,7 +5,7 @@ const apiClient = axios.create({
   headers: {
     'content-type': 'application/json',
   },
-  withCredentials: true
+  withCredentials: false
 });
 
 apiClient.interceptors.response.use(

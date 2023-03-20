@@ -50,5 +50,10 @@
     font-family: 'header-light' !important;
     transform: translateY(2px);
     line-height: 2.5rem;
+    cursor: pointer;
+
+    &--loading {
+      cursor: wait;
+    }
   }
 }
