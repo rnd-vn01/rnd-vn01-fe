@@ -77,12 +77,12 @@ export const DetailPage: React.FC<IDetailPage> = ({
   useEffect(() => {
     const getItemInformation = async () => {
       if (isPoint) {
-        const item = await getAcupuncturePointByCode(currentLanguage, itemCode) as any
+        const item = await getAcupuncturePointByCode(currentLanguage, itemCode) as IAcupuncturePoint
 
         setDetail(item)
         document.title = `${APP_NAME} | ${item.code} | ${item.name}`
       } else {
-        const item = await getMeridianByCode(currentLanguage, itemCode) as any
+        const item = await getMeridianByCode(currentLanguage, itemCode) as IMeridian
 
         setDetail(item)
         document.title = `${APP_NAME} | ${item.code} | ${item.name}`
