@@ -27,8 +27,6 @@ export const SearchBar: React.FC<ISearchBar> = ({
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFilter, setIsFilter] = useState<boolean>(false);
-  const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
 
   useEffect(() => {
     callbackSetResults(searchResults)
@@ -43,16 +41,10 @@ export const SearchBar: React.FC<ISearchBar> = ({
   }, [query])
 
   useEffect(() => {
-    if (isReadyForSearch) {
-      if (passedQuery && passedQuery !== query) {
-        setQuery(passedQuery)
-      }
+    if (passedQuery && passedQuery !== query) {
+      setQuery(passedQuery)
     }
-  }, [isReadyForSearch])
-
-  useEffect(() => {
-    setIsFilter(paramPassedIsFilter)
-  }, [paramPassedIsFilter])
+  }, [passedQuery])
 
   return (
     <div
@@ -74,12 +66,13 @@ export const SearchBar: React.FC<ISearchBar> = ({
         <span className="search-bar__input--span">
           <input
             ref={inputBoxRef}
-            className={`search-bar__input ${!isReadyForSearch && "search-bar__input--loading"}`}
+            className="search-bar__input"
             onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
             onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
             value={query}
-            disabled={isChoosingAlphabet || !isReadyForSearch}
+            disabled={isChoosingAlphabet}
             onChange={e => setQuery(e.target.value)}
+            onClick={() => setQuery("")}
             role="input"
             aria-label="search-input"
             placeholder={t('search_bar.placeholder')}></input>
@@ -107,12 +100,10 @@ export const SearchBar: React.FC<ISearchBar> = ({
         </span >
 
         <SearchProcessor
-          query={isReadyForSearch ? query : ""}
+          query={query}
           callbackSetResults={setSearchResults}
           callbackSetLoading={setIsLoading}
-          callbackIsReadyForSearch={setIsReadyForSearch}
         />
       </div>
-    </div>
-  );
+      );
 };
