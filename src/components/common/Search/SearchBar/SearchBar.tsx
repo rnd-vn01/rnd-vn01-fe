@@ -5,6 +5,8 @@ import SearchIconBlack from "src/assets/images/SearchIconBlack.svg"
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SearchProcessor } from '../SearchProcessor/SearchProcessor';
+import IconFilterOn from 'src/assets/images/IconFilterOn.svg';
+import IconFilterOff from 'src/assets/images/IconFilterOff.svg';
 
 export const SearchBar: React.FC<ISearchBar> = ({
   callbackSetResults,
@@ -12,7 +14,8 @@ export const SearchBar: React.FC<ISearchBar> = ({
   callbackSetQuery,
   numberOfMatchingResults,
   isChoosingAlphabet,
-  passedQuery
+  passedQuery,
+  callbackIsFilter
 }) => {
   const inputBoxRef = useRef()
   const history = useHistory();
@@ -23,6 +26,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(false);
 
   useEffect(() => {
     callbackSetResults(searchResults)
@@ -41,6 +45,10 @@ export const SearchBar: React.FC<ISearchBar> = ({
       setQuery(passedQuery)
     }
   }, [passedQuery])
+
+  useEffect(() => {
+    callbackIsFilter(isFilter)
+  }, [isFilter])
 
   return (
     <div
@@ -79,6 +87,12 @@ export const SearchBar: React.FC<ISearchBar> = ({
           {` `}
           {t('search_bar.matches')}
         </span>}
+
+        <img className="search-bar__filter-icon"
+          src={isFilter ? IconFilterOn : IconFilterOff}
+          onClick={() => setIsFilter(!isFilter)}
+        >
+        </img>
       </span>
 
       <SearchProcessor

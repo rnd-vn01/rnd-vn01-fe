@@ -5,7 +5,7 @@ import { SearchResultItem } from '../SearchResultItem/SearchResultItem';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
-import { filterByAlphabet, passFilter, replaceVietnameseNotation } from 'src/helpers/searchProcess';
+import { filterByAlphabet, passFilter, replaceVietnameseNotation, sortItems } from 'src/helpers/searchProcess';
 import { ALPHABET_LISTS } from 'src/configs/constants';
 import { SearchResultsAlphabetFilters } from './SearchResultsAlphabetFilters/SearchResultsAlphabetFilters';
 
@@ -14,7 +14,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
   query,
   isLoading,
   callbackSetNumberOfMatchingResults,
-  callbackSetChoosingAlphabet
+  callbackSetChoosingAlphabet,
+  isFilter
 }) => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -29,7 +30,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
   const [currentFilterOptions, setCurrentFilterOptions] = useState<any>({
     searchOn: 0,
     searchBy: 0,
-    show: 0
+    show: 0,
+    sort: 0
   });
   const [filters, setFilters] = useState<any>({});
   const [currentIsLoading, setCurrentIsLoading] = useState<boolean>(false);
@@ -43,14 +45,16 @@ export const SearchResults: React.FC<ISearchResults> = ({
       searchBy: ["tất cả", "mã", "tên", "mô tả", "vị trí", "chức năng", "phương pháp"],
       show: ["tất cả kinh lạc", "chỉ kinh lạc LU", "chỉ kinh lạc LI", "chỉ kinh lạc ST", "chỉ kinh lạc SP",
         "chỉ kinh lạc HT", "chỉ kinh lạc SI", "chỉ kinh lạc BL", "chỉ kinh lạc KI", "chỉ kinh lạc PC",
-        "chỉ kinh lạc TE", "chỉ kinh lạc GB", "chỉ kinh lạc Liv", "chỉ kinh lạc Du", "chỉ kinh lạc Ren"]
+        "chỉ kinh lạc TE", "chỉ kinh lạc GB", "chỉ kinh lạc Liv", "chỉ kinh lạc Du", "chỉ kinh lạc Ren"],
+      sort: ["tăng dần", "giảm dần"]
     },
     EN: {
       searchOn: ["all", "meridians", "points"],
       searchBy: ["all", "code", "name", "description", "location", "functionalities", "method"],
       show: ["all meridians", "LU meridian only", "LI meridian only", "ST meridian only", "SP meridian only",
         "HT meridian only", "SI meridian only", "BL meridian only", "KI meridian only", "PC meridian only",
-        "TE meridian only", "GB meridian only", "Liv meridian only", "Du meridian only", "Ren meridian only"]
+        "TE meridian only", "GB meridian only", "Liv meridian only", "Du meridian only", "Ren meridian only"],
+      sort: ["ascending", "descending"]
     }
   }
 
@@ -87,6 +91,15 @@ export const SearchResults: React.FC<ISearchResults> = ({
     setChoosingAlphabetOption(-1);
   }, [query])
 
+  useEffect(() => {
+    setCurrentFilterOptions({
+      searchOn: 0,
+      searchBy: 0,
+      show: 0,
+      sort: 0
+    })
+  }, [isFilter])
+
   const processShowingItems = () => {
     let newResults = results.filter(
       item => passFilter(item, query, item.diseases ? false : true, currentFilterOptions.searchBy)
@@ -109,6 +122,9 @@ export const SearchResults: React.FC<ISearchResults> = ({
           === meridian_name.toUpperCase()
       )
     }
+
+    // Sort
+    newResults = sortItems(newResults, parseInt(currentFilterOptions.sort));
 
     callbackSetNumberOfMatchingResults(newResults.length)
     setCurrentIsLoading(false)
@@ -164,7 +180,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
               {t('no_results')}
             </h1>}
 
-          <div className="search-results__filters">
+          {isFilter && <div className="search-results__filters">
             <h1 className="search-results__filters--category">{t('search_bar.filters.categories.search')}</h1>
 
             <span
@@ -237,7 +253,32 @@ export const SearchResults: React.FC<ISearchResults> = ({
                 ))}
               </select>
             </span>
-          </div>
+
+            <h1 className="search-results__filters--category mt-3">{t('search_bar.filters.categories.sort')}</h1>
+
+            <span
+              className="search-results__option">
+              {t('search_bar.filters.options.show')}
+              <select
+                className="search-results__select"
+                value={currentFilterOptions.sort}
+                onChange={(e) => setCurrentFilterOptions({
+                  ...currentFilterOptions,
+                  sort: parseInt(e.target.value),
+                })}
+                role="select"
+                aria-label="select-sort"
+              >
+                {filters["sort"] && filters["sort"].map((option, index) => (
+                  <option
+                    className="search-results__select--option"
+                    value={index}
+                    key={`sort-${index}`}
+                  >{option}</option>
+                ))}
+              </select>
+            </span>
+          </div>}
         </>}
     </div>
   );

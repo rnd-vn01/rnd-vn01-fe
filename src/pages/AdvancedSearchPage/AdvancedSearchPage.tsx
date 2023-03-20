@@ -20,6 +20,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const [query, setQuery] = useState<string>("");
   const [numberOfMatchingResults, setNumberOfMatchingResults] = useState<number>(0);
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(false);
 
   return (
     <div
@@ -39,6 +40,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
           numberOfMatchingResults={numberOfMatchingResults}
           isChoosingAlphabet={isChoosingAlphabet}
           passedQuery={hookQuery.get('query')}
+          callbackIsFilter={setIsFilter}
         />
 
         <SearchResults
@@ -47,6 +49,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
           query={query}
           callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
+          isFilter={isFilter}
         />
       </div>
     </div>

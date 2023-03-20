@@ -139,6 +139,7 @@ interface ISearchBar {
   numberOfMatchingResults?: number;
   isChoosingAlphabet?: boolean;
   passedQuery?: string;
+  callbackIsFilter?: (boolean) => void;
 }
 
 interface ISearchResults {
@@ -147,6 +148,7 @@ interface ISearchResults {
   isLoading?: boolean;
   callbackSetNumberOfMatchingResults?: (any) => void;
   callbackSetChoosingAlphabet?: (boolean) => void;
+  isFilter?: boolean;
 }
 
 interface ISearchResultItem {

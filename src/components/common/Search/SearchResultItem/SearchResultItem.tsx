@@ -5,6 +5,9 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
 import { useHistory } from 'react-router-dom';
 import Highlighter from "react-highlight-words";
+import IconViewOnModel from "src/assets/images/IconShow.svg";
+import ReactTooltip from 'react-tooltip';
+import { useTranslation } from 'react-i18next';
 
 export const SearchResultItem: React.FC<ISearchResultItem> = ({
   item,
@@ -15,6 +18,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const firstTriggered = useRef<boolean>(false);
   const history = useHistory();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (firstTriggered.current) {
@@ -47,6 +51,24 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
             setIsCollapsed(!isCollapsed)
           }
         }}>
+
+
+        <div
+          className="search-result__header--view-left"
+          data-tip
+          data-for={`tooltip-${item.code}`}>
+          <img
+            src={IconViewOnModel}
+            onClick={(e) => {
+              history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
+                isRedirect: true
+              })
+            }}></img>
+          <ReactTooltip id={`tooltip-${item.code}`} place="bottom" effect="solid">
+            <p>{t('view_on_model')}</p>
+          </ReactTooltip>
+        </div>
+
         <div className="search-result__flex-block flex justify-between">
           <h1 className="search-result__header--code">
             <Highlighter

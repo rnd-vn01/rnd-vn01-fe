@@ -13,7 +13,7 @@ import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
 export const SearchProcessor: React.FC<ISearchProcessor> = ({
   query,
   callbackSetResults,
-  callbackSetLoading
+  callbackSetLoading,
 }) => {
   const history = useHistory();
 

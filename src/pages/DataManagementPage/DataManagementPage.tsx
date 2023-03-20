@@ -19,6 +19,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
   const [query, setQuery] = useState<string>("");
   const [numberOfMatchingResults, setNumberOfMatchingResults] = useState<number>(0);
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(false);
 
   return (
     <div
@@ -37,6 +38,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           callbackSetQuery={setQuery}
           numberOfMatchingResults={numberOfMatchingResults}
           isChoosingAlphabet={isChoosingAlphabet}
+          callbackIsFilter={setIsFilter}
         />
 
         <SearchResults
@@ -45,6 +47,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           query={query}
           callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
+          isFilter={isFilter}
         />
       </div>
     </div>

@@ -150,12 +150,15 @@ i18n
             filters: {
               categories: {
                 search: "Search",
-                show: "Show"
+                show: "Show",
+                sort: "Sort",
               },
               options: {
                 search_on: "search on",
                 search_by: "search by",
-                show: "show"
+                show: "show",
+                ascending: "ascending",
+                descending: "descending"
               }
             },
             placeholder: "Search..."
@@ -460,12 +463,15 @@ i18n
             filters: {
               categories: {
                 search: "Tìm kiếm",
-                show: "Hiển thị"
+                show: "Hiển thị",
+                sort: "Sắp xếp"
               },
               options: {
                 search_on: "tìm trên",
                 search_by: "tìm theo",
-                show: "hiển thị"
+                show: "hiển thị",
+                ascending: "tăng dần",
+                descending: "giảm dần"
               }
             },
             placeholder: "Tìm kiếm..."
