@@ -3,7 +3,7 @@ import { QuickSearchResults } from './QuickSearchResults';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { resetToInitialStateDataSlice, resetToInitialStateLanguageSlice, resetToInitialStatePointSelectionSlice, setAcupuncturePoints, setMeridians, setStateLanguage } from 'src/redux/slice';
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mock/mockGetItems';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
 import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 
