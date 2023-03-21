@@ -1,5 +1,5 @@
 import './DataManagementPage.scss'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FullPageTitleBar,
   SearchBar,
@@ -7,6 +7,8 @@ import {
 } from 'src/components/common';
 import { APP_NAME } from 'src/configs/constants';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
 
@@ -20,6 +22,17 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
   const [numberOfMatchingResults, setNumberOfMatchingResults] = useState<number>(0);
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
   const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
+
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      if (window.pageYOffset > 100) {
+        setShowingScrollToTop(true);
+      } else {
+        setShowingScrollToTop(false);
+      }
+    })
+  }, [])
 
   return (
     <div
@@ -49,6 +62,22 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
           isFilter={isFilter}
         />
+      </div>
+
+      <div
+        className={`advanced-search-page__scroll-to-top 
+      ${showingScrollToTop && "advanced-search-page__scroll-to-top--showing"}`}
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          })
+        }}>
+        <FontAwesomeIcon
+          className="advanced-search-page__scroll-to-top--icon"
+          icon={faArrowUp}
+        ></FontAwesomeIcon>
       </div>
     </div>
   );

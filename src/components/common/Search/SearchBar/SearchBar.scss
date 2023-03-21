@@ -1,10 +1,24 @@
 .search-bar {
-  width: 100%;
   border: 1px solid black;
   cursor: text;
-  position: relative;
-  margin-top: 15px;
+  margin-top: 12px;
   height: 60px;
+  position: fixed;
+  left: 1vw;
+  right: 1vw;
+  background: var(--theme-background);
+  z-index: 1000;
+
+  &__container {
+    cursor: text;
+    margin-top: 10px;
+    height: 65px;
+    position: fixed;
+    left: 1vw;
+    right: 1vw;
+    background: var(--theme-background);
+    z-index: 1000;
+  }
 
   &__logo {
     &--search {

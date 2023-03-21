@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { filterByAlphabet, passFilter, replaceVietnameseNotation, sortItems } from 'src/helpers/searchProcess';
 import { ALPHABET_LISTS } from 'src/configs/constants';
 import { SearchResultsAlphabetFilters } from './SearchResultsAlphabetFilters/SearchResultsAlphabetFilters';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export const SearchResults: React.FC<ISearchResults> = ({
   results,
@@ -38,6 +39,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
   const [choosingAlphabetOption, setChoosingAlphabetOption] = useState<number>(-1);
   const [allAlphabetFilteredResults, setAllAlphabetFilteredResults] = useState<Array<any>>([]);
+  const [showingItems, setShowingItems] = useState<Array<any>>([]);
 
   const FILTER_OPTIONS = {
     VI: {
@@ -100,6 +102,16 @@ export const SearchResults: React.FC<ISearchResults> = ({
     })
   }, [isFilter])
 
+  useEffect(() => {
+    setShowingItems(filteredResults.slice(0, 30))
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    }, 250)
+  }, [filteredResults, allAlphabetFilteredResults])
+
   const processShowingItems = () => {
     let newResults = results.filter(
       item => passFilter(item, query, item.diseases ? false : true, currentFilterOptions.searchBy)
@@ -129,6 +141,14 @@ export const SearchResults: React.FC<ISearchResults> = ({
     callbackSetNumberOfMatchingResults(newResults.length)
     setCurrentIsLoading(false)
     return newResults
+  }
+
+  const fetchNext = () => {
+    setTimeout(() => {
+      let currentLength = showingItems.length;
+      const endLength = Math.min(currentLength + 30, filteredResults.length)
+      setShowingItems(filteredResults.slice(0, endLength))
+    }, 500)
   }
 
   return (
@@ -161,14 +181,21 @@ export const SearchResults: React.FC<ISearchResults> = ({
               }
 
               <div className="search-results__results">
-                {filteredResults.map((result, index) =>
-                  <SearchResultItem
-                    key={index}
-                    item={result}
-                    query={[query]}
-                    usingLanguage={currentLanguage}
-                    isPoint={result.diseases ? false : true}
-                  />)}
+                <InfiniteScroll
+                  dataLength={showingItems.length}
+                  loader={<h4 className='mt-6'>Loading...</h4>}
+                  hasMore={showingItems.length !== filteredResults.length}
+                  next={() => fetchNext()}
+                  scrollThreshold={1}>
+                  {showingItems.map((result, index) =>
+                    <SearchResultItem
+                      key={index}
+                      item={result}
+                      query={[query]}
+                      usingLanguage={currentLanguage}
+                      isPoint={result.diseases ? false : true}
+                    />)}
+                </InfiniteScroll>
               </div>
             </>}
 
@@ -258,7 +285,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
 
             <span
               className="search-results__option">
-              {t('search_bar.filters.options.show')}
+              {t('search_bar.filters.options.sort')}
               <select
                 className="search-results__select"
                 value={currentFilterOptions.sort}

@@ -158,7 +158,8 @@ i18n
                 search_by: "search by",
                 show: "show",
                 ascending: "ascending",
-                descending: "descending"
+                descending: "descending",
+                sort: "sort"
               }
             },
             placeholder: "Search..."
@@ -471,7 +472,8 @@ i18n
                 search_by: "tìm theo",
                 show: "hiển thị",
                 ascending: "tăng dần",
-                descending: "giảm dần"
+                descending: "giảm dần",
+                sort: "sắp xếp"
               }
             },
             placeholder: "Tìm kiếm..."

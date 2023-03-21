@@ -46,60 +46,62 @@ export const SearchBar: React.FC<ISearchBar> = ({
     }
   }, [passedQuery])
 
-  useEffect(() => {
-    callbackIsFilter(isFilter)
-  }, [isFilter])
-
   return (
     <div
-      role="div"
-      aria-label="search-bar"
-      className="search-bar"
-      onClick={() => {
-        (inputBoxRef.current as HTMLInputElement)?.focus()
-      }}>
+      className="search-bar__container">
 
-      <img
-        role="img"
-        aria-label="search-bar-icon"
-        src={usingQuickSearchIconImage}
-        className="search-bar__logo--search"></img>
+      <div
+        role="div"
+        aria-label="search-bar"
+        className="search-bar"
+        onClick={() => {
+          (inputBoxRef.current as HTMLInputElement)?.focus()
+        }}>
+        <img
+          role="img"
+          aria-label="search-bar-icon"
+          src={usingQuickSearchIconImage}
+          className="search-bar__logo--search"></img>
 
-      <span className="search-bar__input--span">
-        <input
-          ref={inputBoxRef}
-          className="search-bar__input"
-          onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
-          onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
-          value={query}
-          disabled={isChoosingAlphabet}
-          onChange={e => setQuery(e.target.value)}
-          onClick={() => setQuery("")}
-          role="input"
-          aria-label="search-input"
-          placeholder={t('search_bar.placeholder')}></input>
+        <span className="search-bar__input--span">
+          <input
+            ref={inputBoxRef}
+            className="search-bar__input"
+            onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
+            onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
+            value={query}
+            disabled={isChoosingAlphabet}
+            onChange={e => setQuery(e.target.value)}
+            role="input"
+            aria-label="search-input"
+            placeholder={t('search_bar.placeholder')}></input>
 
-        {!isLoading && query !== "" && <span className="search-bar__number-of-results"
-          role="span"
-          aria-label="number-of-results"
-          onClick={(e) => e.stopPropagation()}> {/* NOT_TESTED */}
-          {numberOfMatchingResults}
-          {` `}
-          {t('search_bar.matches')}
-        </span>}
+          {!isLoading && query !== "" && <span className="search-bar__number-of-results"
+            role="span"
+            aria-label="number-of-results"
+            onClick={(e) => e.stopPropagation()}> {/* NOT_TESTED */}
+            {numberOfMatchingResults}
+            {` `}
+            {t('search_bar.matches')}
+          </span>}
 
-        <img className="search-bar__filter-icon"
-          src={isFilter ? IconFilterOn : IconFilterOff}
-          onClick={() => setIsFilter(!isFilter)}
-        >
-        </img>
-      </span>
+          <img className="search-bar__filter-icon"
+            src={isFilter ? IconFilterOn : IconFilterOff}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsFilter(!isFilter)
+              callbackIsFilter(!isFilter)
+            }}
+          >
+          </img>
+        </span>
 
-      <SearchProcessor
-        query={query}
-        callbackSetResults={setSearchResults}
-        callbackSetLoading={setIsLoading}
-      />
+        <SearchProcessor
+          query={query}
+          callbackSetResults={setSearchResults}
+          callbackSetLoading={setIsLoading}
+        />
+      </div>
     </div>
   );
 };
