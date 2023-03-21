@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import {
   getAccessToken,
   refreshAccessToken
