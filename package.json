@@ -103,6 +103,9 @@
       "DetailPage.tsx",
       "pages/authentication/",
       "api/axios/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)/"
     ]
   }
 }

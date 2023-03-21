@@ -218,7 +218,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
               <span className="sr-only">Loading...</span>
             </div>}
 
-          <div className="search-results__filters">
+          {isFilter && <div className="search-results__filters">
             <h1 className="search-results__filters--category">{t('search_bar.filters.categories.search')}</h1>
 
             <span
