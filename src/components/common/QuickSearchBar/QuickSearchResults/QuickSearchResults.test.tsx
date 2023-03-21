@@ -2,7 +2,10 @@ import { createEvent, fireEvent, render, screen, waitFor } from '@testing-librar
 import { QuickSearchResults } from './QuickSearchResults';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { resetToInitialStatePointSelectionSlice } from 'src/redux/slice';
+import { resetToInitialStateDataSlice, resetToInitialStateLanguageSlice, resetToInitialStatePointSelectionSlice, setAcupuncturePoints, setMeridians, setStateLanguage } from 'src/redux/slice';
+import { mockGetItems } from 'src/api/mock/mockGetItems';
+import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
+import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -19,8 +22,22 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe('QuickSearchResults', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
+  beforeEach(() => {
+    store.dispatch(setStateLanguage({
+      currentLanguage: "EN"
+    }))
+    store.dispatch(setAcupuncturePoints(DEMO_DATA_EN))
+    store.dispatch(setMeridians(DEMO_DATA_MERIDIAN_EN))
+  })
+
   afterEach(() => {
     store.dispatch(resetToInitialStatePointSelectionSlice())
+    store.dispatch(resetToInitialStateDataSlice())
+    store.dispatch(resetToInitialStateLanguageSlice())
   })
 
   it("to be rendered successfully", async () => {
@@ -28,6 +45,7 @@ describe('QuickSearchResults', () => {
       <Provider store={store}>
         <QuickSearchResults
           query={""}
+          callbackIsReadyForSearch={jest.fn()}
         />
       </Provider>)
 
@@ -41,6 +59,8 @@ describe('QuickSearchResults', () => {
       <Provider store={store}>
         <QuickSearchResults
           query={"a"}
+          isShowing={true}
+          callbackIsReadyForSearch={jest.fn()}
         />
       </Provider>)
 
@@ -54,6 +74,7 @@ describe('QuickSearchResults', () => {
       <Provider store={store}>
         <QuickSearchResults
           query={"a"}
+          callbackIsReadyForSearch={jest.fn()}
         />
       </Provider>)
 
@@ -74,6 +95,7 @@ describe('QuickSearchResults', () => {
       <Provider store={store}>
         <QuickSearchResults
           query={"a"}
+          callbackIsReadyForSearch={jest.fn()}
         />
       </Provider>)
 
@@ -90,6 +112,7 @@ describe('QuickSearchResults', () => {
       <Provider store={store}>
         <QuickSearchResults
           query={"M-HN-3"}
+          callbackIsReadyForSearch={jest.fn()}
         />
       </Provider>)
 
