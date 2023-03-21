@@ -13,11 +13,11 @@ import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
 export const SearchProcessor: React.FC<ISearchProcessor> = ({
   query,
   callbackSetResults,
-  callbackSetLoading
+  callbackSetLoading,
 }) => {
   const history = useHistory();
 
-  const [isLoading, setIsLoading] = useState<any>(false)
+  const [isLoading, setIsLoading] = useState<any>(true)
   const [results, setResults] = useState<any>([])
   const {
     currentLanguage

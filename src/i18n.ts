@@ -19,7 +19,7 @@ i18n
           hometitle: {
             sub: "welcome to",
             project_name: "3D Acupuncture Healthcare Data Management And Treatment System",
-            instruction: "interact with the model to start"
+            instruction: "click to start"
           },
           footer_bar: {
             start_quiz: "Start Quiz"
@@ -150,14 +150,19 @@ i18n
             filters: {
               categories: {
                 search: "Search",
-                show: "Show"
+                show: "Show",
+                sort: "Sort",
               },
               options: {
                 search_on: "search on",
                 search_by: "search by",
-                show: "show"
+                show: "show",
+                ascending: "ascending",
+                descending: "descending",
+                sort: "sort"
               }
-            }
+            },
+            placeholder: "Search..."
           },
           data_management_page: {
             title: "Data Management",
@@ -195,7 +200,7 @@ i18n
               },
               showing: "showing",
               caption: {
-                learnt: "learnt",
+                learnt: "quized",
                 quiz_attempted: "quizzes",
                 accuracy_rate: "accuracy rate"
               }
@@ -218,7 +223,7 @@ i18n
               },
               caution: "\"From\" date must be before or equal to \"to\" date",
               total: "total",
-              learnt: "learnt so far"
+              learnt: "quized so far"
             }
           },
           about_page: {
@@ -328,7 +333,7 @@ i18n
           hometitle: {
             sub: "chào mừng đến với",
             project_name: "Hệ Thống Điều Trị Và Quản Lý Dữ Liệu Châm Cứu 3D",
-            instruction: "tương tác với mô hình để bắt đầu"
+            instruction: "bấm để bắt đầu"
           },
           footer_bar: {
             start_quiz: "Kiểm tra"
@@ -459,14 +464,19 @@ i18n
             filters: {
               categories: {
                 search: "Tìm kiếm",
-                show: "Hiển thị"
+                show: "Hiển thị",
+                sort: "Sắp xếp"
               },
               options: {
                 search_on: "tìm trên",
                 search_by: "tìm theo",
-                show: "hiển thị"
+                show: "hiển thị",
+                ascending: "tăng dần",
+                descending: "giảm dần",
+                sort: "sắp xếp"
               }
-            }
+            },
+            placeholder: "Tìm kiếm..."
           },
           data_management_page: {
             title: "Quản lý Dữ liệu",
@@ -504,7 +514,7 @@ i18n
               },
               showing: "hiển thị",
               caption: {
-                learnt: "đã học",
+                learnt: "đã kiểm tra",
                 quiz_attempted: "bài kiểm tra",
                 accuracy_rate: "tỉ lệ trả lời đúng"
               }
@@ -527,7 +537,7 @@ i18n
               },
               caution: "Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.",
               total: "tổng",
-              learnt: "đã học tích luỹ"
+              learnt: "đã kiểm tra tích luỹ"
             }
           },
           about_page: {
@@ -605,17 +615,17 @@ i18n
           no_results: "Không tìm thấy kết quả",
           meridian_tooltips: {
             "BL": "Bàng quang",
-            "LU": "Phổi",
-            "HT": "Tim",
-            "ST": "Dạ dày",
+            "LU": "Phế",
+            "HT": "Tâm",
+            "ST": "Vị",
             "KI": "Thận",
-            "GB": "Mật",
-            "LI": "Ruột già",
-            "SI": "Ruột non",
-            "Liv": "Gan",
-            "PC": "Màng ngoài tim",
+            "GB": "Đởm",
+            "LI": "Đại trường",
+            "SI": "Tiểu trường",
+            "Liv": "Can",
+            "PC": "Tâm bào",
             "TE": "Tam tiêu",
-            "SP": "Lá lách",
+            "SP": "Tỳ",
             "Du": "Đốc mạch",
             "Ren": "Nhâm mạch",
           },

@@ -28,6 +28,14 @@ export enum QUIZ_QUESTION_TYPE {
   IDENTIFY_CORRECT_LOCATION = 4
 }
 
+export enum ZOOM_CONTROL_LEVEL {
+  FAR = 0,
+  SHOW_LINE = 1,
+  SHOW_ALL = 2,
+  SHOW_LABEL = 3,
+  EXTRA_LARGE = 4
+}
+
 export const ALPHABET_LISTS = {
   VI: ["A", "Ă", "Â", "B", "C", "D", "Đ", "E", "Ê", "G", "H", "I", "K", "L", "M", "N", "O", "Ô", "Ơ",
     "P", "Q", "R", "S", "T", "U", "Ư", "V", "X", "Y"],
@@ -1989,54 +1997,59 @@ export const LINE_POINTS = {
       "z": 3.7
     },
     {
-      "x": 13.5,
+      "x": 13.2,
       "y": -1.5,
       "z": 3
     },
     {
-      "x": 13,
-      "y": -0.6,
-      "z": 2
-    },
-    {
-      "x": 12.8,
-      "y": -0.3,
-      "z": 1.6
+      "x": 12.5,
+      "y": -0.4,
+      "z": 2.1
     },
     {
       "x": 12.3,
-      "y": 0.3,
-      "z": 1
+      "y": -0.05,
+      "z": 1.85
     },
     {
       "x": 12.1,
-      "y": 0.5,
+      "y": 0.15,
+      "z": 1.6
+    },
+    {
+      "x": 11.25,
+      "y": 1.15,
+      "z": 1
+    },
+    {
+      "x": 10.75,
+      "y": 1.725,
       "z": 0.7
     },
     {
-      "x": 11.9,
-      "y": 0.7,
+      "x": 10.25,
+      "y": 2.175,
       "z": 0.4
     },
     {
-      "x": 11.4,
-      "y": 1.1,
-      "z": 0
-    },
-    {
-      "x": 11.1,
-      "y": 1.2,
-      "z": -0.3
-    },
-    {
-      "x": 10.5,
-      "y": 1.8,
-      "z": -0.65
+      "x": 9.75,
+      "y": 2.5,
+      "z": 0.25
     },
     {
       "x": 9.4,
-      "y": 2.725,
-      "z": -1.2
+      "y": 2.7,
+      "z": 0.1
+    },
+    {
+      "x": 9.2,
+      "y": 2.95,
+      "z": -0.2
+    },
+    {
+      "x": 9,
+      "y": 3.1,
+      "z": -0.5
     },
     {
       "x": 8.3,
@@ -2044,8 +2057,13 @@ export const LINE_POINTS = {
       "z": -0.85
     },
     {
-      "x": 7.1,
-      "y": 5,
+      "x": 7,
+      "y": 4.85,
+      "z": -0.85
+    },
+    {
+      "x": 6.7,
+      "y": 5.55,
       "z": -0.85
     },
     {
@@ -2054,19 +2072,14 @@ export const LINE_POINTS = {
       "z": -0.85
     },
     {
-      "x": 5.8,
-      "y": 6.9,
-      "z": -1.45
+      "x": 5.75,
+      "y": 7,
+      "z": -0.45
     },
     {
-      "x": 4.9,
-      "y": 7.15,
-      "z": -1.75
-    },
-    {
-      "x": 3,
-      "y": 8.45,
-      "z": -1.75
+      "x": 4.95,
+      "y": 7.425,
+      "z": -0.45
     },
     {
       "x": 1.5,
@@ -3241,11 +3254,12 @@ export const FOCUS_OPTIONS = {
   },
   "LI": {
     "point": {
-      "x": 8.3,
-      "y": 3.75,
-      "z": -0.85,
+      "x": 8.5,
+      "y": 2.75,
+      "z": -1,
     },
-    "rotate": 225
+    "rotate": 315,
+    "zoom": 2
   },
   "Liv": {
     "point": {
@@ -3257,11 +3271,12 @@ export const FOCUS_OPTIONS = {
   },
   "LU": {
     "point": {
-      "x": -6.6,
-      "y": 4.2,
+      "x": -7.5,
+      "y": 3,
       "z": 0.35,
     },
-    "rotate": 0
+    "rotate": 0,
+    "zoom": 3
   },
   "PC": {
     "point": {
@@ -5310,7 +5325,7 @@ export const POINT_LOCATIONS = {
   },
   "LI-5": {
     "position": [
-      13.5,
+      13.2,
       -1.5,
       3
     ],
@@ -5319,17 +5334,17 @@ export const POINT_LOCATIONS = {
   },
   "LI-6": {
     "position": [
-      13,
-      -0.6,
-      2
+      12.5,
+      -0.4,
+      2.1
     ],
     "reverse": 0,
     "viewFromBottom": false
   },
   "LI-7": {
     "position": [
-      12.8,
-      -0.3,
+      12.1,
+      0.15,
       1.6
     ],
     "reverse": 0,
@@ -5337,8 +5352,8 @@ export const POINT_LOCATIONS = {
   },
   "LI-8": {
     "position": [
-      12.3,
-      0.3,
+      11.25,
+      1.15,
       1
     ],
     "reverse": 0,
@@ -5346,8 +5361,8 @@ export const POINT_LOCATIONS = {
   },
   "LI-9": {
     "position": [
-      12.1,
-      0.5,
+      10.75,
+      1.725,
       0.7
     ],
     "reverse": 0,
@@ -5355,8 +5370,8 @@ export const POINT_LOCATIONS = {
   },
   "LI-10": {
     "position": [
-      11.9,
-      0.7,
+      10.25,
+      2.175,
       0.4
     ],
     "reverse": 0,
@@ -5364,35 +5379,35 @@ export const POINT_LOCATIONS = {
   },
   "LI-11": {
     "position": [
-      11.4,
-      1.1,
-      0
+      9.4,
+      2.7,
+      0.1
     ],
     "reverse": 0,
     "viewFromBottom": false
   },
   "LI-12": {
     "position": [
-      11.1,
-      1.2,
-      -0.3
+      9,
+      3.1,
+      -0.5
     ],
     "reverse": 0,
     "viewFromBottom": false
   },
   "LI-13": {
     "position": [
-      10.5,
-      1.8,
-      -0.65
+      8.3,
+      3.75,
+      -0.85
     ],
     "reverse": 0,
     "viewFromBottom": false
   },
   "LI-14": {
     "position": [
-      8.3,
-      3.75,
+      7,
+      4.85,
       -0.85
     ],
     "reverse": 0,
@@ -5409,9 +5424,9 @@ export const POINT_LOCATIONS = {
   },
   "LI-16": {
     "position": [
-      4.9,
-      7.15,
-      -1.75
+      4.95,
+      7.425,
+      -0.45
     ],
     "reverse": 0,
     "viewFromBottom": false
@@ -6956,3 +6971,66 @@ export const POINT_LOCATIONS = {
     "viewFromBottom": false
   }
 }
+
+export const IMPORTANT_POINTS = [
+  'M-HN-3',
+  'Du-20',
+  'GB-20',
+  'GB-3',
+  'SI-19',
+  'TE-17',
+  'LI-20',
+  'ST-4',
+  'ST-6',
+  'Du-26',
+  'Ren-17',
+  'Ren-14',
+  'Ren-12',
+  'Ren-6',
+  'SP-11',
+  'ST-25',
+  'LU-1',
+  'Du-14',
+  'BL-13',
+  'BL-14',
+  'BL-15',
+  'BL-18',
+  'BL-19',
+  'BL-20',
+  'BL-21',
+  'BL-23',
+  'BL-25',
+  'Du-4',
+  'LU-9',
+  'LU-7',
+  'SP-10',
+  'SP-6',
+  'BL-60',
+  'SP-3',
+  'GB-34',
+  'GB-37',
+  'GB-30',
+  'GB-40',
+  'Liv-5',
+  'Liv-3',
+  'BL-40',
+  'BL-64',
+  'BL-58',
+  'KI-3',
+  'KI-4',
+  'LI-4',
+  'LI-11',
+  'LI-6',
+  'LI-15',
+  'PC-6',
+  'PC-7',
+  'HT-5',
+  'HT-7',
+  'TE-4',
+  'TE-5',
+  'SI-4',
+  'SI-7',
+  'ST-36',
+  'ST-40',
+  'ST-42'
+]

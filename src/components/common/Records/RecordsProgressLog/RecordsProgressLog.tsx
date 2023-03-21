@@ -65,6 +65,7 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
       }
 
       // This month
+      {/* NOT_TESTED */ }
       let maxDateMonth = moment().startOf('isoWeek').subtract(1, 'days').toDate() > moment().toDate() ?
         moment().startOf('isoWeek').subtract(1, 'days').toDate() : moment().toDate()
       for (let i = 0; i < 3; i++) {
@@ -128,6 +129,7 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
           }
         })
       })
+      {/* NOT_TESTED */ }
     }
 
     setShowingData(testData)

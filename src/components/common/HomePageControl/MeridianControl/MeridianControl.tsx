@@ -21,13 +21,15 @@ import KI from "src/assets/images/homeControls/meridianIcons/KI.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { EXTRA_MERIDIAN_COLORS, MERIDIANS_COLOR } from 'src/configs/constants';
-import { setLineSelectedByLabel } from 'src/redux/slice';
+import { setLinePreSelectByLabel, setLineSelectedByLabel } from 'src/redux/slice';
+import { useMediaQuery } from 'react-responsive';
 
 export const MeridianControl: React.FC = ({ }) => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const [selectedMeridian, setSelectedMeridian] = useState<string>("LU");
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const OPTIONS = {
     "LU": {
@@ -151,9 +153,15 @@ export const MeridianControl: React.FC = ({ }) => {
             onClick={() => {
               setSelectedMeridian(meridian);
               setIsDropdown(false);
-              dispatch(setLineSelectedByLabel({
-                selectedLine: meridian
-              }))
+              if (isDesktop) {
+                dispatch(setLinePreSelectByLabel({
+                  line: meridian
+                }))
+              } else {
+                dispatch(setLineSelectedByLabel({
+                  selectedLine: meridian
+                }))
+              }
             }}>
             <div
               style={{ background: OPTIONS[meridian].color }}

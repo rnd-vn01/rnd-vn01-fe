@@ -2,7 +2,7 @@ import './SI.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
 import { useState, useEffect, useCallback } from "react"
-import { setIsHoveringLine, setLineSelected, setLineHover } from 'src/redux/slice/index';
+import { setIsHoveringLine, setLineSelected, setLineHover, resetToInitialStatePointSelectionSlice } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';

@@ -3,6 +3,7 @@
   margin: 0 auto;
   position: relative;
   margin-bottom: 40px;
+  margin-top: 100px;
 
   &__letter {
     font-size: 3rem;
@@ -58,4 +59,8 @@
     margin-top: 30px;
     margin-bottom: 30px;
   }
+}
+
+.infinite-scroll-component {
+  overflow: visible !important;
 }

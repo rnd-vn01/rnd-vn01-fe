@@ -78,4 +78,24 @@ describe('HomePage default entry', () => {
       expect(screen.getByRole("div", { name: "home-page-information" })).toBeInTheDocument()
     })
   })
+
+  it("should close the landing page if model loaded and not clicked on the landing page after 2 seconds", async () => {
+    jest.useFakeTimers();
+
+    store.dispatch(setModelLoaded({
+      modelLoaded: true
+    }))
+
+    render(<Provider store={store}>
+      <HomePage />
+    </Provider>)
+
+    const landingPage = screen.getByRole("div", { name: "home-page-landing" })
+
+    jest.advanceTimersByTime(2000)
+
+    await waitFor(() => {
+      expect(landingPage).toHaveClass("home-page__landing--hidden")
+    })
+  })
 });

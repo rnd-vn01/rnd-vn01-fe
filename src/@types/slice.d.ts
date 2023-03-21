@@ -20,6 +20,7 @@ interface IAuthSlice {
 
 interface IQuickSearchResults {
   query: string;
+  isShowing?: boolean;
 }
 
 interface ILanguageSlice {
@@ -138,6 +139,7 @@ interface ISearchBar {
   numberOfMatchingResults?: number;
   isChoosingAlphabet?: boolean;
   passedQuery?: string;
+  callbackIsFilter?: (boolean) => void;
 }
 
 interface ISearchResults {
@@ -146,6 +148,7 @@ interface ISearchResults {
   isLoading?: boolean;
   callbackSetNumberOfMatchingResults?: (any) => void;
   callbackSetChoosingAlphabet?: (boolean) => void;
+  isFilter?: boolean;
 }
 
 interface ISearchResultItem {
@@ -231,6 +234,7 @@ interface ISelectionSlice {
     type?: string;
     content?: IMeridian | IAcupuncturePoint;
   } | null;
+  preSelectLine?: null;
 }
 
 interface IModelInteractionControl {
@@ -268,4 +272,10 @@ interface IQuizSlice {
   quizField?: number;
   showingCorrectPoint?: string | null;
   isShowing4Labels?: boolean;
+}
+
+interface IZoomControlSlice {
+  isInCloseZoomMode: ZOOM_CONTROL_LEVEL;
+  frustum: any;
+  cameraZoom?: number;
 }

@@ -2,7 +2,7 @@ import './BL.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
 import { useState, useEffect, useCallback } from "react"
-import { setIsHoveringLine, setLineSelected, setLineHover } from 'src/redux/slice/index';
+import { setIsHoveringLine, setLineSelected, setLineHover, resetToInitialStatePointSelectionSlice } from 'src/redux/slice/index';
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
 import { MERIDIANS_COLOR } from 'src/configs/constants';
@@ -561,8 +561,13 @@ export const BL = ({ showLine }) => {
       {showLine && <>
         <line
           onClick={(e) => {
-            if (!isHoveringPoint)
+            if (!isHoveringPoint && selectedType !== "line") {
               debounceClick({})
+            } else {
+              if (selectedType === "line") {
+                dispatch(resetToInitialStatePointSelectionSlice())
+              }
+            }
           }}
           geometry={lineGeometry}>
           <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
@@ -570,8 +575,13 @@ export const BL = ({ showLine }) => {
 
         <line
           onClick={(e) => {
-            if (!isHoveringPoint)
+            if (!isHoveringPoint && selectedType !== "line") {
               debounceClick({})
+            } else {
+              if (selectedType === "line") {
+                dispatch(resetToInitialStatePointSelectionSlice())
+              }
+            }
           }}
           geometry={lineGeometry2}>
           <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />

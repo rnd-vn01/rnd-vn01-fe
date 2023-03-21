@@ -57,14 +57,19 @@ jest.mock('react-i18next', () => ({
   }
 }));
 
+const spyScrollTo = jest.fn();
+Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });
+
 describe('SearchResults', () => {
   beforeEach(() => {
+    spyScrollTo.mockClear();
     render(<Provider store={store}>
       <SearchResults
         callbackSetNumberOfMatchingResults={jest.fn()}
         callbackSetChoosingAlphabet={jest.fn()}
         query={"SI-"}
         results={DEMO_RESULTS}
+        isFilter={true}
       />
     </Provider>)
   })
@@ -135,6 +140,27 @@ describe('SearchResults', () => {
     await waitFor(() => {
       let searchResultsAlphabet = screen.getByRole("h1", { name: "search-results-alphabet" })
       expect(searchResultsAlphabet.innerHTML).toBe("Tất cả")
+    })
+  })
+
+  it("should scroll to top if the results is updated", async () => {
+    jest.useFakeTimers();
+
+    await waitFor(() => {
+      expect(spyScrollTo).toHaveBeenCalledWith({
+        top: 0,
+        behavior: "smooth"
+      })
+    })
+  })
+
+  it("should sort the results by descending if changed the criteria from default", async () => {
+    let selectShow = screen.getByRole("select", { name: "select-sort" })
+    fireEvent.change(selectShow, { target: { value: 1 } })
+
+    await waitFor(() => {
+      const searchResultsDOM = screen.getByRole("div", { name: "search-results" });
+      expect(searchResultsDOM).toBeInTheDocument()
     })
   })
 });

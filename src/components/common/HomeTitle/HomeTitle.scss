@@ -9,7 +9,7 @@
     }
 
     &--main {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       font-size: 3.5rem;
     }
 
@@ -18,9 +18,15 @@
     }
 
     &--instruction {
-      margin-top: 3rem;
+      margin-top: 2rem;
       font-size: 1rem;
       color: rgba(0, 0, 0, .2);
+    }
+
+    &--logo {
+      height: 36px;
+      display: inline;
+      transform: translateY(-3px);
     }
   }
 }

@@ -93,3 +93,54 @@ export const replaceVietnameseNotation = (character: string) => {
     .replace("Ú", "U").replace("Ù", "U").replace("Ủ", "U").replace("Ũ", "U").replace("Ụ", "U")
     .replace("Ứ", "Ư").replace("Ừ", "Ư").replace("Ử", "Ư").replace("Ữ", "Ư").replace("Ự", "Ư")
 }
+
+export const sortItems = (items: any, sortCriteria: number) => {
+  if (items.length === 0)
+    return items
+
+  // Case point
+  let groupedResults = {
+    "meridians": {}
+  }
+
+  items.forEach((item: any) => {
+    if (item.code.includes("-")) {
+      const lastDash = item.code.lastIndexOf("-")
+      const meridian = item.code.substring(0, lastDash)
+      const pointNumber = item.code.substring(lastDash + 1, item.code.length)
+
+      if (Object.keys(groupedResults).includes(meridian)) {
+        groupedResults[meridian][pointNumber] = item
+      } else {
+        groupedResults[meridian] = {}
+        groupedResults[meridian][pointNumber] = item
+      }
+    } else {
+      groupedResults["meridians"][item.code] = item
+    }
+  })
+
+  let results = []
+  // Handle the points first
+  let keys = Object.keys(groupedResults);
+  keys.sort()
+  keys.forEach(key => {
+    let items = groupedResults[key];
+    let itemKeys = Object.keys(items) as any
+    if (key !== "meridians") {
+      itemKeys.sort((a, b) => parseInt(a) > parseInt(b) ? 1 : -1) // NOT_TESTED
+    } else {
+      itemKeys.sort()
+    }
+
+    itemKeys.forEach((itemKey: any) => {
+      results.push(items[itemKey])
+    })
+  })
+
+  if (sortCriteria === 1) {
+    results.reverse()
+  }
+
+  return results
+}

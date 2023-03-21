@@ -11,6 +11,7 @@ import { RootState } from 'src/redux/store';
 import { APP_NAME } from 'src/configs/constants';
 import { LanguagePicker } from 'src/components/common';
 import { QuickInformationMiddleware } from 'src/components/middleware';
+import { CursorControlMiddleware } from 'src/components/middleware';
 import { useLocation } from 'react-router-dom';
 
 export const HomePage: React.FC = () => {
@@ -42,6 +43,14 @@ export const HomePage: React.FC = () => {
       setIsShowingLanding(false);
     }
   }, [])
+
+  useEffect(() => {
+    if (modelLoaded) {
+      setTimeout(() => {
+        setIsShowingLanding(false)
+      }, 2000);
+    }
+  }, [modelLoaded])
 
   return (
     <div
@@ -103,6 +112,7 @@ export const HomePage: React.FC = () => {
 
       {/* Middleware */}
       <QuickInformationMiddleware />
+      <CursorControlMiddleware />
 
       {/* Landing page */}
       <div

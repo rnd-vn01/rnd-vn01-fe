@@ -7,8 +7,9 @@ import {
 } from 'src/components/common';
 import { APP_NAME } from 'src/configs/constants';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import { useQuery } from 'src/helpers/hooks/useQuery';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const { t } = useTranslation();
@@ -20,6 +21,18 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const [query, setQuery] = useState<string>("");
   const [numberOfMatchingResults, setNumberOfMatchingResults] = useState<number>(0);
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
+
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      if (window.pageYOffset > 100) {
+        setShowingScrollToTop(true);
+      } else {
+        setShowingScrollToTop(false);
+      }
+    })
+  }, [])
 
   return (
     <div
@@ -39,6 +52,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
           numberOfMatchingResults={numberOfMatchingResults}
           isChoosingAlphabet={isChoosingAlphabet}
           passedQuery={hookQuery.get('query')}
+          callbackIsFilter={setIsFilter}
         />
 
         <SearchResults
@@ -47,7 +61,25 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
           query={query}
           callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
+          isFilter={isFilter}
         />
+      </div>
+
+      <div
+        className={`advanced-search-page__scroll-to-top 
+      ${showingScrollToTop && "advanced-search-page__scroll-to-top--showing"}`}
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          })
+        }}
+        role="div"
+        aria-label="scroll-to-top">
+        <FontAwesomeIcon
+          className="advanced-search-page__scroll-to-top--icon"
+          icon={faArrowUp}
+        ></FontAwesomeIcon>
       </div>
     </div>
   );

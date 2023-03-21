@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { setLineSelectedByLabel, setPointSelectedByLabel } from 'src/redux/slice';
 
-export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => {
+export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isShowing }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const {
@@ -82,7 +82,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
       role="div"
       aria-label="quick-search-results"
       className={`quick-search-results w-full 
-      ${!isLoading && Object.keys(results).length > 0 ? "quick-search-results--showing" : ""}`}
+      ${!isLoading && isShowing && Object.keys(results).length > 0 ? "quick-search-results--showing" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
       <div
@@ -129,10 +129,12 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query }) => 
                     onClick={() => {
                       const getCode = item.name.substring(item.name.indexOf("(") + 1, item.name.indexOf(")"))
                       if (category === "meridians") {
+                        {/* NOT_TESTED */ }
                         dispatch(setLineSelectedByLabel({
                           selectedLine: getCode
                         }))
                         setResults({});
+                        {/* NOT_TESTED */ }
                       } else {
                         dispatch(setPointSelectedByLabel({
                           selectedPoint: getCode

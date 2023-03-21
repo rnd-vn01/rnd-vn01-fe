@@ -8,6 +8,8 @@ import Highlighter from "react-highlight-words";
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
+import IconViewOnModel from "src/assets/images/IconShow.svg";
+import ReactTooltip from 'react-tooltip';
 
 export const ItemDetail: React.FC<IItemDetail> = ({
   item,
@@ -33,15 +35,35 @@ export const ItemDetail: React.FC<IItemDetail> = ({
       <div
         className="item-detail__header">
         <div className="item-detail__flex-block flex justify-between">
-          <h1 className="item-detail__header--code">
-            {item?.code && <Highlighter
-              highlightClassName='item-detail__highlighted'
-              searchWords={[]}
-              autoEscape={true}
-              textToHighlight={item?.code}
-            >
-            </Highlighter>}
-          </h1>
+          <div className='inline-flex'>
+            <h1 className="item-detail__header--code">
+              {item?.code && <Highlighter
+                highlightClassName='item-detail__highlighted'
+                searchWords={[]}
+                autoEscape={true}
+                textToHighlight={item?.code}
+              >
+              </Highlighter>}
+            </h1>
+            <div
+              className="item-detail__header--view-on-model"
+              data-tip
+              data-for={`tooltip-${item.code}`}>
+              <img
+                src={IconViewOnModel}
+                onClick={(e) => {
+                  history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
+                    isRedirect: true
+                  })
+                }}
+                role="img"
+                aria-label="view-on-model"></img>
+              <ReactTooltip id={`tooltip-${item.code}`} place="bottom" effect="solid">
+                <p>{t('view_on_model')}</p>
+              </ReactTooltip>
+            </div>
+          </div>
+
           <h1 className="item-detail__header--name">
             {item?.name && <Highlighter
               highlightClassName='item-detail__highlighted'
@@ -141,20 +163,6 @@ export const ItemDetail: React.FC<IItemDetail> = ({
             )
           }
         })}
-      </div>
-
-      <div className='flex-center'>
-        <div
-          className='item-detail__buttons--button'
-          role="div"
-          aria-label="view-on-model"
-          onClick={() => {
-            history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
-              isRedirect: true
-            })
-          }}>
-          {t('view_on_model')}
-        </div>
       </div>
     </div>
   );

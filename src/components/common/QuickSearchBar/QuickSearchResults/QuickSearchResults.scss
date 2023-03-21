@@ -13,6 +13,10 @@
   right: 0;
   width: calc(100% + 1px);
 
+  &--hide {
+    display: none;
+  }
+
   &--showing {
     display: block;
   }

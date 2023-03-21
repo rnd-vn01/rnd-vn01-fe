@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 import { APP_NAME, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
+import { CursorControlMiddleware } from 'src/components/middleware';
 
 export const QuizPage: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -21,6 +22,7 @@ export const QuizPage: React.FC = () => {
   document.title = `${APP_NAME} | ${t('quiz_page.title')}`
 
   useEffect(() => {
+    {/* NOT_TESTED */ }
     if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION
       && questionType !== QUIZ_QUESTION_TYPE.NAVIGATE
       && questionType !== QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION && sceneRef.current) {
@@ -28,6 +30,7 @@ export const QuizPage: React.FC = () => {
     } else if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
       (sceneRef.current as any)?.focusForNavigateQuestion();
     }
+    {/* NOT_TESTED */ }
   }, [questionType]);
 
   return (
@@ -81,6 +84,9 @@ export const QuizPage: React.FC = () => {
           callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
         />
       </div>
+
+      {/* Middleware */}
+      <CursorControlMiddleware />
     </div>
   );
 };
