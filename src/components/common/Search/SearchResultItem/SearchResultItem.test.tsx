@@ -6,6 +6,9 @@ import store from 'src/redux/store';
 describe('SearchResultItem', () => {
   beforeEach(() => {
     render(<SearchResultItem
+      item={{
+        code: "LU-20"
+      }}
     />)
   })
 

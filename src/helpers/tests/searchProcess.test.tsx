@@ -1,4 +1,4 @@
-import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
+import { passFilter, SEARCH_BY, sortItems } from 'src/helpers/searchProcess';
 
 const EXAMPLE_POINT = {
   code: "GB-20",
@@ -56,4 +56,36 @@ test("should filter items by triggering method false as expected", async () => {
 
 test("should filter items by diseases false as expected", async () => {
   expect(passFilter(EXAMPLE_MERIDIAN, "Diseases 1", false, SEARCH_BY.FUNCTIONALITIES)).not.toBeTruthy()
+})
+
+const MOCK_DATA_FOR_SORT = [
+  {
+    code: "Ren"
+  },
+  {
+    code: "LU"
+  },
+  {
+    code: "LU-3"
+  },
+  {
+    code: "BL-11"
+  },
+  {
+    code: "BL-2"
+  },
+]
+
+test("should sort the results", async () => {
+  const results = sortItems(MOCK_DATA_FOR_SORT, 0);
+  expect(results).toStrictEqual([
+    { code: 'BL-2' }, { code: 'BL-11' }, { code: 'LU-3' }, { code: 'LU' }, { code: 'Ren' }
+  ])
+})
+
+test("should flip the sorted results if chosen sort by descending", async () => {
+  const results = sortItems(MOCK_DATA_FOR_SORT, 1);
+  expect(results).toStrictEqual([
+    { code: 'Ren' }, { code: 'LU' }, { code: 'LU-3' }, { code: 'BL-11' }, { code: 'BL-2' }
+  ])
 })

@@ -65,17 +65,18 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
       </div>
 
       <div
-        className={`advanced-search-page__scroll-to-top 
-      ${showingScrollToTop && "advanced-search-page__scroll-to-top--showing"}`}
+        className={`data-management-page__scroll-to-top 
+      ${showingScrollToTop && "data-management-page__scroll-to-top--showing"}`}
         onClick={() => {
           window.scrollTo({
             top: 0,
-            left: 0,
             behavior: "smooth",
           })
-        }}>
+        }}
+        role="div"
+        aria-label="scroll-to-top">
         <FontAwesomeIcon
-          className="advanced-search-page__scroll-to-top--icon"
+          className="data-management-page__scroll-to-top--icon"
           icon={faArrowUp}
         ></FontAwesomeIcon>
       </div>

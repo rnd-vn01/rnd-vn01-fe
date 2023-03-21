@@ -140,7 +140,7 @@ describe('ItemDetail', () => {
       />
     </Provider>)
 
-    const buttonViewOnModel = screen.getByRole("div", { name: "view-on-model" })
+    const buttonViewOnModel = screen.getByRole("img", { name: "view-on-model" })
     fireEvent.click(buttonViewOnModel)
 
     await waitFor(() => {
@@ -156,7 +156,7 @@ describe('ItemDetail', () => {
       />
     </Provider>)
 
-    const buttonViewOnModel = screen.getByRole("div", { name: "view-on-model" })
+    const buttonViewOnModel = screen.getByRole("img", { name: "view-on-model" })
     fireEvent.click(buttonViewOnModel)
 
     await waitFor(() => {

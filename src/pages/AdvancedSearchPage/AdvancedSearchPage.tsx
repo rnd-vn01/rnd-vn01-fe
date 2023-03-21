@@ -71,10 +71,11 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
         onClick={() => {
           window.scrollTo({
             top: 0,
-            left: 0,
             behavior: "smooth",
           })
-        }}>
+        }}
+        role="div"
+        aria-label="scroll-to-top">
         <FontAwesomeIcon
           className="advanced-search-page__scroll-to-top--icon"
           icon={faArrowUp}

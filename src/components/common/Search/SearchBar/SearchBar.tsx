@@ -86,6 +86,8 @@ export const SearchBar: React.FC<ISearchBar> = ({
           </span>}
 
           <img className="search-bar__filter-icon"
+            role="img"
+            aria-label="filter-icon"
             src={isFilter ? IconFilterOn : IconFilterOff}
             onClick={(e) => {
               e.stopPropagation();

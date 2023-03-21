@@ -55,7 +55,9 @@ export const ItemDetail: React.FC<IItemDetail> = ({
                   history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
                     isRedirect: true
                   })
-                }}></img>
+                }}
+                role="img"
+                aria-label="view-on-model"></img>
               <ReactTooltip id={`tooltip-${item.code}`} place="bottom" effect="solid">
                 <p>{t('view_on_model')}</p>
               </ReactTooltip>

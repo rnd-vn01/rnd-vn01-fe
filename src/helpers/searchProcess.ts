@@ -128,7 +128,7 @@ export const sortItems = (items: any, sortCriteria: number) => {
     let items = groupedResults[key];
     let itemKeys = Object.keys(items) as any
     if (key !== "meridians") {
-      itemKeys.sort((a, b) => parseInt(a) > parseInt(b) ? 1 : -1)
+      itemKeys.sort((a, b) => parseInt(a) > parseInt(b) ? 1 : -1) // NOT_TESTED
     } else {
       itemKeys.sort()
     }

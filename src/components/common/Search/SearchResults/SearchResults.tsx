@@ -144,11 +144,13 @@ export const SearchResults: React.FC<ISearchResults> = ({
   }
 
   const fetchNext = () => {
+    {/* NOT TESTED */ }
     setTimeout(() => {
       let currentLength = showingItems.length;
       const endLength = Math.min(currentLength + 30, filteredResults.length)
       setShowingItems(filteredResults.slice(0, endLength))
     }, 500)
+    {/* NOT TESTED */ }
   }
 
   return (
@@ -185,7 +187,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
                   dataLength={showingItems.length}
                   loader={<h4 className='mt-6'>Loading...</h4>}
                   hasMore={showingItems.length !== filteredResults.length}
-                  next={() => fetchNext()}
+                  next={() => fetchNext()} // NOT_TESTED
                   scrollThreshold={1}>
                   {showingItems.map((result, index) =>
                     <SearchResultItem

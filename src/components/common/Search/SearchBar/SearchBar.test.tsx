@@ -3,6 +3,8 @@ import { SearchBar } from './SearchBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 
+const mockCallbackIsFilter = jest.fn();
+
 describe('SearchBar', () => {
   beforeEach(() => {
     render(<Provider store={store}>
@@ -10,6 +12,7 @@ describe('SearchBar', () => {
         callbackSetResults={jest.fn()}
         callbackSetLoading={jest.fn()}
         callbackSetQuery={jest.fn()}
+        callbackIsFilter={mockCallbackIsFilter}
         numberOfMatchingResults={5}
       />
     </Provider>)
@@ -61,13 +64,28 @@ describe('SearchBar', () => {
     })
   })
 
-  it("should reset the query as null if clicked on the input box", async () => {
-    const searchInput = screen.getByRole("input", { name: "search-input" })
-    fireEvent.change(searchInput, { target: { value: "aa" } })
-    fireEvent.click(searchInput)
+  it("should callback to show filter box if clicked on the filter icon", async () => {
+    const filterIcon = screen.getByRole("img", { name: "filter-icon" })
+    fireEvent.click(filterIcon)
 
     await waitFor(() => {
-      expect(searchInput.getAttribute("value")).toBe("")
+      let filterIconURL = (filterIcon as any).src.split("/")
+      filterIconURL = filterIconURL[filterIconURL.length - 1]
+      expect(filterIconURL).toBe("IconFilterOn.svg")
+      expect(mockCallbackIsFilter).toHaveBeenCalledWith(true)
+    })
+  })
+
+  it("should hide the filter box after showed if clicked on the filter icon", async () => {
+    const filterIcon = screen.getByRole("img", { name: "filter-icon" })
+    fireEvent.click(filterIcon)
+    fireEvent.click(filterIcon)
+
+    await waitFor(() => {
+      let filterIconURL = (filterIcon as any).src.split("/")
+      filterIconURL = filterIconURL[filterIconURL.length - 1]
+      expect(filterIconURL).toBe("IconFilterOff.svg")
+      expect(mockCallbackIsFilter).toHaveBeenLastCalledWith(false)
     })
   })
 });
