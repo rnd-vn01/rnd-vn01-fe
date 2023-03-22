@@ -479,7 +479,7 @@ i18n
             placeholder: "Tìm kiếm..."
           },
           data_management_page: {
-            title: "Quản lý Dữ liệu",
+            title: "Cập nhật Dữ liệu",
           },
           placeholders: {
             name: "tên",
