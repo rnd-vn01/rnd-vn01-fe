@@ -12,7 +12,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
 import { useMediaQuery } from 'react-responsive';
 import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
-import { getAcupuncturePointByCode, getMeridianByCode } from 'src/helpers/api/items';
+import { getAcupuncturePointByCode, getMeridianByCode, updateAcupuncturePoint, updateMeridian } from 'src/helpers/api/items';
 
 export const DetailPage: React.FC<IDetailPage> = ({
 
@@ -39,7 +39,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
   );
 
   const MySwal = withReactContent(Swal);
-  const handleUpdate = (newItemDetail: any) => {
+  const handleUpdate = async (newItemDetail: any) => {
     if (!isDesktop) {
       setMobileCalledEditDetail(0);
     }
@@ -51,16 +51,34 @@ export const DetailPage: React.FC<IDetailPage> = ({
       delete formattedDetail[field];
     })
 
-    MySwal.fire({
-      icon: 'warning',
-      title: `${t('edit_page.warning')}...`,
-      html: `<p>${t('edit_page.demo_caution')}</p>
-      <pre style="text-align: left; white-space: pre-wrap;">${JSON.stringify(formattedDetail, null, "\t")}</pre>
-      `,
-    })
-      .then(() => {
-        history.push(location.pathname.replace("?edit", ""))
+    let result = false;
+    if (isPoint) {
+      result = await updateAcupuncturePoint({ ...newItemDetail })
+    } else {
+      result = await updateMeridian({ ...newItemDetail })
+    }
+
+    if (result) {
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success...',
+        text: t('edit_page.update_result.success'),
       })
+        .then(() => {
+          history.push(location.pathname.replace("?edit", ""))
+          return;
+        })
+    } else {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: t('edit_page.update_result.failed'),
+      })
+        .then(() => {
+          history.push(location.pathname.replace("?edit", ""))
+          return;
+        })
+    }
   }
 
   useEffect(() => {
@@ -77,7 +95,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
   useEffect(() => {
     const getItemInformation = async () => {
       if (isPoint) {
-        const item = await getAcupuncturePointByCode(currentLanguage, itemCode) as IAcupuncturePoint
+        const item = await getAcupuncturePointByCode(currentLanguage, itemCode) as any
 
         if (Object.keys(item).length === 0) {
           //Redirect to home page
@@ -87,7 +105,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
         setDetail(item)
         document.title = `${APP_NAME} | ${item.code} | ${item.name}`
       } else {
-        const item = await getMeridianByCode(currentLanguage, itemCode) as IMeridian
+        const item = await getMeridianByCode(currentLanguage, itemCode) as any
 
         if (Object.keys(item).length === 0) {
           //Redirect to home page
