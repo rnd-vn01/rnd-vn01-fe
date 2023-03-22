@@ -31,4 +31,14 @@ export const apiItem = {
       code: code
     }));
   },
+
+  updateAcupuncturePoint: (data: IParamUpdateAcupuncturePoint) => {
+    const url = 'acupoint';
+    return apiClient.put(url, data);
+  },
+
+  updateMeridian: (data: IParamUpdateMeridian) => {
+    const url = 'meridian';
+    return apiClient.put(url, data);
+  },
 };

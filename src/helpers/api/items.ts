@@ -27,3 +27,13 @@ export const getMeridianByCode = async (currentLanguage: string, code: string) =
   delete meridian["updatedAt"]
   return meridian
 }
+
+export const updateAcupuncturePoint = async (data: IParamUpdateAcupuncturePoint) => {
+  let updateResult = await apiItem.updateAcupuncturePoint(data)
+  return (updateResult as any).data === "true"
+}
+
+export const updateMeridian = async (data: IParamUpdateMeridian) => {
+  let updateResult = await apiItem.updateMeridian(data)
+  return (updateResult as any).data === "true"
+}

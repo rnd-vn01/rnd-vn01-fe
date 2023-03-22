@@ -10,7 +10,7 @@ import { useQuery } from 'src/helpers/hooks/useQuery';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
-import { getAcupuncturePointByCode, getMeridianByCode } from 'src/helpers/api/items';
+import { getAcupuncturePointByCode, getMeridianByCode, updateAcupuncturePoint, updateMeridian } from 'src/helpers/api/items';
 
 export const DetailPage: React.FC<IDetailPage> = ({
 
@@ -32,7 +32,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
   );
 
   const MySwal = withReactContent(Swal);
-  const handleUpdate = (newItemDetail: any) => {
+  const handleUpdate = async (newItemDetail: any) => {
     let formattedDetail = { ...newItemDetail }
     Object.keys(formattedDetail).forEach((field) => {
       Object.defineProperty(formattedDetail, capitalizeAndMapInformationField(isPoint, field, currentLanguage),
@@ -40,16 +40,34 @@ export const DetailPage: React.FC<IDetailPage> = ({
       delete formattedDetail[field];
     })
 
-    MySwal.fire({
-      icon: 'warning',
-      title: `${t('edit_page.warning')}...`,
-      html: `<p>${t('edit_page.demo_caution')}</p>
-      <pre style="text-align: left; white-space: pre-wrap;">${JSON.stringify(formattedDetail, null, "\t")}</pre>
-      `,
-    })
-      .then(() => {
-        history.push(location.pathname.replace("?edit", ""))
+    let result = false;
+    if (isPoint) {
+      result = await updateAcupuncturePoint({ ...newItemDetail })
+    } else {
+      result = await updateMeridian({ ...newItemDetail })
+    }
+
+    if (result) {
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success...',
+        text: t('edit_page.update_result.success'),
       })
+        .then(() => {
+          history.push(location.pathname.replace("?edit", ""))
+          return;
+        })
+    } else {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: t('edit_page.update_result.failed'),
+      })
+        .then(() => {
+          history.push(location.pathname.replace("?edit", ""))
+          return;
+        })
+    }
   }
 
   useEffect(() => {
