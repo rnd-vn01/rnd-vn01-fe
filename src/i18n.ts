@@ -29,7 +29,7 @@ i18n
             log_in: "Log In",
             menu: {
               personal_records: "Personal Records",
-              data_management: "Data Management",
+              data_management: "Data Update",
               log_out: "Log Out",
               edit_profile: "Edit Profile",
               about_us: "About Us",
@@ -127,7 +127,7 @@ i18n
           title_bar: {
             menu: {
               personal_records: "Personal Records",
-              data_management: "Data Management",
+              data_management: "Data Update",
               log_out: "Log Out",
               sign_up: "Sign Up",
               log_in: "Log In",
@@ -136,7 +136,7 @@ i18n
             pages: {
               default: "",
               advanced_search: "Advanced Search",
-              data_management: "Data Management",
+              data_management: "Data Update",
               personal_records: "Personal Records",
               about_us: "About Us",
               edit_profile: "Edit Profile"
@@ -165,7 +165,7 @@ i18n
             placeholder: "Search..."
           },
           data_management_page: {
-            title: "Data Management",
+            title: "Data Update",
           },
           placeholders: {
             name: "name",
@@ -343,7 +343,7 @@ i18n
             log_in: "Đăng Nhập",
             menu: {
               personal_records: "Dữ liệu Cá nhân",
-              data_management: "Quản lý Dữ liệu",
+              data_management: "Cập nhật Dữ liệu",
               log_out: "Đăng xuất",
               edit_profile: "Cập nhật thông tin",
               about_us: "Về Chúng tôi",
@@ -441,7 +441,7 @@ i18n
           title_bar: {
             menu: {
               personal_records: "Dữ liệu Cá nhân",
-              data_management: "Quản lý Dữ liệu",
+              data_management: "Cập nhật Dữ liệu",
               log_out: "Đăng xuất",
               sign_up: "Đăng ký",
               log_in: "Đăng nhập",
@@ -450,7 +450,7 @@ i18n
             pages: {
               default: "",
               advanced_search: "Tìm Kiếm Nâng Cao",
-              data_management: "Quản Lý Dữ Liệu",
+              data_management: "Cập Nhật Dữ Liệu",
               personal_records: "Dữ Liệu Cá Nhân",
               about_us: "Về Chúng Tôi",
               edit_profile: "Cập Nhật Thông Tin"
