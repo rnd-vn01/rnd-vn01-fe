@@ -3,11 +3,16 @@ import { DataManagementPage } from './DataManagementPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { Context as ResponsiveContext } from "react-responsive";
+import { mockGetItems } from 'src/api/mocks/mockGetItems';
 
 const spyScrollTo = jest.fn();
 Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });
 
 describe('Data Management Page - Desktop', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     spyScrollTo.mockClear();
     render(

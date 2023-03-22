@@ -18,6 +18,22 @@ const EXAMPLE_MERIDIAN = {
   points: ["P1", "P2"]
 }
 
+test("should search on all valid criteria if requested - true case", async () => {
+  expect(passFilter(EXAMPLE_POINT, "at", true, SEARCH_BY.ALL)).toBeTruthy()
+})
+
+test("should search on all valid criteria if requested - true case", async () => {
+  expect(passFilter(EXAMPLE_MERIDIAN, "ip", false, SEARCH_BY.ALL)).toBeTruthy()
+})
+
+test("should search on all valid criteria if requested - false case", async () => {
+  expect(passFilter(EXAMPLE_POINT, "hh", true, SEARCH_BY.ALL)).not.toBeTruthy()
+})
+
+test("should search on all valid criteria if requested - false case", async () => {
+  expect(passFilter(EXAMPLE_MERIDIAN, "nn", false, SEARCH_BY.ALL)).not.toBeTruthy()
+})
+
 test("should filter items by description true as expected", async () => {
   expect(passFilter(EXAMPLE_POINT, "query", true, SEARCH_BY.DESCRIPTION)).toBeTruthy()
 })

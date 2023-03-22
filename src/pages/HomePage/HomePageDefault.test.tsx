@@ -8,6 +8,7 @@ import {
   setModelLoaded,
   setShowingQuickInformation
 } from 'src/redux/slice';
+import { mockGetItems } from 'src/api/mocks/mockGetItems';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -18,6 +19,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe('HomePage default entry', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
