@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { QuizPage } from './QuizPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
+import { mockGetItems } from 'src/api/mocks/mockGetItems';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -15,6 +16,10 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe('QuizPage', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     render(<Provider store={store}>
       <QuizPage />

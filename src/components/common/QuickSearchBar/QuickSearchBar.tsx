@@ -47,7 +47,7 @@ export const QuickSearchBar: React.FC = ({ }) => {
       aria-label="quick-search"
       className="quick-search"
       ref={wrapperRef}
-      onClick={() => {
+      onClick={(e) => {
         (inputBoxRef.current as HTMLInputElement)?.focus()
       }}>
 

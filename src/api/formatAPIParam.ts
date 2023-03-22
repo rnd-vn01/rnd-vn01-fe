@@ -4,9 +4,7 @@ export const objectToQuery = (obj: any): string => {
   var query = [];
 
   for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      query.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop]));
-    }
+    query.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop]));
   }
 
   return '?' + query.join('&');
@@ -15,10 +13,9 @@ export const objectToQuery = (obj: any): string => {
 export const objectToFormData = (object: any): FormData => {
   let fd = new FormData();
   for (const key in object) {
-    if (object.hasOwnProperty(key)) {
-      if (Array.isArray(object[key])) {
-        fd.append(key, JSON.stringify(object[key]));
-      }
+    if (Array.isArray(object[key])) {
+      fd.append(key, JSON.stringify(object[key]));
+    } else {
       fd.append(key, object[key]);
     }
   }

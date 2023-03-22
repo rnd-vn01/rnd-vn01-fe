@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 import store from 'src/redux/store/index';
 import { Provider } from 'react-redux';
+import { mockGetItems } from './api/mocks/mockGetItems';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -15,6 +16,8 @@ jest.mock('react-i18next', () => ({
 }));
 
 test('renders learn react link', () => {
+  mockGetItems();
+
   render(<Provider store={store}>
     <App />
   </Provider>);
