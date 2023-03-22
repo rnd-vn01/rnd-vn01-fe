@@ -1,7 +1,7 @@
-import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
-import { 
-  getAccessToken, 
-  refreshAccessToken 
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import {
+  getAccessToken,
+  refreshAccessToken
 } from 'src/helpers/getAccessToken';
 
 const apiClientJWT = axios.create({
@@ -15,8 +15,7 @@ const apiClientJWT = axios.create({
 
 apiClientJWT.interceptors.request.use(config => {
   const accessToken = getAccessToken();
-  config.headers = { ...config.headers } as AxiosHeaders;
-  if (accessToken) config.headers.set('Authorization', 'Bearer ' + accessToken)
+  if (accessToken) config.headers.Authorization = 'Bearer ' + accessToken;
 
   return config;
 });
@@ -30,7 +29,7 @@ apiClientJWT.interceptors.response.use(
     const message = (err.response.data as any).messages?.[0].message;
 
     if (status === 401) {
-      let newToken = await refreshAccessToken();     
+      let newToken = await refreshAccessToken();
       err.config.headers['Authorization'] = 'Bearer ' + newToken;
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
       return apiClientJWT(err.config);
