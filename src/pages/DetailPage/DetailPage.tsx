@@ -79,10 +79,20 @@ export const DetailPage: React.FC<IDetailPage> = ({
       if (isPoint) {
         const item = await getAcupuncturePointByCode(currentLanguage, itemCode) as IAcupuncturePoint
 
+        if (Object.keys(item).length === 0) {
+          //Redirect to home page
+          history.push("/advanced-search")
+        }
+
         setDetail(item)
         document.title = `${APP_NAME} | ${item.code} | ${item.name}`
       } else {
         const item = await getMeridianByCode(currentLanguage, itemCode) as IMeridian
+
+        if (Object.keys(item).length === 0) {
+          //Redirect to home page
+          history.push("/advanced-search")
+        }
 
         setDetail(item)
         document.title = `${APP_NAME} | ${item.code} | ${item.name}`
