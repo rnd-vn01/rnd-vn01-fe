@@ -84,7 +84,7 @@ export const EditProfilePage: React.FC = ({
     //Valid
     setCalledUpdated(true);
 
-    // Handle updates
+    // Handle Update
     dispatch(setStateAuth({
       isLoggedIn: true,
       user: {

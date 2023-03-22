@@ -92,7 +92,7 @@ describe('HomePage default entry', () => {
 
     const landingPage = screen.getByRole("div", { name: "home-page-landing" })
 
-    jest.advanceTimersByTime(2000)
+    jest.advanceTimersByTime(3000)
 
     await waitFor(() => {
       expect(landingPage).toHaveClass("home-page__landing--hidden")
