@@ -48,7 +48,7 @@ export const HomePage: React.FC = () => {
     if (modelLoaded) {
       setTimeout(() => {
         setIsShowingLanding(false)
-      }, 2000);
+      }, 3000);
     }
   }, [modelLoaded])
 
