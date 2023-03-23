@@ -51,13 +51,24 @@ export const DetailPage: React.FC<IDetailPage> = ({
       delete formattedDetail[field];
     })
 
+    MySwal.fire({
+      didOpen: () => {
+        MySwal.showLoading(null);
+      },
+      didClose: () => {
+        MySwal.hideLoading();
+      },
+      allowOutsideClick: false,
+    })
+
     let result = false;
     if (isPoint) {
-      result = await updateAcupuncturePoint({ ...newItemDetail })
+      result = await updateAcupuncturePoint(currentLanguage, { ...newItemDetail })
     } else {
-      result = await updateMeridian({ ...newItemDetail })
+      result = await updateMeridian(currentLanguage, { ...newItemDetail })
     }
 
+    MySwal.close()
     if (result) {
       MySwal.fire({
         icon: 'success',
@@ -65,7 +76,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
         text: t('edit_page.update_result.success'),
       })
         .then(() => {
-          history.push(location.pathname.replace("?edit", ""))
+          window.location.replace(location.pathname.replace("?edit", ""))
           return;
         })
     } else {
@@ -75,7 +86,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
         text: t('edit_page.update_result.failed'),
       })
         .then(() => {
-          history.push(location.pathname.replace("?edit", ""))
+          window.location.replace(location.pathname.replace("?edit", ""))
           return;
         })
     }
