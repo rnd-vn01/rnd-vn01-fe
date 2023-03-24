@@ -62,6 +62,7 @@ export const Scene = forwardRef((props, ref) => {
   );
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   const location = useLocation() as any;
 
@@ -203,7 +204,7 @@ export const Scene = forwardRef((props, ref) => {
       controls.current.reset();
       let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
       controls.current.target.sub(_v)
-      camera.current.zoom = 1.5
+      camera.current.zoom = isMobile ? 1 : 1.5
       camera.current.updateProjectionMatrix();
 
       dispatch(resetToInitialStateZoomControlSlice())
@@ -415,13 +416,13 @@ export const Scene = forwardRef((props, ref) => {
         ref={camera}
         makeDefault
         position={[-1.75, 10.85, 40]}
-        zoom={1.5}
+        zoom={isMobile ? 1 : 1.5}
       >
       </PerspectiveCamera>
 
       <OrbitControls
         ref={controls}
-        target={[1, 5, 0]}
+        target={[isMobile ? 0 : 1, 5, 0]}
         mouseButtons={{
           LEFT: MOUSE.ROTATE,
           MIDDLE: MOUSE.DOLLY,
@@ -447,11 +448,11 @@ export const Scene = forwardRef((props, ref) => {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
             }))
-          } else if (distanceToCenter < (isDesktop ? 12.5 : 20)) {
+          } else if (distanceToCenter < (isDesktop ? 12.5 : 15)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
             }))
-          } else if (distanceToCenter < (isDesktop ? 20 : 30)) {
+          } else if (distanceToCenter < (isDesktop ? 20 : 20)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
             }))

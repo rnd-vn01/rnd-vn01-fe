@@ -6,10 +6,6 @@
   height: 100vh;
   position: relative;
 
-  @include smallscreen {
-    height: calc(100vh - 55px);
-  }
-
   &__section {
     height: 100%;
 
@@ -84,6 +80,11 @@
       height: 267px;
       z-index: 1001;
       background: var(--theme-background);
+
+      @include mobile {
+        width: calc(90vw);
+        height: fit-content;
+      }
     }
 
     &--hidden {
