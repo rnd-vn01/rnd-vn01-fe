@@ -279,3 +279,13 @@ interface IZoomControlSlice {
   frustum: any;
   cameraZoom?: number;
 }
+
+interface ISideMenu {
+  isShowing: boolean;
+  callbackSetIsShowing: (boolean) => void;
+}
+
+interface IMenuBar {
+  isShowingSideMenu: boolean;
+  callbackSetIsShowingSideMenu: (boolean) => void;
+}

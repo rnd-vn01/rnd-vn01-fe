@@ -17,6 +17,7 @@ import { validateEmail } from 'src/helpers/validate';
 import { useAppDispatch } from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from 'react-responsive';
 
 export const CreateAccountPage: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -33,6 +34,8 @@ export const CreateAccountPage: React.FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation();
+
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   document.title = `${APP_NAME} | ${t('create_account_page.title')}`
 
@@ -192,7 +195,7 @@ export const CreateAccountPage: React.FC = () => {
     <div
       role="div"
       aria-label="create-account-page"
-      className="create-account-page grid grid-cols-5">
+      className={`create-account-page grid ${isMobile ? "grid-cols-2" : "grid-cols-5"}`}>
       <div className="create-account-page__section create-account-page__section--main col-span-2 flex-center">
         <div className="create-account-page__home-icon"
           onClick={() => history.push("/", { isRedirect: true })}>
@@ -236,7 +239,7 @@ export const CreateAccountPage: React.FC = () => {
           error={emailError !== ""}
           helperText={emailError} />
 
-        <div className="grid grid-cols-2 w-full gap-x-2">
+        <div className={`grid ${!isMobile && "grid-cols-2"} w-full gap-x-2`}>
           <div className="col-span-1">
             <TextField
               className="create-account-page__input create-account-page__input--password"
@@ -288,9 +291,9 @@ export const CreateAccountPage: React.FC = () => {
         />
       </div>
 
-      <div className="create-account-page__section create-account-page__section--image col-span-3">
+      {!isMobile && <div className="create-account-page__section create-account-page__section--image col-span-3">
         <img className="create-account-page__image--demo" src={DemoImage}></img>
-      </div>
+      </div>}
     </div >
   );
 };

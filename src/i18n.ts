@@ -342,13 +342,13 @@ i18n
             sign_up: "Đăng Ký",
             log_in: "Đăng Nhập",
             menu: {
-              personal_records: "Dữ liệu Cá nhân",
-              data_management: "Cập nhật Dữ liệu",
-              log_out: "Đăng xuất",
-              edit_profile: "Cập nhật thông tin",
-              about_us: "Về Chúng tôi",
-              start_quiz: "Kiểm tra",
-              advanced_search: "Tìm kiếm nâng cao"
+              personal_records: "Dữ Liệu Cá Nhân",
+              data_management: "Cập Nhật Dữ Liệu",
+              log_out: "Đăng Xuất",
+              edit_profile: "Cập Nhật Thông Tin",
+              about_us: "Về Chúng Tôi",
+              start_quiz: "Kiểm Tra",
+              advanced_search: "Tìm Kiếm Nâng Cao"
             }
           },
           create_account_page: {
