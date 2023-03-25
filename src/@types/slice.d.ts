@@ -288,4 +288,6 @@ interface ISideMenu {
 interface IMenuBar {
   isShowingSideMenu: boolean;
   callbackSetIsShowingSideMenu: (boolean) => void;
+  isShowingSearchBar: boolean;
+  callbackSetIsShowingSearchBar: (boolean) => void;
 }

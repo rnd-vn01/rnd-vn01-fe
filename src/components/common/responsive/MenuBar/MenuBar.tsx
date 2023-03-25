@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import IconAdmin from 'src/assets/images/IconAdmin.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Logo from "src/assets/images/Logo.svg";
 import IconShow from "src/assets/images/IconShow.svg";
 import IconHide from "src/assets/images/IconHide.svg";
@@ -12,7 +12,9 @@ import { MeridianControl, ModelViewModeControl } from 'src/components/common/Hom
 
 export const MenuBar: React.FC<IMenuBar> = ({
   isShowingSideMenu,
-  callbackSetIsShowingSideMenu
+  callbackSetIsShowingSideMenu,
+  isShowingSearchBar,
+  callbackSetIsShowingSearchBar
 }) => {
   const {
     isLoggedIn,
@@ -43,23 +45,28 @@ export const MenuBar: React.FC<IMenuBar> = ({
         {!isShowingSideMenu && <img src={isShowing ? IconShow : IconHide} className={`menu-bar__logo-show-quick-info
           ${!isShowing && `menu-bar__logo-show-quick-info--faded`}
         `}></img>}
+
+        {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
 
       <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
       ${!isShowing && "menu-bar__item--hidden"}`}>
         {!isShowingSideMenu && <ModelViewModeControl />}
+        {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
 
       <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
       ${!isShowing && "menu-bar__item--hidden"}`}>
         {!isShowingSideMenu && <MeridianControl />}
+        {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
 
       <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
-      ${!isShowing && "menu-bar__item--hidden"}`}>
+      ${!isShowing && "menu-bar__item--hidden"}`}
+        onClick={() => callbackSetIsShowingSearchBar(!isShowingSearchBar)}>
         {!isShowingSideMenu &&
           <div className='w-full h-full flex-center'>
-            <FontAwesomeIcon className="menu-bar__menu--icon-search" icon={faSearch} />
+            <FontAwesomeIcon className="menu-bar__menu--icon-search" icon={isShowingSearchBar ? faXmark : faSearch} />
           </div>
         }
       </div>
@@ -80,6 +87,7 @@ export const MenuBar: React.FC<IMenuBar> = ({
             :
             <FontAwesomeIcon className="menu-bar__menu--icon-hamburger" icon={faBars} />}
         </div>
+        {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
     </div>
   );

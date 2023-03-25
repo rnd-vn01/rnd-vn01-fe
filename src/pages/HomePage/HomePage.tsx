@@ -22,6 +22,7 @@ export const HomePage: React.FC = () => {
 
   // MOBILE
   const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const [isShowingSearchBar, setIsShowingSearchBar] = useState<boolean>(false);
 
   const location = useLocation() as any;
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
@@ -144,11 +145,16 @@ export const HomePage: React.FC = () => {
         <MenuBar
           isShowingSideMenu={isShowingSideMenu}
           callbackSetIsShowingSideMenu={setIsShowingSideMenu}
+          isShowingSearchBar={isShowingSearchBar}
+          callbackSetIsShowingSearchBar={setIsShowingSearchBar}
         />
         <SideMenu
           isShowing={isShowingSideMenu}
           callbackSetIsShowing={setIsShowingSideMenu}
         />
+        {isShowingSearchBar && <div className="home-page__section--side-bar">
+          <QuickSearchBar />
+        </div>}
       </>}
     </div>
   );

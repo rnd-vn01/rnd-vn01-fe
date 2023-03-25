@@ -14,6 +14,7 @@
     border-right: 2px solid rgba(0, 0, 0, 1);
     cursor: pointer;
     transition: width 500ms ease;
+    position: relative;
 
     &:last-child {
       border-right: unset;
@@ -36,6 +37,16 @@
     &--faded {
       width: 20vw;
       opacity: 0.5;
+    }
+
+    &--overlayed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 201;
+      background: rgba(0, 0, 0, 0.4);
     }
   }
 
