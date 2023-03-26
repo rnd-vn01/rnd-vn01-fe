@@ -15,6 +15,8 @@ import { useQuery } from 'src/helpers/hooks/useQuery';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
+import { useMediaQuery } from 'react-responsive';
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
 
 export const DetailPage: React.FC<IDetailPage> = ({
 
@@ -28,6 +30,10 @@ export const DetailPage: React.FC<IDetailPage> = ({
   const [itemCode, setItemCode] = useState<string>("");
   const [detail, setDetail] = useState<any>({});
   const [isEdit, setIsEdit] = useState<boolean>(false);
+
+  // RESPONSIVE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const {
     currentLanguage
@@ -101,10 +107,24 @@ export const DetailPage: React.FC<IDetailPage> = ({
       aria-label="detail-page"
       className="detail-page ">
       <div className="detail-page__content">
-        <FullPageTitleBar
+
+
+        {isDesktop ? <FullPageTitleBar
           pageCode={isEdit ? "data-management" : ""}
           translateCode={isEdit ? "data_management" : ""}
-        />
+        /> :
+          <MobileTitleBar
+            translateCode={isEdit ? "data_management" : ""}
+            isShowingSideMenu={isShowingSideMenu}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu} />}
+
+        {!isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>}
+
 
         <SearchBarRedirect />
 

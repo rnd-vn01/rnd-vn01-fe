@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'src/helpers/hooks/useQuery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { useMediaQuery } from 'react-responsive';
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
 
 export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const { t } = useTranslation();
@@ -23,6 +25,10 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
   const [isFilter, setIsFilter] = useState<boolean>(false);
   const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
+
+  // RESPONSIVE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   useEffect(() => {
     document.addEventListener("scroll", () => {
@@ -40,10 +46,21 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
       aria-label="advanced-search-page"
       className="advanced-search-page grid grid-cols-7">
       <div className="advanced-search-page__content">
-        <FullPageTitleBar
+        {isDesktop ? <FullPageTitleBar
           pageCode="advanced-search"
           translateCode="advanced_search"
-        />
+        /> :
+          <MobileTitleBar
+            translateCode={"advanced_search"}
+            isShowingSideMenu={isShowingSideMenu}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu} />}
+
+        {!isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>}
 
         <SearchBar
           callbackSetResults={setSearchResults}

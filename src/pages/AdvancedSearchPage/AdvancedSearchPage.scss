@@ -7,6 +7,10 @@
   margin-top: 60px;
   min-height: 100vh;
 
+  @include mobile {
+    margin-top: 0px;
+  }
+
   &__content {
     width: 98vw;
     margin-left: 1vw;

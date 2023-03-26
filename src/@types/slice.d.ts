@@ -285,9 +285,16 @@ interface ISideMenu {
   callbackSetIsShowing: (boolean) => void;
 }
 
-interface IMenuBar {
+interface IWithSideMenu {
   isShowingSideMenu: boolean;
   callbackSetIsShowingSideMenu: (boolean) => void;
+}
+
+interface IMenuBar extends IWithSideMenu {
   isShowingSearchBar: boolean;
   callbackSetIsShowingSearchBar: (boolean) => void;
+}
+
+interface IMobileTitleBar extends IWithSideMenu {
+  translateCode?: string;
 }

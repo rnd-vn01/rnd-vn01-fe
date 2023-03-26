@@ -22,6 +22,8 @@ import PhotoDHYD from "src/assets/images/about/University.jpg"
 import PhotoEngBook from "src/assets/images/about/EngBook.jpg"
 import PhotoViBook from "src/assets/images/about/ViBook.jpg"
 import PhotoModel from "src/assets/images/about/Model.png"
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
+import { useMediaQuery } from 'react-responsive';
 
 export const AboutPage: React.FC<IAboutPage> = ({
 
@@ -29,16 +31,32 @@ export const AboutPage: React.FC<IAboutPage> = ({
   const { t } = useTranslation();
   document.title = `${APP_NAME} | ${t('about_page.title')}`
 
+  // RESPONSIVE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+
   return (
     <div
       role="div"
       aria-label="about-us-page"
       className="about-us-page grid grid-cols-7">
       <div className="about-us-page__content">
-        <FullPageTitleBar
+        {isDesktop ? <FullPageTitleBar
           pageCode="about-us"
           translateCode="about_us"
         />
+          :
+          <MobileTitleBar
+            translateCode={"about_us"}
+            isShowingSideMenu={isShowingSideMenu}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu} />}
+
+        {!isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>}
 
         <div className='w-full'>
           <div className='about-us-page__head flex items-center justify-center'>
