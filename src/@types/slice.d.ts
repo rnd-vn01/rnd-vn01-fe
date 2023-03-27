@@ -62,6 +62,7 @@ interface IModel {
 
 interface IQuizManager {
   callbackSetQuestionType?: (number) => void;
+  callbackSetQuizStatus?: (any) => void;
 }
 
 interface IQuizOptions {
@@ -303,6 +304,10 @@ interface IMobileTitleBar extends IWithSideMenu {
   isEdit?: boolean;
   isViewingDetail?: boolean;
   callbackTriggerEditDetail?: (any) => void;
+  isQuiz?: boolean;
+  currentQuest?: number;
+  totalQuest?: number;
+  totalCorrect?: number;
 }
 
 interface ISideCriteriaBox {

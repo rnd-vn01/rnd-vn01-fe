@@ -26,6 +26,7 @@ import {
   setNavigateQuestSelectable, setNavigateQuestSelectedPoint,
   setQuizField, setShowingCorrectPoint, setShowingPoints, setStrictMode, unsetStrictMode
 } from 'src/redux/slice';
+import { useMediaQuery } from 'react-responsive';
 
 enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
@@ -34,7 +35,9 @@ enum QUIZ_STATE {
 }
 
 export const QuizManager: React.FC<IQuizManager> = ({
-  callbackSetQuestionType }) => {
+  callbackSetQuestionType,
+  callbackSetQuizStatus
+}) => {
   const history = useHistory();
   const { t } = useTranslation();
   const {
@@ -84,6 +87,9 @@ export const QuizManager: React.FC<IQuizManager> = ({
   const mainSoundPlayer = useRef<any>(new Audio(mainSound))
   const correctSoundPlayer = useRef<any>(new Audio(correctSound));
   const wrongSoundPlayer = useRef<any>(new Audio(wrongSound));
+
+  // RESPONSIVE
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const MERIDIANS = ["LU", "LI", "ST", "SP", "HT", "SI", "BL", "KI", "PC", "TE", "GB", "Liv", "Du", "Ren"]
   const DEMO_FIELD_OPTIONS = [
@@ -144,6 +150,16 @@ export const QuizManager: React.FC<IQuizManager> = ({
       }, 2000)
     }
   }, [selectedAnswer, correctAnswer])
+
+  useEffect(() => {
+    callbackSetQuizStatus({
+      currentQuest: currentQuestion,
+      totalQuest: numberOfQuestions,
+      totalCorrect: numberOfCorrectQuestions
+    })
+  }, [currentQuestion,
+    numberOfQuestions,
+    numberOfCorrectQuestions])
 
   const submitAnswer = (answer) => {
     let getAnswer = "" as any;
@@ -488,7 +504,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
       role="div"
       aria-label="quiz-manager"
       className="quiz-manager">
-      <div className={`quiz-manager__section quiz-manager__section--top
+      {isDesktop && <div className={`quiz-manager__section quiz-manager__section--top
         ${quizState === QUIZ_STATE["IN_PROGRESS"] ? "" : "quiz-manager__section--top--wide"}
       `}>
         {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
@@ -503,10 +519,11 @@ export const QuizManager: React.FC<IQuizManager> = ({
             /> : <QuizTitleBar
               title={t('quiz_page.end')}
             />}
-      </div>
+      </div>}
 
       <div className={`quiz-manager__section quiz-manager__section--main
         ${quizState === QUIZ_STATE["IN_PROGRESS"] ? "" : "quiz-manager__section--main--wide"}
+        ${quizState === QUIZ_STATE["ENDED"] && "quiz-manager__section--main--wide--ended"}
       `}>
         {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
           <QuizOptions
@@ -532,66 +549,73 @@ export const QuizManager: React.FC<IQuizManager> = ({
             />}
       </div>
 
-      <div className="quiz-manager__section quiz-manager__section--button">
-        {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
-          <QuizButton
-            fallbackCaption="Start"
-            translateKey="quiz_page.buttons.start"
-            onClick={() => startQuiz()}
-          />
-          :
-          quizState === QUIZ_STATE["IN_PROGRESS"] ? <QuizStatusBar
-            currentQuest={currentQuestion}
-            totalQuest={numberOfQuestions}
-            isPlus={isPlus}
-            totalCorrect={numberOfCorrectQuestions}
-          /> : <QuizButton
-            fallbackCaption="New Quiz"
-            translateKey="quiz_page.buttons.new_quiz"
-            onClick={() => location.reload()}
-          />}
-      </div>
+      <div className={`quiz-manager__button-section 
+      ${quizState === QUIZ_STATE["IN_PROGRESS"] && "quiz-manager__button-section--flip"}`}>
+        <div className="quiz-manager__section quiz-manager__section--button">
+          {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
+            <QuizButton
+              fallbackCaption="Start"
+              translateKey="quiz_page.buttons.start"
+              onClick={() => startQuiz()}
+            />
+            :
+            quizState === QUIZ_STATE["IN_PROGRESS"] ? (isDesktop ? <QuizStatusBar
+              currentQuest={currentQuestion}
+              totalQuest={numberOfQuestions}
+              isPlus={isPlus}
+              totalCorrect={numberOfCorrectQuestions}
+            /> : <QuizTimer
+              data-render={renderTime}
+              currentTime={currentTime.current}
+              totalTime={60}
+            />) : <QuizButton
+              fallbackCaption="New Quiz"
+              translateKey="quiz_page.buttons.new_quiz"
+              onClick={() => location.reload()}
+            />}
+        </div>
 
-      <div className="quiz-manager__section quiz-manager__section--button quiz-manager__no-border">
-        {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
-          <QuizButton
-            fallbackCaption="Close"
-            translateKey="quiz_page.buttons.close"
-            onClick={() => history.push("/", { isRedirect: true })}
-          /> : quizState === QUIZ_STATE["ENDED"] ?
+        <div className="quiz-manager__section quiz-manager__section--button quiz-manager__no-border">
+          {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
             <QuizButton
               fallbackCaption="Close"
               translateKey="quiz_page.buttons.close"
               onClick={() => history.push("/", { isRedirect: true })}
-            />
-            :
-            isFinished ?
+            /> : quizState === QUIZ_STATE["ENDED"] ?
               <QuizButton
-                fallbackCaption="End"
-                translateKey="quiz_page.buttons.end"
-                onClick={() => {
-                  //HANDLE END QUIZ
-                  endQuiz()
-                }}
-                isDisabled={!isShowingAnswer}
+                fallbackCaption="Close"
+                translateKey="quiz_page.buttons.close"
+                onClick={() => history.push("/", { isRedirect: true })}
               />
               :
-              isShowingAnswer ? <QuizButton
-                fallbackCaption="Next"
-                translateKey="quiz_page.buttons.next"
-                onClick={() => {
-                  reset();
-                }}
-                isDisabled={!isShowingAnswer}
-              /> : <QuizButton
-                fallbackCaption="Skip"
-                translateKey="quiz_page.buttons.skip"
-                onClick={() => {
-                  skip();
-                }}
-                isDisabled={isShowingAnswer}
-              />
-        }
+              isFinished ?
+                <QuizButton
+                  fallbackCaption="End"
+                  translateKey="quiz_page.buttons.end"
+                  onClick={() => {
+                    //HANDLE END QUIZ
+                    endQuiz()
+                  }}
+                  isDisabled={!isShowingAnswer}
+                />
+                :
+                isShowingAnswer ? <QuizButton
+                  fallbackCaption="Next"
+                  translateKey="quiz_page.buttons.next"
+                  onClick={() => {
+                    reset();
+                  }}
+                  isDisabled={!isShowingAnswer}
+                /> : <QuizButton
+                  fallbackCaption="Skip"
+                  translateKey="quiz_page.buttons.skip"
+                  onClick={() => {
+                    skip();
+                  }}
+                  isDisabled={isShowingAnswer}
+                />
+          }
+        </div>
       </div>
     </div>
   );

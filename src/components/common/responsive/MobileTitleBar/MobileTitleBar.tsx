@@ -7,6 +7,7 @@ import { RootState, useAppDispatch } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import HomeIcon from "src/assets/images/HomeIcon.svg";
+import { QuizStatusBar } from 'src/components/common/QuizManager/QuizStatusBar/QuizStatusBar';
 
 export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
   translateCode,
@@ -14,7 +15,11 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
   callbackSetIsShowingSideMenu,
   isEdit,
   isViewingDetail,
-  callbackTriggerEditDetail
+  callbackTriggerEditDetail,
+  isQuiz,
+  currentQuest,
+  totalQuest,
+  totalCorrect
 }) => {
   const {
     currentLanguage
@@ -44,7 +49,7 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
         <img src={HomeIcon}></img>
       </div>
 
-      {!isEdit ? <div className={`mobile-title-bar__item--large flex-center`}>
+      {!isQuiz && (!isEdit ? <div className={`mobile-title-bar__item--large flex-center`}>
         <h1 className="mobile-title-bar__page-title">
           {
             isViewingDetail ? translateCode :
@@ -72,9 +77,14 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
               icon={faMultiply}
             />
           </div>
-        </div>}
+        </div>)}
 
-
+      {isQuiz && <div className={`mobile-title-bar__item--quiz flex row`}>
+        <QuizStatusBar
+          currentQuest={currentQuest}
+          totalCorrect={totalCorrect}
+          totalQuest={totalQuest} />
+      </div>}
 
       <div className={`mobile-title-bar__item--small flex-center`}
         onClick={() => {

@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .quiz-status-bar {
   position: relative;
   height: 100%;
@@ -17,11 +19,19 @@
     &--border-right {
       border-right: 0.5px solid black;
       width: calc(50% + 0.25px);
+
+      @include mobile {
+        border-right: 1px solid black;
+      }
     }
 
     &--border-left {
       border-left: 0.5px solid black;
       width: calc(50% - 0.25px);
+
+      @include mobile {
+        border-left: 1px solid black;
+      }
     }
   }
 

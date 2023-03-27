@@ -55,6 +55,21 @@
         }
       }
     }
+
+    &--quiz {
+      width: 60%;
+      border-left: 2px solid black;
+      border-right: 2px solid black;
+
+      &-option {
+        width: 50%;
+        height: 100%;
+
+        &:first-child {
+          border-right: 2px solid black;
+        }
+      }
+    }
   }
 
   &__page-title {
