@@ -11,7 +11,7 @@ import { useQuery } from 'src/helpers/hooks/useQuery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from 'react-responsive';
-import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
+import { MobileTitleBar, SideCriteriaBox, SideMenu } from 'src/components/common/responsive';
 
 export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const { t } = useTranslation();
@@ -70,6 +70,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
           isChoosingAlphabet={isChoosingAlphabet}
           passedQuery={hookQuery.get('query')}
           callbackIsFilter={setIsFilter}
+          paramPassedIsFilter={isFilter}
         />
 
         <SearchResults
@@ -79,6 +80,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
           callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
           isFilter={isFilter}
+          callbackSetIsFilter={setIsFilter}
         />
       </div>
 

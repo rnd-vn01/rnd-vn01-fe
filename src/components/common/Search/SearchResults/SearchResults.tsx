@@ -9,6 +9,8 @@ import { filterByAlphabet, passFilter, replaceVietnameseNotation, sortItems } fr
 import { ALPHABET_LISTS } from 'src/configs/constants';
 import { SearchResultsAlphabetFilters } from './SearchResultsAlphabetFilters/SearchResultsAlphabetFilters';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { SideCriteriaBox } from 'src/components/common/responsive';
+import { useMediaQuery } from 'react-responsive';
 
 export const SearchResults: React.FC<ISearchResults> = ({
   results,
@@ -16,6 +18,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
   isLoading,
   callbackSetNumberOfMatchingResults,
   callbackSetChoosingAlphabet,
+  callbackSetIsFilter,
   isFilter
 }) => {
   const history = useHistory();
@@ -40,6 +43,10 @@ export const SearchResults: React.FC<ISearchResults> = ({
   const [choosingAlphabetOption, setChoosingAlphabetOption] = useState<number>(-1);
   const [allAlphabetFilteredResults, setAllAlphabetFilteredResults] = useState<Array<any>>([]);
   const [showingItems, setShowingItems] = useState<Array<any>>([]);
+
+  // RESPONSIVE
+  const [isShowingSideCriteria, setIsShowingSideCriteria] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const FILTER_OPTIONS = {
     VI: {
@@ -94,12 +101,14 @@ export const SearchResults: React.FC<ISearchResults> = ({
   }, [query])
 
   useEffect(() => {
-    setCurrentFilterOptions({
-      searchOn: 0,
-      searchBy: 0,
-      show: 0,
-      sort: 0
-    })
+    if (isDesktop) {
+      setCurrentFilterOptions({
+        searchOn: 0,
+        searchBy: 0,
+        show: 0,
+        sort: 0
+      })
+    }
   }, [isFilter])
 
   useEffect(() => {
@@ -209,7 +218,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
               {t('no_results')}
             </h1>}
 
-          {isFilter && <div className="search-results__filters">
+          {isFilter && isDesktop && <div className="search-results__filters">
             <h1 className="search-results__filters--category">{t('search_bar.filters.categories.search')}</h1>
 
             <span
@@ -309,6 +318,17 @@ export const SearchResults: React.FC<ISearchResults> = ({
             </span>
           </div>}
         </>}
+
+      {!isDesktop && <SideCriteriaBox
+        isShowing={isFilter}
+        filters={filters}
+        currentFilterOptions={currentFilterOptions}
+        callbackSetCurrentFilterOptions={(e) => {
+          console.log(e)
+          setCurrentFilterOptions(e)
+          callbackSetIsFilter(false)
+        }}
+      />}
     </div>
   );
 };

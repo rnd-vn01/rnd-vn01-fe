@@ -69,6 +69,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           numberOfMatchingResults={numberOfMatchingResults}
           isChoosingAlphabet={isChoosingAlphabet}
           callbackIsFilter={setIsFilter}
+          paramPassedIsFilter={isFilter}
         />
 
         <SearchResults
@@ -78,6 +79,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
           isFilter={isFilter}
+          callbackSetIsFilter={setIsFilter}
         />
       </div>
 

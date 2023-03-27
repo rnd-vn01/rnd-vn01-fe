@@ -56,6 +56,10 @@
     transform: translateY(5px);
     line-height: 2.5rem;
 
+    @include mobile {
+      width: calc(100% - 140px);
+    }
+
     &--span {
       width: calc(100% - 60px);
       display: block;
@@ -79,5 +83,9 @@
 
   &__number-of-results {
     background: var(--theme-highlight);
+
+    @include mobile {
+      transform: translateY(4px);
+    }
   }
 }

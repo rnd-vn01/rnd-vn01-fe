@@ -140,6 +140,7 @@ interface ISearchBar {
   isChoosingAlphabet?: boolean;
   passedQuery?: string;
   callbackIsFilter?: (boolean) => void;
+  paramPassedIsFilter?: boolean;
 }
 
 interface ISearchResults {
@@ -149,6 +150,7 @@ interface ISearchResults {
   callbackSetNumberOfMatchingResults?: (any) => void;
   callbackSetChoosingAlphabet?: (boolean) => void;
   isFilter?: boolean;
+  callbackSetIsFilter?: (boolean) => void;
 }
 
 interface ISearchResultItem {
@@ -297,4 +299,11 @@ interface IMenuBar extends IWithSideMenu {
 
 interface IMobileTitleBar extends IWithSideMenu {
   translateCode?: string;
+}
+
+interface ISideCriteriaBox {
+  isShowing: boolean;
+  filters?: any;
+  currentFilterOptions?: any;
+  callbackSetCurrentFilterOptions?: (any) => void;
 }
