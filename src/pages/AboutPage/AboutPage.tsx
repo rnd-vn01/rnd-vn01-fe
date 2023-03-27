@@ -105,7 +105,8 @@ export const AboutPage: React.FC<IAboutPage> = ({
         />
 
         <AboutPageSection
-          showContent={<div className='grid grid-cols-4 py-6' style={{ gridColumnGap: "7rem" }}>
+          showContent={<div className={`grid ${isDesktop ? "grid-cols-4" : "grid-cols-2"} py-6`}
+            style={{ gridColumnGap: isDesktop ? "7rem" : "3rem" }}>
             <div className='col-span-1 about-page-section__member'>
               <img className='col-span-1 about-page-section__member--avatar' src={PhotoNhan} />
               <h1>{t('about_page.sections.members.nhan_nguyen_cao')}
@@ -208,10 +209,12 @@ export const AboutPage: React.FC<IAboutPage> = ({
         />
 
         <AboutPageSection
-          showContent={<div className='py-6 flex flex-row'>
+          showContent={<div className={`py-6 flex ${isDesktop ? "flex-row" : "flex-col"}`}>
             <img style={{ width: "500px" }} src={PhotoDHYD} />
             <div className='flex flex-column justify-center items-center'>
-              <h1 className='ml-4' style={{ fontSize: "1.5rem" }}>{t('about_page.sections.users.description')}</h1>
+              <h1 className={
+                `${isDesktop ? "ml-4" : "mt-3 text-center"}`
+              } style={{ fontSize: "1.5rem" }}>{t('about_page.sections.users.description')}</h1>
             </div>
           </div>}
           isCollapsable={true}
@@ -221,7 +224,7 @@ export const AboutPage: React.FC<IAboutPage> = ({
         />
 
         <AboutPageSection
-          showContent={<div className='py-6 flex flex-row'>
+          showContent={<div className={`py-6 flex ${isDesktop ? "flex-row" : "flex-col"}`}>
             <div className='about-page-section__reference mr-4'>
               <img src={PhotoViBook} />
               <h1
