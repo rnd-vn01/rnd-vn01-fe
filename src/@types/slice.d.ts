@@ -178,6 +178,7 @@ interface IItemDetail {
 
 interface IItemDetailEdit extends IItemDetail {
   callbackUpdateDetail?: (any) => void;
+  mobileCalledEditDetail?: number;
 }
 
 interface IPersonalRecordsPage {
@@ -299,6 +300,9 @@ interface IMenuBar extends IWithSideMenu {
 
 interface IMobileTitleBar extends IWithSideMenu {
   translateCode?: string;
+  isEdit?: boolean;
+  isViewingDetail?: boolean;
+  callbackTriggerEditDetail?: (any) => void;
 }
 
 interface ISideCriteriaBox {

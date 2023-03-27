@@ -1,7 +1,7 @@
 import './MobileTitleBar.scss';
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faMultiply, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,9 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
   translateCode,
   isShowingSideMenu,
   callbackSetIsShowingSideMenu,
+  isEdit,
+  isViewingDetail,
+  callbackTriggerEditDetail
 }) => {
   const {
     currentLanguage
@@ -41,19 +44,37 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
         <img src={HomeIcon}></img>
       </div>
 
-      <div className={`mobile-title-bar__item--large flex-center`}>
+      {!isEdit ? <div className={`mobile-title-bar__item--large flex-center`}>
         <h1 className="mobile-title-bar__page-title">
           {
-            t(`title_bar.pages.${translateCode || "default"}`).split(" ").map((word, index) => {
-              return <h1
-                key={`word-${index}`}
-                role={"h1"}
-                aria-label={`word-${index}`}
-                className={`${index === 0 ? "title-bar__page-title--bg" : ""}`}>{index !== 0 && " "} {word}</h1>
-            })
+            isViewingDetail ? translateCode :
+              t(`title_bar.pages.${translateCode || "default"}`).split(" ").map((word, index) => {
+                return <h1
+                  key={`word-${index}`}
+                  role={"h1"}
+                  aria-label={`word-${index}`}
+                  className={`${index === 0 ? "title-bar__page-title--bg" : ""}`}>{index !== 0 && " "} {word}</h1>
+              })
           }
         </h1>
-      </div>
+      </div> :
+        <div className={`mobile-title-bar__item--edit flex row`}>
+          <div className={`mobile-title-bar__item--edit-option flex-center`}
+            onClick={callbackTriggerEditDetail}>
+            <FontAwesomeIcon
+              icon={faCheck}
+            />
+          </div>
+
+          <div className={`mobile-title-bar__item--edit-option flex-center`}
+            onClick={() => { history.push(location.pathname.replace("?edit", "")) }}>
+            <FontAwesomeIcon
+              icon={faMultiply}
+            />
+          </div>
+        </div>}
+
+
 
       <div className={`mobile-title-bar__item--small flex-center`}
         onClick={() => {

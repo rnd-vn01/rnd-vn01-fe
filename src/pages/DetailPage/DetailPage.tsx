@@ -34,6 +34,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
   // RESPONSIVE
   const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const [mobileCalledEditDetail, setMobileCalledEditDetail] = useState<number>(0);
 
   const {
     currentLanguage
@@ -43,6 +44,10 @@ export const DetailPage: React.FC<IDetailPage> = ({
 
   const MySwal = withReactContent(Swal);
   const handleUpdate = (newItemDetail: any) => {
+    if (!isDesktop) {
+      setMobileCalledEditDetail(0);
+    }
+
     let formattedDetail = { ...newItemDetail }
     Object.keys(formattedDetail).forEach((field) => {
       Object.defineProperty(formattedDetail, capitalizeAndMapInformationField(isPoint, field, currentLanguage),
@@ -107,16 +112,20 @@ export const DetailPage: React.FC<IDetailPage> = ({
       aria-label="detail-page"
       className="detail-page ">
       <div className="detail-page__content">
-
-
         {isDesktop ? <FullPageTitleBar
           pageCode={isEdit ? "data-management" : ""}
           translateCode={isEdit ? "data_management" : ""}
         /> :
           <MobileTitleBar
-            translateCode={isEdit ? "data_management" : ""}
+            translateCode={isEdit ? "data_management" : itemCode}
             isShowingSideMenu={isShowingSideMenu}
-            callbackSetIsShowingSideMenu={setIsShowingSideMenu} />}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu}
+            isEdit={isEdit}
+            isViewingDetail={!isEdit}
+            callbackTriggerEditDetail={() => {
+              setMobileCalledEditDetail(mobileCalledEditDetail + 1)
+            }}
+          />}
 
         {!isDesktop && <>
           <SideMenu
@@ -140,6 +149,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
             isPoint={isPoint}
             query={hookQuery.get('query')}
             callbackUpdateDetail={handleUpdate}
+            mobileCalledEditDetail={mobileCalledEditDetail}
           />
         )}
       </div>
