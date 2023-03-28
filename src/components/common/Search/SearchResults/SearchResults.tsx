@@ -324,7 +324,6 @@ export const SearchResults: React.FC<ISearchResults> = ({
         filters={filters}
         currentFilterOptions={currentFilterOptions}
         callbackSetCurrentFilterOptions={(e) => {
-          console.log(e)
           setCurrentFilterOptions(e)
           callbackSetIsFilter(false)
         }}

@@ -70,6 +70,7 @@ describe('SearchResults', () => {
         query={"SI-"}
         results={DEMO_RESULTS}
         isFilter={true}
+        callbackSetIsFilter={jest.fn()}
       />
     </Provider>)
   })

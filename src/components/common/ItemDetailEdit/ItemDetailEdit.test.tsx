@@ -3,6 +3,7 @@ import { ItemDetailEdit } from './ItemDetailEdit';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { Context as ResponsiveContext } from "react-responsive";
 
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -42,11 +43,15 @@ describe('ItemDetailEdit', () => {
   })
 
   it("to be rendered successfully", async () => {
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={{}}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={{}}
+            isPoint={true} />
+        </Provider>
+      </ResponsiveContext.Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByRole("div", { name: "item-detail-edit" })).toBeInTheDocument();
@@ -56,11 +61,14 @@ describe('ItemDetailEdit', () => {
   it("should remove one subitem if clicking on the trash bin icon", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider>
+      </ResponsiveContext.Provider>)
 
     //Remove the second functionality
     const secondItemRemoveIcon = screen.getByTestId("remove-icon-1")
@@ -76,11 +84,14 @@ describe('ItemDetailEdit', () => {
   it("should add one subitem if type in and click on add button", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider>
+      </ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-subitem" })
     fireEvent.change(inputAddSubItem, { target: { value: "F3" } })
@@ -98,11 +109,14 @@ describe('ItemDetailEdit', () => {
   it("should change the content of field name when typed in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider>
+      </ResponsiveContext.Provider>)
 
     const inputName = screen.getByRole("input", { name: "input-name" })
     fireEvent.change(inputName, { target: { value: "New Name" } })
@@ -115,11 +129,13 @@ describe('ItemDetailEdit', () => {
   it("should change the content of field code when typed in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputCode = screen.getByRole("input", { name: "input-code" })
     fireEvent.change(inputCode, { target: { value: "New Code" } })
@@ -132,11 +148,13 @@ describe('ItemDetailEdit', () => {
   it("should change the content of one subitem if type in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const functionalities = screen.getAllByRole("point-functionality")
     fireEvent.change(functionalities[1], { target: { value: "F2 Updated" } })
@@ -150,12 +168,14 @@ describe('ItemDetailEdit', () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
     const mockCallbackUpdateDetail = jest.fn();
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true}
-        callbackUpdateDetail={mockCallbackUpdateDetail} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true}
+            callbackUpdateDetail={mockCallbackUpdateDetail} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputCode = screen.getByRole("input", { name: "input-code" })
     fireEvent.change(inputCode, { target: { value: "New Code" } })
@@ -178,11 +198,13 @@ describe('ItemDetailEdit', () => {
   it("should add one subitem if type in and press enter", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-subitem" })
     fireEvent.change(inputAddSubItem, { target: { value: "F3" } })
@@ -198,11 +220,12 @@ describe('ItemDetailEdit', () => {
   it("should change the content of one subitem of meridian if type in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false} />
-    </Provider>)
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <ItemDetailEdit
+          item={ITEM}
+          isPoint={false} />
+      </Provider></ResponsiveContext.Provider>)
 
     const points = screen.getAllByRole("meridian-point")
     fireEvent.change(points[1], { target: { value: "P2 Updated" } })
@@ -215,11 +238,13 @@ describe('ItemDetailEdit', () => {
   it("should remove one subitem if clicking on the trash bin icon for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false} />
+        </Provider></ResponsiveContext.Provider>)
 
     //Remove the second functionality
     const secondItemRemoveIcon = screen.getByTestId("remove-point-1")
@@ -235,11 +260,11 @@ describe('ItemDetailEdit', () => {
   it("should add one subitem if type in and click on add button for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
 
-    render(<Provider store={store}>
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}><Provider store={store}>
       <ItemDetailEdit
         item={ITEM}
         isPoint={false} />
-    </Provider>)
+    </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-point" })
     fireEvent.change(inputAddSubItem, { target: { value: "P3" } })
@@ -257,11 +282,13 @@ describe('ItemDetailEdit', () => {
   it("should add one subitem if type in and press enter for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-point" })
     fireEvent.change(inputAddSubItem, { target: { value: "P3" } })
@@ -277,11 +304,13 @@ describe('ItemDetailEdit', () => {
   it("should change the content of field caution when typed in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputCaution = screen.getByRole("textarea", { name: "textarea-caution" })
     fireEvent.change(inputCaution, { target: { value: "New Caution" } })
@@ -294,11 +323,13 @@ describe('ItemDetailEdit', () => {
   it("should redirect to details page if clicking on cancel button", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const buttonCancel = screen.getByRole("div", { name: "button-cancel" })
     fireEvent.click(buttonCancel)
@@ -312,12 +343,14 @@ describe('ItemDetailEdit', () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
     const mockCallbackUpdateDetail = jest.fn();
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false}
-        callbackUpdateDetail={mockCallbackUpdateDetail} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false}
+            callbackUpdateDetail={mockCallbackUpdateDetail} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputCode = screen.getByRole("input", { name: "input-code" })
     fireEvent.change(inputCode, { target: { value: "New Code" } })
@@ -342,12 +375,14 @@ describe('ItemDetailEdit', () => {
     delete ITEM["anatomy"]
     const mockCallbackUpdateDetail = jest.fn();
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true}
-        callbackUpdateDetail={mockCallbackUpdateDetail} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true}
+            callbackUpdateDetail={mockCallbackUpdateDetail} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAnatomy = screen.getByRole("textarea", { name: "textarea-anatomy" })
     fireEvent.change(inputAnatomy, { target: { value: "New Anatomy" } })
@@ -367,12 +402,15 @@ describe('ItemDetailEdit', () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
     const mockCallbackUpdateDetail = jest.fn();
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true}
-        callbackUpdateDetail={mockCallbackUpdateDetail} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true}
+            callbackUpdateDetail={mockCallbackUpdateDetail} />
+        </Provider>
+      </ResponsiveContext.Provider>)
 
     const inputAnatomy = screen.getByRole("textarea", { name: "textarea-anatomy" })
     fireEvent.change(inputAnatomy, { target: { value: "" } })
@@ -391,11 +429,13 @@ describe('ItemDetailEdit', () => {
   it("should not add one subitem if leave input box as empty and click on add button for point", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-subitem" })
     fireEvent.change(inputAddSubItem, { target: { value: "" } })
@@ -412,11 +452,13 @@ describe('ItemDetailEdit', () => {
   it("should not add one subitem if leave input box as empty and press enter for point", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-subitem" })
     fireEvent.change(inputAddSubItem, { target: { value: "" } })
@@ -431,11 +473,13 @@ describe('ItemDetailEdit', () => {
   it("should not add one subitem if leave input box as empty and click on add button for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-point" })
     fireEvent.change(inputAddSubItem, { target: { value: "" } })
@@ -452,11 +496,13 @@ describe('ItemDetailEdit', () => {
   it("should not add one subitem if leave input box as empty and press enter for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-point" })
     fireEvent.change(inputAddSubItem, { target: { value: "" } })
@@ -471,11 +517,13 @@ describe('ItemDetailEdit', () => {
   it("should not add one subitem if press other key besides enter for point", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-subitem" })
     fireEvent.change(inputAddSubItem, { target: { value: "F3" } })
@@ -490,11 +538,13 @@ describe('ItemDetailEdit', () => {
   it("should not add one subitem if press other key besides enter for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false} />
+        </Provider></ResponsiveContext.Provider>)
 
     const inputAddSubItem = screen.getByRole("input", { name: "input-add-point" })
     fireEvent.change(inputAddSubItem, { target: { value: "P3" } })
@@ -510,11 +560,13 @@ describe('ItemDetailEdit', () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
     delete ITEM["points"]
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={false} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false} />
+        </Provider></ResponsiveContext.Provider>)
 
     await waitFor(() => {
       expect(screen.getByRole("div", { name: "item-detail-edit" })).toBeInTheDocument();
@@ -525,11 +577,13 @@ describe('ItemDetailEdit', () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
     ITEM["anatomy"] = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec."
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     await waitFor(() => {
       const inputAnatomy = screen.getByRole("textarea", { name: "textarea-anatomy" })
@@ -541,11 +595,13 @@ describe('ItemDetailEdit', () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
     ITEM["anatomy"] = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu"
 
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true} />
+        </Provider></ResponsiveContext.Provider>)
 
     await waitFor(() => {
       const inputAnatomy = screen.getByRole("textarea", { name: "textarea-anatomy" })
