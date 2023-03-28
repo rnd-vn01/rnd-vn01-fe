@@ -44,7 +44,6 @@ export const HomePage: React.FC = () => {
   );
 
   const sceneRef = useRef();
-  const triggerEmergency = useRef<boolean>(false);
 
   document.title = `${APP_NAME}`
 
@@ -54,7 +53,6 @@ export const HomePage: React.FC = () => {
     } else {
       setTimeout(() => {
         if (!modelLoaded) {
-          triggerEmergency.current = true;
           setIsShowingLanding(false);
         }
       }, 5000);
@@ -64,9 +62,7 @@ export const HomePage: React.FC = () => {
   useEffect(() => {
     if (modelLoaded) {
       setTimeout(() => {
-        if (!triggerEmergency.current) {
-          setIsShowingLanding(false)
-        }
+        setIsShowingLanding(false)
       }, 3000);
     }
   }, [modelLoaded])
@@ -162,7 +158,8 @@ export const HomePage: React.FC = () => {
           isShowing={isShowingSideMenu}
           callbackSetIsShowing={setIsShowingSideMenu}
         />
-        {isShowingSearchBar && <div className="home-page__section--side-bar">
+        {isShowingSearchBar && <div className="home-page__section--side-bar"
+          role="div" aria-label="home-page-search-bar">
           <QuickSearchBar />
         </div>}
       </>}

@@ -63,7 +63,9 @@ export const MenuBar: React.FC<IMenuBar> = ({
 
       <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
       ${!isShowing && "menu-bar__item--hidden"}`}
-        onClick={() => callbackSetIsShowingSearchBar(!isShowingSearchBar)}>
+        onClick={() => callbackSetIsShowingSearchBar(!isShowingSearchBar)}
+        role="menu-button"
+        aria-label="search-bar">
         {!isShowingSideMenu &&
           <div className='w-full h-full flex-center'>
             <FontAwesomeIcon className="menu-bar__menu--icon-search" icon={isShowingSearchBar ? faXmark : faSearch} />

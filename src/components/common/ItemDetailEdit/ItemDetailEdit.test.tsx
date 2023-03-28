@@ -37,7 +37,7 @@ const DEMO_MERIDIAN = {
   points: ["P1", "P2"]
 }
 
-describe('ItemDetailEdit', () => {
+describe('ItemDetailEdit - Desktop', () => {
   afterEach(() => {
     store.dispatch(resetToInitialStateAuthSlice());
   })
@@ -606,6 +606,27 @@ describe('ItemDetailEdit', () => {
     await waitFor(() => {
       const inputAnatomy = screen.getByRole("textarea", { name: "textarea-anatomy" })
       expect((inputAnatomy as any).rows).toBe(4)
+    })
+  })
+})
+
+describe('ItemDetailEdit - Mobile', () => {
+  it("should callback update item if click on submit button for meridian", async () => {
+    const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
+    const mockCallbackUpdateDetail = jest.fn();
+
+    render(
+      <ResponsiveContext.Provider value={{ width: 500 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={false}
+            callbackUpdateDetail={mockCallbackUpdateDetail}
+            mobileCalledEditDetail={1} />
+        </Provider></ResponsiveContext.Provider>)
+
+    await waitFor(() => {
+      expect(mockCallbackUpdateDetail).toHaveBeenCalled()
     })
   })
 })

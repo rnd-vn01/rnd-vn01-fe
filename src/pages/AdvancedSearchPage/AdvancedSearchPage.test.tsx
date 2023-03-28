@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AdvancedSearchPage } from './AdvancedSearchPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
+import { Context as ResponsiveContext } from "react-responsive";
 
 const spyScrollTo = jest.fn();
 Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });
@@ -16,12 +17,14 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-describe('AdvancedSearchPage', () => {
+describe('Advanced Search page - Desktop', () => {
   beforeEach(() => {
     spyScrollTo.mockClear();
-    render(<Provider store={store}>
-      <AdvancedSearchPage />
-    </Provider>)
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <AdvancedSearchPage />
+      </Provider>
+    </ResponsiveContext.Provider>)
   })
 
   it("to be rendered successfully", async () => {
@@ -58,6 +61,24 @@ describe('AdvancedSearchPage', () => {
         top: 0,
         behavior: "smooth",
       })
+    })
+  })
+});
+
+describe('Advanced Search page - Mobile', () => {
+  beforeEach(() => {
+    spyScrollTo.mockClear();
+    render(<ResponsiveContext.Provider value={{ width: 500 }}>
+      <Provider store={store}>
+        <AdvancedSearchPage />
+      </Provider>
+    </ResponsiveContext.Provider>)
+  })
+
+  it("to include the mobile title bar", async () => {
+    await waitFor(() => {
+      expect(screen.getByRole("div", { name: "mobile-title-bar" })).toBeInTheDocument();
+      expect(screen.getByRole("div", { name: "side-menu" })).toBeInTheDocument();
     })
   })
 });

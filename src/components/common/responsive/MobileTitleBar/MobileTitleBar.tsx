@@ -65,6 +65,8 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
       </div> :
         <div className={`mobile-title-bar__item--edit flex row`}>
           <div className={`mobile-title-bar__item--edit-option flex-center`}
+            role="div"
+            aria-label="button-submit"
             onClick={callbackTriggerEditDetail}>
             <FontAwesomeIcon
               icon={faCheck}
