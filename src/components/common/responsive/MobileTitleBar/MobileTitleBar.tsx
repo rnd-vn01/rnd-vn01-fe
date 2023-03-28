@@ -44,7 +44,8 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
       className={`mobile-title-bar `}
     >
       <div className={`p-4 mobile-title-bar__item--small flex-center`}
-        onClick={() => history.push("/home", { isRedirect: true })}
+        onClick={() => history.push("/", { isRedirect: true })}
+        data-testid="home-icon"
       >
         <img src={HomeIcon}></img>
       </div>
@@ -74,7 +75,8 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
           </div>
 
           <div className={`mobile-title-bar__item--edit-option flex-center`}
-            onClick={() => { history.push(location.pathname.replace("?edit", "")) }}>
+            onClick={() => { history.push(location.pathname.replace("?edit", "")) }}
+            data-testid="button-cancel">
             <FontAwesomeIcon
               icon={faMultiply}
             />
@@ -89,6 +91,7 @@ export const MobileTitleBar: React.FC<IMobileTitleBar> = ({
       </div>}
 
       <div className={`mobile-title-bar__item--small flex-center`}
+        data-testid="hamburger-icon"
         onClick={() => {
           callbackSetIsShowingSideMenu(!isShowingSideMenu)
         }}

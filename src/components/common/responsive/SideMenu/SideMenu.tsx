@@ -152,6 +152,7 @@ export const SideMenu: React.FC<ISideMenu> = ({
           <div className="side-menu__language">
             <div className='relative w-full'>
               <div className='side-menu__menu-item flex items-center justify-between'
+                data-testid="side-menu-language"
                 onClick={() => setIsShowingLandingPick(!isShowingLanguagePick)}>
                 <p
                   className='side-menu__menu-item--text'
@@ -169,21 +170,23 @@ export const SideMenu: React.FC<ISideMenu> = ({
               <div className={`side-menu__language-pick ${isShowingLanguagePick && "side-menu__language-pick--showing"}`}>
                 <p
                   className={`side-menu__language-pick-item 
-              ${currentLanguage === "EN" && "side-menu__language-pick-item--selected"}`}
+                  ${currentLanguage === "EN" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("EN");
                     history.go(0)
                   }}
+                  data-testid="side-menu-language__EN"
                 >
                   English
                 </p>
                 <p
                   className={`side-menu__language-pick-item 
-              ${currentLanguage === "VI" && "side-menu__language-pick-item--selected"}`}
+                  ${currentLanguage === "VI" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("VI");
                     history.go(0)
                   }}
+                  data-testid="side-menu-language__VI"
                 >
                   Tiếng Việt
                 </p>
@@ -198,6 +201,8 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   <div className='relative w-full'>
                     <div className='side-menu__menu-item side-menu__menu-item--selectable 
                     flex items-center justify-between'
+                      role="menu-item-dropdown"
+                      aria-label={`menu-item-dropdown-${item.item}`}
                       onClick={item.onClick}>
                       <p
                         className='side-menu__menu-item--text'
@@ -223,6 +228,8 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   <div className='relative w-full'>
                     <div className='side-menu__menu-item side-menu__menu-item--selectable 
                     flex items-center justify-between'
+                      role="menu-item-dropdown"
+                      aria-label={`menu-item-dropdown-${item.item}`}
                       onClick={item.onClick}>
                       <p
                         className='side-menu__menu-item--text'
@@ -248,7 +255,10 @@ export const SideMenu: React.FC<ISideMenu> = ({
           <div className='relative w-full'>
             <div className='side-menu__menu-item side-menu__menu-item--selectable 
                     flex items-center justify-between'
-              onClick={logOut}>
+              onClick={logOut}
+              role="menu-item-dropdown"
+              aria-label={`menu-item-dropdown-logout`}
+            >
               <p
                 className='side-menu__menu-item--text'
               >{t('auth_bar.menu.log_out')}</p>

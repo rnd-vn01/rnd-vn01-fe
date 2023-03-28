@@ -41,6 +41,7 @@ export const MenuBar: React.FC<IMenuBar> = ({
       ${isShowingSideMenu && isShowing && "menu-bar__item--no-wrap"}
       ${!isShowing && "menu-bar__item--faded"}`}
         onClick={() => setIsShowing(!isShowing)}
+        data-testid="show-menu-icon"
       >
         {!isShowingSideMenu && <img src={isShowing ? IconShow : IconHide} className={`menu-bar__logo-show-quick-info
           ${!isShowing && `menu-bar__logo-show-quick-info--faded`}
@@ -50,7 +51,8 @@ export const MenuBar: React.FC<IMenuBar> = ({
       </div>
 
       <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
-      ${!isShowing && "menu-bar__item--hidden"}`}>
+      ${!isShowing && "menu-bar__item--hidden"}`}
+        data-testid="model-control-box">
         {!isShowingSideMenu && <ModelViewModeControl />}
         {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
@@ -77,6 +79,7 @@ export const MenuBar: React.FC<IMenuBar> = ({
       ${isShowingSideMenu && "menu-bar__item--wrap"}
       ${!isShowing && "menu-bar__item--hidden"}`}
         onClick={() => callbackSetIsShowingSideMenu(!isShowingSideMenu)}
+        data-testid="show-sidemenu-icon"
       >
         <div className='menu-bar__logo-container'>
           {isLoggedIn ?
@@ -84,10 +87,11 @@ export const MenuBar: React.FC<IMenuBar> = ({
               className="menu-bar__menu--button-logo inline-flex w-fit h-full flex-center"
               aria-label="menu-bar-menu-button">
               <img src={Logo} className="menu-bar__menu--image-logo"></img>
-              {user.isAdmin && <img src={IconAdmin} className="menu-bar__menu--icon-gear"></img>}
+              {user.isAdmin && <img src={IconAdmin} className="menu-bar__menu--icon-gear" data-testid="admin-icon"></img>}
             </div>
             :
-            <FontAwesomeIcon className="menu-bar__menu--icon-hamburger" icon={faBars} />}
+            <FontAwesomeIcon className="menu-bar__menu--icon-hamburger" data-testid="hamburger-icon"
+              icon={faBars} />}
         </div>
         {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
