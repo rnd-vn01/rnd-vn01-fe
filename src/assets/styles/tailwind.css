@@ -595,14 +595,6 @@ video {
   grid-row: span 5 / span 5;
 }
 
-.row-span-2 {
-  grid-row: span 2 / span 2;
-}
-
-.row-span-4 {
-  grid-row: span 4 / span 4;
-}
-
 .row-span-3 {
   grid-row: span 3 / span 3;
 }
@@ -627,6 +619,10 @@ video {
   margin-left: 0.25rem;
 }
 
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
 .mr-3 {
   margin-right: 0.75rem;
 }
@@ -643,10 +639,6 @@ video {
   margin-left: 0.5rem;
 }
 
-.mt-3 {
-  margin-top: 0.75rem;
-}
-
 .mt-5 {
   margin-top: 1.25rem;
 }
@@ -661,6 +653,10 @@ video {
 
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .block {
@@ -732,16 +728,20 @@ video {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .grid-cols-5 {
   grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .flex-row {

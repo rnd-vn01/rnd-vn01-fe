@@ -44,19 +44,29 @@ export const HomePage: React.FC = () => {
   );
 
   const sceneRef = useRef();
+  const triggerEmergency = useRef<boolean>(false);
 
   document.title = `${APP_NAME}`
 
   useEffect(() => {
     if (location?.state?.isRedirect) {
       setIsShowingLanding(false);
+    } else {
+      setTimeout(() => {
+        if (!modelLoaded) {
+          triggerEmergency.current = true;
+          setIsShowingLanding(false);
+        }
+      }, 5000);
     }
   }, [])
 
   useEffect(() => {
     if (modelLoaded) {
       setTimeout(() => {
-        setIsShowingLanding(false)
+        if (!triggerEmergency.current) {
+          setIsShowingLanding(false)
+        }
       }, 3000);
     }
   }, [modelLoaded])

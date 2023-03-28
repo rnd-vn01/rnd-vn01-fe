@@ -53,12 +53,12 @@ export const PersonalRecordsPage: React.FC<IPersonalRecordsPage> = ({
           }}
         />
 
-        <div className="grid grid-cols-3 pt-3 gap-3">
+        <div className={`grid pt-3 gap-3 ${isDesktop ? "grid-cols-3" : "grid-cols-1"}`}>
           <div className="col-span-1">
             <RecordsProgressLog />
           </div>
 
-          <div className="col-span-2">
+          <div className={`${isDesktop ? "col-span-2" : "col-span-1"}`}>
             <RecordsChart />
           </div>
         </div>

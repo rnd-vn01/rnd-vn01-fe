@@ -11,5 +11,10 @@
   &__content {
     width: 98vw;
     margin-left: 1vw;
+
+    @include mobile {
+      width: 95vw;
+      margin-left: 2.5vw;
+    }
   }
 }
