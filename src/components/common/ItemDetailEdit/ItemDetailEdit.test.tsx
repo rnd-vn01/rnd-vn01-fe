@@ -112,23 +112,6 @@ describe('ItemDetailEdit', () => {
     })
   })
 
-  it("should change the content of field code when typed in new value", async () => {
-    const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
-
-    render(<Provider store={store}>
-      <ItemDetailEdit
-        item={ITEM}
-        isPoint={true} />
-    </Provider>)
-
-    const inputCode = screen.getByRole("input", { name: "input-code" })
-    fireEvent.change(inputCode, { target: { value: "New Code" } })
-
-    await waitFor(() => {
-      expect(inputCode.getAttribute("value")).toBe("New Code")
-    })
-  })
-
   it("should change the content of one subitem if type in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
@@ -157,8 +140,8 @@ describe('ItemDetailEdit', () => {
         callbackUpdateDetail={mockCallbackUpdateDetail} />
     </Provider>)
 
-    const inputCode = screen.getByRole("input", { name: "input-code" })
-    fireEvent.change(inputCode, { target: { value: "New Code" } })
+    const inputName = screen.getByRole("input", { name: "input-name" })
+    fireEvent.change(inputName, { target: { value: "New Name" } })
 
     const functionalities = screen.getAllByRole("point-functionality")
     fireEvent.change(functionalities[1], { target: { value: "F2 Updated" } })
@@ -168,7 +151,7 @@ describe('ItemDetailEdit', () => {
 
     await waitFor(() => {
       let UPDATED_ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
-      UPDATED_ITEM["code"] = "New Code"
+      UPDATED_ITEM["name"] = "New Name"
       UPDATED_ITEM["functionalities"][1] = "F2 Updated"
 
       expect(mockCallbackUpdateDetail).toHaveBeenCalledWith(UPDATED_ITEM)
@@ -319,8 +302,8 @@ describe('ItemDetailEdit', () => {
         callbackUpdateDetail={mockCallbackUpdateDetail} />
     </Provider>)
 
-    const inputCode = screen.getByRole("input", { name: "input-code" })
-    fireEvent.change(inputCode, { target: { value: "New Code" } })
+    const inputName = screen.getByRole("input", { name: "input-name" })
+    fireEvent.change(inputName, { target: { value: "New Name" } })
 
     const points = screen.getAllByRole("meridian-point")
     fireEvent.change(points[1], { target: { value: "P2 Updated" } })
@@ -330,7 +313,7 @@ describe('ItemDetailEdit', () => {
 
     await waitFor(() => {
       let UPDATED_ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
-      UPDATED_ITEM["code"] = "New Code"
+      UPDATED_ITEM["name"] = "New Name"
       UPDATED_ITEM["points"][1] = "P2 Updated"
 
       expect(mockCallbackUpdateDetail).toHaveBeenCalledWith(UPDATED_ITEM)

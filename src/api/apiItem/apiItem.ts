@@ -31,4 +31,18 @@ export const apiItem = {
       code: code
     }));
   },
+
+  updateAcupuncturePoint: (language: string, data: IParamUpdateAcupuncturePoint) => {
+    const url = 'acupoint';
+    return apiClient.put(url + objectToQuery({
+      language: language,
+    }), data);
+  },
+
+  updateMeridian: (language: string, data: IParamUpdateMeridian) => {
+    const url = 'meridian';
+    return apiClient.put(url + objectToQuery({
+      language: language,
+    }), data);
+  },
 };

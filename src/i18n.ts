@@ -184,7 +184,11 @@ i18n
             caution: "caution: fields remained blank would be skipped in saving",
             demo_caution: "Please be informed that the UI is for demo purpose, so no update would be made. The following\
             are the content of the detail after update:",
-            warning: "Warning"
+            warning: "Warning",
+            update_result: {
+              success: "Updated successfully!",
+              failed: "Error occured! Could not update the information."
+            }
           },
           personal_records_page: {
             title: "Personal Records"
@@ -498,7 +502,11 @@ i18n
             caution: "lưu ý: các trường được để trống sẽ không được lưu trữ",
             demo_caution: "Vì giao diện hiện tại đang được sử dụng cho mục đích demo, quá trình cập nhật thông tin\
             sẽ không được thực hiện. Thông tin chi tiết sau khi được cập nhật sẽ bao gồm:",
-            warning: "Lưu ý"
+            warning: "Lưu ý",
+            update_result: {
+              success: "Đã cập nhật thông tin thành công!",
+              failed: "Có lỗi xảy ra! Không thể cập nhật thông tin."
+            }
           },
           personal_records_page: {
             title: "Dữ Liệu Cá Nhân"
