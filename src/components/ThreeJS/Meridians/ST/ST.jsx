@@ -1,8 +1,61 @@
 import './ST.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
+import { useState, useEffect, useCallback } from "react"
+import { setIsHoveringLine, setLineSelected, setLineHover, resetToInitialStatePointSelectionSlice } from 'src/redux/slice/index';
+import { useAppDispatch } from 'src/redux/store';
+import { useSelector } from 'react-redux';
+import { MERIDIANS_COLOR } from 'src/configs/constants';
+import { debounce } from "lodash"
 
-export const ST = ({ }) => {
+export const ST = ({ showLine }) => {
+  const LABEL = 'ST'
+  const LINE_BASE_COLOR = MERIDIANS_COLOR[5]
+
+  const [color, setColor] = useState(LINE_BASE_COLOR)
+  const dispatch = useAppDispatch();
+  const [isOnHover, setIsOnHover] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const [isInCheckingRange, setIsInCheckingRange] = useState(false);
+
+  const {
+    selectedLabel,
+    selectedType,
+    isHoveringPoint,
+    hoveringLineLabel
+  } = useSelector(
+    (state) => state.selectionSlice,
+  );
+
+  useEffect(() => {
+    setIsSelected(LABEL === selectedLabel && selectedType === 'line')
+  }, [selectedLabel])
+
+  useEffect(() => {
+    if (isSelected) {
+      setColor('#FF0000')
+    } else if (isOnHover) {
+      setColor('#000000')
+    } else {
+      setColor(LINE_BASE_COLOR)
+    }
+
+    dispatch(setIsHoveringLine({
+      isHoveringLine: isOnHover
+    }))
+  }, [isOnHover, isSelected])
+
+  useEffect(() => {
+    if (hoveringLineLabel) {
+      setIsOnHover(LABEL === hoveringLineLabel)
+    } else {
+      setIsOnHover(false);
+    }
+  }, [hoveringLineLabel])
+
+  const debounceClick = useCallback(
+    debounce((data) => dispatch(setLineSelected(data)), 100), []);
+
   const points = []
   points.push(new Vector3(-0.8, 12, 2.425))
   points.push(new Vector3(-0.795, 11.71, 2.45))
@@ -76,7 +129,6 @@ export const ST = ({ }) => {
   points.push(new Vector3(-4.2, -28.4, 1.75))
   points.push(new Vector3(-4.55, -29.05, 3.05))
   points.push(new Vector3(-4.8, -29.35, 3.9))
-
   const lineGeometry = new BufferGeometry().setFromPoints(points)
 
   return (
@@ -174,7 +226,7 @@ export const ST = ({ }) => {
       <Point
         positionArray={[-1.4, 2, 3]}
         label="ST-19"
-        labelPosition={0} />
+        labelPosition={2} />
 
       <Point
         positionArray={[-1.45, 1.4227, 3.1]}
@@ -306,9 +358,19 @@ export const ST = ({ }) => {
         label="ST-45"
         labelPosition={2} />
 
-      <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={'#43A6CC'} linewidth={2} linecap={'round'} linejoin={'round'} />
-      </line>
+      {showLine && <line
+        onClick={(e) => {
+          if (!isHoveringPoint && selectedType !== "line") {
+            debounceClick({})
+          } else {
+            if (selectedType === "line") {
+              dispatch(resetToInitialStatePointSelectionSlice())
+            }
+          }
+        }}
+        geometry={lineGeometry}>
+        <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
+      </line>}
     </>
   );
 };

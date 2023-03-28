@@ -1,6 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ICameraQuaternionSlice } from 'src/@types/slice';
-import { Quaternion } from 'three';
 
 export const initialStateCameraQuaternionSlice = {
   x: 0,

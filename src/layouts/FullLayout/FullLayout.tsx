@@ -19,7 +19,7 @@ export const FullLayout: React.FC<ILayout> = ({ header, children }) => {
       <div
         role="div"
         aria-label="full-layout-center"
-        className={`full-layout__center ${isPageWithTabletTitle ? "full-layout__center--title" : ""}`}>{children}</div>
+        className={`full-layout__center`}>{children}</div>
     </div>
   );
 };

@@ -1,8 +1,63 @@
 import './BL.scss'
 import { Point } from "src/components/ThreeJS/index";
 import { BufferGeometry, Vector3 } from "three";
+import { useState, useEffect, useCallback } from "react"
+import { setIsHoveringLine, setLineSelected, setLineHover, resetToInitialStatePointSelectionSlice } from 'src/redux/slice/index';
+import { useAppDispatch } from 'src/redux/store';
+import { useSelector } from 'react-redux';
+import { MERIDIANS_COLOR } from 'src/configs/constants';
+import { debounce } from "lodash"
+export const BL = ({ showLine }) => {
+  const LABEL = 'BL'
+  const LINE_BASE_COLOR = MERIDIANS_COLOR[7]
 
-export const BL = ({ }) => {
+  const [color, setColor] = useState(LINE_BASE_COLOR)
+  const dispatch = useAppDispatch();
+  const [isOnHover, setIsOnHover] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const [isInCheckingRange, setIsInCheckingRange] = useState(false);
+
+  const {
+    selectedLabel,
+    selectedType,
+    isHoveringPoint,
+    hoveringLineLabel
+  } = useSelector(
+    (state) => state.selectionSlice,
+  );
+
+  useEffect(() => {
+    setIsSelected(LABEL === selectedLabel && selectedType === 'line')
+  }, [selectedLabel])
+
+  useEffect(() => {
+    if (isSelected) {
+      setColor('#FF0000')
+    } else if (isOnHover) {
+      setColor('#000000')
+    } else {
+      setColor(LINE_BASE_COLOR)
+    }
+
+    dispatch(setIsHoveringLine({
+      isHoveringLine: isOnHover
+    }))
+  }, [isOnHover, isSelected])
+
+  useEffect(() => {
+    if (hoveringLineLabel) {
+      setIsOnHover(LABEL === hoveringLineLabel)
+    } else {
+      setIsOnHover(false);
+    }
+  }, [hoveringLineLabel])
+
+  const debounceClick = useCallback(
+    debounce((data) => dispatch(setLineSelected(data)), 100), []);
+
+  const debounceHover = useCallback(
+    debounce((data) => dispatch(setLineHover(data)), 5), []);
+
   const points = []
   points.push(new Vector3(0.35, 12.275, 2.5))
   points.push(new Vector3(0.35, 12.5, 2.75))
@@ -108,7 +163,6 @@ export const BL = ({ }) => {
   points2.push(new Vector3(5.3, -29.44, 2.1))
   points2.push(new Vector3(5.4, -29.45, 2.4))
   points2.push(new Vector3(5.525, -29.45, 2.95))
-
   const lineGeometry = new BufferGeometry().setFromPoints(points)
   const lineGeometry2 = new BufferGeometry().setFromPoints(points2)
 
@@ -193,8 +247,8 @@ export const BL = ({ }) => {
       <Point
         positionArray={[0.8, 4.6, -3.35]}
         label="BL-15"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.8, 3.875, -3.3]}
@@ -223,14 +277,14 @@ export const BL = ({ }) => {
       <Point
         positionArray={[0.8, 0.025, -2.7]}
         label="BL-20"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.8, -0.7, -2.45]}
         label="BL-21"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.8, -1.425, -2.2]}
@@ -283,31 +337,31 @@ export const BL = ({ }) => {
       <Point
         positionArray={[0.9, -6.2, -3.3]}
         label="BL-30"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[0.45, -4.9, -2.75]}
         label="BL-31"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
         positionArray={[0.45, -5.4, -2.95]}
         label="BL-32"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
         positionArray={[0.45, -5.8, -3.1]}
         label="BL-33"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
         positionArray={[0.45, -6.2, -3.25]}
         label="BL-34"
-        labelPosition={1}
+        labelPosition={4}
         reverse />
 
       <Point
@@ -349,8 +403,8 @@ export const BL = ({ }) => {
       <Point
         positionArray={[1.35, 6.775, -3.1]}
         label="BL-41"
-        labelPosition={4} 
-        reverse/>
+        labelPosition={4}
+        reverse />
 
       <Point
         positionArray={[1.35, 6.05, -3.35]}
@@ -504,13 +558,35 @@ export const BL = ({ }) => {
         label="BL-67"
         labelPosition={0} />
 
-      <line geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={'#44A668'} linewidth={2} linecap={'round'} linejoin={'round'} />
-      </line>
+      {showLine && <>
+        <line
+          onClick={(e) => {
+            if (!isHoveringPoint && selectedType !== "line") {
+              debounceClick({})
+            } else {
+              if (selectedType === "line") {
+                dispatch(resetToInitialStatePointSelectionSlice())
+              }
+            }
+          }}
+          geometry={lineGeometry}>
+          <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
+        </line>
 
-      <line geometry={lineGeometry2}>
-        <lineBasicMaterial attach="material" color={'#44A668'} linewidth={2} linecap={'round'} linejoin={'round'} />
-      </line>
+        <line
+          onClick={(e) => {
+            if (!isHoveringPoint && selectedType !== "line") {
+              debounceClick({})
+            } else {
+              if (selectedType === "line") {
+                dispatch(resetToInitialStatePointSelectionSlice())
+              }
+            }
+          }}
+          geometry={lineGeometry2}>
+          <lineBasicMaterial attach="material" color={color} linewidth={1} linecap={'round'} linejoin={'round'} />
+        </line>
+      </>}
     </>
   );
 };
