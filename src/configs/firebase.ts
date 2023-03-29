@@ -3,10 +3,8 @@ import {
   GoogleAuthProvider,
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
-  sendEmailVerification,
   onAuthStateChanged
 } from "firebase/auth";
 import { getStorage } from "firebase/storage";
@@ -19,11 +17,6 @@ const firebaseConfig = {
   messagingSenderId: "935886942779",
   appId: "1:935886942779:web:d53b2a6f21010f94fee21e"
 };
-
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-
-const MySwal = withReactContent(Swal);
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

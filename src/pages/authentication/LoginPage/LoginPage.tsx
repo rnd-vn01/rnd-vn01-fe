@@ -20,6 +20,7 @@ import { validateEmail } from 'src/helpers/validate';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
+import { createNewAccount, getAccountInfo } from 'src/helpers/api/auth';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -102,15 +103,33 @@ export const LoginPage: React.FC = () => {
         } else {
           // Valid login
           const user = result.user;
-          dispatch(setStateAuth({
-            isLoggedIn: true,
-            user: {
-              email: user.email,
-              profileImage: "https://firebasestorage.googleapis.com/v0/b/cs204finalproj.appspot.com/o/istockphoto-1223671392-612x612.jpg?alt=media&token=e9312c19-c34e-4a87-9a72-552532766cde",
-              firebaseId: user.uid,
-              isAdmin: ADMIN_EMAILS.includes(user.email)
-            }
-          }))
+
+          const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
+
+          if (Object.keys(accountInfo).length) {
+            dispatch(setStateAuth({
+              isLoggedIn: true,
+              user: {
+                email: accountInfo.email,
+                profileImage: accountInfo.image,
+                firebaseId: user.uid,
+                isAdmin: ADMIN_EMAILS.includes(accountInfo.email),
+                name: accountInfo.name
+              }
+            }))
+          } else {
+            dispatch(setStateAuth({
+              isLoggedIn: true,
+              user: {
+                email: user.email,
+                profileImage: "https://firebasestorage.googleapis.com/v0/b/cs204finalproj.appspot.com/o/istockphoto-1223671392-612x612.jpg?alt=media&token=e9312c19-c34e-4a87-9a72-552532766cde",
+                firebaseId: user.uid,
+                isAdmin: ADMIN_EMAILS.includes(user.email),
+                name: ""
+              }
+            }))
+          }
+
           history.push("/", { isRedirect: true })
         }
       })
@@ -160,16 +179,52 @@ export const LoginPage: React.FC = () => {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user as any;
 
-      dispatch(setStateAuth({
-        isLoggedIn: true,
-        user: {
-          name: user.displayName,
+      try {
+        await createNewAccount({
+          firebase_id: user.uid,
           email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
-          profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
-          firebaseId: user.uid,
-          isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
+          image: user.photoURL,
+          name: user.displayName
+        })
+
+        dispatch(setStateAuth({
+          isLoggedIn: true,
+          user: {
+            name: user.displayName,
+            email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
+            profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
+            firebaseId: user.uid,
+            isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
+          }
+        }))
+      } catch (e) {
+        // Skip this catch, case of normal login
+        const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
+
+        if (Object.keys(accountInfo).length) {
+          dispatch(setStateAuth({
+            isLoggedIn: true,
+            user: {
+              email: accountInfo.email,
+              profileImage: accountInfo.image,
+              firebaseId: user.uid,
+              isAdmin: ADMIN_EMAILS.includes(accountInfo.email),
+              name: accountInfo.name
+            }
+          }))
+        } else {
+          dispatch(setStateAuth({
+            isLoggedIn: true,
+            user: {
+              name: user.displayName,
+              email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
+              profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
+              firebaseId: user.uid,
+              isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
+            }
+          }))
         }
-      }))
+      }
 
       history.push("/", { isRedirect: true })
     } catch (err: any) {

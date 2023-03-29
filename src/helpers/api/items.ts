@@ -1,4 +1,4 @@
-import { apiItem } from "src/api/apiItem/apiItem"
+import { apiItem } from "src/api/endpoints/apiItem/apiItem"
 const EXCLUDE_FIELDS = ["_id", "createdAt", "updatedAt", "__v"]
 
 export const getMeridians = async (currentLanguage: string) => {

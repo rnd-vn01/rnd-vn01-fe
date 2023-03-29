@@ -7034,3 +7034,5 @@ export const IMPORTANT_POINTS = [
   'ST-40',
   'ST-42'
 ]
+
+export const DEFAULT_PROFILE_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/vn01-staging.appspot.com/o/default.jpg?alt=media&token=4cbce2c8-9847-415a-888e-d87443d0f7a1"

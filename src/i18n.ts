@@ -323,6 +323,14 @@ i18n
           },
           view_details: "View details",
           view_on_model: "View location on model",
+          exception: {
+            cannot_create_account: "Error! Cannot create new account."
+          },
+          toast: {
+            pending: "Updating image",
+            success: "Uploaded successfully!",
+            error: 'Error occured! Cannot upload image.',
+          }
         }
       },
       vi: {
@@ -639,6 +647,14 @@ i18n
           },
           view_details: "Xem chi tiết",
           view_on_model: "Xem vị trí trên mô hình",
+          exception: {
+            cannot_create_account: "Lỗi! Không thể đăng ký tài khoản mới."
+          },
+          toast: {
+            pending: "Đang tải ảnh",
+            success: "Tải ảnh thành công!",
+            error: 'Lỗi! Không thể tải ảnh.',
+          }
         }
       }
     }

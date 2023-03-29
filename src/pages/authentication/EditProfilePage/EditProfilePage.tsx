@@ -11,6 +11,10 @@ import { FullPageTitleBar } from 'src/components/common';
 import { TextField } from '@mui/material';
 import { Button } from 'src/components/common';
 import { setStateAuth } from 'src/redux/slice';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from 'src/configs/firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import { updateProfile } from 'src/helpers/api/auth';
 
 export const EditProfilePage: React.FC = ({
 
@@ -42,6 +46,7 @@ export const EditProfilePage: React.FC = ({
     if (user?.email) {
       setEmail(user?.email || "");
       setName(user?.name || "");
+      setImage(user?.profileImage || "");
     }
   }, [user]);
 
@@ -58,15 +63,93 @@ export const EditProfilePage: React.FC = ({
   //Values
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [image, setImage] = useState<string>("");
   const [calledUpdated, setCalledUpdated] = useState<boolean>(false);
 
   //Errors
   const [emailError, setEmailError] = useState<string>("");
   const [nameError, setNameError] = useState<string>("");
+  const [imageError, setImageError] = useState<string>("");
 
-  const validateAndSave = () => {
+  const handleInputChange = async (e: any) => {
+    //Upload images to firebase
+    Array.from(e.target.files).forEach(async (file: any) => {
+      let uploadPromise = upload(file).then((url: any) => {
+        setImage(url.default);
+        setImageError("");
+      })
+
+      toast.promise(
+        uploadPromise,
+        {
+          pending: t('toast.pending'),
+          success: t('toast.success'),
+          error: t('toast.error'),
+        },
+        {
+          success: {
+            duration: 5000,
+            icon: '🔥',
+          },
+        } as any
+      );
+    })
+  }
+
+  const upload = async (file: any) => {
+    return new Promise((resolve, reject) => {
+      const storageRef = ref(storage, `/accounts/${file.name}-${Date.now()}`)
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        'state_changed',
+        function (snapshot) {
+          switch (snapshot.state) {
+            case "paused":
+              break;
+            case "running":
+              break;
+          }
+        },
+        function (error) {
+          setImageError("Error occured");
+          switch (error.code) {
+            case "storage/unauthorized":
+              reject("User doesn't have permission to access the object");
+              break;
+
+            case "storage/canceled":
+              reject("User canceled the upload");
+              break;
+
+            case "storage/unknown":
+              reject("Unknown error occurred, inspect error.serverResponse");
+              break;
+          }
+        },
+        function () {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve({
+              default: downloadURL
+            });
+          })
+        }
+      );
+    })
+  }
+
+  const uploadImage = () => {
+    document?.getElementById('uploadImage')?.click();
+  }
+
+  const validateAndSave = async () => {
     if (name === "") {
       setNameError(t("create_account_page.messages.invalid"));
+      return;
+    }
+
+    if (image === "" || imageError !== "") {
+      setImageError(t("create_account_page.messages.invalid"));
       return;
     }
 
@@ -84,21 +167,43 @@ export const EditProfilePage: React.FC = ({
     //Valid
     setCalledUpdated(true);
 
-    // Handle Update
-    dispatch(setStateAuth({
-      isLoggedIn: true,
-      user: {
-        ...user,
-        name: name
-      }
-    }))
-
     // TODO: CALL API
+    let result = false;
+    result = await updateProfile({
+      firebase_id: user?.firebaseId,
+      email: email,
+      image: image,
+      name: name,
+    })
 
-    MySwal.close();
-    history.push("/", { isRedirect: true })
+    if (result) {
+      // Handle Update
+      dispatch(setStateAuth({
+        isLoggedIn: true,
+        user: {
+          ...user,
+          name: name,
+          profileImage: image
+        }
+      }))
+
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success...',
+        text: t('edit_page.update_result.success'),
+      })
+        .then(() => {
+          history.push("/", { isRedirect: true })
+          return;
+        })
+    } else {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: t('edit_page.update_result.failed'),
+      })
+    }
   }
-
 
   return (
     <div
@@ -140,6 +245,20 @@ export const EditProfilePage: React.FC = ({
           error={nameError !== ""}
           helperText={nameError} />
 
+        <div className="edit-profile-page__image--block">
+          <img className="edit-profile-page__image"
+            src={image}
+            onClick={() => uploadImage()}
+          >
+
+          </img>
+          <p className="edit-profile-page__image--error">{imageError}</p>
+        </div>
+
+        <input style={{ display: "none" }} type='file' id="uploadImage" name="uploadImage"
+          onChange={handleInputChange} />
+
+
         <Button
           theme="filled"
           caption={t('edit_profile_page.button_captions.update_profile')}
@@ -149,6 +268,8 @@ export const EditProfilePage: React.FC = ({
           }}
         />
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

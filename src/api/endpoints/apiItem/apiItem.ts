@@ -1,5 +1,5 @@
-import { objectToQuery, objectToFormData } from '../formatAPIParam';
-import apiClient from '../axios/apiClient';
+import { objectToQuery, objectToFormData } from '../../formatAPIParam';
+import apiClient from '../../axios/apiClient';
 
 export const apiItem = {
   getAcupuncturePoints: (language: string) => {
