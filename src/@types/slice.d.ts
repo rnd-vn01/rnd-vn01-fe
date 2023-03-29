@@ -331,12 +331,3 @@ interface IDataSlice {
   acupuncturePoints: Array<IAcupuncturePoint>,
   meridians: Array<IMeridian>
 }
-
-interface IParamUpdateAcupuncturePoint extends IAcupuncturePoint { }
-interface IParamUpdateMeridian {
-  code: string;
-  name: string;
-  description: string;
-  diseases: string;
-  points?: Array<string>
-}

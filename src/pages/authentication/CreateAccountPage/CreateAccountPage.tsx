@@ -12,12 +12,13 @@ import { Button } from 'src/components/common';
 import DemoImage from "src/assets/images/DemoBackground.png";
 import Logo from "src/assets/images/Logo.svg";
 import GoogleLogo from "src/assets/images/GoogleLogo.svg";
-import { ADMIN_EMAILS, APP_NAME } from 'src/configs/constants';
+import { ADMIN_EMAILS, APP_NAME, DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
 import { useAppDispatch } from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from 'react-responsive';
+import { createNewAccount } from 'src/helpers/api/auth';
 
 export const CreateAccountPage: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -101,8 +102,21 @@ export const CreateAccountPage: React.FC = () => {
       .then((user: any) => {
         if (auth.currentUser) {
           sendEmailVerification(auth.currentUser)
-            .then((result: any) => {
+            .then(async (result: any) => {
               MySwal.close();
+
+              try {
+                await createNewAccount({
+                  firebase_id: user.user.uid,
+                  email: email,
+                  image: DEFAULT_PROFILE_IMAGE_URL,
+                  name: ''
+                })
+              } catch (e) {
+                throw {
+                  message: t('cannot_create_account')
+                }
+              }
 
               MySwal.fire({
                 icon: 'success',
@@ -169,19 +183,33 @@ export const CreateAccountPage: React.FC = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user as any;
+      const email = user?.reloadUserInfo?.providerUserInfo?.[0].email
+
+      try {
+        await createNewAccount({
+          firebase_id: user.uid,
+          email: email,
+          image: user.photoURL,
+          name: user.displayName
+        })
+      } catch (e) {
+        throw {
+          message: t('cannot_create_account')
+        }
+      }
 
       dispatch(setStateAuth({
         isLoggedIn: true,
         user: {
           name: user.displayName,
-          email: user.email,
+          email: email,
           profileImage: user.photoURL,
           firebaseId: user.uid,
-          isAdmin: ADMIN_EMAILS.includes(user.email),
+          isAdmin: ADMIN_EMAILS.includes(email),
         }
       }))
 
-      history.push("/", { isRedirect: true })
+      history.push("/", { isRedirect: true });
     } catch (err: any) {
       MySwal.fire({
         icon: 'error',

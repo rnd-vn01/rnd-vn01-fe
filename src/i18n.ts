@@ -326,6 +326,14 @@ i18n
           view_on_model: "View location on model",
           new_personal_records: {
             days_streak: "days streak"
+          },
+          exception: {
+            cannot_create_account: "Error! Cannot create new account."
+          },
+          toast: {
+            pending: "Updating image",
+            success: "Uploaded successfully!",
+            error: 'Error occured! Cannot upload image.',
           }
         }
       },
@@ -646,6 +654,14 @@ i18n
           view_on_model: "Xem vị trí trên mô hình",
           new_personal_records: {
             days_streak: "ngày liên tiếp"
+          },
+          exception: {
+            cannot_create_account: "Lỗi! Không thể đăng ký tài khoản mới."
+          },
+          toast: {
+            pending: "Đang tải ảnh",
+            success: "Tải ảnh thành công!",
+            error: 'Lỗi! Không thể tải ảnh.',
           }
         }
       }

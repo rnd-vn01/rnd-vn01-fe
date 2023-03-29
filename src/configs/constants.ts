@@ -7082,3 +7082,5 @@ export const POINT_MERIDIAN_COLOR_MAP = {
   "Du": 0x7f7fd5, //Du
   "Ren": 0x9bb9b9 //Ren
 }
+
+export const DEFAULT_PROFILE_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/vn01-staging.appspot.com/o/default.jpg?alt=media&token=4cbce2c8-9847-415a-888e-d87443d0f7a1"
