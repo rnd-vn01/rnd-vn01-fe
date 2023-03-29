@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { DetailPage } from './DetailPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { mockGetUpdateItemCombined } from 'src/api/mocks/mockGetUpdateItemCombined';
+import { mockGetUpdateItemCombined } from 'src/api/mocks/items/mockGetUpdateItemCombined';
 import { setStateLanguage } from 'src/redux/slice';
 
 const mockHistoryPush = jest.fn();

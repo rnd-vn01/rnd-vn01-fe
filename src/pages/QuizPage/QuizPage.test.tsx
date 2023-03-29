@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { QuizPage } from './QuizPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {

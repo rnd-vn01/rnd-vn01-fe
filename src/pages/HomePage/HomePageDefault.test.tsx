@@ -8,7 +8,7 @@ import {
   setModelLoaded,
   setShowingQuickInformation
 } from 'src/redux/slice';
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

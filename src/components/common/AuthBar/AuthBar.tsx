@@ -135,6 +135,7 @@ export const AuthBar: React.FC = ({ }) => {
             {isLoggedIn ?
               <>
                 <img referrerPolicy="no-referrer"
+                  data-testid="auth-bar-profile-image"
                   src={user.profileImage || DEFAULT_PROFILE_IMAGE_URL} className="auth-bar__menu--image-logo"></img>
                 {user.isAdmin && <img src={IconAdmin} className="auth-bar__menu--icon-gear"></img>}
               </>
