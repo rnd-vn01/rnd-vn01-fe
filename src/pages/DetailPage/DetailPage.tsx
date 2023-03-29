@@ -15,6 +15,8 @@ import { useQuery } from 'src/helpers/hooks/useQuery';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
+import { useMediaQuery } from 'react-responsive';
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
 
 export const DetailPage: React.FC<IDetailPage> = ({
 
@@ -29,6 +31,11 @@ export const DetailPage: React.FC<IDetailPage> = ({
   const [detail, setDetail] = useState<any>({});
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
+  // RESPONSIVE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const [mobileCalledEditDetail, setMobileCalledEditDetail] = useState<number>(0);
+
   const {
     currentLanguage
   } = useSelector(
@@ -37,6 +44,10 @@ export const DetailPage: React.FC<IDetailPage> = ({
 
   const MySwal = withReactContent(Swal);
   const handleUpdate = (newItemDetail: any) => {
+    if (!isDesktop) {
+      setMobileCalledEditDetail(0);
+    }
+
     let formattedDetail = { ...newItemDetail }
     Object.keys(formattedDetail).forEach((field) => {
       Object.defineProperty(formattedDetail, capitalizeAndMapInformationField(isPoint, field, currentLanguage),
@@ -101,10 +112,28 @@ export const DetailPage: React.FC<IDetailPage> = ({
       aria-label="detail-page"
       className="detail-page ">
       <div className="detail-page__content">
-        <FullPageTitleBar
+        {isDesktop ? <FullPageTitleBar
           pageCode={isEdit ? "data-management" : ""}
           translateCode={isEdit ? "data_management" : ""}
-        />
+        /> :
+          <MobileTitleBar
+            translateCode={isEdit ? "data_management" : itemCode}
+            isShowingSideMenu={isShowingSideMenu}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu}
+            isEdit={isEdit}
+            isViewingDetail={!isEdit}
+            callbackTriggerEditDetail={() => {
+              setMobileCalledEditDetail(mobileCalledEditDetail + 1)
+            }}
+          />}
+
+        {!isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>}
+
 
         <SearchBarRedirect />
 
@@ -120,6 +149,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
             isPoint={isPoint}
             query={hookQuery.get('query')}
             callbackUpdateDetail={handleUpdate}
+            mobileCalledEditDetail={mobileCalledEditDetail}
           />
         )}
       </div>

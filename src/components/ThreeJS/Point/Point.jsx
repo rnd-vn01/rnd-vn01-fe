@@ -90,22 +90,22 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   const getPointSize = () => {
     let desktopSize = isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375));
-    let mobileSize = isOnHover ? 10.5 : (isSelected ? 12.5 : (isAnswerPoint ? 15 : 8.5));
+    let mobileSize = isOnHover ? 10.5 : (isSelected ? 10.5 : (isAnswerPoint ? 12 : 8.5));
 
     if (!isTablet) {
       mobileSize *= 1.5
       if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
-        mobileSize *= 2
+        mobileSize *= 1.35
         if (cameraZoom === 1.5)
-          mobileSize *= 1.5
+          mobileSize *= 1.15
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
-        mobileSize *= 1.5
+        mobileSize *= 1.15
         if (cameraZoom === 1.5)
-          mobileSize *= 1.5
+          mobileSize *= 1.15
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) {
-        mobileSize *= 1.25
+        mobileSize *= 1.05
         if (cameraZoom === 1.5)
-          mobileSize *= 1.25
+          mobileSize *= 1.05
       }
 
       return mobileSize

@@ -2,6 +2,7 @@ import './RecordsSummary.scss';
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { SUMMARY_SHOWING_TIME_TYPES, SUMMARY_SHOWING_TIME_TYPE_OPTIONS } from 'src/configs/constants';
+import { useMediaQuery } from 'react-responsive';
 
 export const RecordsSummary: React.FC<IRecordsSummary> = ({
   data
@@ -14,6 +15,7 @@ export const RecordsSummary: React.FC<IRecordsSummary> = ({
     quizzes: 0,
     accuracy: 0
   });
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   useEffect(() => {
     let testData = {}
@@ -85,23 +87,25 @@ export const RecordsSummary: React.FC<IRecordsSummary> = ({
         </span>
       </div>
 
-      <div className='flex justify-between pt-3 pb-2'>
-        <div className='records-summary__item'>
+      <div className={`
+        pt-3 pb-2 ${isDesktop ? "flex justify-between" : "grid grid-cols-2"}
+      `}>
+        <div className={`records-summary__item ${!isDesktop && "col-span-1 mb-2"}`}>
           <h1 data-testid="record-summary-points">{showingData?.points}</h1>
           <h3>{t('general.points')} {' '} {t('records.summary.caption.learnt')}</h3>
         </div>
 
-        <div className='records-summary__item'>
+        <div className={`records-summary__item ${!isDesktop && "col-span-1 mb-2"}`}>
           <h1 data-testid="record-summary-meridians">{showingData?.meridians}</h1>
           <h3>{t('general.meridians')} {' '} {t('records.summary.caption.learnt')}</h3>
         </div>
 
-        <div className='records-summary__item'>
+        <div className={`records-summary__item ${!isDesktop && "col-span-1"}`}>
           <h1 data-testid="record-summary-quizzes">{showingData?.quizzes}</h1>
           <h3>{t('records.summary.caption.quiz_attempted')}</h3>
         </div>
 
-        <div className='records-summary__item'>
+        <div className={`records-summary__item ${!isDesktop && "col-span-1"}`}>
           <h1 data-testid="record-summary-accuracy">{showingData?.accuracy}%</h1>
           <h3>{t('records.summary.caption.accuracy_rate')}</h3>
         </div>

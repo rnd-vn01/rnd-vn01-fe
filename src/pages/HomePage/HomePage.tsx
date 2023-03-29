@@ -13,10 +13,19 @@ import { LanguagePicker } from 'src/components/common';
 import { QuickInformationMiddleware } from 'src/components/middleware';
 import { CursorControlMiddleware } from 'src/components/middleware';
 import { useLocation } from 'react-router-dom';
+import { SideMenu } from 'src/components/common/responsive/SideMenu/SideMenu';
+import { useMediaQuery } from 'react-responsive';
+import { MenuBar } from 'src/components/common/responsive/MenuBar/MenuBar';
 
 export const HomePage: React.FC = () => {
   const [isShowingLanding, setIsShowingLanding] = useState<boolean>(true);
+
+  // MOBILE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const [isShowingSearchBar, setIsShowingSearchBar] = useState<boolean>(false);
+
   const location = useLocation() as any;
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   const {
     currentLanguage
@@ -41,6 +50,12 @@ export const HomePage: React.FC = () => {
   useEffect(() => {
     if (location?.state?.isRedirect) {
       setIsShowingLanding(false);
+    } else {
+      setTimeout(() => {
+        if (!modelLoaded) {
+          setIsShowingLanding(false);
+        }
+      }, 5000);
     }
   }, [])
 
@@ -73,30 +88,33 @@ export const HomePage: React.FC = () => {
           src={DemoImage}></img> */}
       </div>
 
-      <div className="home-page__section--side-bar">
-        <QuickSearchBar />
-      </div>
+      {!isMobile &&
+        <>
+          <div className="home-page__section--side-bar">
+            <QuickSearchBar />
+          </div>
 
-      <div className="home-page__section--menu">
-        <AuthBar />
-      </div>
+          <div className="home-page__section--menu">
+            <AuthBar />
+          </div>
 
-      <div className="home-page__section--language">
-        <LanguagePicker />
-      </div>
+          <div className="home-page__section--language">
+            <LanguagePicker />
+          </div>
 
-      <div className="home-page__section--controls">
-        <HomePageControl
-          isQuizPage={false}
-          callbackPanCenter={() => (sceneRef.current as any)?.panCenter()}
-          callbackPanDown={() => (sceneRef.current as any)?.panDown()}
-          callbackPanLeft={() => (sceneRef.current as any)?.panLeft()}
-          callbackPanRight={() => (sceneRef.current as any)?.panRight()}
-          callbackPanUp={() => (sceneRef.current as any)?.panUp()}
-          callbackZoomIn={() => (sceneRef.current as any)?.zoomIn()}
-          callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
-        />
-      </div>
+          <div className="home-page__section--controls">
+            <HomePageControl
+              isQuizPage={false}
+              callbackPanCenter={() => (sceneRef.current as any)?.panCenter()}
+              callbackPanDown={() => (sceneRef.current as any)?.panDown()}
+              callbackPanLeft={() => (sceneRef.current as any)?.panLeft()}
+              callbackPanRight={() => (sceneRef.current as any)?.panRight()}
+              callbackPanUp={() => (sceneRef.current as any)?.panUp()}
+              callbackZoomIn={() => (sceneRef.current as any)?.zoomIn()}
+              callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
+            />
+          </div>
+        </>}
 
       {(isShowingQuickInformation != null) &&
         <div
@@ -128,6 +146,23 @@ export const HomePage: React.FC = () => {
           {modelLoaded && <HomeTitle />}
         </div>
       </div>
+
+      {isMobile && <>
+        <MenuBar
+          isShowingSideMenu={isShowingSideMenu}
+          callbackSetIsShowingSideMenu={setIsShowingSideMenu}
+          isShowingSearchBar={isShowingSearchBar}
+          callbackSetIsShowingSearchBar={setIsShowingSearchBar}
+        />
+        <SideMenu
+          isShowing={isShowingSideMenu}
+          callbackSetIsShowing={setIsShowingSideMenu}
+        />
+        {isShowingSearchBar && <div className="home-page__section--side-bar"
+          role="div" aria-label="home-page-search-bar">
+          <QuickSearchBar />
+        </div>}
+      </>}
     </div>
   );
 };

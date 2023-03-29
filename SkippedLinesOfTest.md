@@ -5,13 +5,13 @@ src/components/common/Records/RecordsProgressLog
     RecordsProgressLog.tsx ~ 69-93
 
 src/components/common/Search/SearchBar
-    SearchBar.tsx ~ 82
+    SearchBar.tsx ~ 87
 
 src/components/common/Search/SearchResults
-    SearchResults.tsx ~ 148-151, 190
+    SearchResults.tsx ~ 157-160, 199
 
 src/helpers 
     searchProcess.ts ~ 131
 
 src/pages/QuizPage
-    QuizPage.tsx ~ 29,31
+    QuizPage.tsx ~ 38, 40

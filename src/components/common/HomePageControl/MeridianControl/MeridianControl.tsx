@@ -1,7 +1,6 @@
 import './MeridianControl.scss';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from "react-i18next";
 import ReactTooltip from 'react-tooltip';
 import TE from "src/assets/images/homeControls/meridianIcons/TE.svg";
@@ -19,7 +18,7 @@ import SI from "src/assets/images/homeControls/meridianIcons/SI.svg";
 import GB from "src/assets/images/homeControls/meridianIcons/GB.svg";
 import KI from "src/assets/images/homeControls/meridianIcons/KI.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { EXTRA_MERIDIAN_COLORS, MERIDIANS_COLOR } from 'src/configs/constants';
 import { setLinePreSelectByLabel, setLineSelectedByLabel } from 'src/redux/slice';
 import { useMediaQuery } from 'react-responsive';
@@ -30,6 +29,7 @@ export const MeridianControl: React.FC = ({ }) => {
   const [selectedMeridian, setSelectedMeridian] = useState<string>("LU");
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   const OPTIONS = {
     "LU": {
@@ -135,7 +135,7 @@ export const MeridianControl: React.FC = ({ }) => {
             className='meridian-control__selected--icon'
             src={OPTIONS[selectedMeridian].icon}></img>
         </div>
-        <FontAwesomeIcon icon={faCaretUp}></FontAwesomeIcon>
+        <FontAwesomeIcon icon={isMobile ? faCaretDown : faCaretUp}></FontAwesomeIcon>
       </div>
 
       <div
@@ -145,7 +145,7 @@ export const MeridianControl: React.FC = ({ }) => {
         {Object.keys(OPTIONS).map((meridian, index) => (
           <div
             key={index}
-            className={`m-2 w-100 text-center meridian-control__dropdown--option
+            className={`m-2 w-100 ${isMobile && "flex-center"} text-center meridian-control__dropdown--option
               ${meridian === selectedMeridian ? "meridian-control__dropdown--option-selected" : ""}
             `}
             role="div"

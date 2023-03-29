@@ -17,6 +17,7 @@ import { APP_NAME } from 'src/configs/constants';
 import { validateEmail } from 'src/helpers/validate';
 import { useAppDispatch } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from 'react-responsive';
 
 export const ChangePasswordPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -27,6 +28,8 @@ export const ChangePasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const location = useLocation() as any;
   const { t, i18n } = useTranslation();
+
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   document.title = `${APP_NAME} | ${t('password_reset_page.title')}`
 
@@ -99,7 +102,7 @@ export const ChangePasswordPage: React.FC = () => {
     <div
       role="div"
       aria-label="password-reset-page"
-      className="password-reset-page grid grid-cols-5">
+      className={`password-reset-page grid ${isMobile ? "grid-cols-2" : "grid-cols-5"}`}>
       <div className="password-reset-page__section password-reset-page__section--main col-span-2 flex-center">
         <div className="password-reset-page__home-icon"
           onClick={() => history.push("/", { isRedirect: true })}>
@@ -142,9 +145,9 @@ export const ChangePasswordPage: React.FC = () => {
         />
       </div>
 
-      <div className="password-reset-page__section password-reset-page__section--image col-span-3">
+      {!isMobile && <div className="password-reset-page__section password-reset-page__section--image col-span-3">
         <img className="password-reset-page__image--demo" src={DemoImage}></img>
-      </div>
+      </div>}
     </div>
   );
 };

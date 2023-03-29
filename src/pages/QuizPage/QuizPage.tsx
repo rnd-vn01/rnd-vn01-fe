@@ -8,16 +8,25 @@ import {
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
 import { SceneQuiz } from 'src/components/index';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 import { APP_NAME, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 import { CursorControlMiddleware } from 'src/components/middleware';
+import { useMediaQuery } from 'react-responsive';
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
 
 export const QuizPage: React.FC = () => {
   const { t, i18n } = useTranslation();
   const sceneRef = useRef();
   const [questionType, setQuestionType] = useState<number>(QUIZ_QUESTION_TYPE.DESCRIPTION);
+
+  // RESPONSIVE
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const [quizStatus, setQuizStatus] = useState<any>({
+    currentQuest: 0,
+    totalQuest: 0,
+    totalCorrect: 0
+  })
 
   document.title = `${APP_NAME} | ${t('quiz_page.title')}`
 
@@ -37,9 +46,9 @@ export const QuizPage: React.FC = () => {
     <div
       role="div"
       aria-label="quiz-page"
-      className="quiz-page grid grid-cols-7">
+      className={`quiz-page grid ${isDesktop ? "grid-cols-7" : "grid-rows-8"}`}>
       <div
-        className="quiz-page__section quiz-page__section--model col-span-5">
+        className={`quiz-page__section quiz-page__section--model ${isDesktop ? "col-span-5" : "row-span-5"}`}>
         <Canvas shadows>
           <SceneQuiz
             ref={sceneRef}
@@ -58,21 +67,39 @@ export const QuizPage: React.FC = () => {
           src={DemoImage}></img>} */}
       </div>
 
-      <div className="quiz-page__section quiz-page__section--side-bar col-span-2">
+      <div className={`quiz-page__section quiz-page__section--side-bar ${isDesktop ? "col-span-2" : "row-span-3"}`}>
         <QuizManager
           callbackSetQuestionType={setQuestionType}
+          callbackSetQuizStatus={setQuizStatus}
         ></QuizManager>
       </div>
 
-      <div
+      {isDesktop && <div
         style={{
           zIndex: 202
         }}
         className="quiz-page__section--menu">
         <AuthBar />
-      </div>
+      </div>}
 
-      <div className="quiz-page__section--controls">
+      {!isDesktop && <MobileTitleBar
+        translateCode={"quiz_page"}
+        isQuiz={true}
+        isShowingSideMenu={isShowingSideMenu}
+        callbackSetIsShowingSideMenu={setIsShowingSideMenu}
+        currentQuest={quizStatus.currentQuest}
+        totalQuest={quizStatus.totalQuest}
+        totalCorrect={quizStatus.totalCorrect}
+      />}
+
+      {!isDesktop && <>
+        <SideMenu
+          isShowing={isShowingSideMenu}
+          callbackSetIsShowing={setIsShowingSideMenu}
+        />
+      </>}
+
+      {isDesktop && <div className="quiz-page__section--controls">
         <HomePageControl
           isQuizPage={true}
           callbackPanCenter={() => (sceneRef.current as any)?.panCenter()}
@@ -83,7 +110,7 @@ export const QuizPage: React.FC = () => {
           callbackZoomIn={() => (sceneRef.current as any)?.zoomIn()}
           callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
         />
-      </div>
+      </div>}
 
       {/* Middleware */}
       <CursorControlMiddleware />

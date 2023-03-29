@@ -1,9 +1,15 @@
+@import "src/responsive.scss";
+
 .quick-search {
    height: 60px;
    width: 100%;
    border-bottom: 1px solid black;
    cursor: text;
    position: relative;
+
+   @include mobile {
+      border-bottom: 2px solid black;
+   }
 
    &__logo {
       &--search {

@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .about-page-section {
   width: 100%;
   margin: 0 auto;
@@ -22,6 +24,7 @@
       font-size: 1.25rem;
       line-height: 1.75rem;
       font-weight: normal;
+      text-align: right;
     }
 
     &--collapsable {
@@ -72,6 +75,11 @@
       transform: translateY(-50%);
       color: black;
       margin-bottom: -12%;
+
+      @include mobile {
+        font-size: 1.5rem;
+        line-height: 1.55rem;
+      }
     }
   }
 
@@ -80,6 +88,10 @@
 
     &--avatar {
       height: 200px;
+
+      @include mobile {
+        height: 150px;
+      }
     }
 
     h1 {

@@ -2,12 +2,16 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AboutPage } from './AboutPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
+import { Context as ResponsiveContext } from "react-responsive";
 
-describe('AboutPage', () => {
+describe('About Page - Desktop', () => {
   beforeEach(() => {
-    render(<Provider store={store}>
-      <AboutPage />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <AboutPage />
+        </Provider>
+      </ResponsiveContext.Provider>)
   })
 
   it("to be rendered successfully", async () => {
@@ -73,3 +77,21 @@ describe('AboutPage', () => {
     })
   })
 });
+
+describe('About Page - Mobile', () => {
+  beforeEach(() => {
+    render(
+      <ResponsiveContext.Provider value={{ width: 500 }}>
+        <Provider store={store}>
+          <AboutPage />
+        </Provider>
+      </ResponsiveContext.Provider>)
+  })
+
+  it("to include the mobile title bar", async () => {
+    await waitFor(() => {
+      expect(screen.getByRole("div", { name: "mobile-title-bar" })).toBeInTheDocument();
+      expect(screen.getByRole("div", { name: "side-menu" })).toBeInTheDocument();
+    })
+  })
+})

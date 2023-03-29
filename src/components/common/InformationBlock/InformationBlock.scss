@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .information-block {
   height: fit-content;
   max-height: 65vh;
@@ -84,6 +86,12 @@
       width: 40px;
       left: -50px;
       top: -52px;
+
+      @include mobile {
+        bottom: 100px;
+        left: unset;
+        right: 5px;
+      }
     }
 
     &--faded {

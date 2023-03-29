@@ -24,6 +24,7 @@ import {
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS, MERIDIANS, POINT_LOCATIONS } from 'src/configs/constants';
+import { useMediaQuery } from 'react-responsive';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -44,6 +45,9 @@ export const SceneQuiz = forwardRef((props, ref) => {
     (state: RootState) => state.quizSlice,
   );
   const [isShowingLine, setIsShowingLine] = useState<boolean>(false);
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
@@ -311,7 +315,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
 
       <OrbitControls
         ref={controls}
-        target={[1, 5, 0]}
+        target={[isMobile ? 0 : 1, isMobile ? 7.5 : 5, 0]}
         mouseButtons={{
           LEFT: MOUSE.ROTATE,
           MIDDLE: MOUSE.DOLLY,

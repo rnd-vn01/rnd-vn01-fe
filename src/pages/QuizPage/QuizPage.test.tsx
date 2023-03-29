@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { QuizPage } from './QuizPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
+import { Context as ResponsiveContext } from "react-responsive";
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -16,9 +17,11 @@ jest.mock('react-i18next', () => ({
 
 describe('QuizPage', () => {
   beforeEach(() => {
-    render(<Provider store={store}>
-      <QuizPage />
-    </Provider>)
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <QuizPage />
+      </Provider>
+    </ResponsiveContext.Provider>)
   })
 
   it("to be rendered successfully", async () => {
