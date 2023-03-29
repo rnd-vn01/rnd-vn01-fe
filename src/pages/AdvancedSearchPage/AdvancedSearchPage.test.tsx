@@ -3,7 +3,7 @@ import { AdvancedSearchPage } from './AdvancedSearchPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { Context as ResponsiveContext } from "react-responsive";
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 const spyScrollTo = jest.fn();
 Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });

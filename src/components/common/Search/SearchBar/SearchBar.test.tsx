@@ -2,7 +2,7 @@ import { createEvent, fireEvent, render, screen, waitFor } from '@testing-librar
 import { SearchBar } from './SearchBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 const mockCallbackIsFilter = jest.fn();
 

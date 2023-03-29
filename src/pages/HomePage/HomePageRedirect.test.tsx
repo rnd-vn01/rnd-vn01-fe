@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { Context as ResponsiveContext } from "react-responsive";
 import React from 'react';
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

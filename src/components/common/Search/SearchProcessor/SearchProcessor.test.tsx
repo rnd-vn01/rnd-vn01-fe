@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { SearchProcessor } from './SearchProcessor';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 describe('SearchProcessor', () => {
   beforeAll(() => {

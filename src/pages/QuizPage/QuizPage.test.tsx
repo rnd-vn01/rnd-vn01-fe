@@ -3,7 +3,7 @@ import { QuizPage } from './QuizPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { Context as ResponsiveContext } from "react-responsive";
-import { mockGetItems } from 'src/api/mocks/mockGetItems';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {

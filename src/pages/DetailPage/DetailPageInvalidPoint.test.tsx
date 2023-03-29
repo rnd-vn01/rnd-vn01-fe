@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { DetailPage } from './DetailPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { mockGetItemByCode } from 'src/api/mocks/mockGetItemByCode';
+import { mockGetItemByCode } from 'src/api/mocks/items/mockGetItemByCode';
 
 const mockHistoryPush = jest.fn();
 
