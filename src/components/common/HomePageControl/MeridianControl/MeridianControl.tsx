@@ -20,7 +20,7 @@ import KI from "src/assets/images/homeControls/meridianIcons/KI.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { EXTRA_MERIDIAN_COLORS, MERIDIANS_COLOR } from 'src/configs/constants';
-import { setLinePreSelectByLabel, setLineSelectedByLabel } from 'src/redux/slice';
+import { resetToInitialStatePointSelectionSlice, setLinePreSelectByLabel, setLineSelectedByLabel } from 'src/redux/slice';
 import { useMediaQuery } from 'react-responsive';
 
 export const MeridianControl: React.FC = ({ }) => {
@@ -154,6 +154,7 @@ export const MeridianControl: React.FC = ({ }) => {
               setSelectedMeridian(meridian);
               setIsDropdown(false);
               if (isDesktop) {
+                dispatch(resetToInitialStatePointSelectionSlice());
                 dispatch(setLinePreSelectByLabel({
                   line: meridian
                 }))
