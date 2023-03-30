@@ -3206,43 +3206,48 @@ export const LINE_POINTS = {
 export const FOCUS_OPTIONS = {
   "ST": {
     "point": {
-      "x": -0.8,
-      "y": 12,
-      "z": 2.425,
+      "x": 1,
+      "y": 2.5,
+      "z": 0,
     },
-    "rotate": 0
+    "rotate": 30,
+    "zoom": 1.75
   },
   "KI": {
     "point": {
-      "x": -2.35,
-      "y": -28.8,
-      "z": -0.2,
+      "x": 1,
+      "y": -2.5,
+      "z": 0,
     },
-    "rotate": -22.5
+    "rotate": 20,
+    "zoom": 1.75
   },
   "BL": {
     "point": {
       "x": 1.35,
-      "y": 4.6,
+      "y": 0,
       "z": -3.45,
     },
-    "rotate": 180
+    "rotate": 180,
+    "zoom": 2
   },
   "Du": {
     "point": {
       "x": 0.075,
-      "y": 6.05,
+      "y": 4.05,
       "z": -3.1,
     },
-    "rotate": 180
+    "rotate": 180,
+    "zoom": 1.5
   },
   "GB": {
     "point": {
       "x": -1.875,
-      "y": 13.25,
+      "y": 3.25,
       "z": 0.675,
     },
-    "rotate": 22.5
+    "rotate": 45,
+    "zoom": 1.5
   },
   "HT": {
     "point": {
@@ -3250,73 +3255,80 @@ export const FOCUS_OPTIONS = {
       "y": 1.65,
       "z": 0,
     },
-    "rotate": 10
+    "rotate": 10,
+    "zoom": 3
   },
   "LI": {
     "point": {
       "x": 8.5,
-      "y": 2.75,
+      "y": 2,
       "z": -1,
     },
     "rotate": 315,
-    "zoom": 2
+    "zoom": 1.65
   },
   "Liv": {
     "point": {
       "x": 2.625,
-      "y": -25.1,
+      "y": -12.5,
       "z": -0.7,
     },
-    "rotate": 22.5
+    "rotate": 35,
+    "zoom": 1.5
   },
   "LU": {
     "point": {
-      "x": -7.5,
-      "y": 3,
+      "x": -10.5,
+      "y": 2,
       "z": 0.35,
     },
     "rotate": 0,
-    "zoom": 3
+    "zoom": 2.75
   },
   "PC": {
     "point": {
-      "x": -6.3,
-      "y": 4.1,
+      "x": -10.3,
+      "y": 2,
       "z": 0.4,
     },
-    "rotate": 0
+    "rotate": 20,
+    "zoom": 2.5
   },
   "Ren": {
     "point": {
       "x": 0,
-      "y": 0,
+      "y": 2.5,
       "z": 0,
     },
-    "rotate": 0
+    "rotate": 0,
+    "zoom": 2.4
   },
   "SI": {
     "point": {
-      "x": 3.5,
-      "y": 6.5,
+      "x": 6,
+      "y": 4,
       "z": -3.1,
     },
-    "rotate": 180
+    "rotate": 200,
+    "zoom": 2
   },
   "SP": {
     "point": {
       "x": -3,
-      "y": -28.9,
-      "z": 2.9,
+      "y": -21,
+      "z": 3.5,
     },
-    "rotate": -22.5
+    "rotate": -22.5,
+    "zoom": 2.5
   },
   "TE": {
     "point": {
-      "x": -14.1,
-      "y": -1.6,
-      "z": 1.35,
+      "x": -12.1,
+      "y": 3.75,
+      "z": 1.75,
     },
-    "rotate": 105
+    "rotate": 125,
+    "zoom": 1.75
   }
 }
 

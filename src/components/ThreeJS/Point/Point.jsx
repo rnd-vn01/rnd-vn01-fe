@@ -89,7 +89,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
 
   const getPointSize = () => {
-    let desktopSize = isOnHover ? 12.5 : (isSelected ? 14 : (isAnswerPoint ? 17.5 : 9.375));
+    let desktopSize = isOnHover ? 12.5 : (isSelected ? 13 : (isAnswerPoint ? 16.5 : 9.375));
     let mobileSize = isOnHover ? 10.5 : (isSelected ? 10.5 : (isAnswerPoint ? 12 : 8.5));
 
     if (!isTablet) {
@@ -111,15 +111,15 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       return mobileSize
     } else {
       if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
-        desktopSize *= 2.75
+        desktopSize *= 3
         if (cameraZoom === 1.5)
           desktopSize *= 1.5
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
-        desktopSize *= 2
+        desktopSize *= 1.35
         if (cameraZoom === 1.5)
           desktopSize *= 1.5
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL) {
-        desktopSize *= 1.5
+        desktopSize *= 1.05
         if (cameraZoom === 1.5)
           desktopSize *= 1.25
       } else {

@@ -103,7 +103,7 @@ export const Scene = forwardRef((props, ref) => {
         _v.y = 0.5
         break
     }
-    controls.current.target.sub(_v)
+    controls.current?.target?.sub(_v)
   }
 
   useEffect(() => {
@@ -113,10 +113,10 @@ export const Scene = forwardRef((props, ref) => {
     // const interval = setInterval(() => {
     //   if (camera.current) {
     //     dispatch(setStateCameraQuaternion({
-    //       x: camera.current.quaternion._x,
-    //       y: camera.current.quaternion._y,
-    //       z: camera.current.quaternion._z,
-    //       w: camera.current.quaternion._w,
+    //       x: camera.current?.quaternion._x,
+    //       y: camera.current?.quaternion._y,
+    //       z: camera.current?.quaternion._z,
+    //       w: camera.current?.quaternion._w,
     //     }))
     //   }
     // }, 2500)
@@ -130,22 +130,22 @@ export const Scene = forwardRef((props, ref) => {
     window.addEventListener("keydown", (e) => {
       switch (e.key) {
         case "ArrowLeft":
-          if (controls.current.target.x > -15) {
+          if (controls.current?.target?.x > -15) {
             move(PAN_DIRECTION.LEFT)
           }
           break
         case "ArrowRight":
-          if (controls.current.target.x < 15) {
+          if (controls.current?.target?.x < 15) {
             move(PAN_DIRECTION.RIGHT)
           }
           break
         case "ArrowUp":
-          if (controls.current.target.y < 15) {
+          if (controls.current?.target?.y < 15) {
             move(PAN_DIRECTION.UP)
           }
           break
         case "ArrowDown":
-          if (controls.current.target.y > -30) {
+          if (controls.current?.target?.y > -30) {
             move(PAN_DIRECTION.DOWN)
           }
           break
@@ -201,11 +201,11 @@ export const Scene = forwardRef((props, ref) => {
     },
 
     panCenter() {
-      controls.current.reset();
-      let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
-      controls.current.target.sub(_v)
+      controls.current?.reset();
+      let _v = new Vector3(controls.current?.target?.x - 1, controls.current?.target?.y - 5, controls.current?.target?.z);
+      controls.current?.target?.sub(_v)
       camera.current.zoom = isMobile ? 1 : 1.5
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
 
       dispatch(resetToInitialStateZoomControlSlice())
       //defineAndRestateFrustum();
@@ -213,20 +213,20 @@ export const Scene = forwardRef((props, ref) => {
 
     zoomIn() {
       camera.current.zoom += 0.25
-      camera.current.updateProjectionMatrix();
-      if (camera.current.zoom >= 4) {
+      camera.current?.updateProjectionMatrix();
+      if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
         }))
-      } else if (camera.current.zoom >= 4) {
+      } else if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
         }))
-      } else if (camera.current.zoom >= 2.5) {
+      } else if (camera.current?.zoom >= 2.5) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
         }))
-      } else if (camera.current.zoom >= 2) {
+      } else if (camera.current?.zoom >= 2) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
         }))
@@ -240,24 +240,24 @@ export const Scene = forwardRef((props, ref) => {
     },
 
     zoomOut() {
-      if (camera.current.zoom >= 1) {
+      if (camera.current?.zoom >= 1) {
         camera.current.zoom -= 0.25
-        camera.current.updateProjectionMatrix();
+        camera.current?.updateProjectionMatrix();
       }
 
-      if (camera.current.zoom >= 4) {
+      if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
         }))
-      } else if (camera.current.zoom >= 4) {
+      } else if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
         }))
-      } else if (camera.current.zoom >= 2.5) {
+      } else if (camera.current?.zoom >= 2.5) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
         }))
-      } else if (camera.current.zoom >= 2) {
+      } else if (camera.current?.zoom >= 2) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
         }))
@@ -285,21 +285,22 @@ export const Scene = forwardRef((props, ref) => {
     if (isSelectingFromMenu && selectedType === "line" && controls.current) {
       //Get the first point of line
       const point = FOCUS_OPTIONS[selectedLabel]["point"];
-      controls.current.reset();
+      controls.current?.reset();
 
-      let _v = new Vector3(controls.current.target.x - point["x"],
-        controls.current.target.y - point["y"],
-        controls.current.target.z - point["z"]);
-      controls.current.target.sub(_v)
-      camera.current.zoom = 3.5;
-      camera.current.updateProjectionMatrix();
+      let _v = new Vector3(controls.current?.target?.x - point["x"],
+        isDesktop ? controls.current?.target?.y - point["y"] : controls.current?.target?.y - point["y"] + 5,
+        controls.current?.target?.z - point["z"]);
+      controls.current?.target?.sub(_v)
+      camera.current.zoom = isDesktop ? FOCUS_OPTIONS[selectedLabel]["zoom"] :
+        Math.max(FOCUS_OPTIONS[selectedLabel]["zoom"] - 1.5, 1);
+      camera.current?.updateProjectionMatrix();
 
       const rad = MathUtils.degToRad(FOCUS_OPTIONS[selectedLabel]["rotate"]);
 
       //Need rotation
-      const cx1 = camera.current.position.x;
-      const cy1 = camera.current.position.y;
-      const cz1 = camera.current.position.z;
+      const cx1 = camera.current?.position.x;
+      const cy1 = camera.current?.position.y;
+      const cz1 = camera.current?.position.z;
 
       // 4. Calculate new camera position:
       const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
@@ -307,27 +308,27 @@ export const Scene = forwardRef((props, ref) => {
       const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
 
       // 5. Set new camera position:
-      camera.current.position.set(cx2, cy2, cz2);
+      camera.current?.position.set(cx2, cy2, cz2);
 
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
     } else if (isSelectingFromMenu && selectedType === "point" && controls.current && camera.current) {
       //Get the first point of line
-      controls.current.reset();
+      controls.current?.reset();
 
-      let _v = new Vector3(controls.current.target.x - pointPosition["x"],
-        controls.current.target.y - pointPosition["y"],
-        controls.current.target.z - pointPosition["z"]);
-      controls.current.target.sub(_v)
+      let _v = new Vector3(controls.current?.target?.x - pointPosition["x"],
+        controls.current?.target?.y - pointPosition["y"],
+        controls.current?.target?.z - pointPosition["z"]);
+      controls.current?.target?.sub(_v)
       camera.current.zoom = 3.5;
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
 
       const rad = MathUtils.degToRad(pointPosition["reverse"]);
       const rad90 = MathUtils.degToRad(90)
 
       //Need rotation
-      const cx1 = camera.current.position.x;
-      const cy1 = camera.current.position.y;
-      const cz1 = camera.current.position.z;
+      const cx1 = camera.current?.position.x;
+      const cy1 = camera.current?.position.y;
+      const cz1 = camera.current?.position.z;
 
       // 4. Calculate new camera position:
       const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
@@ -335,31 +336,31 @@ export const Scene = forwardRef((props, ref) => {
       const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
 
       // 5. Set new camera position:
-      camera.current.position.set(cx2, cy2, cz2);
+      camera.current?.position.set(cx2, cy2, cz2);
 
       if (pointPosition["viewFromBottom"]) {
         camera.current.zoom = 7.5;
       }
 
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
     } else if (preSelectLine && preSelectLine !== "") {
       //Get the first point of line
       const point = FOCUS_OPTIONS[preSelectLine]["point"];
-      controls.current.reset();
+      controls.current?.reset();
 
-      let _v = new Vector3(controls.current.target.x - point["x"],
-        controls.current.target.y - point["y"],
-        controls.current.target.z - point["z"]);
-      controls.current.target.sub(_v)
-      camera.current.zoom = FOCUS_OPTIONS[preSelectLine]["zoom"] || 3.5;
-      camera.current.updateProjectionMatrix();
+      let _v = new Vector3(controls.current?.target?.x - point["x"],
+        controls.current?.target?.y - point["y"],
+        controls.current?.target?.z - point["z"]);
+      controls.current?.target?.sub(_v)
+      camera.current.zoom = isDesktop ? FOCUS_OPTIONS[preSelectLine]["zoom"] : 3.5;
+      camera.current?.updateProjectionMatrix();
 
       const rad = MathUtils.degToRad(FOCUS_OPTIONS[preSelectLine]["rotate"]);
 
       //Need rotation
-      const cx1 = camera.current.position.x;
-      const cy1 = camera.current.position.y;
-      const cz1 = camera.current.position.z;
+      const cx1 = camera.current?.position.x;
+      const cy1 = camera.current?.position.y;
+      const cz1 = camera.current?.position.z;
 
       // 4. Calculate new camera position:
       const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
@@ -367,22 +368,22 @@ export const Scene = forwardRef((props, ref) => {
       const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
 
       // 5. Set new camera position:
-      camera.current.position.set(cx2, cy2, cz2);
+      camera.current?.position.set(cx2, cy2, cz2);
 
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
     }
   }
 
   const defineAndRestateFrustum = () => {
     var frustum = new Frustum();
     var cameraViewProjectionMatrix = new Matrix4();
-    cameraViewProjectionMatrix.multiplyMatrices(camera.current.projectionMatrix, camera.current.matrixWorldInverse);
+    cameraViewProjectionMatrix.multiplyMatrices(camera.current?.projectionMatrix, camera.current?.matrixWorldInverse);
     frustum.setFromProjectionMatrix(cameraViewProjectionMatrix);
     dispatch(setFrustum({
       frustum: frustum
     }))
     dispatch(setCameraZoom({
-      cameraZoom: camera.current.zoom
+      cameraZoom: camera.current?.zoom
     }))
   }
 
@@ -434,9 +435,9 @@ export const Scene = forwardRef((props, ref) => {
 
           let _v = new Vector3();
           _v.copy(controls.current.target);
-          controls.current.target.clamp(minPan, maxPan);
+          controls.current?.target?.clamp(minPan, maxPan);
           _v.sub(controls.current.target)
-          camera.current.position.sub(_v);
+          camera.current?.position.sub(_v);
 
           const distanceToCenter = controls.current.object.position.distanceTo(controls.current.target);
 
