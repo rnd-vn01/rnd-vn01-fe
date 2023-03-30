@@ -8,7 +8,7 @@ import {
   PerspectiveCamera,
   useProgress,
 } from "@react-three/drei";
-import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
+import SCENE_BACKGROUND from 'src/assets/images/background/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
 import { MOUSE, MathUtils, Vector3 } from 'three';
 import {
@@ -298,7 +298,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
         background={true}
       />
 
-      <ambientLight intensity={-0.25} />
+      <ambientLight intensity={-0.4} />
 
       <spotLight
         args={["#f7f7f7", 0.4, 0, angleToRadians(45), 0.35]}
@@ -372,7 +372,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
         <planeGeometry args={[3000, 300]} />
-        <meshStandardMaterial color="#ffffff" />
+        <meshStandardMaterial color="#d3edfb" />
       </mesh>
 
     </Suspense >

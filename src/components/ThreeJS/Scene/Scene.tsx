@@ -9,9 +9,9 @@ import {
   PerspectiveCamera,
   useProgress,
 } from "@react-three/drei";
-import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
+import SCENE_BACKGROUND from 'src/assets/images/background/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
-import { MOUSE, MathUtils, Vector3, Frustum, Matrix4, Object3D } from 'three';
+import { MOUSE, MathUtils, Vector3, Frustum, Matrix4 } from 'three';
 import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
@@ -33,6 +33,7 @@ import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { Floor } from '../Floor/Floor';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -404,9 +405,10 @@ export const Scene = forwardRef((props, ref) => {
       <Environment
         files={SCENE_BACKGROUND}
         background={true}
+
       />
 
-      <ambientLight intensity={-0.25} />
+      <ambientLight intensity={-0.4} />
 
       <spotLight
         args={["#f7f7f7", 0.4, 0, angleToRadians(45), 0.35]}
@@ -547,11 +549,7 @@ export const Scene = forwardRef((props, ref) => {
           showLine={true}
         />}
       {/* Floor */}
-      <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
-        <planeGeometry args={[3000, 300]} />
-        <meshStandardMaterial color="#ffffff" />
-      </mesh>
-
+      <Floor />
     </Suspense >
   );
 });
