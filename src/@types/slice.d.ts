@@ -239,6 +239,7 @@ interface ISelectionSlice {
     content?: IMeridian | IAcupuncturePoint;
   } | null;
   preSelectLine?: null;
+  showingNeighbors?: Array<string>;
 }
 
 interface IModelInteractionControl {

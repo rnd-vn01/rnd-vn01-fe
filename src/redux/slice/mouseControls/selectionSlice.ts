@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getNeighborPoints } from 'src/helpers/getNeighborsPoints';
 import { LINE_POINTS, POINT_LOCATIONS } from 'src/configs/constants';
 
 export const initialStateSelectionSlice = {
@@ -13,7 +14,8 @@ export const initialStateSelectionSlice = {
   isSelectingFromMenu: false,
   pointPosition: null,
   isShowingQuickInformation: null,
-  preSelectLine: null
+  preSelectLine: null,
+  showingNeighbors: []
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -33,6 +35,7 @@ export const selectionSlice = createSlice({
       state.pointPosition = null;
       state.isShowingQuickInformation = null;
       state.preSelectLine = null;
+      state.showingNeighbors = [];
     },
 
     setPointSelected(state, action) {
@@ -42,6 +45,9 @@ export const selectionSlice = createSlice({
       state.selectedLabel = action.payload.selectedLabel;
       state.selectedType = 'point';
       state.preSelectLine = null;
+      if (action.payload.selectedLabel) {
+        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 2, "unlimited")
+      }
     },
 
     setLineSelected(state, action) {
@@ -169,6 +175,9 @@ export const selectionSlice = createSlice({
       state.isSelectingFromMenu = true;
       state.selectedLabel = action.payload.selectedPoint;
       state.selectedType = 'point';
+      if (action.payload.selectedLabel) {
+        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 2, "unlimited")
+      }
     }
   },
 });
