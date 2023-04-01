@@ -84,7 +84,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [positionArray])
 
   let position = useMemo(() => {
-    return new Float32Array([positionArray[0], positionArray[1], positionArray[2] + 0.02]);
+    return new Float32Array([positionArray[0], positionArray[1], positionArray[2] + (reverse ? -0.02 : 0.02)]);
   }, [positionArray])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
