@@ -46,7 +46,7 @@ export const selectionSlice = createSlice({
       state.selectedType = 'point';
       state.preSelectLine = null;
       if (action.payload.selectedLabel) {
-        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 2, "unlimited")
+        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.5, "unlimited")
       }
     },
 
@@ -72,8 +72,13 @@ export const selectionSlice = createSlice({
         })
 
         if (minDistance < 0.5) {
-          state.selectedLabel = selectedLine;
-          state.selectedType = 'line';
+          if (state.selectedLabel === selectedLine) {
+            state.selectedLabel = null;
+            state.selectedType = null;
+          } else {
+            state.selectedLabel = selectedLine;
+            state.selectedType = 'line';
+          }
           state.isSelectingFromMenu = false;
           state.preSelectLine = null;
         }
@@ -176,7 +181,7 @@ export const selectionSlice = createSlice({
       state.selectedLabel = action.payload.selectedPoint;
       state.selectedType = 'point';
       if (action.payload.selectedLabel) {
-        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 2, "unlimited")
+        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.5, "unlimited")
       }
     }
   },

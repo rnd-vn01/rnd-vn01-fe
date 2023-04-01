@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Text } from "src/components/ThreeJS/index";
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
-import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint } from 'src/redux/slice/index';
+import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint, resetToInitialStatePointSelectionSlice } from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
 import { IMPORTANT_POINTS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
@@ -84,7 +84,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [positionArray])
 
   let position = useMemo(() => {
-    return new Float32Array([positionArray[0], positionArray[1], positionArray[2] + (reverse ? -0.02 : 0.02)]);
+    return new Float32Array([positionArray[0], positionArray[1],
+    reverse ? positionArray[2] : (positionArray[2] + 0.02)]);
   }, [positionArray])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
@@ -289,23 +290,27 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
           }
         }}
         onClick={(e) => {
-          if (!isQuizMode || (isNavigateQuest && navigateQuestSelectable)) {
-            if (e.distanceToRay < 0.1) {
-              setTimeout(() => {
-                dispatch(setPointSelected({
-                  selectedLabel: label,
-                  pointPosition: {
-                    x: position[0],
-                    y: position[1],
-                    z: position[2]
-                  }
-                }))
-              }, 100)
+          if (isSelected) {
+            dispatch(resetToInitialStatePointSelectionSlice())
+          } else {
+            if (!isQuizMode || (isNavigateQuest && navigateQuestSelectable)) {
+              if (e.distanceToRay < 0.1) {
+                setTimeout(() => {
+                  dispatch(setPointSelected({
+                    selectedLabel: label,
+                    pointPosition: {
+                      x: position[0],
+                      y: position[1],
+                      z: position[2]
+                    }
+                  }))
+                }, 100)
 
-              if (isNavigateQuest && navigateQuestSelectable) {
-                dispatch(setNavigateQuestSelectedPoint({
-                  selectedPoint: label,
-                }))
+                if (isNavigateQuest && navigateQuestSelectable) {
+                  dispatch(setNavigateQuestSelectedPoint({
+                    selectedPoint: label,
+                  }))
+                }
               }
             }
           }
