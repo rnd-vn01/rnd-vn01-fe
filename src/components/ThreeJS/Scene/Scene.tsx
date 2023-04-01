@@ -51,7 +51,8 @@ export const Scene = forwardRef((props, ref) => {
     selectedType,
     pointPosition,
     isSelectingFromMenu,
-    preSelectLine
+    preSelectLine,
+    secondarySelectedMeridian
   } = useSelector(
     (state: RootState) => state.selectionSlice,
   );
@@ -403,6 +404,7 @@ export const Scene = forwardRef((props, ref) => {
     } else {
       if (selectedType && selectedLabel) {
         return (selectedLabel === label) || (selectedType === 'point' && selectedLabel?.split("-")[0] === label)
+          || (secondarySelectedMeridian === label)
       } else {
         return isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE
       }

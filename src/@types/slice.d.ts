@@ -240,6 +240,9 @@ interface ISelectionSlice {
   } | null;
   preSelectLine?: null;
   showingNeighbors?: Array<string>;
+  secondarySelectedMeridian?: string;
+  backupSelectedPoint?: string;
+  backupSelectedNeighbors?: Array<string>;
 }
 
 interface IModelInteractionControl {

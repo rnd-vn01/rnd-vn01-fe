@@ -15,7 +15,10 @@ export const initialStateSelectionSlice = {
   pointPosition: null,
   isShowingQuickInformation: null,
   preSelectLine: null,
-  showingNeighbors: []
+  showingNeighbors: [],
+  secondarySelectedMeridian: null,
+  backupSelectedPoint: "",
+  backupSelectedNeighbors: [],
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -23,6 +26,8 @@ export const selectionSlice = createSlice({
   initialState: initialStateSelectionSlice,
   reducers: {
     resetToInitialStatePointSelectionSlice(state) {
+      state.backupSelectedPoint = `${state.selectedLabel}` || "";
+      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors)) || []
       state.selectedLabel = null;
       state.selectedType = null;
       state.isHoveringPoint = false;
@@ -36,16 +41,50 @@ export const selectionSlice = createSlice({
       state.isShowingQuickInformation = null;
       state.preSelectLine = null;
       state.showingNeighbors = [];
+      state.secondarySelectedMeridian = null;
     },
 
     setPointSelected(state, action) {
+      const backupCurrentSelectedPoint = `${state.backupSelectedPoint}`;
+
       state.firstSelected = false;
       state.isSelectingFromMenu = false;
       state.pointPosition = action.payload.pointPosition;
       state.selectedLabel = action.payload.selectedLabel;
       state.selectedType = 'point';
       state.preSelectLine = null;
+
       if (action.payload.selectedLabel) {
+        console.log(backupCurrentSelectedPoint)
+
+        // In case not the first item selected
+        if (backupCurrentSelectedPoint !== null && backupCurrentSelectedPoint !== undefined
+          && backupCurrentSelectedPoint !== "M-HN-3") {
+          // Check to mark in case of a neighbor
+          // If is in the neighbor list
+          console.log(state.backupSelectedNeighbors)
+
+          if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)) {
+            // If not being also one from secondary selected meridian
+            if (state.secondarySelectedMeridian === null ||
+              state.secondarySelectedMeridian === undefined) {
+              // If not of the same meridian
+              let selectedPointMeridian = backupCurrentSelectedPoint.split("-") as any
+              selectedPointMeridian = selectedPointMeridian[0]
+
+              // New meridian
+              let newPointMeridian = action.payload.selectedLabel.split("-") as any
+              newPointMeridian = newPointMeridian[0]
+
+              console.log(selectedPointMeridian, newPointMeridian)
+
+              if (selectedPointMeridian !== newPointMeridian) {
+                state.secondarySelectedMeridian = selectedPointMeridian
+              }
+            }
+          }
+        }
+
         state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.5, "unlimited")
       }
     },
@@ -175,6 +214,7 @@ export const selectionSlice = createSlice({
       state.isSelectingFromMenu = true;
       state.selectedLabel = action.payload.selectedPoint;
       state.selectedType = 'point';
+
       if (action.payload.selectedLabel) {
         state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.5, "unlimited")
       }
