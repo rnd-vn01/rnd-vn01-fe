@@ -72,13 +72,8 @@ export const selectionSlice = createSlice({
         })
 
         if (minDistance < 0.5) {
-          if (state.selectedLabel === selectedLine) {
-            state.selectedLabel = null;
-            state.selectedType = null;
-          } else {
-            state.selectedLabel = selectedLine;
-            state.selectedType = 'line';
-          }
+          state.selectedLabel = selectedLine;
+          state.selectedType = 'line';
           state.isSelectingFromMenu = false;
           state.preSelectLine = null;
         }

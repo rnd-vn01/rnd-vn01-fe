@@ -213,7 +213,11 @@ export const Scene = forwardRef((props, ref) => {
     },
 
     zoomIn() {
-      camera.current.zoom += 0.25
+      if (camera.current?.zoom < 2 || camera.current?.zoom >= 4) {
+        camera.current.zoom += 0.5
+      } else {
+        camera.current.zoom += 1
+      }
       camera.current?.updateProjectionMatrix();
       if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
@@ -242,7 +246,12 @@ export const Scene = forwardRef((props, ref) => {
 
     zoomOut() {
       if (camera.current?.zoom >= 1) {
-        camera.current.zoom -= 0.25
+        if (camera.current?.zoom === 3 || camera.current?.zoom === 4) {
+          camera.current.zoom -= 1
+        } else {
+          camera.current.zoom -= 0.5
+        }
+
         camera.current?.updateProjectionMatrix();
       }
 

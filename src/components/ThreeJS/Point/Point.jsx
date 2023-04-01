@@ -113,9 +113,9 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       return mobileSize
     } else {
       if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
-        desktopSize *= 3
+        desktopSize *= 1.5
         if (cameraZoom === 1.5)
-          desktopSize *= 1.5
+          desktopSize *= 3
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
         desktopSize *= 1.35
         if (cameraZoom === 1.5)
@@ -145,7 +145,6 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
       return (!preSelectLine && (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL)))
     }
-
   }
 
   useEffect(() => {
