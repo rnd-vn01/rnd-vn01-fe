@@ -34,7 +34,8 @@ i18n
               edit_profile: "Edit Profile",
               about_us: "About Us",
               start_quiz: "Start Quiz",
-              advanced_search: "Advanced Search"
+              advanced_search: "Advanced Search",
+              home: "Home"
             }
           },
           create_account_page: {
@@ -348,7 +349,8 @@ i18n
               edit_profile: "Cập Nhật Thông Tin",
               about_us: "Về Chúng Tôi",
               start_quiz: "Kiểm Tra",
-              advanced_search: "Tìm Kiếm Nâng Cao"
+              advanced_search: "Tìm Kiếm Nâng Cao",
+              home: "Trang Chủ"
             }
           },
           create_account_page: {

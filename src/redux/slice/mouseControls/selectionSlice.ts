@@ -26,8 +26,8 @@ export const selectionSlice = createSlice({
   initialState: initialStateSelectionSlice,
   reducers: {
     resetToInitialStatePointSelectionSlice(state) {
-      state.backupSelectedPoint = `${state.selectedLabel}` || "";
-      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors)) || []
+      state.backupSelectedPoint = `${state.selectedLabel || ""}`;
+      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors))
       state.selectedLabel = null;
       state.selectedType = null;
       state.isHoveringPoint = false;
@@ -45,7 +45,14 @@ export const selectionSlice = createSlice({
     },
 
     setPointSelected(state, action) {
-      const backupCurrentSelectedPoint = `${state.backupSelectedPoint}`;
+      let backupCurrentSelectedPoint = `
+      ${(state.selectedLabel !== null && state.selectedLabel !== undefined && state.selectedLabel !== "") ?
+          `${state.selectedLabel}`
+          :
+          (state.backupSelectedPoint !== null && state.backupSelectedPoint !== undefined
+            && state.backupSelectedPoint !== "")
+            ? `${state.backupSelectedPoint}` : ""}`;
+      backupCurrentSelectedPoint = backupCurrentSelectedPoint.trim()
 
       state.firstSelected = false;
       state.isSelectingFromMenu = false;
@@ -55,16 +62,15 @@ export const selectionSlice = createSlice({
       state.preSelectLine = null;
 
       if (action.payload.selectedLabel) {
-        console.log(backupCurrentSelectedPoint)
-
         // In case not the first item selected
-        if (backupCurrentSelectedPoint !== null && backupCurrentSelectedPoint !== undefined
+        if (backupCurrentSelectedPoint !== null
+          && backupCurrentSelectedPoint !== undefined
+          && backupCurrentSelectedPoint !== ""
           && backupCurrentSelectedPoint !== "M-HN-3") {
           // Check to mark in case of a neighbor
           // If is in the neighbor list
-          console.log(state.backupSelectedNeighbors)
-
-          if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)) {
+          if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)
+            || state.showingNeighbors?.includes(action.payload.selectedLabel)) {
             // If not being also one from secondary selected meridian
             if (state.secondarySelectedMeridian === null ||
               state.secondarySelectedMeridian === undefined) {
@@ -75,8 +81,6 @@ export const selectionSlice = createSlice({
               // New meridian
               let newPointMeridian = action.payload.selectedLabel.split("-") as any
               newPointMeridian = newPointMeridian[0]
-
-              console.log(selectedPointMeridian, newPointMeridian)
 
               if (selectedPointMeridian !== newPointMeridian) {
                 state.secondarySelectedMeridian = selectedPointMeridian
@@ -214,10 +218,12 @@ export const selectionSlice = createSlice({
       state.isSelectingFromMenu = true;
       state.selectedLabel = action.payload.selectedPoint;
       state.selectedType = 'point';
+      state.showingNeighbors = getNeighborPoints(action.payload.selectedPoint, true, 1.5, "unlimited")
+    },
 
-      if (action.payload.selectedLabel) {
-        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.5, "unlimited")
-      }
+    setRemoveBackup(state) {
+      state.backupSelectedNeighbors = []
+      state.backupSelectedPoint = "";
     }
   },
 });
@@ -226,5 +232,6 @@ const { actions, reducer } = selectionSlice;
 export const { resetToInitialStatePointSelectionSlice, setPointSelected,
   setLineSelected, setIsHoveringPoint, setIsHoveringLine, setIsCurrentMousePosition,
   setIsCurrentMouseMovePosition, setLineHover, setLineSelectedByLabel,
-  setShowingQuickInformation, setPointSelectedByLabel, setLinePreSelectByLabel } = actions;
+  setShowingQuickInformation, setPointSelectedByLabel, setLinePreSelectByLabel,
+  setRemoveBackup } = actions;
 export default reducer;

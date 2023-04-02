@@ -26,7 +26,8 @@ import {
   resetToInitialStateZoomControlSlice,
   setInCloseZoomMode,
   setFrustum,
-  setCameraZoom
+  setCameraZoom,
+  setRemoveBackup
 } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
@@ -157,6 +158,7 @@ export const Scene = forwardRef((props, ref) => {
     dispatch(unsetStrictMode())
     dispatch(resetToInitialStateQuizSlice())
     dispatch(resetToInitialStateZoomControlSlice())
+    dispatch(setRemoveBackup())
 
     setTimeout(() => {
       // Check if a point is selected from redirect

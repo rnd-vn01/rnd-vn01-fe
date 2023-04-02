@@ -6,7 +6,10 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Text } from "src/components/ThreeJS/index";
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
-import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint, resetToInitialStatePointSelectionSlice } from 'src/redux/slice/index';
+import {
+  setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint,
+  resetToInitialStatePointSelectionSlice, setRemoveBackup
+} from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
 import { IMPORTANT_POINTS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
@@ -115,7 +118,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
         desktopSize *= 1.5
         if (cameraZoom === 1.5)
-          desktopSize *= 3
+          desktopSize *= 1.5
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
         desktopSize *= 1.35
         if (cameraZoom === 1.5)
@@ -290,7 +293,10 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         }}
         onClick={(e) => {
           if (isSelected) {
-            dispatch(resetToInitialStatePointSelectionSlice())
+            if (e.distanceToRay < 0.1) {
+              dispatch(resetToInitialStatePointSelectionSlice())
+              dispatch(setRemoveBackup());
+            }
           } else {
             if (!isQuizMode || (isNavigateQuest && navigateQuestSelectable)) {
               if (e.distanceToRay < 0.1) {
