@@ -1,21 +1,21 @@
 export const MERIDIANS_COLOR = {
-  1: "#4C922D",
-  2: "#B4CB3C",
-  3: "#CCA443",
-  4: "#C5CC43",
-  5: "#43A6CC",
-  6: "#B343CC",
-  7: "#44A668",
-  8: "#4377CC",
-  9: "#5643CC",
-  10: "#68CC43",
-  11: "#4DC2BA",
-  12: "#CC4370",
+  1: "#32FF8F", //LU
+  2: "#AF594F", //LI
+  3: "#FFFF54", //HT
+  4: "#007299", //SP
+  5: "#FF00FF", //ST
+  6: "#DDA0DD", //SI
+  7: "#FF1493", //BL
+  8: "#4B0082", //KI
+  9: "#0000FF", //PC
+  10: "#00FF00", //TE
+  11: "#8B0000", //GB
+  12: "#008000", //Liv
 }
 
 export const EXTRA_MERIDIAN_COLORS = {
-  1: "#618888",
-  2: "#885C88"
+  1: "#323299", //Du
+  2: "#436060" //Ren
 }
 
 export const APP_NAME = "Acupuncture 3D"

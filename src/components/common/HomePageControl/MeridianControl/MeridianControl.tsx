@@ -48,7 +48,7 @@ export const MeridianControl: React.FC = ({ }) => {
       code: "ST",
       name: t('meridian_tooltips.ST'),
       icon: ST,
-      color: MERIDIANS_COLOR[3]
+      color: MERIDIANS_COLOR[5]
     },
     "SP": {
       code: "SP",
@@ -60,7 +60,7 @@ export const MeridianControl: React.FC = ({ }) => {
       code: "HT",
       name: t('meridian_tooltips.HT'),
       icon: HT,
-      color: MERIDIANS_COLOR[5]
+      color: MERIDIANS_COLOR[3]
     },
     "SI": {
       code: "SI",
