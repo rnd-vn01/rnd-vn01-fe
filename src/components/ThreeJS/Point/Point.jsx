@@ -138,15 +138,19 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }
 
   const checkPointShowing = () => {
-    if (selectedType === "point" && selectedLabel) {
-      return showingNeighbors.includes(label) || isSelected || isMeridianSelected || isSameMeridianSelected
-    } else {
-      // Case 1 point is selected
-      if (isMeridianSelected || isQuizMode || isSelected || isSameMeridianSelected) {
-        return true;
-      }
+    if (!isQuizMode) {
+      if (selectedType === "point" && selectedLabel) {
+        return showingNeighbors.includes(label) || isSelected || isMeridianSelected || isSameMeridianSelected
+      } else {
+        // Case 1 point is selected
+        if (isMeridianSelected || isQuizMode || isSelected || isSameMeridianSelected) {
+          return true;
+        }
 
-      return (!preSelectLine && (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL)))
+        return (!preSelectLine && (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL)))
+      }
+    } else {
+      return true;
     }
   }
 
