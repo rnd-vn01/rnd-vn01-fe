@@ -4,14 +4,13 @@
   overflow-y: auto;
   overflow-x: hidden;
   position: absolute;
-  top: 60px;
+  top: 53px;
   cursor: default;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
+  border: 1px solid black;
   background: var(--theme-background);
   display: none;
-  right: 0;
-  width: calc(100% + 1px);
+  right: -1px;
+  width: calc(100% + 2px);
 
   &--hide {
     display: none;

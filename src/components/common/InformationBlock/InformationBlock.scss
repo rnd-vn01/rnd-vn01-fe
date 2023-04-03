@@ -84,8 +84,8 @@
       position: absolute;
       height: 40px;
       width: 40px;
-      left: -50px;
-      top: -52px;
+      right: 5px;
+      top: -48px;
 
       @include mobile {
         bottom: 100px;
@@ -96,6 +96,8 @@
 
     &--faded {
       opacity: 0.5;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
     }
   }
 }

@@ -64,6 +64,12 @@ export const Scene = forwardRef((props, ref) => {
     (state: RootState) => state.zoomControlSlice,
   );
 
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
+  );
+
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
@@ -85,7 +91,9 @@ export const Scene = forwardRef((props, ref) => {
         display: "flex", width: "100vw", justifyContent: "center",
         alignItems: "center", flexDirection: "column"
       }}>
-      <h3 style={{ display: "inline", fontSize: 24 }}>{`${Math.round(progress)}% loaded`}</h3>
+      <h3 style={{ display: "inline", fontSize: 24 }}>{
+        currentLanguage === "EN" ? `${Math.round(progress)}% loaded` : `Đã tải ${Math.round(progress)}%`
+      }</h3>
       <progress id="file" value={progress} max="100"></progress>
     </Html>
   }

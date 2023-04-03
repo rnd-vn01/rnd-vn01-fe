@@ -16,36 +16,7 @@ describe('MeridianControl', () => {
     </Provider>)
 
     await waitFor(() => {
-      expect(screen.getByRole("div", { name: "meridian-control" })).toBeInTheDocument();
-    })
-  })
-
-  it("should show dropdown if clicking on the icon and is currently not collapsed", async () => {
-    render(<Provider store={store}>
-      <MeridianControl />
-    </Provider>)
-
-    const getIcon = screen.getByRole("div", { name: "meridian-control-icon" })
-    fireEvent.click(getIcon)
-
-    await waitFor(() => {
-      const meridianControlDropdown = screen.getByRole("div", { name: "meridian-control-dropdown" })
-      expect(meridianControlDropdown).toHaveClass("meridian-control__dropdown--show")
-    })
-  })
-
-  it("should hide icon if clicking on the icon and is currently collapsed", async () => {
-    render(<Provider store={store}>
-      <MeridianControl />
-    </Provider>)
-
-    const getIcon = screen.getByRole("div", { name: "meridian-control-icon" })
-    fireEvent.click(getIcon)
-    fireEvent.click(getIcon)
-
-    await waitFor(() => {
-      const meridianControlDropdown = screen.getByRole("div", { name: "meridian-control-dropdown" })
-      expect(meridianControlDropdown).not.toHaveClass("meridian-control__dropdown--show")
+      expect(screen.getByRole("div", { name: "meridian-control-desktop" })).toBeInTheDocument();
     })
   })
 
@@ -56,17 +27,10 @@ describe('MeridianControl', () => {
       </Provider>
     </ResponsiveContext.Provider>)
 
-    const getIcon = screen.getByRole("div", { name: "meridian-control-icon" })
-    fireEvent.click(getIcon)
-
     const menuItem = screen.getByRole("div", { name: "meridian-control-item-1" })
     fireEvent.click(menuItem)
 
     await waitFor(() => {
-      //Expect the menu to be collapsed
-      const meridianControlDropdown = screen.getByRole("div", { name: "meridian-control-dropdown" })
-      expect(meridianControlDropdown).not.toHaveClass("meridian-control__dropdown--show")
-
       //Expect the selected line to be updated
       expect(store.getState().selectionSlice.preSelectLine).toBe("LI")
     })
@@ -83,44 +47,48 @@ describe('MeridianControl', () => {
       </Provider>
     </ResponsiveContext.Provider>)
 
-    const getIcon = screen.getByRole("div", { name: "meridian-control-icon" })
-    fireEvent.click(getIcon)
 
     const menuItem = screen.getByRole("div", { name: "meridian-control-item-1" })
     fireEvent.click(menuItem)
 
     await waitFor(() => {
-      //Expect the menu to be collapsed
-      const meridianControlDropdown = screen.getByRole("div", { name: "meridian-control-dropdown" })
-      expect(meridianControlDropdown).not.toHaveClass("meridian-control__dropdown--show")
-
       //Expect the selected line to be updated
       expect(store.getState().selectionSlice.preSelectLine).toBe("LI")
       expect(store.getState().selectionSlice.selectedLabel).toBe(null)
     })
   })
 
-  it("should perform as expected when selected one item from menu for mobile and tablet", async () => {
-    render(<ResponsiveContext.Provider value={{ width: 1000 }}>
+  it("should scroll to the right while clicking on the button", async () => {
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
         <MeridianControl />
       </Provider>
     </ResponsiveContext.Provider>)
 
-    const getIcon = screen.getByRole("div", { name: "meridian-control-icon" })
-    fireEvent.click(getIcon)
+    await waitFor(() => {
+      const mockScrollBy = jest.fn();
+      const scrollableDiv = screen.getByRole("div", { name: "meridian-control-desktop-mask" })
+      scrollableDiv.scrollBy = mockScrollBy;
 
-    const menuItem = screen.getByRole("div", { name: "meridian-control-item-1" })
-    fireEvent.click(menuItem)
+      fireEvent.click(screen.getByRole("button", { name: "meridian-control-scroll-right" }))
+      expect(mockScrollBy).toHaveBeenCalledWith(145, 0);
+    })
+  })
+
+  it("should scroll to the left while clicking on the button", async () => {
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <MeridianControl />
+      </Provider>
+    </ResponsiveContext.Provider>)
 
     await waitFor(() => {
-      //Expect the menu to be collapsed
-      const meridianControlDropdown = screen.getByRole("div", { name: "meridian-control-dropdown" })
-      expect(meridianControlDropdown).not.toHaveClass("meridian-control__dropdown--show")
+      const mockScrollBy = jest.fn();
+      const scrollableDiv = screen.getByRole("div", { name: "meridian-control-desktop-mask" })
+      scrollableDiv.scrollBy = mockScrollBy;
 
-      //Expect the selected line to be updated
-      expect(store.getState().selectionSlice.selectedLabel).toBe("LI")
-      expect(store.getState().selectionSlice.selectedType).toBe("line")
+      fireEvent.click(screen.getByRole("button", { name: "meridian-control-scroll-left" }))
+      expect(mockScrollBy).toHaveBeenCalledWith(-145, 0);
     })
   })
 });

@@ -1,7 +1,8 @@
-import './MeridianControl.scss';
-import React, { useRef, useState } from 'react';
+import './MeridianControlResponsive.scss';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from "react-i18next";
+import ReactTooltip from 'react-tooltip';
 import TE from "src/assets/images/homeControls/meridianIcons/TE.svg";
 import Du from "src/assets/images/homeControls/meridianIcons/Du.svg";
 import ST from "src/assets/images/homeControls/meridianIcons/ST.svg";
@@ -16,18 +17,19 @@ import LI from "src/assets/images/homeControls/meridianIcons/LI.svg";
 import SI from "src/assets/images/homeControls/meridianIcons/SI.svg";
 import GB from "src/assets/images/homeControls/meridianIcons/GB.svg";
 import KI from "src/assets/images/homeControls/meridianIcons/KI.svg";
-import controlLeft from "src/assets/images/homeControls/controlIcons/controlLeft.svg";
-import controlRight from "src/assets/images/homeControls/controlIcons/controlRight.svg";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { EXTRA_MERIDIAN_COLORS, MERIDIANS_COLOR } from 'src/configs/constants';
-import { resetToInitialStatePointSelectionSlice, setLinePreSelectByLabel } from 'src/redux/slice';
-import { hexToRgb } from '@mui/material';
+import { resetToInitialStatePointSelectionSlice, setLinePreSelectByLabel, setLineSelectedByLabel } from 'src/redux/slice';
+import { useMediaQuery } from 'react-responsive';
 
-export const MeridianControl: React.FC = ({ }) => {
+export const MeridianControlResponsive: React.FC = ({ }) => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const [selectedMeridian, setSelectedMeridian] = useState<string>("LU");
-  const scrollableDiv = useRef<any>(null);
+  const [isDropdown, setIsDropdown] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   const OPTIONS = {
     "LU": {
@@ -116,76 +118,67 @@ export const MeridianControl: React.FC = ({ }) => {
     },
   }
 
-  const handleScrollLeft = (e: any) => {
-    scrollableDiv.current.scrollBy(-145, 0);
-  }
-
-  const handleScrollRight = (e: any) => {
-    scrollableDiv.current.scrollBy(145, 0);
-  }
-
   return (
     <div
       role="div"
-      aria-label="meridian-control-desktop"
-      className="meridian-control-desktop">
+      aria-label="meridian-control"
+      className="meridian-control">
       <div
-        className='meridian-control-desktop__control flex-center meridian-control-desktop__control--left'
-        onClick={handleScrollLeft}
-        role="button"
-        aria-label="meridian-control-scroll-left">
-        <img className='' src={controlLeft} />
-      </div>
-      <div className='meridian-control-desktop__mask'
-        aria-label="meridian-control-desktop-mask"
+        className="inline-flex meridian-control__selected--container"
         role="div"
-        ref={scrollableDiv}>
-        <div className='meridian-control-desktop__scrollable'
-        >
-          {Object.keys(OPTIONS).map((meridian, index) => {
-            const rgb = hexToRgb(OPTIONS[meridian].color).replace("rgb", "rgba").replace(")", ", 0.6)");
-
-            return (
-              <div
-                className={`meridian-control-desktop__item 
-              ${selectedMeridian === meridian && "meridian-control-desktop__item--selected"}
-            `}
-                style={{
-                  border: `1px solid ${OPTIONS[meridian].color}`,
-                  background: rgb
-                }}
-                onClick={() => {
-                  setSelectedMeridian(meridian);
-                  dispatch(resetToInitialStatePointSelectionSlice());
-                  dispatch(setLinePreSelectByLabel({
-                    line: meridian
-                  }))
-                }}
-                key={index}
-                aria-label={`meridian-control-item-${index}`}
-                role="div"
-              >
-                <div className={`meridian-control-desktop__item-icon-container`}
-                  style={{ background: OPTIONS[meridian].color }}>
-                  <img
-                    className={`meridian-control-desktop__item-icon`}
-                    src={OPTIONS[meridian].icon}></img>
-                </div>
-                <div className={`meridian-control-desktop__item-name`}>
-                  <p>{OPTIONS[meridian].name}</p>
-                </div>
-              </div>
-            )
-          })}
+        aria-label="meridian-control-icon"
+        onClick={() => setIsDropdown(!isDropdown)}>
+        <div
+          style={{ background: OPTIONS[selectedMeridian].color }}
+          className='meridian-control__selected'>
+          <img
+            className='meridian-control__selected--icon'
+            src={OPTIONS[selectedMeridian].icon}></img>
         </div>
+        <FontAwesomeIcon icon={isMobile ? faCaretDown : faCaretUp}></FontAwesomeIcon>
       </div>
+
       <div
-        className='meridian-control-desktop__control flex-center meridian-control-desktop__control--right'
-        role="button"
-        aria-label="meridian-control-scroll-right"
-        onClick={handleScrollRight}>
-        <img className='' src={controlRight} />
+        role="div"
+        aria-label="meridian-control-dropdown"
+        className={`meridian-control__dropdown ${isDropdown ? "meridian-control__dropdown--show" : ""}`}>
+        {Object.keys(OPTIONS).map((meridian, index) => (
+          <div
+            key={index}
+            className={`m-2 w-100 ${isMobile && "flex-center"} text-center meridian-control__dropdown--option
+              ${meridian === selectedMeridian ? "meridian-control__dropdown--option-selected" : ""}
+            `}
+            role="div"
+            aria-label={`meridian-control-item-${index}`}
+            onClick={() => {
+              setSelectedMeridian(meridian);
+              setIsDropdown(false);
+              if (isDesktop) {
+                dispatch(resetToInitialStatePointSelectionSlice());
+                dispatch(setLinePreSelectByLabel({
+                  line: meridian
+                }))
+              } else {
+                dispatch(setLineSelectedByLabel({
+                  selectedLine: meridian
+                }))
+              }
+            }}>
+            <div
+              style={{ background: OPTIONS[meridian].color }}
+              className='meridian-control__dropdown--item'
+              data-tip
+              data-for={`tooltip-${meridian}`}>
+              <img
+                className='meridian-control__selected--icon'
+                src={OPTIONS[meridian].icon}></img>
+              <ReactTooltip id={`tooltip-${meridian}`} place="left" effect="solid">
+                <p>{OPTIONS[meridian].name}</p>
+              </ReactTooltip>
+            </div>
+          </div>
+        ))}
       </div>
-    </div >
+    </div>
   );
 };
