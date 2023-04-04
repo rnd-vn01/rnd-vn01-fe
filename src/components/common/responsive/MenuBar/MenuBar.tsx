@@ -8,7 +8,8 @@ import { faBars, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Logo from "src/assets/images/Logo.svg";
 import IconShow from "src/assets/images/IconShow.svg";
 import IconHide from "src/assets/images/IconHide.svg";
-import { MeridianControl, ModelViewModeControl } from 'src/components/common/HomePageControl';
+import { ModelViewModeControl } from 'src/components/common/HomePageControl';
+import { MeridianControlResponsive } from '../MeridianControlResponsive/MeridianControlResponsive';
 
 export const MenuBar: React.FC<IMenuBar> = ({
   isShowingSideMenu,
@@ -37,7 +38,7 @@ export const MenuBar: React.FC<IMenuBar> = ({
       aria-label="menu-bar"
       className={`menu-bar ${!isShowing && "menu-bar--hidden"}`}
     >
-      <div className={`${!isShowingSideMenu && "p-5"} menu-bar__item 
+      <div className={`${!isShowingSideMenu && "p-3 flex-center"} menu-bar__item 
       ${isShowingSideMenu && isShowing && "menu-bar__item--no-wrap"}
       ${!isShowing && "menu-bar__item--faded"}`}
         onClick={() => setIsShowing(!isShowing)}
@@ -59,7 +60,7 @@ export const MenuBar: React.FC<IMenuBar> = ({
 
       <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
       ${!isShowing && "menu-bar__item--hidden"}`}>
-        {!isShowingSideMenu && <MeridianControl />}
+        {!isShowingSideMenu && <MeridianControlResponsive />}
         {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
 

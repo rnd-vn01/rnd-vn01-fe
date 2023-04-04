@@ -1,5 +1,5 @@
 .title-bar {
-  height: 45px;
+  height: 60px;
   margin: 0 auto;
   position: fixed;
   top: 0;
@@ -8,6 +8,7 @@
   right: 0;
   background: var(--theme-background);
   z-index: 1001;
+  padding-bottom: 10px;
 
   &__option {
     font-size: 1.5rem;
@@ -52,7 +53,7 @@
   &__dropdown {
     position: absolute;
     border: 1px solid black;
-    top: calc(100% + 15px);
+    top: calc(100%);
     background: var(--theme-background);
     z-index: 100;
     left: 1vw;

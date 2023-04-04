@@ -320,6 +320,9 @@ i18n
           },
           view_details: "View details",
           view_on_model: "View location on model",
+          new_personal_records: {
+            days_streak: "days streak"
+          }
         }
       },
       vi: {
@@ -633,6 +636,9 @@ i18n
           },
           view_details: "Xem chi tiết",
           view_on_model: "Xem vị trí trên mô hình",
+          new_personal_records: {
+            days_streak: "ngày liên tiếp"
+          }
         }
       }
     }

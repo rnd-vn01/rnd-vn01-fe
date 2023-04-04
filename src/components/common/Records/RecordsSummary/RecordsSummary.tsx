@@ -88,7 +88,7 @@ export const RecordsSummary: React.FC<IRecordsSummary> = ({
       </div>
 
       <div className={`
-        pt-3 pb-2 ${isDesktop ? "flex justify-between" : "grid grid-cols-2"}
+        pt-3 pb-2 grid grid-cols-2
       `}>
         <div className={`records-summary__item ${!isDesktop && "col-span-1 mb-2"}`}>
           <h1 data-testid="record-summary-points">{showingData?.points}</h1>
