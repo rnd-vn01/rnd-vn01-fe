@@ -194,6 +194,10 @@ interface IRecordsProgressLog {
 
 }
 
+interface IRecordsProgressLogDesktop {
+  data?: any
+}
+
 interface IRecordsSummary {
   data?: any
 }

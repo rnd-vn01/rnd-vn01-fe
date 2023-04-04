@@ -2,7 +2,10 @@ src/components/common/QuickSearchBar/QuickSearchResults
     QuickSearchResults.tsx ~ 133-136
 
 src/components/common/Records/RecordsProgressLog
-    RecordsProgressLog.tsx ~ 69-93
+    RecordsProgressLog.tsx ~ 72-96
+
+src/components/common/Records/RecordsProgressLog/responsive
+    RecordsProgressDesktop.tsx ~ 19, 65
 
 src/components/common/Search/SearchBar
     SearchBar.tsx ~ 87
