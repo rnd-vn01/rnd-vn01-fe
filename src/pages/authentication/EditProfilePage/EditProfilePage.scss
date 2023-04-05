@@ -14,7 +14,7 @@
     margin-left: 25vw;
     padding-top: 40px;
 
-    @include mobile {
+    @include smallscreen {
       width: 80vw;
       margin-left: 10vw;
     }

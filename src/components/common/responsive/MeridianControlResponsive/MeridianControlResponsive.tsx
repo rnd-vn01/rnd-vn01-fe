@@ -29,7 +29,6 @@ export const MeridianControlResponsive: React.FC = ({ }) => {
   const [selectedMeridian, setSelectedMeridian] = useState<string>("LU");
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   const OPTIONS = {
     "LU": {
@@ -135,7 +134,7 @@ export const MeridianControlResponsive: React.FC = ({ }) => {
             className='meridian-control__selected--icon'
             src={OPTIONS[selectedMeridian].icon}></img>
         </div>
-        <FontAwesomeIcon icon={isMobile ? faCaretDown : faCaretUp}></FontAwesomeIcon>
+        <FontAwesomeIcon icon={!isDesktop ? faCaretDown : faCaretUp}></FontAwesomeIcon>
       </div>
 
       <div
@@ -145,7 +144,7 @@ export const MeridianControlResponsive: React.FC = ({ }) => {
         {Object.keys(OPTIONS).map((meridian, index) => (
           <div
             key={index}
-            className={`m-2 w-100 ${isMobile && "flex-center"} text-center meridian-control__dropdown--option
+            className={`m-2 w-100 ${!isDesktop && "flex-center"} text-center meridian-control__dropdown--option
               ${meridian === selectedMeridian ? "meridian-control__dropdown--option-selected" : ""}
             `}
             role="div"

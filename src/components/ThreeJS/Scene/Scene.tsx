@@ -72,7 +72,6 @@ export const Scene = forwardRef((props, ref) => {
   );
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   const location = useLocation() as any;
 
@@ -217,7 +216,7 @@ export const Scene = forwardRef((props, ref) => {
       controls.current?.reset();
       let _v = new Vector3(controls.current?.target?.x - 1, controls.current?.target?.y - 5, controls.current?.target?.z);
       controls.current?.target?.sub(_v)
-      camera.current.zoom = isMobile ? 1 : 1.5
+      camera.current.zoom = !isDesktop ? 1 : 1.5
       camera.current?.updateProjectionMatrix();
 
       dispatch(resetToInitialStateZoomControlSlice())
@@ -441,13 +440,13 @@ export const Scene = forwardRef((props, ref) => {
         ref={camera}
         makeDefault
         position={[-1.75, 10.85, 40]}
-        zoom={isMobile ? 1 : 1.5}
+        zoom={!isDesktop ? 1 : 1.5}
       >
       </PerspectiveCamera>
 
       <OrbitControls
         ref={controls}
-        target={[isMobile ? 0 : 1, 5, 0]}
+        target={[!isDesktop ? 0 : 1, 5, 0]}
         mouseButtons={{
           LEFT: MOUSE.ROTATE,
           MIDDLE: MOUSE.DOLLY,

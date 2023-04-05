@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .side-criteria-box {
   height: 100%;
   width: 100vw;
@@ -22,8 +24,21 @@
     top: 124px;
     transition: left 500ms ease;
 
+    @include tablet {
+      width: fit-content;
+      min-width: 35vw;
+      left: auto;
+      display: none;
+    }
+
     &--showing {
-      left: 0
+      @include mobile {
+        left: 0;
+      }
+
+      @include tablet {
+        display: flex;
+      }
     }
   }
 

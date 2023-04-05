@@ -13,7 +13,7 @@
     width: 98vw;
     margin-left: 1vw;
 
-    @include mobile {
+    @include smallscreen {
       width: 95vw;
       margin-left: 2.5vw;
     }

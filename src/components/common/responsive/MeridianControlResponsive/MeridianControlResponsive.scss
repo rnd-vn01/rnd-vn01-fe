@@ -15,9 +15,19 @@
     border-radius: 50%;
     margin-right: 5px;
 
+    @include tablet {
+      width: 50px !important;
+      height: 50px !important;
+    }
+
     &--icon {
       width: 30px;
       height: 30px;
+
+      @include tablet {
+        width: 35px !important;
+        height: 35px !important;
+      }
     }
 
     &--container {
@@ -45,7 +55,7 @@
     height: 30vh;
     width: 100%;
 
-    @include mobile {
+    @include smallscreen {
       max-height: 30vh;
       overflow-y: auto;
       background-color: var(--theme-background);
@@ -71,6 +81,11 @@
       height: 40px !important;
       border-radius: 50%;
       margin-right: 5px;
+
+      @include tablet {
+        width: 50px !important;
+        height: 50px !important;
+      }
     }
 
     &--option {
