@@ -7,7 +7,7 @@
   cursor: text;
   position: relative;
 
-  @include mobile {
+  @include smallscreen {
     border-bottom: 2px solid black;
   }
 

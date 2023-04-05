@@ -17,4 +17,4 @@ src/helpers
     searchProcess.ts ~ 131
 
 src/pages/QuizPage
-    QuizPage.tsx ~ 38, 40
+    QuizPage.tsx ~ 39,41

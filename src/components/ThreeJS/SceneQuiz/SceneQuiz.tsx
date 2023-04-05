@@ -52,7 +52,6 @@ export const SceneQuiz = forwardRef((props, ref) => {
   const [isShowingLine, setIsShowingLine] = useState<boolean>(false);
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
@@ -322,7 +321,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
 
       <OrbitControls
         ref={controls}
-        target={[isMobile ? 0 : 1, isMobile ? 7.5 : 5, 0]}
+        target={[!isDesktop ? 0 : 1, !isDesktop ? 7.5 : 5, 0]}
         mouseButtons={{
           LEFT: MOUSE.ROTATE,
           MIDDLE: MOUSE.DOLLY,

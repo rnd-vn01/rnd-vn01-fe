@@ -76,7 +76,7 @@
       color: black;
       margin-bottom: -12%;
 
-      @include mobile {
+      @include smallscreen {
         font-size: 1.5rem;
         line-height: 1.55rem;
       }
@@ -89,7 +89,7 @@
     &--avatar {
       height: 200px;
 
-      @include mobile {
+      @include smallscreen {
         height: 150px;
       }
     }

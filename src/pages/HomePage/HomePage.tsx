@@ -25,7 +25,7 @@ export const HomePage: React.FC = () => {
   const [isShowingSearchBar, setIsShowingSearchBar] = useState<boolean>(false);
 
   const location = useLocation() as any;
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const {
     currentLanguage
@@ -88,7 +88,7 @@ export const HomePage: React.FC = () => {
           src={DemoImage}></img> */}
       </div>
 
-      {!isMobile &&
+      {isDesktop &&
         <>
           <div className="home-page__section--side-bar">
             <QuickSearchBar />
@@ -147,7 +147,7 @@ export const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {isMobile && <>
+      {!isDesktop && <>
         <MenuBar
           isShowingSideMenu={isShowingSideMenu}
           callbackSetIsShowingSideMenu={setIsShowingSideMenu}

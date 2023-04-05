@@ -9,11 +9,15 @@ import IconShow from "src/assets/images/IconShow.svg"
 import IconHide from "src/assets/images/IconHide.svg"
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
+import { useMediaQuery } from 'react-responsive';
 
 export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInformation, usingLanguage }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const [isShowing, setIsShowing] = useState<boolean>(false);
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   const {
     isShowingQuickInformation
@@ -35,64 +39,134 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
       aria-label="information-block"
       className="information-block">
 
-      {isShowingQuickInformation && <div
-        className={`information-block__menu--button-logo inline-flex w-fit h-full flex-center
+      {(isDesktop || isMobile) ?
+        <>
+          {isShowingQuickInformation && <div
+            className={`information-block__menu--button-logo inline-flex w-fit h-full flex-center
           ${!isShowing && `information-block__menu--faded`}
         `}
-        onClick={(e) => {
-          e.stopPropagation()
-          setIsShowing(!isShowing)
-        }}
-        role="div"
-        aria-label="information-block-hide-icon"
-      >
-        <img src={isShowing ? IconShow : IconHide} className="information-block__menu--image-logo"></img>
-      </div>}
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsShowing(!isShowing)
+            }}
+            role="div"
+            aria-label="information-block-hide-icon"
+          >
+            <img src={isShowing ? IconShow : IconHide} className="information-block__menu--image-logo"></img>
+          </div>}
 
-      {itemInformation && isShowing &&
+          {itemInformation && isShowing &&
+            <>
+              <div className="information-block__title flex flex-col items-center justify-center"
+                data-testid={"information-block-title"}>
+                <span className="px-2 text-center">
+                  <h1 className="information-block__title--code">{itemInformation.code}</h1>
+                  <h1 className="information-block__title--name">{capitalizeEachWord(itemInformation.name)}</h1>
+                </span>
+              </div>
+
+              {Object.keys(itemInformation).map((field, index) => {
+                if (field === "description") {
+                  return (
+                    <div key={`point-information-${index}`}>
+                      <div
+                        className={`information-block__category`}>
+                        {capitalizeAndMapInformationField(isPoint, field, usingLanguage)}
+                      </div>
+                      <div className="information-block__info">
+                        <p className={`information-block__info--text p-2`}>
+                          {itemInformation[field]}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                }
+              })}
+
+              <div
+                className={`information-block__view-details flex justify-between`}
+                role="div"
+                aria-label="information-block-view-details"
+                onClick={() => {
+                  history.push(`/detail/${isPoint ? "point" : "meridian"}/${itemInformation.code}`)
+                }}
+              >
+                <span>
+                  {t('view_details')}
+                </span>
+
+                <div className='inline-flex items-center justify-center' style={{ transform: "rotate(45deg)" }}>
+                  <FontAwesomeIcon icon={faArrowUp} />
+                </div>
+              </div>
+            </>}
+        </> :
         <>
-          <div className="information-block__title flex flex-col items-center justify-center"
-            data-testid={"information-block-title"}>
-            <span className="px-2 text-center">
-              <h1 className="information-block__title--code">{itemInformation.code}</h1>
-              <h1 className="information-block__title--name">{capitalizeEachWord(itemInformation.name)}</h1>
-            </span>
-          </div>
+          {isShowingQuickInformation && <div
+            className={`information-block__menu--button-logo inline-flex w-fit h-full flex-center
+          ${!isShowing && `information-block__menu--faded`}
+        `}
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsShowing(!isShowing)
+            }}
+            role="div"
+            aria-label="information-block-hide-icon"
+          >
+            <img src={isShowing ? IconShow : IconHide} className="information-block__menu--image-logo"></img>
+          </div>}
 
-          {Object.keys(itemInformation).map((field, index) => {
-            if (field === "description") {
-              return (
-                <div key={`point-information-${index}`}>
-                  <div
-                    className={`information-block__category`}>
-                    {capitalizeAndMapInformationField(isPoint, field, usingLanguage)}
-                  </div>
-                  <div className="information-block__info">
-                    <p className={`information-block__info--text p-2`}>
-                      {itemInformation[field]}
-                    </p>
+
+          {itemInformation && isShowing &&
+            <div className='grid grid-cols-5'>
+              <div className='col-span-2'>
+                <div className="information-block__title flex flex-col items-center justify-center"
+                  data-testid={"information-block-title"}>
+                  <span className="px-2 text-center">
+                    <h1 className="information-block__title--code">{itemInformation.code}</h1>
+                    <h1 className="information-block__title--name">{capitalizeEachWord(itemInformation.name)}</h1>
+                  </span>
+                </div>
+              </div>
+
+              <div className='col-span-3'>
+                {Object.keys(itemInformation).map((field, index) => {
+                  if (field === "description") {
+                    return (
+                      <div key={`point-information-${index}`}>
+                        <div
+                          className={`information-block__category`}>
+                          {capitalizeAndMapInformationField(isPoint, field, usingLanguage)}
+                        </div>
+                        <div className="information-block__info">
+                          <p className={`information-block__info--text p-2`}>
+                            {itemInformation[field]}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  }
+                })}
+
+                <div
+                  className={`information-block__view-details flex justify-between`}
+                  role="div"
+                  aria-label="information-block-view-details"
+                  onClick={() => {
+                    history.push(`/detail/${isPoint ? "point" : "meridian"}/${itemInformation.code}`)
+                  }}
+                >
+                  <span>
+                    {t('view_details')}
+                  </span>
+
+                  <div className='inline-flex items-center justify-center' style={{ transform: "rotate(45deg)" }}>
+                    <FontAwesomeIcon icon={faArrowUp} />
                   </div>
                 </div>
-              )
-            }
-          })}
-
-          <div
-            className={`information-block__view-details flex justify-between`}
-            role="div"
-            aria-label="information-block-view-details"
-            onClick={() => {
-              history.push(`/detail/${isPoint ? "point" : "meridian"}/${itemInformation.code}`)
-            }}
-          >
-            <span>
-              {t('view_details')}
-            </span>
-
-            <div className='inline-flex items-center justify-center' style={{ transform: "rotate(45deg)" }}>
-              <FontAwesomeIcon icon={faArrowUp} />
+              </div>
             </div>
-          </div>
+          }
         </>}
     </div>
   );

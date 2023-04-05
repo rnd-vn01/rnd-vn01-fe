@@ -20,7 +20,7 @@
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
 
-      @include mobile {
+      @include smallscreen {
         width: 100%;
         top: 65px;
         border-left: unset;
@@ -64,7 +64,7 @@
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
 
-      @include mobile {
+      @include smallscreen {
         width: 100%;
         position: absolute;
         bottom: 0;

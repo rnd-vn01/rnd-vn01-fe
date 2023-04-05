@@ -8,8 +8,8 @@
   margin-top: 15px;
   height: 60px;
 
-  @include mobile {
-    margin-top: 0px;
+  @include smallscreen {
+    margin-top: 10px;
     transform: translateX(-1vw);
     border-left: unset;
     border-right: unset;
