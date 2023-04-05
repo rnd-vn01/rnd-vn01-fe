@@ -79,6 +79,7 @@ export const AuthBar: React.FC = ({ }) => {
         history.push("/", { isRedirect: true })
         logout();
         dispatch(resetToInitialStateAuthSlice());
+        localStorage.removeItem("accessToken")
       },
       selectable: true,
       divider: false

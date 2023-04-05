@@ -18,7 +18,7 @@ import { useAppDispatch } from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from 'react-responsive';
-import { createNewAccount } from 'src/helpers/api/auth';
+import { createNewAccount, login } from 'src/helpers/api/auth';
 
 export const CreateAccountPage: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -53,6 +53,7 @@ export const CreateAccountPage: React.FC = () => {
   // Hooks
   useEffect(() => {
     logout();
+    localStorage.removeItem("accessToken")
     dispatch(resetToInitialStateAuthSlice())
   }, []);
 
@@ -110,7 +111,8 @@ export const CreateAccountPage: React.FC = () => {
                   firebase_id: user.user.uid,
                   email: email,
                   image: DEFAULT_PROFILE_IMAGE_URL,
-                  name: ''
+                  name: '',
+                  roles: ['user']
                 })
               } catch (e) {
                 throw {
@@ -125,6 +127,7 @@ export const CreateAccountPage: React.FC = () => {
               })
                 .then(() => {
                   logout();
+                  localStorage.removeItem("accessToken")
                   dispatch(resetToInitialStateAuthSlice())
                   history.push("/", { isRedirect: true });
                   return;
@@ -190,8 +193,15 @@ export const CreateAccountPage: React.FC = () => {
           firebase_id: user.uid,
           email: email,
           image: user.photoURL,
-          name: user.displayName
+          name: user.displayName,
+          roles: ['user']
         })
+      } catch (e) {
+
+      }
+
+      try {
+        await login(user.uid)
       } catch (e) {
         throw {
           message: t('cannot_create_account')

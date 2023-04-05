@@ -103,6 +103,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
     {
       item: t('auth_bar.menu.home'),
       onClick: () => {
+        localStorage.removeItem("accessToken")
         history.push("/", { isRedirect: true })
       },
       selectable: true,

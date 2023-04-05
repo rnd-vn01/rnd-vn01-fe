@@ -1,5 +1,6 @@
 import { objectToQuery, objectToFormData } from '../../formatAPIParam';
 import apiClient from '../../axios/apiClient';
+import apiClientJWT from 'src/api/axios/apiClientJWT';
 
 export const apiItem = {
   getAcupuncturePoints: (language: string) => {
@@ -34,14 +35,14 @@ export const apiItem = {
 
   updateAcupuncturePoint: (language: string, data: IParamUpdateAcupuncturePoint) => {
     const url = 'acupoint';
-    return apiClient.put(url + objectToQuery({
+    return apiClientJWT.put(url + objectToQuery({
       language: language,
     }), data);
   },
 
   updateMeridian: (language: string, data: IParamUpdateMeridian) => {
     const url = 'meridian';
-    return apiClient.put(url + objectToQuery({
+    return apiClientJWT.put(url + objectToQuery({
       language: language,
     }), data);
   },
