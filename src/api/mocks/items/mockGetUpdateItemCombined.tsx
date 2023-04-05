@@ -4,9 +4,11 @@ import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
 import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
 import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
+import apiClientJWT from 'src/api/axios/apiClientJWT';
 
 export const mockGetUpdateItemCombined = () => {
   const mock = new MockAdapter(apiClient as any)
+  const mockJWT = new MockAdapter(apiClientJWT as any)
   let pathRegex = new RegExp(`${process.env.REACT_APP_API_ENDPOINT}acupoint\/filter`);
 
   mock.onGet(pathRegex)
@@ -61,7 +63,7 @@ export const mockGetUpdateItemCombined = () => {
 
   pathRegex = new RegExp(`${process.env.REACT_APP_API_ENDPOINT}acupoint`);
 
-  mock.onPut(pathRegex)
+  mockJWT.onPut(pathRegex)
     .reply((config: any) => {
       return ([200, true])
     })
@@ -88,7 +90,7 @@ export const mockGetUpdateItemCombined = () => {
 
   pathRegex = new RegExp(`${process.env.REACT_APP_API_ENDPOINT}meridian`);
 
-  mock.onPut(pathRegex)
+  mockJWT.onPut(pathRegex)
     .reply((config: any) => {
       return ([200, true])
     })

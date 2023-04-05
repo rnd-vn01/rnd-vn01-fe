@@ -51,13 +51,23 @@ export const DetailPage: React.FC<IDetailPage> = ({
     })
 
     let result = false;
-    if (isPoint) {
-      result = await updateAcupuncturePoint(currentLanguage, { ...newItemDetail })
-    } else {
-      result = await updateMeridian(currentLanguage, { ...newItemDetail })
+    try {
+      if (isPoint) {
+        result = await updateAcupuncturePoint(currentLanguage, { ...newItemDetail })
+      } else {
+        result = await updateMeridian(currentLanguage, { ...newItemDetail })
+      }
+    }
+    catch {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: t('edit_page.update_result.failed'),
+      })
     }
 
     MySwal.close()
+
     if (result) {
       MySwal.fire({
         icon: 'success',

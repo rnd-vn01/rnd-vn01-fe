@@ -8,9 +8,8 @@ const apiClientJWT = axios.create({
   baseURL: process.env.REACT_APP_API_ENDPOINT,
   headers: {
     'content-type': 'application/json',
-    // 'Authorization': 'Bearer ' + getAccessToken()
+    'Authorization': 'Bearer ' + getAccessToken()
   },
-  withCredentials: true
 });
 
 apiClientJWT.interceptors.request.use(config => {
@@ -26,7 +25,6 @@ apiClientJWT.interceptors.response.use(
   },
   async (err: AxiosError) => {
     const status = err.response.status;
-    const message = (err.response.data as any).messages?.[0].message;
 
     if (status === 401) {
       let newToken = await refreshAccessToken();

@@ -53,6 +53,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       onClick: () => {
         logout();
         dispatch(resetToInitialStateAuthSlice());
+        localStorage.removeItem("accessToken")
         history.push("/", { isRedirect: true })
       },
       selectable: isLoggedIn,

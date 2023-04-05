@@ -20,7 +20,7 @@ import { validateEmail } from 'src/helpers/validate';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
-import { createNewAccount, getAccountInfo } from 'src/helpers/api/auth';
+import { createNewAccount, getAccountInfo, login } from 'src/helpers/api/auth';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -49,6 +49,7 @@ export const LoginPage: React.FC = () => {
   // Hooks
   useEffect(() => {
     logout();
+    localStorage.removeItem("accessToken")
     dispatch(resetToInitialStateAuthSlice())
 
     if (location?.state?.isRedirect) {
@@ -97,12 +98,15 @@ export const LoginPage: React.FC = () => {
           })
             .then(() => {
               logout();
+              localStorage.removeItem("accessToken")
               dispatch(resetToInitialStateAuthSlice())
               return;
             })
         } else {
           // Valid login
           const user = result.user;
+
+          await login(user.uid)
 
           const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
 
@@ -175,18 +179,59 @@ export const LoginPage: React.FC = () => {
   }
 
   const signInWithGoogle = async () => {
+    let user;
+
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      const user = res.user as any;
+      user = res.user as any;
+    } catch (err: any) {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: err.message,
+      })
+      return;
+    }
 
-      try {
-        await createNewAccount({
-          firebase_id: user.uid,
+    try {
+      await createNewAccount({
+        firebase_id: user.uid,
+        email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
+        image: user.photoURL,
+        name: user.displayName,
+        roles: ['user']
+      })
+
+      await login(user.uid)
+
+      dispatch(setStateAuth({
+        isLoggedIn: true,
+        user: {
+          name: user.displayName,
           email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
-          image: user.photoURL,
-          name: user.displayName
-        })
+          profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
+          firebaseId: user.uid,
+          isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
+        }
+      }))
+    } catch (e) {
+      await login(user.uid)
 
+      // Skip this catch, case of normal login
+      const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
+
+      if (Object.keys(accountInfo).length) {
+        dispatch(setStateAuth({
+          isLoggedIn: true,
+          user: {
+            email: accountInfo.email,
+            profileImage: accountInfo.image,
+            firebaseId: user.uid,
+            isAdmin: ADMIN_EMAILS.includes(accountInfo.email),
+            name: accountInfo.name
+          }
+        }))
+      } else {
         dispatch(setStateAuth({
           isLoggedIn: true,
           user: {
@@ -197,43 +242,10 @@ export const LoginPage: React.FC = () => {
             isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
           }
         }))
-      } catch (e) {
-        // Skip this catch, case of normal login
-        const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
-
-        if (Object.keys(accountInfo).length) {
-          dispatch(setStateAuth({
-            isLoggedIn: true,
-            user: {
-              email: accountInfo.email,
-              profileImage: accountInfo.image,
-              firebaseId: user.uid,
-              isAdmin: ADMIN_EMAILS.includes(accountInfo.email),
-              name: accountInfo.name
-            }
-          }))
-        } else {
-          dispatch(setStateAuth({
-            isLoggedIn: true,
-            user: {
-              name: user.displayName,
-              email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
-              profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
-              firebaseId: user.uid,
-              isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
-            }
-          }))
-        }
       }
-
-      history.push("/", { isRedirect: true })
-    } catch (err: any) {
-      MySwal.fire({
-        icon: 'error',
-        title: t('error'),
-        text: err.message,
-      })
     }
+
+    history.push("/", { isRedirect: true })
   }
 
   return (

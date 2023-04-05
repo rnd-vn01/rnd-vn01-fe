@@ -12,4 +12,5 @@ interface IParamCreateUpdateAccount {
   email: string;
   image: string;
   name: string;
+  roles?: Array<string>
 }

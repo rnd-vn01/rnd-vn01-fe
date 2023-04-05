@@ -1,4 +1,4 @@
-import { createNewAccount, getAccountInfo, updateProfile } from "src/helpers/api/auth";
+import { createNewAccount, getAccountInfo, login, updateProfile } from "src/helpers/api/auth";
 import { resetToInitialStateAuthSlice } from "src/redux/slice";
 import store from "src/redux/store";
 import { mockAuth } from "../mocks/auth/mockAuth"
@@ -7,7 +7,8 @@ const SKELETON = {
   firebase_id: "VALID",
   email: "test@gmail.com",
   image: "imageURL",
-  name: "Name"
+  name: "Name",
+  roles: ["user"]
 }
 
 describe("apiAuth", () => {
@@ -56,6 +57,13 @@ describe("apiAuth", () => {
   describe("update profile", () => {
     it("should return the result on valid updating request", async () => {
       const result = await updateProfile({ ...SKELETON })
+      expect(result).toBeTruthy()
+    })
+  })
+
+  describe("login", () => {
+    it("should return the access token on valid login request", async () => {
+      const result = await login("VALID")
       expect(result).toBeTruthy()
     })
   })
