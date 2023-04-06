@@ -32,6 +32,7 @@ import {
   unsetStrictMode
 } from 'src/redux/slice';
 import { getAcupuncturePoints } from 'src/helpers/api/items';
+import { storeQuizResult } from 'src/helpers/api/quizRecords';
 
 enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
@@ -58,6 +59,11 @@ export const QuizManager: React.FC<IQuizManager> = ({
   } = useSelector(
     (state: RootState) => state.dataSlice,
   );
+  const {
+    user
+  } = useSelector(
+    (state: RootState) => state.authSlice,
+  );
   const dispatch = useAppDispatch();
 
   const [quizState, setQuizState] = useState<number>(QUIZ_STATE["SELECT_OPTIONS"]);
@@ -76,7 +82,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
   const [answersList, setAnswersList] = useState<Array<any>>([]);
   const DEMO_QUESTION_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
   const [numberOfQuestionsOptionsList, setNumberOfQuestionsOptionsList] = useState<Array<number>>(DEMO_QUESTION_COUNT_OPTIONS)
-  const [questionType, setQuestionType] = useState<number>(QUIZ_QUESTION_TYPE.DESCRIPTION)
+  const questionTypeRef = useRef<number>(QUIZ_QUESTION_TYPE.DESCRIPTION)
   const [fetchingData, setFetchingData] = useState<boolean>(true);
 
   const pointCurrentFieldIndexes = useRef<any>([]);
@@ -143,8 +149,43 @@ export const QuizManager: React.FC<IQuizManager> = ({
     startTimer();
   }
 
-  const endQuiz = () => {
+  const endQuiz = async () => {
     setQuizState(QUIZ_STATE["ENDED"])
+
+    // Call API to store quiz results
+    const quiz = quizHistory.current;
+
+    // Count number of correct answer
+    let correctAnswers = 0;
+    let quizDetails = []
+    quiz?.questions?.forEach(detail => {
+      if (detail !== null && detail.correctAnswer === detail.answer)
+        correctAnswers += 1;
+
+      quizDetails.push({
+        question: detail.question,
+        answer: detail.answer,
+        correctAnswer: detail.correctAnswer,
+        time: detail.time,
+        isCorrect: detail !== null && detail.correctAnswer === detail.answer,
+        options: detail.options
+      })
+    })
+
+    const quizResult = {
+      userFirebaseId: user.firebaseId,
+      numberOfQuestions: quiz?.options?.numberOfQuestions,
+      quizOption: quiz?.options?.field[0]?.value,
+      correctAnswers,
+      details: quizDetails,
+      datetime: new Date().toISOString()
+    }
+
+    try {
+      await storeQuizResult(quizResult)
+    } catch (e) {
+      alert(t('login_page.messages.save_quiz_error'))
+    }
   }
 
   useEffect(() => {
@@ -161,7 +202,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
     let getAnswer = "" as any;
     let getCorrectAnswer = "" as any;
 
-    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+    if (questionTypeRef.current === QUIZ_QUESTION_TYPE.NAVIGATE) {
       if (selectedPoint === null || selectedPoint === undefined) {
         alert(t('quiz_page.alerts.select_one'))
         return;
@@ -214,7 +255,8 @@ export const QuizManager: React.FC<IQuizManager> = ({
     if (currentQuestion === numberOfQuestions) {
       setIsFinished(true);
     }
-    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+
+    if (questionTypeRef.current === QUIZ_QUESTION_TYPE.NAVIGATE) {
       dispatch(setNavigateQuestSelectable({
         selectable: false
       }))
@@ -222,13 +264,13 @@ export const QuizManager: React.FC<IQuizManager> = ({
       dispatch(setShowingCorrectPoint({
         correctPoint: temporarilyStoredQuestionContent.current.correctAnswer
       }))
-    } else if (questionType === QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
+    } else if (questionTypeRef.current === QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
       let correctAnswer = temporarilyStoredQuestionContent.current.options[temporarilyStoredQuestionContent.current.correctAnswer].answer
       let correctPointCode = correctAnswer.substring(0, correctAnswer.indexOf(" "))
       dispatch(setShowingCorrectPoint({
         correctPoint: correctPointCode
       }))
-    } else if (questionType === QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION) {
+    } else if (questionTypeRef.current === QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION) {
       let correctAnswer = temporarilyStoredQuestionContent.current.options[temporarilyStoredQuestionContent.current.correctAnswer].answer
       let correctPointCode = correctAnswer.substring(0, correctAnswer.indexOf(" "))
       dispatch(setShowingCorrectPoint({
@@ -389,7 +431,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
         break
     }
 
-    setQuestionType(questionType)
+    questionTypeRef.current = questionType;
     callbackSetQuestionType(questionType)
 
     if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
@@ -448,7 +490,8 @@ export const QuizManager: React.FC<IQuizManager> = ({
 
     if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
       temporarilyStoredQuestionContent.current = {
-        question: `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`,
+        question: `${t('quiz_page.questions.navigate')}`.replace("{POINT_NAME}",
+          `${DEMO_DATA[used[correct]].name}`),
         options: TEST_ANSWERS_LIST,
         answer: null,
         correctAnswer: TEST_ANSWERS_LIST[correct].answer.substring(0, TEST_ANSWERS_LIST[correct].answer.indexOf(" ")),
@@ -553,7 +596,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
             />) : quizState === QUIZ_STATE["IN_PROGRESS"] ?
             <QuizQuestion
               questionContent={questionContent}
-              type={questionType}
+              type={questionTypeRef.current}
               optionsList={answersList}
               correctAnswer={correctAnswer}
               isShowingAnswer={isShowingAnswer}
