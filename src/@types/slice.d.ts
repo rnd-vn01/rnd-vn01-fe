@@ -194,6 +194,10 @@ interface IRecordsProgressLog {
 
 }
 
+interface IRecordsProgressLogDesktop {
+  data?: any
+}
+
 interface IRecordsSummary {
   data?: any
 }
@@ -239,6 +243,10 @@ interface ISelectionSlice {
     content?: IMeridian | IAcupuncturePoint;
   } | null;
   preSelectLine?: null;
+  showingNeighbors?: Array<string>;
+  secondarySelectedMeridian?: string;
+  backupSelectedPoint?: string;
+  backupSelectedNeighbors?: Array<string>;
 }
 
 interface IModelInteractionControl {

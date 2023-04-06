@@ -16,6 +16,7 @@ export const RecordsSummary: React.FC<IRecordsSummary> = ({
     accuracy: 0
   });
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     let testData = {}
@@ -88,7 +89,7 @@ export const RecordsSummary: React.FC<IRecordsSummary> = ({
       </div>
 
       <div className={`
-        pt-3 pb-2 ${isDesktop ? "flex justify-between" : "grid grid-cols-2"}
+        pt-3 pb-2 grid ${isMobile ? "grid-cols-2" : "grid-cols-4"}
       `}>
         <div className={`records-summary__item ${!isDesktop && "col-span-1 mb-2"}`}>
           <h1 data-testid="record-summary-points">{showingData?.points}</h1>

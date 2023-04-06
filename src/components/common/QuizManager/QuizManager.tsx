@@ -507,6 +507,13 @@ export const QuizManager: React.FC<IQuizManager> = ({
       {isDesktop && <div className={`quiz-manager__section quiz-manager__section--top
         ${quizState === QUIZ_STATE["IN_PROGRESS"] ? "" : "quiz-manager__section--top--wide"}
       `}>
+        {isDesktop && quizState === QUIZ_STATE["IN_PROGRESS"] && <QuizStatusBar
+          currentQuest={currentQuestion}
+          totalQuest={numberOfQuestions}
+          isPlus={isPlus}
+          totalCorrect={numberOfCorrectQuestions}
+        />}
+
         {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
           <QuizTitleBar
             title={t('quiz_page.title')}
@@ -559,12 +566,32 @@ export const QuizManager: React.FC<IQuizManager> = ({
               onClick={() => startQuiz()}
             />
             :
-            quizState === QUIZ_STATE["IN_PROGRESS"] ? (isDesktop ? <QuizStatusBar
-              currentQuest={currentQuestion}
-              totalQuest={numberOfQuestions}
-              isPlus={isPlus}
-              totalCorrect={numberOfCorrectQuestions}
-            /> : <QuizTimer
+            quizState === QUIZ_STATE["IN_PROGRESS"] ? (isDesktop ? (isFinished ?
+              <QuizButton
+                fallbackCaption="End"
+                translateKey="quiz_page.buttons.end"
+                onClick={() => {
+                  //HANDLE END QUIZ
+                  endQuiz()
+                }}
+                isDisabled={!isShowingAnswer}
+              />
+              :
+              isShowingAnswer ? <QuizButton
+                fallbackCaption="Next"
+                translateKey="quiz_page.buttons.next"
+                onClick={() => {
+                  reset();
+                }}
+                isDisabled={!isShowingAnswer}
+              /> : <QuizButton
+                fallbackCaption="Skip"
+                translateKey="quiz_page.buttons.skip"
+                onClick={() => {
+                  skip();
+                }}
+                isDisabled={isShowingAnswer}
+              />) : <QuizTimer
               data-render={renderTime}
               currentTime={currentTime.current}
               totalTime={60}

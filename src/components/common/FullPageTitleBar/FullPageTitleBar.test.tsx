@@ -50,7 +50,7 @@ describe('FullPageTitleBar', () => {
     }));
 
     await waitFor(() => {
-      const menuItemDropdown = screen.getByRole("menu-item", { name: "menu-item-title_bar.menu.log_out" })
+      const menuItemDropdown = screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-auth_bar.menu.log_out" })
       fireEvent.click(menuItemDropdown);
       expect(mockHistoryPush).toHaveBeenCalledWith("/", { "isRedirect": true })
       expect(store.getState().authSlice).toStrictEqual({
@@ -62,12 +62,24 @@ describe('FullPageTitleBar', () => {
 
   test.each([
     {
-      item: 'title_bar.menu.personal_records',
+      item: 'auth_bar.menu.data_management',
+      path: '/data'
+    },
+    {
+      item: 'auth_bar.menu.advanced_search',
+      path: '/advanced-search'
+    },
+    {
+      item: 'auth_bar.menu.start_quiz',
+      path: '/quiz'
+    },
+    {
+      item: 'auth_bar.menu.personal_records',
       path: '/records'
     },
     {
-      item: 'title_bar.menu.data_management',
-      path: '/data'
+      item: 'auth_bar.menu.about_us',
+      path: '/about'
     },
     {
       item: 'auth_bar.menu.edit_profile',
@@ -92,7 +104,7 @@ describe('FullPageTitleBar', () => {
       </Provider>)
 
       await waitFor(() => {
-        const menuItemDropdown = screen.getByRole("menu-item", { name: `menu-item-${item}` })
+        const menuItemDropdown = screen.getByRole("menu-item-dropdown", { name: `menu-item-dropdown-${item}` })
         fireEvent.click(menuItemDropdown);
         expect(mockHistoryPush).toHaveBeenCalledWith(path)
       })
@@ -101,13 +113,21 @@ describe('FullPageTitleBar', () => {
 
   test.each([
     {
-      item: 'title_bar.menu.sign_up',
+      item: 'auth_bar.sign_up',
       path: '/signup'
     },
     {
-      item: 'title_bar.menu.log_in',
+      item: 'auth_bar.log_in',
       path: '/login'
     },
+    {
+      item: 'auth_bar.menu.advanced_search',
+      path: '/advanced-search'
+    },
+    {
+      item: 'auth_bar.menu.about_us',
+      path: '/about'
+    }
   ])(
     'to naviage to $item page if clicking on the item for not logged in users',
     async ({ item, path }) => {
@@ -121,22 +141,54 @@ describe('FullPageTitleBar', () => {
       </Provider>)
 
       await waitFor(() => {
-        const menuItemDropdown = screen.getByRole("menu-item", { name: `menu-item-${item}` })
+        const menuItemDropdown = screen.getByRole("menu-item-dropdown", { name: `menu-item-dropdown-${item}` })
         fireEvent.click(menuItemDropdown);
         expect(mockHistoryPush).toHaveBeenCalledWith(path)
       })
     },
   );
 
-  it("should redirect to home page if clicking on home icon", async () => {
+  it("should redirect to home page if clicking on the Home option, logged in", async () => {
+    store.dispatch(setStateAuth({
+      isLoggedIn: true,
+      user: {
+        name: "NAME",
+        email: "test@gmail.com",
+        profileImage: "profileImage",
+        firebaseId: "firebaseId",
+        isAdmin: true
+      }
+    }));
+
     render(<Provider store={store}>
       <FullPageTitleBar />
     </Provider>)
 
     await waitFor(() => {
-      const homeIcon = screen.getByRole("div", { name: "title-bar-home-icon" })
-      fireEvent.click(homeIcon);
+      const menuItemDropdown = screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-auth_bar.menu.home" })
+      fireEvent.click(menuItemDropdown);
       expect(mockHistoryPush).toHaveBeenCalledWith("/", { "isRedirect": true })
+    })
+  })
+
+  it("should redirect to home page if clicking on the Home option, not logged in", async () => {
+    render(<Provider store={store}>
+      <FullPageTitleBar />
+    </Provider>)
+
+    store.dispatch(setStateAuth({
+      isLoggedIn: false,
+      user: {}
+    }));
+
+    await waitFor(() => {
+      const menuItemDropdown = screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-auth_bar.menu.home" })
+      fireEvent.click(menuItemDropdown);
+      expect(mockHistoryPush).toHaveBeenCalledWith("/", { "isRedirect": true })
+      expect(store.getState().authSlice).toStrictEqual({
+        isLoggedIn: false,
+        user: {}
+      })
     })
   })
 
@@ -239,10 +291,34 @@ describe('FullPageTitleBar', () => {
 
     await waitFor(() => {
       // Get the menu item of current page
-      const menuItemCurrentPage = screen.getByRole("menu-item", { name: "menu-item-title_bar.menu.personal_records" })
+      const menuItemCurrentPage = screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-auth_bar.menu.personal_records" })
 
       // Get the menu item of another page
-      const menuItemOtherPage = screen.getByRole("menu-item", { name: "menu-item-title_bar.menu.data_management" })
+      const menuItemOtherPage = screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-auth_bar.menu.data_management" })
+
+      expect(menuItemCurrentPage).toHaveClass("title-bar__dropdown--selected-item")
+      expect(menuItemOtherPage).not.toHaveClass("title-bar__dropdown--selected-item")
+    })
+  })
+
+  it("should highlight selected page, not logged in", async () => {
+    store.dispatch(setStateAuth({
+      isLoggedIn: false,
+      user: {}
+    }));
+
+    render(<Provider store={store}>
+      <FullPageTitleBar
+        translateCode="advanced_search"
+      />
+    </Provider>)
+
+    await waitFor(() => {
+      // Get the menu item of current page
+      const menuItemCurrentPage = screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-auth_bar.menu.advanced_search" })
+
+      // Get the menu item of another page
+      const menuItemOtherPage = screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-auth_bar.menu.home" })
 
       expect(menuItemCurrentPage).toHaveClass("title-bar__dropdown--selected-item")
       expect(menuItemOtherPage).not.toHaveClass("title-bar__dropdown--selected-item")

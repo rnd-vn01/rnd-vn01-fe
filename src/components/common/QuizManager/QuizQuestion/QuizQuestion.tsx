@@ -15,7 +15,8 @@ export const QuizQuestion: React.FC<IQuizQuestion> = ({
       aria-label="quiz-question"
       id={`quiz-question-${currentQuestion}`}
       className="quiz-question">
-      <div className={`quiz-question__question ${type === QUIZ_QUESTION_TYPE.NAVIGATE ? "quiz-question__question--navigate" : ""}`}>
+      <div className={`quiz-question__question flex-center
+      ${type === QUIZ_QUESTION_TYPE.NAVIGATE ? "quiz-question__question--navigate" : ""}`}>
         {questionContent}
       </div>
 
@@ -44,6 +45,7 @@ export const QuizQuestion: React.FC<IQuizQuestion> = ({
         <div>
           <div
             className={`quiz-question__answer 
+              quiz-question__answer--navigate
               flex justify-center items-center
               ${isShowingAnswer ? "quiz-question__answer--ended" : "quiz-question__answer--not-ended"}`}
             onClick={() => {

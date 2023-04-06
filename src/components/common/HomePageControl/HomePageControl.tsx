@@ -5,6 +5,8 @@ import { RootState } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 import { ModelViewModeControl } from './ModelViewModeControl/ModelViewModeControl';
 import { ModelInteractionControl } from './ModelInteractionControl/ModelInteractionControl';
+import { MeridianControlResponsive } from '../responsive/index';
+import { useMediaQuery } from 'react-responsive';
 import { MeridianControl } from './MeridianControl/MeridianControl';
 
 export const HomePageControl: React.FC<IHomePageControl> = ({
@@ -13,20 +15,18 @@ export const HomePageControl: React.FC<IHomePageControl> = ({
 }) => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   return (
     <div
       role="div"
       aria-label="home-page-control"
-      className={`home-page-control grid grid-cols-2 ${isQuizPage ? "home-page-control--quiz" : ""}`}>
-      {!isQuizPage &&
-        <div className="home-page-control__control col-start-2">
-          <MeridianControl />
-        </div>
-      }
-      {!isQuizPage && <div className="home-page-control__control">
+      className={`home-page-control ${isQuizPage ? "home-page-control--quiz" : ""}`}>
+      {/* {!isQuizPage && <div className="home-page-control__control">
         <ModelViewModeControl />
-      </div>}
+      </div>} */}
+
+
       <div className={`home-page-control__control  ${isQuizPage ? "home-page-control__control--quiz" : ""}`}>
         <ModelInteractionControl
           callbackPanCenter={callbackPanCenter}
@@ -38,6 +38,13 @@ export const HomePageControl: React.FC<IHomePageControl> = ({
           callbackZoomOut={callbackZoomOut}
         />
       </div>
+
+      {!isQuizPage &&
+        <div className="home-page-control__control">
+          {!isDesktop && <MeridianControlResponsive />}
+          {isDesktop && <MeridianControl />}
+        </div>
+      }
     </div>
   );
 };

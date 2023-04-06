@@ -8,7 +8,7 @@ import {
   PerspectiveCamera,
   useProgress,
 } from "@react-three/drei";
-import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
+import SCENE_BACKGROUND from 'src/assets/images/background/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
 import { MOUSE, MathUtils, Vector3 } from 'three';
 import {
@@ -44,10 +44,14 @@ export const SceneQuiz = forwardRef((props, ref) => {
   } = useSelector(
     (state: RootState) => state.quizSlice,
   );
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
+  );
   const [isShowingLine, setIsShowingLine] = useState<boolean>(false);
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress()
@@ -57,7 +61,9 @@ export const SceneQuiz = forwardRef((props, ref) => {
         display: "flex", width: "100vw", justifyContent: "center",
         alignItems: "center", flexDirection: "column"
       }}>
-      <h3 style={{ display: "inline", fontSize: 24 }}>{`${Math.round(progress)}% loaded`}</h3>
+      <h3 style={{ display: "inline", fontSize: 24 }}>{
+        currentLanguage === "EN" ? `${Math.round(progress)}% loaded` : `Đã tải ${Math.round(progress)}%`
+      }</h3>
       <progress id="file" value={progress} max="100"></progress>
     </Html>
   }
@@ -298,7 +304,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
         background={true}
       />
 
-      <ambientLight intensity={-0.25} />
+      <ambientLight intensity={-0.4} />
 
       <spotLight
         args={["#f7f7f7", 0.4, 0, angleToRadians(45), 0.35]}
@@ -315,7 +321,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
 
       <OrbitControls
         ref={controls}
-        target={[isMobile ? 0 : 1, isMobile ? 7.5 : 5, 0]}
+        target={[!isDesktop ? 0 : 1, !isDesktop ? 7.5 : 5, 0]}
         mouseButtons={{
           LEFT: MOUSE.ROTATE,
           MIDDLE: MOUSE.DOLLY,
@@ -372,7 +378,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
       {/* Floor */}
       <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
         <planeGeometry args={[3000, 300]} />
-        <meshStandardMaterial color="#ffffff" />
+        <meshStandardMaterial color="#d3edfb" />
       </mesh>
 
     </Suspense >

@@ -12,6 +12,8 @@ import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
 import { RecordsLog } from '../RecordsLog/RecordsLog';
 import { generateRandomDate, getMidnight } from 'src/helpers/date';
+import { useMediaQuery } from 'react-responsive';
+import { RecordsProgressDesktop } from './responsive/RecordsProgressDesktop';
 
 export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
   const { t } = useTranslation();
@@ -23,6 +25,7 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   const filterDate = (dates: any, filterBy: any) => {
     let startDate = null;
@@ -52,7 +55,7 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
     if (isProgress) {
       MERIDIANS.forEach(meridian => {
         testData.push({
-          caption: currentLanguage === "EN" ? `${meridian} ${t('general.meridian')}` : `${t('general.meridian')} ${meridian}`,
+          caption: `${meridian}`,
           percentage: Math.round(Math.random() * 100)
         })
       })
@@ -195,26 +198,26 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({ }) => {
 
       </div>
 
-      {isProgress &&
-        <div className='records-progress__progress'>
-          {showingData.map((item, index) => (
-            <div
-              key={`records-progress-${index}`}
-              className='records-progress__progress--item'>
-              <div className='flex justify-between'>
-                <p>{item.caption}</p>
-                <p>{item.percentage}%</p>
-              </div>
-
-              <div className='records-progress__progress--percentage-bg'>
-                <div className='records-progress__progress--percentage-cover' style={{
-                  width: `${item.percentage}%`
-                }} />
-              </div>
+      {(isProgress && !isDesktop) && <div className='records-progress__progress'>
+        {showingData.map((item, index) => (
+          <div
+            key={`records-progress-${index}`}
+            className='records-progress__progress--item'>
+            <div className='flex justify-between'>
+              <p>{item.caption}</p>
+              <p>{item.percentage}%</p>
             </div>
-          ))}
-        </div>}
 
+            <div className='records-progress__progress--percentage-bg'>
+              <div className='records-progress__progress--percentage-cover' style={{
+                width: `${item.percentage}%`
+              }} />
+            </div>
+          </div>
+        ))}
+      </div>}
+
+      {(isProgress && isDesktop) && <RecordsProgressDesktop data={showingData} />}
 
       {!isProgress &&
         <div className='records-progress__progress'>

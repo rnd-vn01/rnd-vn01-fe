@@ -8,6 +8,7 @@ import Highlighter from "react-highlight-words";
 import IconViewOnModel from "src/assets/images/IconShow.svg";
 import ReactTooltip from 'react-tooltip';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 
 export const SearchResultItem: React.FC<ISearchResultItem> = ({
   item,
@@ -19,6 +20,7 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
   const firstTriggered = useRef<boolean>(false);
   const history = useHistory();
   const { t } = useTranslation();
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   useEffect(() => {
     if (firstTriggered.current) {
@@ -45,10 +47,12 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
       <div
         className="search-result__header"
         onClick={(e) => {
-          {
+          if (isDesktop) {
             if (!firstTriggered.current)
               firstTriggered.current = true
             setIsCollapsed(!isCollapsed)
+          } else {
+            history.push(`/detail/${isPoint ? "point" : "meridian"}/${item.code}?query=${query}`)
           }
         }}>
 

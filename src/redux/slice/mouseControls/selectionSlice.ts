@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getNeighborPoints } from 'src/helpers/getNeighborsPoints';
 import { LINE_POINTS, POINT_LOCATIONS } from 'src/configs/constants';
 
 export const initialStateSelectionSlice = {
@@ -13,7 +14,11 @@ export const initialStateSelectionSlice = {
   isSelectingFromMenu: false,
   pointPosition: null,
   isShowingQuickInformation: null,
-  preSelectLine: null
+  preSelectLine: null,
+  showingNeighbors: [],
+  secondarySelectedMeridian: null,
+  backupSelectedPoint: "",
+  backupSelectedNeighbors: [],
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -21,6 +26,8 @@ export const selectionSlice = createSlice({
   initialState: initialStateSelectionSlice,
   reducers: {
     resetToInitialStatePointSelectionSlice(state) {
+      state.backupSelectedPoint = `${state.selectedLabel || ""}`;
+      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors))
       state.selectedLabel = null;
       state.selectedType = null;
       state.isHoveringPoint = false;
@@ -33,15 +40,57 @@ export const selectionSlice = createSlice({
       state.pointPosition = null;
       state.isShowingQuickInformation = null;
       state.preSelectLine = null;
+      state.showingNeighbors = [];
+      state.secondarySelectedMeridian = null;
     },
 
     setPointSelected(state, action) {
+      let backupCurrentSelectedPoint = `
+      ${(state.selectedLabel !== null && state.selectedLabel !== undefined && state.selectedLabel !== "") ?
+          `${state.selectedLabel}`
+          :
+          (state.backupSelectedPoint !== null && state.backupSelectedPoint !== undefined
+            && state.backupSelectedPoint !== "")
+            ? `${state.backupSelectedPoint}` : ""}`;
+      backupCurrentSelectedPoint = backupCurrentSelectedPoint.trim()
+
       state.firstSelected = false;
       state.isSelectingFromMenu = false;
       state.pointPosition = action.payload.pointPosition;
       state.selectedLabel = action.payload.selectedLabel;
       state.selectedType = 'point';
       state.preSelectLine = null;
+
+      if (action.payload.selectedLabel) {
+        // In case not the first item selected
+        if (backupCurrentSelectedPoint !== null
+          && backupCurrentSelectedPoint !== undefined
+          && backupCurrentSelectedPoint !== ""
+          && backupCurrentSelectedPoint !== "M-HN-3") {
+          // Check to mark in case of a neighbor
+          // If is in the neighbor list
+          if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)
+            || state.showingNeighbors?.includes(action.payload.selectedLabel)) {
+            // If not being also one from secondary selected meridian
+            if (state.secondarySelectedMeridian === null ||
+              state.secondarySelectedMeridian === undefined) {
+              // If not of the same meridian
+              let selectedPointMeridian = backupCurrentSelectedPoint.split("-") as any
+              selectedPointMeridian = selectedPointMeridian[0]
+
+              // New meridian
+              let newPointMeridian = action.payload.selectedLabel.split("-") as any
+              newPointMeridian = newPointMeridian[0]
+
+              if (selectedPointMeridian !== newPointMeridian) {
+                state.secondarySelectedMeridian = selectedPointMeridian
+              }
+            }
+          }
+        }
+
+        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.75, "unlimited")
+      }
     },
 
     setLineSelected(state, action) {
@@ -169,6 +218,12 @@ export const selectionSlice = createSlice({
       state.isSelectingFromMenu = true;
       state.selectedLabel = action.payload.selectedPoint;
       state.selectedType = 'point';
+      state.showingNeighbors = getNeighborPoints(action.payload.selectedPoint, true, 1.75, "unlimited")
+    },
+
+    setRemoveBackup(state) {
+      state.backupSelectedNeighbors = []
+      state.backupSelectedPoint = "";
     }
   },
 });
@@ -177,5 +232,6 @@ const { actions, reducer } = selectionSlice;
 export const { resetToInitialStatePointSelectionSlice, setPointSelected,
   setLineSelected, setIsHoveringPoint, setIsHoveringLine, setIsCurrentMousePosition,
   setIsCurrentMouseMovePosition, setLineHover, setLineSelectedByLabel,
-  setShowingQuickInformation, setPointSelectedByLabel, setLinePreSelectByLabel } = actions;
+  setShowingQuickInformation, setPointSelectedByLabel, setLinePreSelectByLabel,
+  setRemoveBackup } = actions;
 export default reducer;

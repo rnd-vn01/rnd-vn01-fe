@@ -9,9 +9,9 @@ import {
   PerspectiveCamera,
   useProgress,
 } from "@react-three/drei";
-import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
+import SCENE_BACKGROUND from 'src/assets/images/background/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
-import { MOUSE, MathUtils, Vector3, Frustum, Matrix4, Object3D } from 'three';
+import { MOUSE, MathUtils, Vector3, Frustum, Matrix4 } from 'three';
 import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
@@ -26,13 +26,16 @@ import {
   resetToInitialStateZoomControlSlice,
   setInCloseZoomMode,
   setFrustum,
-  setCameraZoom
+  setCameraZoom,
+  setRemoveBackup,
+  setStateCameraQuaternion
 } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { Floor } from '../Floor/Floor';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -50,7 +53,8 @@ export const Scene = forwardRef((props, ref) => {
     selectedType,
     pointPosition,
     isSelectingFromMenu,
-    preSelectLine
+    preSelectLine,
+    secondarySelectedMeridian
   } = useSelector(
     (state: RootState) => state.selectionSlice,
   );
@@ -61,8 +65,13 @@ export const Scene = forwardRef((props, ref) => {
     (state: RootState) => state.zoomControlSlice,
   );
 
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
+  );
+
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   const location = useLocation() as any;
 
@@ -82,7 +91,9 @@ export const Scene = forwardRef((props, ref) => {
         display: "flex", width: "100vw", justifyContent: "center",
         alignItems: "center", flexDirection: "column"
       }}>
-      <h3 style={{ display: "inline", fontSize: 24 }}>{`${Math.round(progress)}% loaded`}</h3>
+      <h3 style={{ display: "inline", fontSize: 24 }}>{
+        currentLanguage === "EN" ? `${Math.round(progress)}% loaded` : `Đã tải ${Math.round(progress)}%`
+      }</h3>
       <progress id="file" value={progress} max="100"></progress>
     </Html>
   }
@@ -155,6 +166,7 @@ export const Scene = forwardRef((props, ref) => {
     dispatch(unsetStrictMode())
     dispatch(resetToInitialStateQuizSlice())
     dispatch(resetToInitialStateZoomControlSlice())
+    dispatch(setRemoveBackup())
 
     setTimeout(() => {
       // Check if a point is selected from redirect
@@ -204,7 +216,7 @@ export const Scene = forwardRef((props, ref) => {
       controls.current?.reset();
       let _v = new Vector3(controls.current?.target?.x - 1, controls.current?.target?.y - 5, controls.current?.target?.z);
       controls.current?.target?.sub(_v)
-      camera.current.zoom = isMobile ? 1 : 1.5
+      camera.current.zoom = !isDesktop ? 1 : 1.5
       camera.current?.updateProjectionMatrix();
 
       dispatch(resetToInitialStateZoomControlSlice())
@@ -212,7 +224,11 @@ export const Scene = forwardRef((props, ref) => {
     },
 
     zoomIn() {
-      camera.current.zoom += 0.25
+      if (camera.current?.zoom < 2 || camera.current?.zoom >= 4) {
+        camera.current.zoom += 0.5
+      } else {
+        camera.current.zoom += 1
+      }
       camera.current?.updateProjectionMatrix();
       if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
@@ -241,7 +257,12 @@ export const Scene = forwardRef((props, ref) => {
 
     zoomOut() {
       if (camera.current?.zoom >= 1) {
-        camera.current.zoom -= 0.25
+        if (camera.current?.zoom === 3 || camera.current?.zoom === 4) {
+          camera.current.zoom -= 1
+        } else {
+          camera.current.zoom -= 0.5
+        }
+
         camera.current?.updateProjectionMatrix();
       }
 
@@ -393,6 +414,7 @@ export const Scene = forwardRef((props, ref) => {
     } else {
       if (selectedType && selectedLabel) {
         return (selectedLabel === label) || (selectedType === 'point' && selectedLabel?.split("-")[0] === label)
+          || (secondarySelectedMeridian === label)
       } else {
         return isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE
       }
@@ -404,9 +426,10 @@ export const Scene = forwardRef((props, ref) => {
       <Environment
         files={SCENE_BACKGROUND}
         background={true}
+
       />
 
-      <ambientLight intensity={-0.25} />
+      <ambientLight intensity={-0.4} />
 
       <spotLight
         args={["#f7f7f7", 0.4, 0, angleToRadians(45), 0.35]}
@@ -417,13 +440,13 @@ export const Scene = forwardRef((props, ref) => {
         ref={camera}
         makeDefault
         position={[-1.75, 10.85, 40]}
-        zoom={isMobile ? 1 : 1.5}
+        zoom={!isDesktop ? 1 : 1.5}
       >
       </PerspectiveCamera>
 
       <OrbitControls
         ref={controls}
-        target={[isMobile ? 0 : 1, 5, 0]}
+        target={[!isDesktop ? 0 : 1, 5, 0]}
         mouseButtons={{
           LEFT: MOUSE.ROTATE,
           MIDDLE: MOUSE.DOLLY,
@@ -547,11 +570,7 @@ export const Scene = forwardRef((props, ref) => {
           showLine={true}
         />}
       {/* Floor */}
-      <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
-        <planeGeometry args={[3000, 300]} />
-        <meshStandardMaterial color="#ffffff" />
-      </mesh>
-
+      <Floor />
     </Suspense >
   );
 });

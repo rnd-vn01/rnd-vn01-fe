@@ -1,15 +1,23 @@
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader, DynamicDrawUsage, Vector3 } from 'three';
+import { TextureLoader, DynamicDrawUsage, Vector3, Color } from 'three';
 import circleImg from 'src/assets/images/PointCircle.png';
 import circleSelectedImg from 'src/assets/images/PointCircleSelected.png';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Text } from "src/components/ThreeJS/index";
 import { useAppDispatch } from 'src/redux/store';
 import { useSelector } from 'react-redux';
-import { setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint } from 'src/redux/slice/index';
+import {
+  setPointSelected, setIsHoveringPoint, setNavigateQuestSelectedPoint,
+  resetToInitialStatePointSelectionSlice, setRemoveBackup
+} from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
-import { IMPORTANT_POINTS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
+import {
+  IMPORTANT_POINTS,
+  IS_TESTING_COLORFUL_MERIDIAN_POINTS,
+  ZOOM_CONTROL_LEVEL,
+  POINT_MERIDIAN_COLOR_MAP
+} from 'src/configs/constants';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
@@ -33,7 +41,8 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   const {
     selectedLabel,
     selectedType,
-    preSelectLine
+    preSelectLine,
+    showingNeighbors
   } = useSelector(
     (state) => state.selectionSlice,
   );
@@ -83,7 +92,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [positionArray])
 
   let position = useMemo(() => {
-    return new Float32Array(positionArray);
+    return new Float32Array([positionArray[0], positionArray[1], positionArray[2]]);
   }, [positionArray])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
@@ -111,7 +120,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       return mobileSize
     } else {
       if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.EXTRA_LARGE) {
-        desktopSize *= 3
+        desktopSize *= 1.5
         if (cameraZoom === 1.5)
           desktopSize *= 1.5
       } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
@@ -129,6 +138,31 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       }
 
       return desktopSize
+    }
+  }
+
+  const setDefaultColor = () => {
+    if (IS_TESTING_COLORFUL_MERIDIAN_POINTS && label !== "M-HN-3") {
+      setColor(POINT_MERIDIAN_COLOR_MAP[label.split("-")[0]])
+    } else {
+      setColor(0xF9FFB3)
+    }
+  }
+
+  const checkPointShowing = () => {
+    if (!isQuizMode) {
+      if (selectedType === "point" && selectedLabel) {
+        return showingNeighbors.includes(label) || isSelected || isMeridianSelected || isSameMeridianSelected
+      } else {
+        // Case 1 point is selected
+        if (isMeridianSelected || isQuizMode || isSelected || isSameMeridianSelected) {
+          return true;
+        }
+
+        return (!preSelectLine && (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL)))
+      }
+    } else {
+      return true;
     }
   }
 
@@ -171,7 +205,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
           setIsAnswerPoint(true);
         }
       } else {
-        setColor(0xF9FFB3)
+        setDefaultColor();
         setIsShowingLabel(false);
         setIsAnswerPoint(false);
         if (!markedPoint) {
@@ -192,7 +226,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         setColor(0xFFFF00)
       } else {
         setIsShowingLabel(false);
-        setColor(0xF9FFB3)
+        setDefaultColor();
       }
     } else {
       setIsInShowingPoints(false);
@@ -204,7 +238,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     if (isOnHover || isSelected) {
       setColor(0xFFFF00)
     } else {
-      setColor(0xF9FFB3)
+      setDefaultColor();
     }
 
     dispatch(setIsHoveringPoint({
@@ -250,6 +284,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   useEffect(() => {
     setIsImportantPoint(IMPORTANT_POINTS.includes(label))
+    setDefaultColor();
   }, [])
 
   // useEffect(() => {
@@ -260,21 +295,26 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   // }, [frustum, preSelectLine])
 
   return (
-    (isMeridianSelected || isQuizMode || isSelected || isSameMeridianSelected ||
-      (!preSelectLine && (isImportantPoint || (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_ALL)))) ? (<>
-        <points
-          onPointerMove={(e) => {
-            if (isHoverable && !isAnswerPoint) {
-              if (isDesktop) {
-                if (e.distanceToRay < 0.1) {
-                  setIsOnHover(true);
-                } else {
-                  setIsOnHover(false);
-                }
+    checkPointShowing() ? (<>
+      <points
+        onPointerMove={(e) => {
+          if (isHoverable && !isAnswerPoint) {
+            if (isDesktop) {
+              if (e.distanceToRay < 0.1) {
+                setIsOnHover(true);
+              } else {
+                setIsOnHover(false);
               }
             }
-          }}
-          onClick={(e) => {
+          }
+        }}
+        onClick={(e) => {
+          if (isSelected) {
+            if (e.distanceToRay < 0.1) {
+              dispatch(resetToInitialStatePointSelectionSlice())
+              dispatch(setRemoveBackup());
+            }
+          } else {
             if (!isQuizMode || (isNavigateQuest && navigateQuestSelectable)) {
               if (e.distanceToRay < 0.1) {
                 setTimeout(() => {
@@ -295,37 +335,38 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
                 }
               }
             }
-          }}>
-          <bufferGeometry attach="geometry">
-            <bufferAttribute
-              attach="attributes-position"
-              count={position.length / 3}
-              array={position}
-              itemSize={3}
-              usage={DynamicDrawUsage}
-            />
-          </bufferGeometry>
-          <pointsMaterial
-            attach="material"
-            map={imgTex}
-            color={color}
-            size={getPointSize()}
-            sizeAttenuation={false}
-            transparent={false}
-            alphaTest={0.5}
-            opacity={isOnHover || isSelected || isAnswerPoint ? 1.0 : 0.5}
+          }
+        }}>
+        <bufferGeometry attach="geometry">
+          <bufferAttribute
+            attach="attributes-position"
+            count={position.length / 3}
+            array={position}
+            itemSize={3}
+            usage={DynamicDrawUsage}
           />
-        </points>
+        </bufferGeometry>
+        <pointsMaterial
+          attach="material"
+          map={imgTex}
+          color={color}
+          size={getPointSize()}
+          sizeAttenuation={false}
+          transparent={false}
+          alphaTest={0.5}
+          opacity={isOnHover || isSelected || isAnswerPoint ? 1.0 : 0.5}
+        />
+      </points>
 
-        {isShowingLabel && <Text
-          positionArray={textPosition}
-          text={isInShowingPoints ? (isShowing4Labels ? `${(showingPoints.indexOf(label) + 1).toString()}. ${label}` :
-            `P` + (showingPoints.indexOf(label) + 1).toString()) :
-            label}
-          reverse={reverse}
-          viewFromBottom={viewFromBottom}
-          isOnHover={isOnHover || isSelected || isAnswerPoint}
-        ></Text>}
-      </>) : (<></>)
+      {isShowingLabel && <Text
+        positionArray={textPosition}
+        text={isInShowingPoints ? (isShowing4Labels ? `${(showingPoints.indexOf(label) + 1).toString()}. ${label}` :
+          `P` + (showingPoints.indexOf(label) + 1).toString()) :
+          label}
+        reverse={reverse}
+        viewFromBottom={viewFromBottom}
+        isOnHover={isOnHover || isSelected || isAnswerPoint}
+      ></Text>}
+    </>) : (<></>)
   );
 };

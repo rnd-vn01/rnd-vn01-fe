@@ -14,6 +14,7 @@ import { ItemDetailEdit } from "./ItemDetailEdit/ItemDetailEdit"
 import {
   RecordsChart, RecordsProgressLog, RecordsSummary
 } from "./Records";
+import { RecordsSummaryDesktop } from "./Records/RecordsSummary/desktop/RecordsSummaryDesktop"
 import { AboutPageSection } from "./AboutPageSection/AboutPageSection"
 import { HomePageControl } from "./HomePageControl/HomePageControl"
 import { LanguagePicker } from "./LanguagePicker/LanguagePicker"
@@ -36,6 +37,7 @@ export {
   RecordsChart,
   RecordsProgressLog,
   RecordsSummary,
+  RecordsSummaryDesktop,
   AboutPageSection,
   HomePageControl,
   LanguagePicker

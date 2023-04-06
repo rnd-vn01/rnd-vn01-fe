@@ -6,7 +6,7 @@
   height: 60px;
   border-bottom: 1px solid black;
 
-  @include mobile {
+  @include smallscreen {
     border-bottom: unset;
     border-left: 1px solid black;
   }

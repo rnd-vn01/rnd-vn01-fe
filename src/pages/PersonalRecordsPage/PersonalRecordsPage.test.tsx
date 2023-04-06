@@ -28,7 +28,7 @@ describe('PersonalRecordsPage', () => {
     </ResponsiveContext.Provider>)
 
     await waitFor(() => {
-      expect(screen.getByRole("div", { name: "personal-records-page" })).toBeInTheDocument();
+      expect(screen.getByRole("div", { name: "personal-records-page-desktop" })).toBeInTheDocument();
       expect(screen.getByRole("div", { name: "title-bar" })).toBeInTheDocument();
     })
   })

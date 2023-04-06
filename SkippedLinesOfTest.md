@@ -2,7 +2,10 @@ src/components/common/QuickSearchBar/QuickSearchResults
     QuickSearchResults.tsx ~ 133-136
 
 src/components/common/Records/RecordsProgressLog
-    RecordsProgressLog.tsx ~ 69-93
+    RecordsProgressLog.tsx ~ 72-96
+
+src/components/common/Records/RecordsProgressLog/responsive
+    RecordsProgressDesktop.tsx ~ 18
 
 src/components/common/Search/SearchBar
     SearchBar.tsx ~ 87
@@ -14,4 +17,4 @@ src/helpers
     searchProcess.ts ~ 131
 
 src/pages/QuizPage
-    QuizPage.tsx ~ 38, 40
+    QuizPage.tsx ~ 39,41

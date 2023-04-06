@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { resetToInitialStatePointSelectionSlice, setShowingQuickInformation } from 'src/redux/slice';
 import store from 'src/redux/store';
 import { InformationBlock } from './InformationBlock';
+import { Context as ResponsiveContext } from "react-responsive";
 
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -40,17 +41,19 @@ describe('InformationBlock', () => {
   })
 
   it("should navigate to the detail page if click on view details for point", async () => {
-    render(<Provider store={store}>
-      <InformationBlock
-        isPoint={true}
-        itemInformation={{
-          code: "GB-20",
-          name: "Name",
-          description: "Description",
-          functionalities: []
-        }}
-      />
-    </Provider>)
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <InformationBlock
+          isPoint={true}
+          itemInformation={{
+            code: "GB-20",
+            name: "Name",
+            description: "Description",
+            functionalities: []
+          }}
+        />
+      </Provider>
+    </ResponsiveContext.Provider>)
 
     const viewDetails = screen.getByRole("div", { name: "information-block-view-details" })
     fireEvent.click(viewDetails)
@@ -61,17 +64,19 @@ describe('InformationBlock', () => {
   })
 
   it("should navigate to the detail page if click on view details for meridian", async () => {
-    render(<Provider store={store}>
-      <InformationBlock
-        isPoint={false}
-        itemInformation={{
-          code: "LU",
-          name: "Lung",
-          description: "Description for Lung",
-          diseases: "",
-        }}
-      />
-    </Provider>)
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <InformationBlock
+          isPoint={false}
+          itemInformation={{
+            code: "LU",
+            name: "Lung",
+            description: "Description for Lung",
+            diseases: "",
+          }}
+        />
+      </Provider>
+    </ResponsiveContext.Provider>)
 
     const viewDetails = screen.getByRole("div", { name: "information-block-view-details" })
     fireEvent.click(viewDetails)
@@ -82,22 +87,106 @@ describe('InformationBlock', () => {
   })
 
   it("should hide the information block if clicked on the icon", async () => {
-    render(<Provider store={store}>
-      <InformationBlock
-        isPoint={false}
-        itemInformation={{
-          code: "LU",
-          name: "Lung",
-          description: "Description for Lung",
-          diseases: "",
-        }}
-      />
-    </Provider>)
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <InformationBlock
+          isPoint={false}
+          itemInformation={{
+            code: "LU",
+            name: "Lung",
+            description: "Description for Lung",
+            diseases: "",
+          }}
+        />
+      </Provider>
+    </ResponsiveContext.Provider>)
 
     fireEvent.click(screen.getByRole("div", { name: "information-block-hide-icon" }))
 
     await waitFor(() => {
       expect(screen.queryByTestId("information-block-title")).toBeNull()
+    })
+  })
+
+  describe("InformationBlock tablet", () => {
+    it("to be rendered successfully", async () => {
+      render(<ResponsiveContext.Provider value={{ width: 800 }}>
+        <Provider store={store}>
+          <InformationBlock />
+        </Provider>
+      </ResponsiveContext.Provider>)
+
+      await waitFor(() => {
+        expect(screen.getByRole("div", { name: "information-block" })).toBeInTheDocument();
+      })
+    })
+
+    it("should navigate to the detail page if click on view details for point", async () => {
+      render(<ResponsiveContext.Provider value={{ width: 800 }}>
+        <Provider store={store}>
+          <InformationBlock
+            isPoint={true}
+            itemInformation={{
+              code: "GB-20",
+              name: "Name",
+              description: "Description",
+              functionalities: []
+            }}
+          />
+        </Provider>
+      </ResponsiveContext.Provider>)
+
+      const viewDetails = screen.getByRole("div", { name: "information-block-view-details" })
+      fireEvent.click(viewDetails)
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledWith("/detail/point/GB-20")
+      })
+    })
+
+    it("should navigate to the detail page if click on view details for meridian", async () => {
+      render(<ResponsiveContext.Provider value={{ width: 800 }}>
+        <Provider store={store}>
+          <InformationBlock
+            isPoint={false}
+            itemInformation={{
+              code: "LU",
+              name: "Lung",
+              description: "Description for Lung",
+              diseases: "",
+            }}
+          />
+        </Provider>
+      </ResponsiveContext.Provider>)
+
+      const viewDetails = screen.getByRole("div", { name: "information-block-view-details" })
+      fireEvent.click(viewDetails)
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledWith("/detail/meridian/LU")
+      })
+    })
+
+    it("should hide the information block if clicked on the icon", async () => {
+      render(<ResponsiveContext.Provider value={{ width: 800 }}>
+        <Provider store={store}>
+          <InformationBlock
+            isPoint={false}
+            itemInformation={{
+              code: "LU",
+              name: "Lung",
+              description: "Description for Lung",
+              diseases: "",
+            }}
+          />
+        </Provider>
+      </ResponsiveContext.Provider>)
+
+      fireEvent.click(screen.getByRole("div", { name: "information-block-hide-icon" }))
+
+      await waitFor(() => {
+        expect(screen.queryByTestId("information-block-title")).toBeNull()
+      })
     })
   })
 });

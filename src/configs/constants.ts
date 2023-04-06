@@ -1,21 +1,21 @@
 export const MERIDIANS_COLOR = {
-  1: "#4C922D",
-  2: "#B4CB3C",
-  3: "#CCA443",
-  4: "#C5CC43",
-  5: "#43A6CC",
-  6: "#B343CC",
-  7: "#44A668",
-  8: "#4377CC",
-  9: "#5643CC",
-  10: "#68CC43",
-  11: "#4DC2BA",
-  12: "#CC4370",
+  1: "#32FF8F", //LU
+  2: "#AF594F", //LI
+  3: "#FFFF54", //HT
+  4: "#007299", //SP
+  5: "#FF00FF", //ST
+  6: "#DDA0DD", //SI
+  7: "#FF1493", //BL
+  8: "#4B0082", //KI
+  9: "#0000FF", //PC
+  10: "#00FF00", //TE
+  11: "#8B0000", //GB
+  12: "#008000", //Liv
 }
 
 export const EXTRA_MERIDIAN_COLORS = {
-  1: "#618888",
-  2: "#885C88"
+  1: "#323299", //Du
+  2: "#436060" //Ren
 }
 
 export const APP_NAME = "Acupuncture 3D"
@@ -7046,3 +7046,39 @@ export const IMPORTANT_POINTS = [
   'ST-40',
   'ST-42'
 ]
+
+export const IS_TESTING_COLORFUL_MERIDIAN_POINTS = false;
+
+export const MERIDIAN_COLOR_MAP = {
+  "LU": "#32FF8F", //LU
+  "LI": "#AF594F", //LI
+  "HT": "#FFFF54", //HT
+  "SP": "#007299", //SP
+  "ST": "#FF00FF", //ST
+  "SI": "#DDA0DD", //SI
+  "BL": "#FF1493", //BL
+  "KI": "#4B0082", //KI
+  "PC": "#0000FF", //PC
+  "TE": "#00FF00", //TE
+  "GB": "#8B0000", //GB
+  "Liv": "#008000", //Liv
+  "Du": "#323299", //Du
+  "Ren": "#436060" //Ren
+}
+
+export const POINT_MERIDIAN_COLOR_MAP = {
+  "LU": 0x59ffa4, //LU
+  "LI": 0xce9892, //LI
+  "HT": 0xffff54, //HT
+  "SP": 0x5ed6ff, //SP
+  "ST": 0xff5eff, //ST
+  "SI": 0xd383d3, //SI
+  "BL": 0xff4fae, //BL
+  "KI": 0xba5bff, //KI
+  "PC": 0x6262ff, //PC
+  "TE": 0x62ff62, //TE
+  "GB": 0xff5050, //GB
+  "Liv": 0x59ff59, //Liv
+  "Du": 0x7f7fd5, //Du
+  "Ren": 0x9bb9b9 //Ren
+}

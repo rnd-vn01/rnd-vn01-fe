@@ -1,5 +1,5 @@
 .title-bar {
-  height: 70px;
+  height: 60px;
   margin: 0 auto;
   position: fixed;
   top: 0;
@@ -8,6 +8,7 @@
   right: 0;
   background: var(--theme-background);
   z-index: 1001;
+  padding-bottom: 10px;
 
   &__option {
     font-size: 1.5rem;
@@ -23,6 +24,11 @@
   }
 
   &__menu {
+    padding: 5px;
+    top: 0px;
+    position: absolute;
+    left: calc(1vw - 5px);
+
     &--name {
       font-size: 1.5rem;
       line-height: 45px;
@@ -47,10 +53,10 @@
   &__dropdown {
     position: absolute;
     border: 1px solid black;
-    top: calc(100% + 1px);
+    top: calc(100%);
     background: var(--theme-background);
     z-index: 100;
-    right: 1vw;
+    left: 1vw;
 
     &--hide {
       display: none;
@@ -64,6 +70,16 @@
       &:hover {
         background: var(--theme-primary)
       }
+    }
+
+    &--divider {
+      border: 0;
+      clear: both;
+      display: block;
+      width: 96%;
+      background-color: black;
+      height: 1px;
+      margin: 2px 0;
     }
 
     &--selected-item {
@@ -82,23 +98,6 @@
 
     &--bg {
       background: var(--theme-primary)
-    }
-  }
-
-  &__home-icon {
-    border: 1px solid transparent;
-    position: absolute;
-    padding: 5px;
-    top: 12.5px;
-    cursor: pointer;
-
-    &:hover {
-      background: var(--theme-primary);
-      border: 1px solid black;
-    }
-
-    img {
-      width: 35px;
     }
   }
 }

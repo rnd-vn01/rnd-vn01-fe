@@ -21,6 +21,7 @@ export const QuizPage: React.FC = () => {
 
   // RESPONSIVE
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
   const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
   const [quizStatus, setQuizStatus] = useState<any>({
     currentQuest: 0,
@@ -46,9 +47,10 @@ export const QuizPage: React.FC = () => {
     <div
       role="div"
       aria-label="quiz-page"
-      className={`quiz-page grid ${isDesktop ? "grid-cols-7" : "grid-rows-8"}`}>
+      className={`quiz-page grid ${isDesktop ? "grid-cols-7" : isMobile ? "grid-rows-8" : "grid-rows-3"}`}>
       <div
-        className={`quiz-page__section quiz-page__section--model ${isDesktop ? "col-span-5" : "row-span-5"}`}>
+        className={`quiz-page__section quiz-page__section--model ${isDesktop ? "col-span-5" :
+          isMobile ? "row-span-5" : "row-span-2"}`}>
         <Canvas shadows>
           <SceneQuiz
             ref={sceneRef}
@@ -67,7 +69,8 @@ export const QuizPage: React.FC = () => {
           src={DemoImage}></img>} */}
       </div>
 
-      <div className={`quiz-page__section quiz-page__section--side-bar ${isDesktop ? "col-span-2" : "row-span-3"}`}>
+      <div className={`quiz-page__section quiz-page__section--side-bar ${isDesktop ? "col-span-2" :
+        isMobile ? "row-span-3" : "row-span-1"}`}>
         <QuizManager
           callbackSetQuestionType={setQuestionType}
           callbackSetQuizStatus={setQuizStatus}
