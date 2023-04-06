@@ -200,7 +200,7 @@ describe("selectionSlice", () => {
 
     await waitFor(() => {
       expect(store.getState().selectionSlice.showingNeighbors).toStrictEqual(
-        getNeighborPoints(SELECTED_POINT, true, 1.5, "unlimited")
+        getNeighborPoints(SELECTED_POINT, true, 1.75, "unlimited")
       )
     })
   })

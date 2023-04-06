@@ -165,10 +165,11 @@ export const MeridianControl: React.FC = ({ }) => {
                 aria-label={`meridian-control-item-${index}`}
                 role="div"
               >
-                <div className={`meridian-control-desktop__item-icon-container`}
+                <div className={`meridian-control-desktop__item-icon-container flex-center`}
                   style={{ background: OPTIONS[meridian].color }}>
                   <img
-                    className={`meridian-control-desktop__item-icon`}
+                    className={`meridian-control-desktop__item-icon 
+                    ${(index === 4 || index === 9) && `meridian-control-desktop__item-icon--black`}`}
                     src={OPTIONS[meridian].icon}></img>
                 </div>
                 <div className={`meridian-control-desktop__item-name`}>

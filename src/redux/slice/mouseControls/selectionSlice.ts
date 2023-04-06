@@ -89,7 +89,7 @@ export const selectionSlice = createSlice({
           }
         }
 
-        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.5, "unlimited")
+        state.showingNeighbors = getNeighborPoints(action.payload.selectedLabel, true, 1.75, "unlimited")
       }
     },
 
@@ -218,7 +218,7 @@ export const selectionSlice = createSlice({
       state.isSelectingFromMenu = true;
       state.selectedLabel = action.payload.selectedPoint;
       state.selectedType = 'point';
-      state.showingNeighbors = getNeighborPoints(action.payload.selectedPoint, true, 1.5, "unlimited")
+      state.showingNeighbors = getNeighborPoints(action.payload.selectedPoint, true, 1.75, "unlimited")
     },
 
     setRemoveBackup(state) {

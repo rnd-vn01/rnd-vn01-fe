@@ -27,7 +27,8 @@ import {
   setInCloseZoomMode,
   setFrustum,
   setCameraZoom,
-  setRemoveBackup
+  setRemoveBackup,
+  setStateCameraQuaternion
 } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';

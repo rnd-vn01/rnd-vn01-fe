@@ -1,5 +1,5 @@
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader, DynamicDrawUsage, Vector3 } from 'three';
+import { TextureLoader, DynamicDrawUsage, Vector3, Color } from 'three';
 import circleImg from 'src/assets/images/PointCircle.png';
 import circleSelectedImg from 'src/assets/images/PointCircleSelected.png';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -12,7 +12,12 @@ import {
 } from 'src/redux/slice/index';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
-import { IMPORTANT_POINTS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
+import {
+  IMPORTANT_POINTS,
+  IS_TESTING_COLORFUL_MERIDIAN_POINTS,
+  ZOOM_CONTROL_LEVEL,
+  POINT_MERIDIAN_COLOR_MAP
+} from 'src/configs/constants';
 
 export const Point = ({ positionArray, label, labelPosition, reverse = false, viewFromBottom = false }) => {
   const dispatch = useAppDispatch();
@@ -87,8 +92,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
   }, [positionArray])
 
   let position = useMemo(() => {
-    return new Float32Array([positionArray[0], positionArray[1],
-    reverse ? positionArray[2] : (positionArray[2] + 0.02)]);
+    return new Float32Array([positionArray[0], positionArray[1], positionArray[2]]);
   }, [positionArray])
 
   const imgTex = isSelected ? useLoader(TextureLoader, circleSelectedImg) : useLoader(TextureLoader, circleImg);
@@ -134,6 +138,14 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
       }
 
       return desktopSize
+    }
+  }
+
+  const setDefaultColor = () => {
+    if (IS_TESTING_COLORFUL_MERIDIAN_POINTS && label !== "M-HN-3") {
+      setColor(POINT_MERIDIAN_COLOR_MAP[label.split("-")[0]])
+    } else {
+      setColor(0xF9FFB3)
     }
   }
 
@@ -193,7 +205,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
           setIsAnswerPoint(true);
         }
       } else {
-        setColor(0xF9FFB3)
+        setDefaultColor();
         setIsShowingLabel(false);
         setIsAnswerPoint(false);
         if (!markedPoint) {
@@ -214,7 +226,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
         setColor(0xFFFF00)
       } else {
         setIsShowingLabel(false);
-        setColor(0xF9FFB3)
+        setDefaultColor();
       }
     } else {
       setIsInShowingPoints(false);
@@ -226,7 +238,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     if (isOnHover || isSelected) {
       setColor(0xFFFF00)
     } else {
-      setColor(0xF9FFB3)
+      setDefaultColor();
     }
 
     dispatch(setIsHoveringPoint({
@@ -272,6 +284,7 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
 
   useEffect(() => {
     setIsImportantPoint(IMPORTANT_POINTS.includes(label))
+    setDefaultColor();
   }, [])
 
   // useEffect(() => {

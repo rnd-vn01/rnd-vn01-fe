@@ -7046,3 +7046,39 @@ export const IMPORTANT_POINTS = [
   'ST-40',
   'ST-42'
 ]
+
+export const IS_TESTING_COLORFUL_MERIDIAN_POINTS = false;
+
+export const MERIDIAN_COLOR_MAP = {
+  "LU": "#32FF8F", //LU
+  "LI": "#AF594F", //LI
+  "HT": "#FFFF54", //HT
+  "SP": "#007299", //SP
+  "ST": "#FF00FF", //ST
+  "SI": "#DDA0DD", //SI
+  "BL": "#FF1493", //BL
+  "KI": "#4B0082", //KI
+  "PC": "#0000FF", //PC
+  "TE": "#00FF00", //TE
+  "GB": "#8B0000", //GB
+  "Liv": "#008000", //Liv
+  "Du": "#323299", //Du
+  "Ren": "#436060" //Ren
+}
+
+export const POINT_MERIDIAN_COLOR_MAP = {
+  "LU": 0x59ffa4, //LU
+  "LI": 0xce9892, //LI
+  "HT": 0xffff54, //HT
+  "SP": 0x5ed6ff, //SP
+  "ST": 0xff5eff, //ST
+  "SI": 0xd383d3, //SI
+  "BL": 0xff4fae, //BL
+  "KI": 0xba5bff, //KI
+  "PC": 0x6262ff, //PC
+  "TE": 0x62ff62, //TE
+  "GB": 0xff5050, //GB
+  "Liv": 0x59ff59, //Liv
+  "Du": 0x7f7fd5, //Du
+  "Ren": 0x9bb9b9 //Ren
+}
