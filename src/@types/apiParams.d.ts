@@ -14,3 +14,26 @@ interface IParamCreateUpdateAccount {
   name: string;
   roles?: Array<string>
 }
+
+interface IQuestionDetailOption {
+  id: number;
+  answer: string;
+}
+
+interface IQuizDetail {
+  question: string;
+  answer: number | string;
+  correctAnswer: number | string;
+  time: number;
+  isCorrect: boolean;
+  options: Array<IQuestionDetailOption>;
+}
+
+interface IParamQuizzes {
+  userFirebaseId: string;
+  numberOfQuestions: number;
+  correctAnswers: number;
+  quizOption: number;
+  details: Array<IQuizDetail>;
+  datetime: string;
+}

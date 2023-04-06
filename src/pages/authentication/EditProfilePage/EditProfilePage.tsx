@@ -174,7 +174,6 @@ export const EditProfilePage: React.FC = ({
     //Valid
     setCalledUpdated(true);
 
-    // TODO: CALL API
     let result = false;
     result = await updateProfile({
       firebase_id: user?.firebaseId,
