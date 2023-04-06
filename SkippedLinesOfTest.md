@@ -5,7 +5,7 @@ src/components/common/Records/RecordsProgressLog
     RecordsProgressLog.tsx ~ 72-96
 
 src/components/common/Records/RecordsProgressLog/responsive
-    RecordsProgressDesktop.tsx ~ 19, 65
+    RecordsProgressDesktop.tsx ~ 18
 
 src/components/common/Search/SearchBar
     SearchBar.tsx ~ 87
