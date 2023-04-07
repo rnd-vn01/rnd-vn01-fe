@@ -9,9 +9,10 @@ export const storeQuizResult = async (data: IParamQuizzes) => {
 
 export const getQuizzesOfUsers = async (firebaseID: string) => {
   let quizzes = await apiQuizRecords.getQuizzesOfUsers(firebaseID)
+  let getQuizzes = quizzes?.data;
 
   //Update time zone
-  quizzes?.data?.forEach(quiz => {
+  getQuizzes.forEach(quiz => {
     quiz.datetime = moment(quiz.datetime).toDate()
 
     EXCLUDE_FIELDS.forEach(field => {
@@ -19,5 +20,5 @@ export const getQuizzesOfUsers = async (firebaseID: string) => {
     })
   })
 
-  return quizzes.data
+  return getQuizzes
 }

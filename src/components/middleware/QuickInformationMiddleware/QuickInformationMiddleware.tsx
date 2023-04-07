@@ -2,10 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
-import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 import { setShowingQuickInformation } from 'src/redux/slice';
 import { getAcupuncturePointByCode, getMeridianByCode } from 'src/helpers/api/items';
 

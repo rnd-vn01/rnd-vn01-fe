@@ -83,7 +83,8 @@ i18n
               not_verified: "Please verify your account through email!",
               not_found: "Your login information is not correct!",
               login_to_continue: "Please log in to continue!",
-              save_quiz_error: "Error occured. Quiz's result cannot be saved!"
+              save_quiz_error: "Error occured. Quiz's result cannot be saved!",
+              records_error: "Error occured. Cannot get the personal records!"
             }
           },
           quiz_page: {
@@ -414,7 +415,8 @@ i18n
               not_verified: "Vui lòng xác thực tài khoản qua Email đã đăng ký!",
               not_found: "Thông tin đăng nhập không đúng!",
               login_to_continue: "Vui lòng đăng nhập để tiếp tục!",
-              save_quiz_error: "Có lỗi xảy ra. Kết quả bài kiểm tra không thể được lưu trữ!"
+              save_quiz_error: "Có lỗi xảy ra. Kết quả bài kiểm tra không thể được lưu trữ!",
+              records_error: "Có lỗi xảy ra. Không thể lấy thông tin cá nhân!"
             }
           },
           quiz_page: {
