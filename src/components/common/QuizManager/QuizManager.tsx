@@ -184,7 +184,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
     try {
       await storeQuizResult(quizResult)
     } catch (e) {
-      alert(t('login_page.messages.save_quiz_error'))
+      alert(t('login_page.messages.records_error'))
     }
   }
 
@@ -353,7 +353,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
       while (true) {
         random = Math.floor(Math.random() * DEMO_DATA.length)
 
-        if (!usedPointIndexes.current.includes(DEMO_DATA[random].code)) {
+        if (!usedPointIndexes.current.includes(random)) {
           used.push(random)
           usedPointIndexes.current.push(random)
           break;
@@ -375,7 +375,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
       while (true) {
         random = Math.floor(Math.random() * thisMeridianIndexes.length)
 
-        if (!usedPointIndexes.current.includes(thisMeridianIndexes[random].code)) {
+        if (!usedPointIndexes.current.includes(thisMeridianIndexes[random])) {
           used.push(thisMeridianIndexes[random])
           usedPointIndexes.current.push(thisMeridianIndexes[random])
           break;

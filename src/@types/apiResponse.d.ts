@@ -8,3 +8,12 @@ interface IParamGetAccountInfo {
   updatedAt?: string;
   __v?: number
 }
+
+interface IFormattedQuizDetail {
+  userFirebaseId?: string;
+  numberOfQuestions?: number;
+  correctAnswers?: number;
+  quizOption?: number;
+  datetime?: Date;
+  details?: Array<IQuizDetail>;
+}

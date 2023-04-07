@@ -8,8 +8,6 @@ import {
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
 import { SceneQuiz } from 'src/components/index';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 import { APP_NAME, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 import { CursorControlMiddleware } from 'src/components/middleware';

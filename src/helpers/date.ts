@@ -32,10 +32,6 @@ export const getInputDateFormat = (date: Date) => {
   return moment(date).format('YYYY-MM-DD');
 }
 
-export const generateRandomDate = (start, end) => {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
 export const getMidnight = (date: Date) => {
   let result = new Date(date.getTime())
   result.setHours(0, 0, 0, 0);
@@ -57,4 +53,13 @@ export const getMonday = (d: Date) => {
   dateToReturn.setSeconds(0);
 
   return dateToReturn;
+}
+
+export const getSunday = (d: Date) => {
+  let sunday = moment().endOf('week').add(1, "days").toDate()
+  sunday.setHours(23);
+  sunday.setMinutes(59);
+  sunday.setSeconds(59);
+
+  return sunday
 }

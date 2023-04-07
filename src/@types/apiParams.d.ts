@@ -20,13 +20,18 @@ interface IQuestionDetailOption {
   answer: string;
 }
 
+interface IQuestionDetailOption2 {
+  index: number;
+  answer: string;
+}
+
 interface IQuizDetail {
   question: string;
   answer: number | string;
   correctAnswer: number | string;
   time: number;
   isCorrect: boolean;
-  options: Array<IQuestionDetailOption>;
+  options: Array<IQuestionDetailOption> | Array<IQuestionDetailOption2>;
 }
 
 interface IParamQuizzes {

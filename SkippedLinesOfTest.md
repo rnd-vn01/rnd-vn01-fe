@@ -15,6 +15,10 @@ src/components/common/Search/SearchResults
 
 src/helpers 
     searchProcess.ts ~ 131
+    statistics.ts ~ 11, 71, 114, 155-163
+
+src/pages/PersonalRecordsPage
+    PersonalRecordsPage.tsx ~ 36-38, 47
 
 src/pages/QuizPage
-    QuizPage.tsx ~ 29,31
+    QuizPage.tsx ~ 27, 29

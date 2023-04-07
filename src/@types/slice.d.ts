@@ -185,11 +185,11 @@ interface IPersonalRecordsPage {
 }
 
 interface IRecordsChart {
-
+  quizzesList?: any;
 }
 
 interface IRecordsProgressLog {
-
+  quizzesList?: any;
 }
 
 interface IRecordsSummary {
