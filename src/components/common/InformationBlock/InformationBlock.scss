@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .information-block {
   height: fit-content;
   max-height: 65vh;
@@ -31,6 +33,12 @@
     &--code {
       margin-right: 20px;
       background: var(--theme-highlight);
+    }
+
+    @include tablet {
+      height: 100%;
+      border-right: 1px solid black;
+      line-height: 2.75rem;
     }
   }
 
@@ -82,12 +90,20 @@
       position: absolute;
       height: 40px;
       width: 40px;
-      left: -50px;
-      top: -52px;
+      right: 5px;
+      top: -48px;
+
+      @include smallscreen {
+        bottom: 100px;
+        left: unset;
+        right: 5px;
+      }
     }
 
     &--faded {
       opacity: 0.5;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
     }
   }
 }

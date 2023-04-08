@@ -22,6 +22,8 @@ import PhotoDHYD from "src/assets/images/about/University.jpg"
 import PhotoEngBook from "src/assets/images/about/EngBook.jpg"
 import PhotoViBook from "src/assets/images/about/ViBook.jpg"
 import PhotoModel from "src/assets/images/about/Model.png"
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
+import { useMediaQuery } from 'react-responsive';
 
 export const AboutPage: React.FC<IAboutPage> = ({
 
@@ -29,16 +31,33 @@ export const AboutPage: React.FC<IAboutPage> = ({
   const { t } = useTranslation();
   document.title = `${APP_NAME} | ${t('about_page.title')}`
 
+  // RESPONSIVE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
   return (
     <div
       role="div"
       aria-label="about-us-page"
       className="about-us-page grid grid-cols-7">
       <div className="about-us-page__content">
-        <FullPageTitleBar
+        {isDesktop ? <FullPageTitleBar
           pageCode="about-us"
           translateCode="about_us"
         />
+          :
+          <MobileTitleBar
+            translateCode={"about_us"}
+            isShowingSideMenu={isShowingSideMenu}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu} />}
+
+        {!isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>}
 
         <div className='w-full'>
           <div className='about-us-page__head flex items-center justify-center'>
@@ -87,7 +106,8 @@ export const AboutPage: React.FC<IAboutPage> = ({
         />
 
         <AboutPageSection
-          showContent={<div className='grid grid-cols-4 py-6' style={{ gridColumnGap: "7rem" }}>
+          showContent={<div className={`grid ${!isMobile ? "grid-cols-4" : "grid-cols-2"} py-6`}
+            style={{ gridColumnGap: isDesktop ? "7rem" : "3rem" }}>
             <div className='col-span-1 about-page-section__member'>
               <img className='col-span-1 about-page-section__member--avatar' src={PhotoNhan} />
               <h1>{t('about_page.sections.members.nhan_nguyen_cao')}
@@ -190,10 +210,12 @@ export const AboutPage: React.FC<IAboutPage> = ({
         />
 
         <AboutPageSection
-          showContent={<div className='py-6 flex flex-row'>
+          showContent={<div className={`py-6 flex ${!isMobile ? "flex-row" : "flex-col"}`}>
             <img style={{ width: "500px" }} src={PhotoDHYD} />
             <div className='flex flex-column justify-center items-center'>
-              <h1 className='ml-4' style={{ fontSize: "1.5rem" }}>{t('about_page.sections.users.description')}</h1>
+              <h1 className={
+                `${!isMobile ? "ml-4" : "mt-3 text-center"}`
+              } style={{ fontSize: "1.5rem" }}>{t('about_page.sections.users.description')}</h1>
             </div>
           </div>}
           isCollapsable={true}
@@ -203,7 +225,7 @@ export const AboutPage: React.FC<IAboutPage> = ({
         />
 
         <AboutPageSection
-          showContent={<div className='py-6 flex flex-row'>
+          showContent={<div className={`py-6 flex ${!isMobile ? "flex-row" : "flex-col"}`}>
             <div className='about-page-section__reference mr-4'>
               <img src={PhotoViBook} />
               <h1
@@ -220,6 +242,9 @@ export const AboutPage: React.FC<IAboutPage> = ({
                   window.open(`https://sketchfab.com/3d-models/study-human-male-sculpt-65836fbba6974f3cbe8fbd7bc6bebc4d`, "_blank").focus()
                 }}
                 src={PhotoModel}
+                style={{
+                  objectFit: "cover"
+                }}
                 data-testid="img-model-asset" />
               <h1
               >{t('about_page.sections.model')}</h1>

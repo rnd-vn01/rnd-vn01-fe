@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .search-bar-redirect {
   width: 100%;
   border: 1px solid black;
@@ -5,6 +7,15 @@
   position: relative;
   margin-top: 15px;
   height: 60px;
+
+  @include smallscreen {
+    margin-top: 10px;
+    transform: translateX(-1vw);
+    border-left: unset;
+    border-right: unset;
+    border-bottom: 2px solid black;
+    width: 100vw;
+  }
 
   &__logo {
     &--search {

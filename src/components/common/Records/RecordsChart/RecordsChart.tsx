@@ -20,6 +20,7 @@ import { Line } from 'react-chartjs-2';
 import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
 import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
 import { MERIDIANS } from 'src/configs/constants';
+import { useMediaQuery } from 'react-responsive';
 
 export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
   const { t } = useTranslation();
@@ -37,6 +38,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
     labels: [],
     datasets: []
   })
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   ChartJS.register(
     CategoryScale,
@@ -384,14 +386,15 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
     // }
   };
 
-
   return (
     <div
       role="div"
       aria-label="records-chart"
       className="records-chart p-2">
 
-      <div className='w-full flex justify-between records-chart__title--container'>
+      <div className={`w-full flex justify-between records-chart__title--container
+       ${!isDesktop && "flex-col"}
+      `}>
         <span>
           {isPoint &&
             <>

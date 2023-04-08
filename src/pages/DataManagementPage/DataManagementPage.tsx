@@ -9,6 +9,8 @@ import { APP_NAME } from 'src/configs/constants';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { useMediaQuery } from 'react-responsive';
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
 
 export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
 
@@ -23,6 +25,10 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
   const [isFilter, setIsFilter] = useState<boolean>(false);
   const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
+
+  // RESPONSIVE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   useEffect(() => {
     document.addEventListener("scroll", () => {
@@ -40,10 +46,21 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
       aria-label="data-management-page"
       className="data-management-page grid grid-cols-7">
       <div className="data-management-page__content">
-        <FullPageTitleBar
+        {isDesktop ? <FullPageTitleBar
           pageCode="data-management"
           translateCode="data_management"
-        />
+        /> :
+          <MobileTitleBar
+            translateCode={"data_management"}
+            isShowingSideMenu={isShowingSideMenu}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu} />}
+
+        {!isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>}
 
         <SearchBar
           callbackSetResults={setSearchResults}
@@ -52,6 +69,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           numberOfMatchingResults={numberOfMatchingResults}
           isChoosingAlphabet={isChoosingAlphabet}
           callbackIsFilter={setIsFilter}
+          paramPassedIsFilter={isFilter}
         />
 
         <SearchResults
@@ -61,6 +79,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           callbackSetNumberOfMatchingResults={setNumberOfMatchingResults}
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
           isFilter={isFilter}
+          callbackSetIsFilter={setIsFilter}
         />
       </div>
 

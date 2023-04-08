@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .search-bar {
   border: 1px solid black;
   cursor: text;
@@ -9,6 +11,15 @@
   background: var(--theme-background);
   z-index: 1000;
 
+  @include smallscreen {
+    margin-top: 0px;
+    transform: translateX(-1vw);
+    border-left: unset;
+    border-right: unset;
+    border-bottom: 2px solid black;
+    width: 100vw;
+  }
+
   &__container {
     cursor: text;
     margin-top: 10px;
@@ -18,6 +29,11 @@
     right: 1vw;
     background: var(--theme-background);
     z-index: 1000;
+
+    @include smallscreen {
+      margin-top: 64px;
+      z-index: 199;
+    }
   }
 
   &__logo {
@@ -39,6 +55,10 @@
     font-family: 'header-light' !important;
     transform: translateY(5px);
     line-height: 2.5rem;
+
+    @include smallscreen {
+      width: calc(100% - 140px);
+    }
 
     &--span {
       width: calc(100% - 60px);
@@ -63,5 +83,9 @@
 
   &__number-of-results {
     background: var(--theme-highlight);
+
+    @include smallscreen {
+      transform: translateY(4px);
+    }
   }
 }

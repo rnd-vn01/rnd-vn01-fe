@@ -1,3 +1,5 @@
+import { waitFor } from "@testing-library/react"
+import { getNeighborPoints } from "src/helpers/getNeighborsPoints"
 import {
   resetToInitialStatePointSelectionSlice,
   setIsCurrentMouseMovePosition,
@@ -5,7 +7,10 @@ import {
   setIsHoveringLine,
   setIsHoveringPoint,
   setLineHover,
-  setLineSelected
+  setLineSelected,
+  setPointSelected,
+  setPointSelectedByLabel,
+  setRemoveBackup,
 } from "src/redux/slice"
 import store from "src/redux/store"
 
@@ -154,5 +159,185 @@ describe("selectionSlice", () => {
     store.dispatch(setLineHover({}))
 
     expect(store.getState().selectionSlice.hoveringLineLabel).toBeNull()
+  })
+
+  it("should set the secondary meridian selected if passed the condition", async () => {
+    store.dispatch(setPointSelected({
+      selectedLabel: "LU-1",
+      pointPosition: {
+        x: -4,
+        y: 6.4,
+        z: 1.05
+      }
+    }))
+
+    await waitFor(() => {
+      store.dispatch(resetToInitialStatePointSelectionSlice());
+    })
+
+    await waitFor(() => {
+      store.dispatch(setPointSelected({
+        selectedLabel: "ST-14",
+        pointPosition: {
+          x: -3.3,
+          y: 5.842,
+          z: 1.7
+        }
+      }))
+    })
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.secondarySelectedMeridian).toBe("LU")
+    })
+  })
+
+  it("should set the neighbor list when a point is selected from quick search result", async () => {
+    const SELECTED_POINT = "LU-1"
+
+    store.dispatch(setPointSelectedByLabel({
+      selectedPoint: SELECTED_POINT
+    }))
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.showingNeighbors).toStrictEqual(
+        getNeighborPoints(SELECTED_POINT, true, 1.75, "unlimited")
+      )
+    })
+  })
+
+  it("should skip the check for secondary meridian if is first point selected", async () => {
+    await waitFor(() => {
+      store.dispatch(resetToInitialStatePointSelectionSlice());
+    })
+
+    store.dispatch(setPointSelected({
+      selectedLabel: "LU-1",
+      pointPosition: {
+        x: -4,
+        y: 6.4,
+        z: 1.05
+      }
+    }))
+
+    await waitFor(() => {
+      store.dispatch(resetToInitialStatePointSelectionSlice());
+    })
+  })
+
+  it("should reset if called remove backup data", async () => {
+    store.dispatch(setRemoveBackup())
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.backupSelectedPoint).toBe("")
+      expect(store.getState().selectionSlice.backupSelectedNeighbors).toStrictEqual([])
+    })
+  })
+
+  it("should reset to initial state if called reset from initial", async () => {
+    store.dispatch(resetToInitialStatePointSelectionSlice())
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.backupSelectedPoint).toBe("")
+      expect(store.getState().selectionSlice.backupSelectedNeighbors).toStrictEqual([])
+    })
+  })
+
+  it("should do nothing if called selected point with null param", async () => {
+    store.dispatch(setPointSelected({
+      selectedLabel: null
+    }))
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.secondarySelectedMeridian).toBeNull()
+    })
+  })
+
+  it("should check for second point meridian if not deselect first, simulating the case none reset was called", async () => {
+    store.dispatch(setPointSelected({
+      selectedLabel: "LU-1",
+      pointPosition: {
+        x: -4,
+        y: 6.4,
+        z: 1.05
+      }
+    }))
+
+    await waitFor(() => {
+      store.dispatch(setPointSelected({
+        selectedLabel: "ST-14",
+        pointPosition: {
+          x: -3.3,
+          y: 5.842,
+          z: 1.7
+        }
+      }))
+    })
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.secondarySelectedMeridian).toBe("LU")
+    })
+  })
+
+  it("should update the selection for second meridian if select third point", async () => {
+    store.dispatch(setPointSelected({
+      selectedLabel: "LU-1",
+      pointPosition: {
+        x: -4,
+        y: 6.4,
+        z: 1.05
+      }
+    }))
+
+    await waitFor(() => {
+      store.dispatch(setPointSelected({
+        selectedLabel: "ST-14",
+        pointPosition: {
+          x: -3.3,
+          y: 5.842,
+          z: 1.7
+        }
+      }))
+    })
+
+    await waitFor(() => {
+      store.dispatch(setPointSelected({
+        selectedLabel: "SP-20",
+        pointPosition: {
+          x: -3.8,
+          y: 4.75,
+          z: 2.2
+        }
+      }))
+    })
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.secondarySelectedMeridian).toBe("ST")
+    })
+  })
+
+  it("should perform as expected for selection of secondary meridian if select point same as current meridian", async () => {
+    store.dispatch(setPointSelected({
+      selectedLabel: "LU-1",
+      pointPosition: {
+        x: -4,
+        y: 6.4,
+        z: 1.05
+      }
+    }))
+
+    await waitFor(() => {
+      store.dispatch(setPointSelected({
+        selectedLabel: "LU-2",
+        pointPosition: {
+          x: -4,
+          y: 6.9,
+          z: 0.75
+        }
+      }))
+    })
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.secondarySelectedMeridian).toBeNull()
+    })
   })
 })

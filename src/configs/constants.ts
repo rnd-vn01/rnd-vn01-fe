@@ -1,21 +1,21 @@
 export const MERIDIANS_COLOR = {
-  1: "#4C922D",
-  2: "#B4CB3C",
-  3: "#CCA443",
-  4: "#C5CC43",
-  5: "#43A6CC",
-  6: "#B343CC",
-  7: "#44A668",
-  8: "#4377CC",
-  9: "#5643CC",
-  10: "#68CC43",
-  11: "#4DC2BA",
-  12: "#CC4370",
+  1: "#32FF8F", //LU
+  2: "#AF594F", //LI
+  3: "#FFFF54", //HT
+  4: "#007299", //SP
+  5: "#FF00FF", //ST
+  6: "#DDA0DD", //SI
+  7: "#FF1493", //BL
+  8: "#4B0082", //KI
+  9: "#0000FF", //PC
+  10: "#00FF00", //TE
+  11: "#8B0000", //GB
+  12: "#008000", //Liv
 }
 
 export const EXTRA_MERIDIAN_COLORS = {
-  1: "#618888",
-  2: "#885C88"
+  1: "#323299", //Du
+  2: "#436060" //Ren
 }
 
 export const APP_NAME = "Acupuncture 3D"
@@ -3206,43 +3206,48 @@ export const LINE_POINTS = {
 export const FOCUS_OPTIONS = {
   "ST": {
     "point": {
-      "x": -0.8,
-      "y": 12,
-      "z": 2.425,
+      "x": 1,
+      "y": 2.5,
+      "z": 0,
     },
-    "rotate": 0
+    "rotate": 30,
+    "zoom": 1.75
   },
   "KI": {
     "point": {
-      "x": -2.35,
-      "y": -28.8,
-      "z": -0.2,
+      "x": 1,
+      "y": -2.5,
+      "z": 0,
     },
-    "rotate": -22.5
+    "rotate": 20,
+    "zoom": 1.75
   },
   "BL": {
     "point": {
       "x": 1.35,
-      "y": 4.6,
+      "y": 0,
       "z": -3.45,
     },
-    "rotate": 180
+    "rotate": 180,
+    "zoom": 2
   },
   "Du": {
     "point": {
       "x": 0.075,
-      "y": 6.05,
+      "y": 4.05,
       "z": -3.1,
     },
-    "rotate": 180
+    "rotate": 180,
+    "zoom": 1.5
   },
   "GB": {
     "point": {
       "x": -1.875,
-      "y": 13.25,
+      "y": 3.25,
       "z": 0.675,
     },
-    "rotate": 22.5
+    "rotate": 45,
+    "zoom": 1.5
   },
   "HT": {
     "point": {
@@ -3250,73 +3255,80 @@ export const FOCUS_OPTIONS = {
       "y": 1.65,
       "z": 0,
     },
-    "rotate": 10
+    "rotate": 10,
+    "zoom": 3
   },
   "LI": {
     "point": {
       "x": 8.5,
-      "y": 2.75,
+      "y": 2,
       "z": -1,
     },
     "rotate": 315,
-    "zoom": 2
+    "zoom": 1.65
   },
   "Liv": {
     "point": {
       "x": 2.625,
-      "y": -25.1,
+      "y": -12.5,
       "z": -0.7,
     },
-    "rotate": 22.5
+    "rotate": 35,
+    "zoom": 1.5
   },
   "LU": {
     "point": {
-      "x": -7.5,
-      "y": 3,
+      "x": -10.5,
+      "y": 2,
       "z": 0.35,
     },
     "rotate": 0,
-    "zoom": 3
+    "zoom": 2.75
   },
   "PC": {
     "point": {
-      "x": -6.3,
-      "y": 4.1,
+      "x": -10.3,
+      "y": 2,
       "z": 0.4,
     },
-    "rotate": 0
+    "rotate": 20,
+    "zoom": 2.5
   },
   "Ren": {
     "point": {
       "x": 0,
-      "y": 0,
+      "y": 2.5,
       "z": 0,
     },
-    "rotate": 0
+    "rotate": 0,
+    "zoom": 2.4
   },
   "SI": {
     "point": {
-      "x": 3.5,
-      "y": 6.5,
+      "x": 6,
+      "y": 4,
       "z": -3.1,
     },
-    "rotate": 180
+    "rotate": 200,
+    "zoom": 2
   },
   "SP": {
     "point": {
       "x": -3,
-      "y": -28.9,
-      "z": 2.9,
+      "y": -21,
+      "z": 3.5,
     },
-    "rotate": -22.5
+    "rotate": -22.5,
+    "zoom": 2.5
   },
   "TE": {
     "point": {
-      "x": -14.1,
-      "y": -1.6,
-      "z": 1.35,
+      "x": -12.1,
+      "y": 3.75,
+      "z": 1.75,
     },
-    "rotate": 105
+    "rotate": 125,
+    "zoom": 1.75
   }
 }
 
@@ -7034,3 +7046,39 @@ export const IMPORTANT_POINTS = [
   'ST-40',
   'ST-42'
 ]
+
+export const IS_TESTING_COLORFUL_MERIDIAN_POINTS = false;
+
+export const MERIDIAN_COLOR_MAP = {
+  "LU": "#32FF8F", //LU
+  "LI": "#AF594F", //LI
+  "HT": "#FFFF54", //HT
+  "SP": "#007299", //SP
+  "ST": "#FF00FF", //ST
+  "SI": "#DDA0DD", //SI
+  "BL": "#FF1493", //BL
+  "KI": "#4B0082", //KI
+  "PC": "#0000FF", //PC
+  "TE": "#00FF00", //TE
+  "GB": "#8B0000", //GB
+  "Liv": "#008000", //Liv
+  "Du": "#323299", //Du
+  "Ren": "#436060" //Ren
+}
+
+export const POINT_MERIDIAN_COLOR_MAP = {
+  "LU": 0x59ffa4, //LU
+  "LI": 0xce9892, //LI
+  "HT": 0xffff54, //HT
+  "SP": 0x5ed6ff, //SP
+  "ST": 0xff5eff, //ST
+  "SI": 0xd383d3, //SI
+  "BL": 0xff4fae, //BL
+  "KI": 0xba5bff, //KI
+  "PC": 0x6262ff, //PC
+  "TE": 0x62ff62, //TE
+  "GB": 0xff5050, //GB
+  "Liv": 0x59ff59, //Liv
+  "Du": 0x7f7fd5, //Du
+  "Ren": 0x9bb9b9 //Ren
+}

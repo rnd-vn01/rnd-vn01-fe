@@ -31,6 +31,14 @@ export const LanguagePicker: React.FC = () => {
       className="language-picker flex flex-col items-start justify-center">
       <div
         role="div"
+        aria-label="language-picker-icon"
+        className={`language-picker__current flex items-center justify-center cursor-pointer
+        ${isShowingDropdown && "language-picker__current--show"}`}
+        onClick={() => setIsShowingDropdown(!isShowingDropdown)}>
+        {currentLanguage}
+      </div>
+      <div
+        role="div"
         aria-label="language-picker-dropdown"
         className={`language-picker__dropdown w-fit h-fit flex flex-col items-end justify-center
         ${!isShowingDropdown ? "language-picker__dropdown--hide" : ""}`}>
@@ -47,13 +55,6 @@ export const LanguagePicker: React.FC = () => {
             {language}
           </div>
         ))}
-      </div>
-      <div
-        role="div"
-        aria-label="language-picker-icon"
-        className="language-picker__current flex items-center justify-center cursor-pointer"
-        onClick={() => setIsShowingDropdown(!isShowingDropdown)}>
-        {currentLanguage}
       </div>
     </div>
   );

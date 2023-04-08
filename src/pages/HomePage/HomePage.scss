@@ -6,24 +6,26 @@
   height: 100vh;
   position: relative;
 
-  @include smallscreen {
-    height: calc(100vh - 55px);
-  }
-
   &__section {
     height: 100%;
 
     &--side-bar {
       background: var(--theme-background);
       flex-direction: column;
-      border-left: 1px solid black;
       position: absolute;
-      right: 0;
-      top: 0;
+      right: 5px;
+      top: 5px;
       width: calc(100% / 3.5);
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
+
+      @include smallscreen {
+        width: 100%;
+        top: 65px;
+        border-left: unset;
+      }
+
     }
 
     &--main-content {
@@ -53,15 +55,26 @@
     &--information {
       background: var(--theme-background);
       flex-direction: column;
-      border-left: 1px solid black;
-      border-bottom: 1px solid black;
+      border: 1px solid black;
       position: absolute;
-      right: 0;
-      top: 60px;
+      right: 5px;
+      top: 59px;
       width: calc(100% / 3.5);
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
+
+      @include smallscreen {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        max-height: 65vh;
+        height: fit-content;
+        top: auto;
+        border: none;
+        border-top: 2px solid black;
+      }
     }
   }
 
@@ -84,6 +97,11 @@
       height: 267px;
       z-index: 1001;
       background: var(--theme-background);
+
+      @include mobile {
+        width: calc(90vw);
+        height: fit-content;
+      }
     }
 
     &--hidden {

@@ -5,7 +5,8 @@ import { useAppDispatch } from 'src/redux/store';
 import {
   resetToInitialStatePointSelectionSlice,
   setIsCurrentMousePosition,
-  setIsCurrentMouseMovePosition
+  setIsCurrentMouseMovePosition,
+  setRemoveBackup
 } from 'src/redux/slice/index';
 import { useCallback } from "react";
 import { debounce } from "lodash";
@@ -43,6 +44,7 @@ export const Body = ({ isQuizMode }) => {
             debounceClick({
               currentMousePosition: null
             })
+            dispatch(setRemoveBackup())
           } else {
             debounceClick({
               currentMousePosition: {

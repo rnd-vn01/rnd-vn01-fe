@@ -62,6 +62,7 @@ interface IModel {
 
 interface IQuizManager {
   callbackSetQuestionType?: (number) => void;
+  callbackSetQuizStatus?: (any) => void;
 }
 
 interface IQuizOptions {
@@ -140,6 +141,7 @@ interface ISearchBar {
   isChoosingAlphabet?: boolean;
   passedQuery?: string;
   callbackIsFilter?: (boolean) => void;
+  paramPassedIsFilter?: boolean;
 }
 
 interface ISearchResults {
@@ -149,6 +151,7 @@ interface ISearchResults {
   callbackSetNumberOfMatchingResults?: (any) => void;
   callbackSetChoosingAlphabet?: (boolean) => void;
   isFilter?: boolean;
+  callbackSetIsFilter?: (boolean) => void;
 }
 
 interface ISearchResultItem {
@@ -176,6 +179,7 @@ interface IItemDetail {
 
 interface IItemDetailEdit extends IItemDetail {
   callbackUpdateDetail?: (any) => void;
+  mobileCalledEditDetail?: number;
 }
 
 interface IPersonalRecordsPage {
@@ -188,6 +192,10 @@ interface IRecordsChart {
 
 interface IRecordsProgressLog {
 
+}
+
+interface IRecordsProgressLogDesktop {
+  data?: any
 }
 
 interface IRecordsSummary {
@@ -235,6 +243,10 @@ interface ISelectionSlice {
     content?: IMeridian | IAcupuncturePoint;
   } | null;
   preSelectLine?: null;
+  showingNeighbors?: Array<string>;
+  secondarySelectedMeridian?: string;
+  backupSelectedPoint?: string;
+  backupSelectedNeighbors?: Array<string>;
 }
 
 interface IModelInteractionControl {
@@ -278,4 +290,37 @@ interface IZoomControlSlice {
   isInCloseZoomMode: ZOOM_CONTROL_LEVEL;
   frustum: any;
   cameraZoom?: number;
+}
+
+interface ISideMenu {
+  isShowing: boolean;
+  callbackSetIsShowing: (boolean) => void;
+}
+
+interface IWithSideMenu {
+  isShowingSideMenu: boolean;
+  callbackSetIsShowingSideMenu: (boolean) => void;
+}
+
+interface IMenuBar extends IWithSideMenu {
+  isShowingSearchBar: boolean;
+  callbackSetIsShowingSearchBar: (boolean) => void;
+}
+
+interface IMobileTitleBar extends IWithSideMenu {
+  translateCode?: string;
+  isEdit?: boolean;
+  isViewingDetail?: boolean;
+  callbackTriggerEditDetail?: (any) => void;
+  isQuiz?: boolean;
+  currentQuest?: number;
+  totalQuest?: number;
+  totalCorrect?: number;
+}
+
+interface ISideCriteriaBox {
+  isShowing: boolean;
+  filters?: any;
+  currentFilterOptions?: any;
+  callbackSetCurrentFilterOptions?: (any) => void;
 }

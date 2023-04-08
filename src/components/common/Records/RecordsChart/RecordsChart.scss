@@ -1,8 +1,19 @@
+@import "src/responsive.scss";
+
 .records-chart {
   background: white;
   border: 1px solid black;
   width: 100%;
-  height: 60vh;
+  height: 70vh;
+
+  @include smallscreen {
+    height: fit-content;
+    margin-bottom: 20px;
+  }
+
+  @include tablet {
+    min-height: 50vh;
+  }
 
   &__title {
     font-size: 1.75rem;
@@ -12,6 +23,11 @@
 
     &--container {
       border-bottom: 1px solid black;
+
+      span:not(:first-child) {
+        text-align: right;
+        margin-bottom: 10px;
+      }
     }
 
     &--selected {

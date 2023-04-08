@@ -11,6 +11,8 @@ import { FullPageTitleBar } from 'src/components/common';
 import { TextField } from '@mui/material';
 import { Button } from 'src/components/common';
 import { setStateAuth } from 'src/redux/slice';
+import { useMediaQuery } from 'react-responsive';
+import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
 
 export const EditProfilePage: React.FC = ({
 
@@ -18,6 +20,11 @@ export const EditProfilePage: React.FC = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  // RESPONSIVE
+  const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+
   /*
   const { user, isUpdateProfile, updateProfileSuccess } = useSelector(
     (state: RootState) => state.loginSlice,
@@ -106,10 +113,21 @@ export const EditProfilePage: React.FC = ({
       aria-label="edit-profile-page"
       className="edit-profile-page">
       <div className="edit-profile-page__content">
-        <FullPageTitleBar
-          pageCode={"edit-profile"}
-          translateCode={"edit_profile"}
-        />
+        {isDesktop ? <FullPageTitleBar
+          pageCode="edit-profile"
+          translateCode="edit_profile"
+        /> :
+          <MobileTitleBar
+            translateCode={"edit_profile"}
+            isShowingSideMenu={isShowingSideMenu}
+            callbackSetIsShowingSideMenu={setIsShowingSideMenu} />}
+
+        {!isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>}
 
         <TextField
           className="edit-profile-page__input edit-profile-page__input--email"

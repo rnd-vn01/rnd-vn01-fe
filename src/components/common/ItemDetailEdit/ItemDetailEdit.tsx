@@ -6,18 +6,21 @@ import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BASIC_FIELDS } from 'src/configs/constants';
+import { useMediaQuery } from 'react-responsive';
 
 export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
   item,
   isPoint,
   usingLanguage,
   query,
-  callbackUpdateDetail
+  callbackUpdateDetail,
+  mobileCalledEditDetail
 }) => {
   const history = useHistory();
   const [itemDetail, setItemDetail] = useState<any>({});
   const [newItemValue, setNewItemValue] = useState<string>("");
   const { t } = useTranslation();
+  const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
   useEffect(() => {
     //Fill if missing some fields
@@ -38,6 +41,12 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
 
     setItemDetail(itemDetail)
   }, [item])
+
+  useEffect(() => {
+    if (mobileCalledEditDetail > 0) {
+      updateItemDetail();
+    }
+  }, [mobileCalledEditDetail])
 
   const updateInformation = (newValue: string, type: string, index: number) => {
     newValue = newValue
@@ -284,7 +293,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
 
       <p className='italic item-detail-edit__caution'>{t('edit_page.caution')}</p>
 
-      <div className='item-detail-edit__buttons flex items-center justify-center mt-3'>
+      {isDesktop && <div className='item-detail-edit__buttons flex items-center justify-center mt-3'>
         <div
           className='item-detail-edit__buttons--button item-detail-edit__buttons--button-check'
           role="div"
@@ -305,7 +314,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
             icon={faMultiply}
           />
         </div>
-      </div>
+      </div>}
     </div>
   );
 };

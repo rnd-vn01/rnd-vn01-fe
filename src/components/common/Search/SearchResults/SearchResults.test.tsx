@@ -3,6 +3,7 @@ import { SearchResults } from './SearchResults';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { resetToInitialStateLanguageSlice, setStateLanguage } from 'src/redux/slice';
+import { Context as ResponsiveContext } from "react-responsive";
 
 const DEMO_RESULTS = [{
   "code": "SI-19",
@@ -60,18 +61,22 @@ jest.mock('react-i18next', () => ({
 const spyScrollTo = jest.fn();
 Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });
 
-describe('SearchResults', () => {
+describe('Search Results - Desktop', () => {
   beforeEach(() => {
     spyScrollTo.mockClear();
-    render(<Provider store={store}>
-      <SearchResults
-        callbackSetNumberOfMatchingResults={jest.fn()}
-        callbackSetChoosingAlphabet={jest.fn()}
-        query={"SI-"}
-        results={DEMO_RESULTS}
-        isFilter={true}
-      />
-    </Provider>)
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <SearchResults
+            callbackSetNumberOfMatchingResults={jest.fn()}
+            callbackSetChoosingAlphabet={jest.fn()}
+            query={"SI-"}
+            results={DEMO_RESULTS}
+            isFilter={true}
+            callbackSetIsFilter={jest.fn()}
+          />
+        </Provider>
+      </ResponsiveContext.Provider>)
   })
 
   afterEach(() => {
@@ -94,6 +99,97 @@ describe('SearchResults', () => {
 
     //Choose one filter
     fireEvent.click(screen.getByRole("h1", { name: "search-results-alphabet-Z" }))
+  })
+
+  it("should display no results if change criteria to meridians only", async () => {
+    let selectSearchOn = screen.getByRole("select", { name: "select-search-on" })
+    fireEvent.change(selectSearchOn, { target: { value: 1 } })
+
+    await waitFor(() => {
+      expect(screen.getByRole("h1", { name: "no-results" })).toBeInTheDocument();
+    })
+  })
+
+  it("should display all results if change criteria to points only", async () => {
+    let selectSearchOn = screen.getByRole("select", { name: "select-search-on" })
+    fireEvent.change(selectSearchOn, { target: { value: 2 } })
+
+    await waitFor(() => {
+      expect(screen.getByRole("h1", { name: "search-results-alphabet" })).toBeInTheDocument();
+    })
+  })
+
+  it("should display no results if change criteria to LU meridians only", async () => {
+    let selectShow = screen.getByRole("select", { name: "select-show" })
+    fireEvent.change(selectShow, { target: { value: 1 } })
+
+    await waitFor(() => {
+      expect(screen.getByRole("h1", { name: "no-results" })).toBeInTheDocument();
+    })
+  })
+
+  it("should display no results if change criteria to search by name", async () => {
+    let selectSearchBy = screen.getByRole("select", { name: "select-search-by" })
+    fireEvent.change(selectSearchBy, { target: { value: 2 } })
+
+    await waitFor(() => {
+      expect(screen.getByRole("h1", { name: "no-results" })).toBeInTheDocument();
+    })
+  })
+
+  it("should display by default the caption as Tất cả if language is set to Vietnamese", async () => {
+    store.dispatch(setStateLanguage({
+      currentLanguage: "VI"
+    }))
+
+    await waitFor(() => {
+      let searchResultsAlphabet = screen.getByRole("h1", { name: "search-results-alphabet" })
+      expect(searchResultsAlphabet.innerHTML).toBe("Tất cả")
+    })
+  })
+
+  it("should scroll to top if the results is updated", async () => {
+    jest.useFakeTimers();
+
+    await waitFor(() => {
+      expect(spyScrollTo).toHaveBeenCalledWith({
+        top: 0,
+        behavior: "smooth"
+      })
+    })
+  })
+
+  it("should sort the results by descending if changed the criteria from default", async () => {
+    let selectShow = screen.getByRole("select", { name: "select-sort" })
+    fireEvent.change(selectShow, { target: { value: 1 } })
+
+    await waitFor(() => {
+      const searchResultsDOM = screen.getByRole("div", { name: "search-results" });
+      expect(searchResultsDOM).toBeInTheDocument()
+    })
+  })
+});
+
+describe('Search Results - Mobile', () => {
+  beforeEach(() => {
+    spyScrollTo.mockClear();
+    render(
+      <ResponsiveContext.Provider value={{ width: 500 }}>
+        <Provider store={store}>
+          <SearchResults
+            callbackSetNumberOfMatchingResults={jest.fn()}
+            callbackSetChoosingAlphabet={jest.fn()}
+            query={"SI-"}
+            results={DEMO_RESULTS}
+            isFilter={true}
+            callbackSetIsFilter={jest.fn()}
+          />
+        </Provider>
+      </ResponsiveContext.Provider>)
+  })
+
+  afterEach(() => {
+    store.dispatch(resetToInitialStateLanguageSlice())
   })
 
   it("should display no results if change criteria to meridians only", async () => {

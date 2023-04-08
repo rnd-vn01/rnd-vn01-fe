@@ -19,7 +19,7 @@ export const HomeTitle: React.FC = ({ }) => {
 
       <h1 className="home-title__title--main text-center">
         <img src={Logo} className="home-title__title--logo mr-3"></img>
-        {APP_NAME.toUpperCase()}
+        <p>{APP_NAME.toUpperCase()}</p>
         <img src={Logo} className="home-title__title--logo ml-3"></img>
       </h1>
 

@@ -1,7 +1,13 @@
+@import "src/responsive.scss";
+
 .item-detail-edit {
   width: 60vw;
   margin: 0 auto;
   margin-top: 20px;
+
+  @include smallscreen {
+    width: 90vw;
+  }
 
   &__flex-block {
     border-bottom: 1px solid black;

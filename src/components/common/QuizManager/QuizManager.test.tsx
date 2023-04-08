@@ -6,7 +6,9 @@ import { QuizManager } from './QuizManager';
 describe('QuizManager', () => {
   beforeEach(() => {
     render(<Provider store={store}>
-      <QuizManager />
+      <QuizManager
+        callbackSetQuizStatus={jest.fn()}
+      />
     </Provider>)
   })
 

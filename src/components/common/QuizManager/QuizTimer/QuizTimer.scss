@@ -1,8 +1,15 @@
+@import "src/responsive.scss";
+
 .quiz-timer {
   position: relative;
   overflow: hidden;
   height: 60px;
   border-bottom: 1px solid black;
+
+  @include smallscreen {
+    border-bottom: unset;
+    border-left: 1px solid black;
+  }
 
   &__count-down {
     width: 100%;

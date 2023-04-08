@@ -12,6 +12,11 @@
     width: 70vw;
     margin-left: 15vw;
     margin-bottom: 40px;
+
+    @include smallscreen {
+      width: 90vw;
+      margin-left: 5vw;
+    }
   }
 
   &__head {
@@ -19,6 +24,10 @@
 
     &--logo {
       width: 125px;
+
+      @include smallscreen {
+        width: 75px;
+      }
     }
 
     &--project-name {
@@ -26,6 +35,11 @@
       line-height: 3.75rem;
       width: fit-content;
       text-align: left;
+
+      @include smallscreen {
+        font-size: 2rem;
+        line-height: 2.5rem;
+      }
     }
   }
 

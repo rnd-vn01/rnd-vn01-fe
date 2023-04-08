@@ -34,8 +34,8 @@
     }
 
     &--image-logo {
-      height: 35px;
-      width: 35px;
+      height: 40px;
+      width: 40px;
     }
 
     &--icon {
@@ -54,11 +54,12 @@
 
     &--button-logo {
       background: var(--theme-background);
-      padding: 5px;
+      padding: 6px;
       border-radius: 50px;
       cursor: pointer;
       border: 1px solid black;
       margin-left: 5px;
+      margin-top: 5px;
       position: relative;
     }
   }
@@ -66,8 +67,8 @@
   &__dropdown {
     position: absolute;
     border: 1px solid black;
-    left: 10px;
-    top: calc(100% + 1px);
+    left: 6.5px;
+    top: calc(100% + 5px);
     background: var(--theme-background);
     z-index: 100;
 

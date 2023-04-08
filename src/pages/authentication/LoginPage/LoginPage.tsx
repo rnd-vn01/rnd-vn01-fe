@@ -20,6 +20,7 @@ import { validateEmail } from 'src/helpers/validate';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from 'react-responsive';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -32,6 +33,8 @@ export const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const location = useLocation() as any;
   const { t, i18n } = useTranslation();
+
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   document.title = `${APP_NAME} | ${t('login_page.title')}`
 
@@ -185,7 +188,7 @@ export const LoginPage: React.FC = () => {
     <div
       role="div"
       aria-label="login-page"
-      className="login-page grid grid-cols-5">
+      className={`login-page grid ${isMobile ? "grid-cols-2" : "grid-cols-5"}`}>
       <div className="login-page__section login-page__section--main col-span-2 flex-center">
         <div className="login-page__home-icon"
           onClick={() => history.push("/", { isRedirect: true })}>
@@ -251,9 +254,9 @@ export const LoginPage: React.FC = () => {
         />
       </div>
 
-      <div className="login-page__section login-page__section--image col-span-3">
+      {!isMobile && <div className="login-page__section login-page__section--image col-span-3">
         <img className="login-page__image--demo" src={DemoImage}></img>
-      </div>
+      </div>}
     </div>
   );
 };

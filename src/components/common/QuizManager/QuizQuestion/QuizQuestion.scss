@@ -1,3 +1,5 @@
+@import "src/responsive.scss";
+
 .quiz-question {
   overflow: hidden;
   position: relative;
@@ -6,8 +8,23 @@
   &__question {
     margin: 8px;
     height: 100%;
-    max-height: calc(100% - 130px);
+    max-height: calc(100% - 250px);
     overflow: auto;
+    font-size: 1.5rem;
+    text-align: justify;
+    background-image: url("../../../../assets/images/QuizQuestionBackground.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    @include smallscreen {
+      max-height: calc(100% - 130px);
+      font-size: 1.125rem;
+    }
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
 
     &--navigate {
       max-height: calc(100% - 75px);
@@ -20,15 +37,25 @@
 
   &__answer {
     bottom: 0;
-    height: 60px;
-    font-size: 1.25rem;
+    height: 120px;
+    font-size: 1.5rem;
     cursor: pointer;
     border-top: 1px solid black;
     background: transparent;
     text-align: center;
+    color: black;
+
+    &--navigate {
+      height: 60px;
+    }
+
+    @include smallscreen {
+      height: 60px;
+      font-size: 1.25rem;
+    }
 
     &:hover {
-      background: var(--theme-background-hover)
+      background: var(--theme-primary);
     }
 
     &:nth-child(even) {
@@ -37,17 +64,21 @@
 
     &--true {
       background: #95A543;
+      color: white;
 
       &:hover {
         background: #95A543 !important;
+        color: white;
       }
     }
 
     &--false {
       background: var(--theme-danger);
+      color: white;
 
       &:hover {
         background: var(--theme-danger) !important;
+        color: white;
       }
     }
 
@@ -60,7 +91,7 @@
 
     &--not-ended {
       &:hover {
-        background: var(--theme-background-hover);
+        background: var(--theme-primary);
         cursor: pointer;
       }
     }
@@ -71,5 +102,10 @@
     bottom: 0;
     right: 0;
     left: 0;
+    height: 240px;
+
+    @include smallscreen {
+      height: unset;
+    }
   }
 }

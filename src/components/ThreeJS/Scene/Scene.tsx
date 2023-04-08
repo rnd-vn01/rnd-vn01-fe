@@ -9,9 +9,9 @@ import {
   PerspectiveCamera,
   useProgress,
 } from "@react-three/drei";
-import SCENE_BACKGROUND from 'src/assets/images/SCENE_BACKGROUND.hdr';
+import SCENE_BACKGROUND from 'src/assets/images/background/SCENE_BACKGROUND.hdr';
 import { Body } from "../Body/Body";
-import { MOUSE, MathUtils, Vector3, Frustum, Matrix4, Object3D } from 'three';
+import { MOUSE, MathUtils, Vector3, Frustum, Matrix4 } from 'three';
 import {
   LU, LI, ST, SP, HT, SI, BL, KI, PC, TE, GB, Liv, Du, Ren, Others
 } from '../Meridians';
@@ -26,13 +26,16 @@ import {
   resetToInitialStateZoomControlSlice,
   setInCloseZoomMode,
   setFrustum,
-  setCameraZoom
+  setCameraZoom,
+  setRemoveBackup,
+  setStateCameraQuaternion
 } from 'src/redux/slice/index';
 import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS, ZOOM_CONTROL_LEVEL } from 'src/configs/constants';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { Floor } from '../Floor/Floor';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -50,7 +53,8 @@ export const Scene = forwardRef((props, ref) => {
     selectedType,
     pointPosition,
     isSelectingFromMenu,
-    preSelectLine
+    preSelectLine,
+    secondarySelectedMeridian
   } = useSelector(
     (state: RootState) => state.selectionSlice,
   );
@@ -59,6 +63,12 @@ export const Scene = forwardRef((props, ref) => {
     isInCloseZoomMode
   } = useSelector(
     (state: RootState) => state.zoomControlSlice,
+  );
+
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
   );
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
@@ -81,7 +91,9 @@ export const Scene = forwardRef((props, ref) => {
         display: "flex", width: "100vw", justifyContent: "center",
         alignItems: "center", flexDirection: "column"
       }}>
-      <h3 style={{ display: "inline", fontSize: 24 }}>{`${Math.round(progress)}% loaded`}</h3>
+      <h3 style={{ display: "inline", fontSize: 24 }}>{
+        currentLanguage === "EN" ? `${Math.round(progress)}% loaded` : `Đã tải ${Math.round(progress)}%`
+      }</h3>
       <progress id="file" value={progress} max="100"></progress>
     </Html>
   }
@@ -102,7 +114,7 @@ export const Scene = forwardRef((props, ref) => {
         _v.y = 0.5
         break
     }
-    controls.current.target.sub(_v)
+    controls.current?.target?.sub(_v)
   }
 
   useEffect(() => {
@@ -112,10 +124,10 @@ export const Scene = forwardRef((props, ref) => {
     // const interval = setInterval(() => {
     //   if (camera.current) {
     //     dispatch(setStateCameraQuaternion({
-    //       x: camera.current.quaternion._x,
-    //       y: camera.current.quaternion._y,
-    //       z: camera.current.quaternion._z,
-    //       w: camera.current.quaternion._w,
+    //       x: camera.current?.quaternion._x,
+    //       y: camera.current?.quaternion._y,
+    //       z: camera.current?.quaternion._z,
+    //       w: camera.current?.quaternion._w,
     //     }))
     //   }
     // }, 2500)
@@ -129,22 +141,22 @@ export const Scene = forwardRef((props, ref) => {
     window.addEventListener("keydown", (e) => {
       switch (e.key) {
         case "ArrowLeft":
-          if (controls.current.target.x > -15) {
+          if (controls.current?.target?.x > -15) {
             move(PAN_DIRECTION.LEFT)
           }
           break
         case "ArrowRight":
-          if (controls.current.target.x < 15) {
+          if (controls.current?.target?.x < 15) {
             move(PAN_DIRECTION.RIGHT)
           }
           break
         case "ArrowUp":
-          if (controls.current.target.y < 15) {
+          if (controls.current?.target?.y < 15) {
             move(PAN_DIRECTION.UP)
           }
           break
         case "ArrowDown":
-          if (controls.current.target.y > -30) {
+          if (controls.current?.target?.y > -30) {
             move(PAN_DIRECTION.DOWN)
           }
           break
@@ -154,6 +166,7 @@ export const Scene = forwardRef((props, ref) => {
     dispatch(unsetStrictMode())
     dispatch(resetToInitialStateQuizSlice())
     dispatch(resetToInitialStateZoomControlSlice())
+    dispatch(setRemoveBackup())
 
     setTimeout(() => {
       // Check if a point is selected from redirect
@@ -200,32 +213,36 @@ export const Scene = forwardRef((props, ref) => {
     },
 
     panCenter() {
-      controls.current.reset();
-      let _v = new Vector3(controls.current.target.x - 1, controls.current.target.y - 5, controls.current.target.z);
-      controls.current.target.sub(_v)
-      camera.current.zoom = 1.5
-      camera.current.updateProjectionMatrix();
+      controls.current?.reset();
+      let _v = new Vector3(controls.current?.target?.x - 1, controls.current?.target?.y - 5, controls.current?.target?.z);
+      controls.current?.target?.sub(_v)
+      camera.current.zoom = !isDesktop ? 1 : 1.5
+      camera.current?.updateProjectionMatrix();
 
       dispatch(resetToInitialStateZoomControlSlice())
       //defineAndRestateFrustum();
     },
 
     zoomIn() {
-      camera.current.zoom += 0.25
-      camera.current.updateProjectionMatrix();
-      if (camera.current.zoom >= 4) {
+      if (camera.current?.zoom < 2 || camera.current?.zoom >= 4) {
+        camera.current.zoom += 0.5
+      } else {
+        camera.current.zoom += 1
+      }
+      camera.current?.updateProjectionMatrix();
+      if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
         }))
-      } else if (camera.current.zoom >= 4) {
+      } else if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
         }))
-      } else if (camera.current.zoom >= 2.5) {
+      } else if (camera.current?.zoom >= 2.5) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
         }))
-      } else if (camera.current.zoom >= 2) {
+      } else if (camera.current?.zoom >= 2) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
         }))
@@ -239,24 +256,29 @@ export const Scene = forwardRef((props, ref) => {
     },
 
     zoomOut() {
-      if (camera.current.zoom >= 1) {
-        camera.current.zoom -= 0.25
-        camera.current.updateProjectionMatrix();
+      if (camera.current?.zoom >= 1) {
+        if (camera.current?.zoom === 3 || camera.current?.zoom === 4) {
+          camera.current.zoom -= 1
+        } else {
+          camera.current.zoom -= 0.5
+        }
+
+        camera.current?.updateProjectionMatrix();
       }
 
-      if (camera.current.zoom >= 4) {
+      if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
         }))
-      } else if (camera.current.zoom >= 4) {
+      } else if (camera.current?.zoom >= 4) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
         }))
-      } else if (camera.current.zoom >= 2.5) {
+      } else if (camera.current?.zoom >= 2.5) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
         }))
-      } else if (camera.current.zoom >= 2) {
+      } else if (camera.current?.zoom >= 2) {
         dispatch(setInCloseZoomMode({
           isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
         }))
@@ -284,21 +306,22 @@ export const Scene = forwardRef((props, ref) => {
     if (isSelectingFromMenu && selectedType === "line" && controls.current) {
       //Get the first point of line
       const point = FOCUS_OPTIONS[selectedLabel]["point"];
-      controls.current.reset();
+      controls.current?.reset();
 
-      let _v = new Vector3(controls.current.target.x - point["x"],
-        controls.current.target.y - point["y"],
-        controls.current.target.z - point["z"]);
-      controls.current.target.sub(_v)
-      camera.current.zoom = 3.5;
-      camera.current.updateProjectionMatrix();
+      let _v = new Vector3(controls.current?.target?.x - point["x"],
+        isDesktop ? controls.current?.target?.y - point["y"] : controls.current?.target?.y - point["y"] + 5,
+        controls.current?.target?.z - point["z"]);
+      controls.current?.target?.sub(_v)
+      camera.current.zoom = isDesktop ? FOCUS_OPTIONS[selectedLabel]["zoom"] :
+        Math.max(FOCUS_OPTIONS[selectedLabel]["zoom"] - 1.5, 1);
+      camera.current?.updateProjectionMatrix();
 
       const rad = MathUtils.degToRad(FOCUS_OPTIONS[selectedLabel]["rotate"]);
 
       //Need rotation
-      const cx1 = camera.current.position.x;
-      const cy1 = camera.current.position.y;
-      const cz1 = camera.current.position.z;
+      const cx1 = camera.current?.position.x;
+      const cy1 = camera.current?.position.y;
+      const cz1 = camera.current?.position.z;
 
       // 4. Calculate new camera position:
       const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
@@ -306,27 +329,27 @@ export const Scene = forwardRef((props, ref) => {
       const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
 
       // 5. Set new camera position:
-      camera.current.position.set(cx2, cy2, cz2);
+      camera.current?.position.set(cx2, cy2, cz2);
 
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
     } else if (isSelectingFromMenu && selectedType === "point" && controls.current && camera.current) {
       //Get the first point of line
-      controls.current.reset();
+      controls.current?.reset();
 
-      let _v = new Vector3(controls.current.target.x - pointPosition["x"],
-        controls.current.target.y - pointPosition["y"],
-        controls.current.target.z - pointPosition["z"]);
-      controls.current.target.sub(_v)
+      let _v = new Vector3(controls.current?.target?.x - pointPosition["x"],
+        controls.current?.target?.y - pointPosition["y"],
+        controls.current?.target?.z - pointPosition["z"]);
+      controls.current?.target?.sub(_v)
       camera.current.zoom = 3.5;
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
 
       const rad = MathUtils.degToRad(pointPosition["reverse"]);
       const rad90 = MathUtils.degToRad(90)
 
       //Need rotation
-      const cx1 = camera.current.position.x;
-      const cy1 = camera.current.position.y;
-      const cz1 = camera.current.position.z;
+      const cx1 = camera.current?.position.x;
+      const cy1 = camera.current?.position.y;
+      const cz1 = camera.current?.position.z;
 
       // 4. Calculate new camera position:
       const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
@@ -334,31 +357,31 @@ export const Scene = forwardRef((props, ref) => {
       const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
 
       // 5. Set new camera position:
-      camera.current.position.set(cx2, cy2, cz2);
+      camera.current?.position.set(cx2, cy2, cz2);
 
       if (pointPosition["viewFromBottom"]) {
         camera.current.zoom = 7.5;
       }
 
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
     } else if (preSelectLine && preSelectLine !== "") {
       //Get the first point of line
       const point = FOCUS_OPTIONS[preSelectLine]["point"];
-      controls.current.reset();
+      controls.current?.reset();
 
-      let _v = new Vector3(controls.current.target.x - point["x"],
-        controls.current.target.y - point["y"],
-        controls.current.target.z - point["z"]);
-      controls.current.target.sub(_v)
-      camera.current.zoom = FOCUS_OPTIONS[preSelectLine]["zoom"] || 3.5;
-      camera.current.updateProjectionMatrix();
+      let _v = new Vector3(controls.current?.target?.x - point["x"],
+        controls.current?.target?.y - point["y"],
+        controls.current?.target?.z - point["z"]);
+      controls.current?.target?.sub(_v)
+      camera.current.zoom = isDesktop ? FOCUS_OPTIONS[preSelectLine]["zoom"] : 3.5;
+      camera.current?.updateProjectionMatrix();
 
       const rad = MathUtils.degToRad(FOCUS_OPTIONS[preSelectLine]["rotate"]);
 
       //Need rotation
-      const cx1 = camera.current.position.x;
-      const cy1 = camera.current.position.y;
-      const cz1 = camera.current.position.z;
+      const cx1 = camera.current?.position.x;
+      const cy1 = camera.current?.position.y;
+      const cz1 = camera.current?.position.z;
 
       // 4. Calculate new camera position:
       const cx2 = Math.cos(rad) * cx1 - Math.sin(rad) * cz1;
@@ -366,22 +389,22 @@ export const Scene = forwardRef((props, ref) => {
       const cz2 = Math.sin(rad) * cx1 + Math.cos(rad) * cz1;
 
       // 5. Set new camera position:
-      camera.current.position.set(cx2, cy2, cz2);
+      camera.current?.position.set(cx2, cy2, cz2);
 
-      camera.current.updateProjectionMatrix();
+      camera.current?.updateProjectionMatrix();
     }
   }
 
   const defineAndRestateFrustum = () => {
     var frustum = new Frustum();
     var cameraViewProjectionMatrix = new Matrix4();
-    cameraViewProjectionMatrix.multiplyMatrices(camera.current.projectionMatrix, camera.current.matrixWorldInverse);
+    cameraViewProjectionMatrix.multiplyMatrices(camera.current?.projectionMatrix, camera.current?.matrixWorldInverse);
     frustum.setFromProjectionMatrix(cameraViewProjectionMatrix);
     dispatch(setFrustum({
       frustum: frustum
     }))
     dispatch(setCameraZoom({
-      cameraZoom: camera.current.zoom
+      cameraZoom: camera.current?.zoom
     }))
   }
 
@@ -391,6 +414,7 @@ export const Scene = forwardRef((props, ref) => {
     } else {
       if (selectedType && selectedLabel) {
         return (selectedLabel === label) || (selectedType === 'point' && selectedLabel?.split("-")[0] === label)
+          || (secondarySelectedMeridian === label)
       } else {
         return isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LINE
       }
@@ -402,9 +426,10 @@ export const Scene = forwardRef((props, ref) => {
       <Environment
         files={SCENE_BACKGROUND}
         background={true}
+
       />
 
-      <ambientLight intensity={-0.25} />
+      <ambientLight intensity={-0.4} />
 
       <spotLight
         args={["#f7f7f7", 0.4, 0, angleToRadians(45), 0.35]}
@@ -415,13 +440,13 @@ export const Scene = forwardRef((props, ref) => {
         ref={camera}
         makeDefault
         position={[-1.75, 10.85, 40]}
-        zoom={1.5}
+        zoom={!isDesktop ? 1 : 1.5}
       >
       </PerspectiveCamera>
 
       <OrbitControls
         ref={controls}
-        target={[1, 5, 0]}
+        target={[!isDesktop ? 0 : 1, 5, 0]}
         mouseButtons={{
           LEFT: MOUSE.ROTATE,
           MIDDLE: MOUSE.DOLLY,
@@ -433,9 +458,9 @@ export const Scene = forwardRef((props, ref) => {
 
           let _v = new Vector3();
           _v.copy(controls.current.target);
-          controls.current.target.clamp(minPan, maxPan);
+          controls.current?.target?.clamp(minPan, maxPan);
           _v.sub(controls.current.target)
-          camera.current.position.sub(_v);
+          camera.current?.position.sub(_v);
 
           const distanceToCenter = controls.current.object.position.distanceTo(controls.current.target);
 
@@ -447,11 +472,11 @@ export const Scene = forwardRef((props, ref) => {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
             }))
-          } else if (distanceToCenter < (isDesktop ? 12.5 : 20)) {
+          } else if (distanceToCenter < (isDesktop ? 12.5 : 15)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
             }))
-          } else if (distanceToCenter < (isDesktop ? 20 : 30)) {
+          } else if (distanceToCenter < (isDesktop ? 20 : 20)) {
             dispatch(setInCloseZoomMode({
               isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
             }))
@@ -545,11 +570,7 @@ export const Scene = forwardRef((props, ref) => {
           showLine={true}
         />}
       {/* Floor */}
-      <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
-        <planeGeometry args={[3000, 300]} />
-        <meshStandardMaterial color="#ffffff" />
-      </mesh>
-
+      <Floor />
     </Suspense >
   );
 });
