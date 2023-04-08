@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "vn01-staging"
+    "staging": "vn01-staging",
+    "production": "acupuncture-3d-vn01"
   }
 }

@@ -26,7 +26,7 @@ jobs:
       - run:
           command: npm run build
       - run:
-          command: firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: firebase deploy -P staging --token=$FIREBASE_TOKEN --non-interactive
   deploy-to-live:
     description: Deploy application to live server
     docker:
@@ -41,7 +41,7 @@ jobs:
       - run:
           command: npm run build
       - run:
-          command: firebase deploy --token=$PRODUCTION_FIREBASE_TOKEN --non-interactive
+          command: firebase deploy -P production --token=$PRODUCTION_FIREBASE_TOKEN --non-interactive
   
 workflows:
   test:
