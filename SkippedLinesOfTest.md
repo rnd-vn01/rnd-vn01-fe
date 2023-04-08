@@ -11,14 +11,14 @@ src/components/common/Records/RecordsProgressLog/responsive
     RecordsProgressDesktop.tsx ~ 18
 
 src/components/common/Search/SearchBar
-    SearchBar.tsx ~ 58, 96
+    SearchBar.tsx ~ 86, 98
 
 src/components/common/Search/SearchResults
     SearchResults.tsx ~ 157-160, 205
 
 src/helpers 
     searchProcess.ts ~ 131
-    statistics.ts ~ 11, 71, 114, 155-163
+    statistics.ts ~ 72, 116, 157-165
 
 src/pages/PersonalRecordsPage
     PersonalRecordsPage.tsx ~ 38-39, 48

@@ -19,7 +19,8 @@ export const RecordsSummaryDesktop: React.FC<IRecordsSummary> = ({
     points: 0,
     meridians: 0,
     quizzes: 0,
-    accuracy: 0
+    accuracy: 0,
+    dates: 0,
   });
   const {
     currentLanguage

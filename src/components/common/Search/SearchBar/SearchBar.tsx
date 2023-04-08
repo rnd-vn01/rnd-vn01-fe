@@ -83,7 +83,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
           <input
             ref={inputBoxRef}
             className={`search-bar__input ${!isReadyForSearch && "search-bar__input--loading"}`}
-            onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
+            onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)} // NOT_TESTED
             onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
             value={query}
             disabled={isChoosingAlphabet || !isReadyForSearch}

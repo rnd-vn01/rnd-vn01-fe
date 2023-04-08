@@ -1,7 +1,7 @@
 import './RecordsSummary.scss';
 import React, { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { SUMMARY_SHOWING_TIME_TYPES, SUMMARY_SHOWING_TIME_TYPE_OPTIONS } from 'src/configs/constants';
+import { SUMMARY_SHOWING_TIME_TYPES } from 'src/configs/constants';
 import { useMediaQuery } from 'react-responsive';
 import { getSummary } from 'src/helpers/statistics';
 

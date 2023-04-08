@@ -1,5 +1,5 @@
 import { MERIDIANS, MERIDIAN_POINTS, SUMMARY_SHOWING_TIME_TYPE_OPTIONS } from "src/configs/constants";
-import { getMonday, getSunday } from "./date";
+import { getMidnight, getMonday, getSunday } from "./date";
 import moment from "moment";
 
 export const filterQuizzesList = (quizzesList: Array<IFormattedQuizDetail>,
@@ -43,7 +43,8 @@ export const getSummary = (quizzesList: Array<IFormattedQuizDetail>,
       points: 0,
       meridians: 0,
       quizzes: 0,
-      accuracy: 0
+      accuracy: 0,
+      days: 0,
     }
   }
 
@@ -86,7 +87,8 @@ export const getSummary = (quizzesList: Array<IFormattedQuizDetail>,
     points: acupuncturePoints.length,
     meridians: meridians.length,
     quizzes: quizzesCount,
-    accuracy: Math.round(sumAccuracies / quizzesCount)
+    accuracy: Math.round(sumAccuracies / quizzesCount),
+    days: calculateDateStreak(quizzesList)
   }
 }
 
@@ -193,4 +195,43 @@ export const getLogsForChart = (quizzesList: Array<IFormattedQuizDetail>,
   })
 
   return results.reverse();
+}
+
+export const calculateDateStreak = (quizzesList: Array<IFormattedQuizDetail>) => {
+  let filteredList = filterQuizzesList(quizzesList, SUMMARY_SHOWING_TIME_TYPE_OPTIONS.ALL_TIME);
+  filteredList = [...filteredList].reverse()
+
+  let streak = 0;
+  const today = getMidnight(new Date())
+  const yesterday = getMidnight(moment(new Date()).add(-1, 'days').toDate())
+  let lastCheckingDate = null;
+
+  filteredList.forEach(quiz => {
+    const checkingDate = new Date(quiz.datetime.getFullYear(), quiz.datetime.getMonth(),
+      quiz.datetime.getDate(), 0, 0, 0, 0)
+
+    if (!lastCheckingDate) {
+      if ((checkingDate < today || checkingDate > today) && (
+        checkingDate < yesterday || checkingDate > yesterday
+      ))
+        return 0;
+      else {
+        lastCheckingDate = new Date(checkingDate.getTime());
+        streak = 1;
+      }
+    } else {
+      let prevOfCheckingDate = new Date(moment(lastCheckingDate).add(-1, 'days').toDate().getTime())
+
+      if (checkingDate.getTime() === lastCheckingDate.getTime()) {
+        // Continue the loop
+      } else if (checkingDate.getTime() === prevOfCheckingDate.getTime()) {
+        streak += 1;
+        lastCheckingDate = new Date(prevOfCheckingDate.getTime())
+      } else {
+        return 0;
+      }
+    }
+  })
+
+  return streak <= 1 ? 0 : streak;
 }

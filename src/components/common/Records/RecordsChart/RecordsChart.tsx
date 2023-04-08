@@ -1,8 +1,6 @@
 import './RecordsChart.scss';
 import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
 import { capitalize } from 'src/helpers/capitalize';
 import { getCurrentDateFullString, getInputDateFormat, getMidnight, getMonday, getWeekNumber } from 'src/helpers/date';
 import moment from 'moment';
@@ -27,12 +25,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({
   const { t } = useTranslation();
   const [isPoint, setIsPoint] = useState<boolean>(true);
   const [showingTypeOption, setShowingTypeOption] = useState<number>(0);
-  const {
-    currentLanguage
-  } = useSelector(
-    (state: RootState) => state.languageSlice,
-  );
-  const [fromDate, setFromDate] = useState<Date>(moment(new Date()).add(-1, "days").toDate());
+  const [fromDate, setFromDate] = useState<Date>(getMidnight(getMonday(new Date())));
   const [toDate, setToDate] = useState<Date>(getMidnight(new Date()));
   const [chartData, setChartData] = useState<any>({
     labels: [],
@@ -174,7 +167,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({
     switch (showingTypeOption) {
       case 0:
         let iterator = new Date(fromDate);
-        while (iterator <= toDate) {
+        while (getMidnight(iterator) <= toDate) {
           labels.push({
             value: new Date(iterator),
             label: getCurrentDateFullString(iterator)
