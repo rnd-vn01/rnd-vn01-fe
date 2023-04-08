@@ -12,12 +12,12 @@ import {
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCyRlZGGJrwMswL8n68yAMkItWDhoOSBrI",
-  authDomain: "vn01-staging.firebaseapp.com",
-  projectId: "vn01-staging",
-  storageBucket: "vn01-staging.appspot.com",
-  messagingSenderId: "935886942779",
-  appId: "1:935886942779:web:d53b2a6f21010f94fee21e"
+  apiKey: "AIzaSyBhh-rxBo5DHXynUM5H45pTtGxni-um2QA",
+  authDomain: "acupuncture-3d-vn01.firebaseapp.com",
+  projectId: "acupuncture-3d-vn01",
+  storageBucket: "acupuncture-3d-vn01.appspot.com",
+  messagingSenderId: "704168149305",
+  appId: "1:704168149305:web:881bbf7518e706ebdd68e8"
 };
 
 import Swal from 'sweetalert2'
