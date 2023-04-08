@@ -27,6 +27,21 @@ jobs:
           command: npm run build
       - run:
           command: firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+  deploy-to-live:
+    description: Deploy application to live server
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - node/install:
+          node-version: '18.12'
+      - node/install-packages
+      - run:
+          command: npm install -g firebase-tools
+      - run:
+          command: npm run build
+      - run:
+          command: firebase deploy --token=$PRODUCTION_FIREBASE_TOKEN --non-interactive
   
 workflows:
   test:
@@ -52,6 +67,6 @@ workflows:
           filters:
             branches:
               only: main
-      # - deploy-to-live:
-      #     requires:
-      #       - test
+      - deploy-to-live:
+          requires:
+            - test
