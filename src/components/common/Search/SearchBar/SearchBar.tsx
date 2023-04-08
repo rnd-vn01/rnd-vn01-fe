@@ -43,10 +43,12 @@ export const SearchBar: React.FC<ISearchBar> = ({
   }, [query])
 
   useEffect(() => {
-    if (passedQuery && passedQuery !== query) {
-      setQuery(passedQuery)
+    if (isReadyForSearch) {
+      if (passedQuery && passedQuery !== query) {
+        setQuery(passedQuery)
+      }
     }
-  }, [passedQuery])
+  }, [isReadyForSearch])
 
   useEffect(() => {
     setIsFilter(paramPassedIsFilter)
@@ -80,11 +82,11 @@ export const SearchBar: React.FC<ISearchBar> = ({
         <span className="search-bar__input--span">
           <input
             ref={inputBoxRef}
-            className="search-bar__input"
+            className={`search-bar__input ${!isReadyForSearch && "search-bar__input--loading"}`}
             onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
             onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
             value={query}
-            disabled={isChoosingAlphabet}
+            disabled={isChoosingAlphabet || !isReadyForSearch}
             onChange={e => setQuery(e.target.value)}
             role="input"
             aria-label="search-input"
@@ -110,7 +112,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
             }}
           >
           </img>
-        </span>
+        </span >
 
         <SearchProcessor
           query={isReadyForSearch ? query : ""}
