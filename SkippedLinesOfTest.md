@@ -26,3 +26,6 @@ src/pages/PersonalRecordsPage
 
 src/pages/QuizPage
     QuizPage.tsx ~ 39, 41
+
+src/redux/slice/mouseControls
+    selectionSlice.ts ~ 65
