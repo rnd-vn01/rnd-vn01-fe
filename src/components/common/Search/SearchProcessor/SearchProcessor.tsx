@@ -93,6 +93,7 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
       dispatch(setAcupuncturePoints(dataAcupuncturePoints))
       dispatch(setMeridians(dataMeridians))
 
+      console.log("Aloha 243")
       callbackIsReadyForSearch(true);
     }
 

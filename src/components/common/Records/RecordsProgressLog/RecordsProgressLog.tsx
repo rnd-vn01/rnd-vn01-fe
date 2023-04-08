@@ -18,12 +18,23 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({
   const [isProgress, setIsProgress] = useState<boolean>(true);
   const [showingTypeOption, setShowingTypeOption] = useState<number>(0);
   const [showingData, setShowingData] = useState<any>([]);
+  const [render, setRender] = useState<number>(0);
   const {
     currentLanguage
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+
+  const formatForDesktop = (items) => {
+    const cloneItems = JSON.parse(JSON.stringify(items))
+
+    cloneItems.forEach(item => {
+      item.caption = currentLanguage === "EN" ? item.caption?.split(" ")[0] : item.caption?.split(" ")[2];
+    })
+
+    return cloneItems;
+  }
 
   useEffect(() => {
     let testData = []
@@ -44,10 +55,15 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({
     setShowingData(testData)
   }, [showingTypeOption, isProgress])
 
+  useEffect(() => {
+    setRender(render + 1);
+  }, [showingData])
+
   return (
     <div
       role="div"
       aria-label="records-progress"
+      key={render}
       className="records-progress p-2">
 
       <div className='w-full flex justify-between records-progress__title--container'>
@@ -123,7 +139,7 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({
         ))}
       </div>}
 
-      {(isProgress && isDesktop) && <RecordsProgressDesktop data={showingData} />}
+      {(isProgress && isDesktop) && <RecordsProgressDesktop data={formatForDesktop(showingData)} />}
 
       {!isProgress &&
         <div className='records-progress__progress'>

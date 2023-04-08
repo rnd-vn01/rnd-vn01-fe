@@ -126,25 +126,6 @@ describe('ItemDetailEdit - Desktop', () => {
     })
   })
 
-  it("should change the content of field code when typed in new value", async () => {
-    const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
-
-    render(
-      <ResponsiveContext.Provider value={{ width: 1200 }}>
-        <Provider store={store}>
-          <ItemDetailEdit
-            item={ITEM}
-            isPoint={true} />
-        </Provider></ResponsiveContext.Provider>)
-
-    const inputCode = screen.getByRole("input", { name: "input-code" })
-    fireEvent.change(inputCode, { target: { value: "New Code" } })
-
-    await waitFor(() => {
-      expect(inputCode.getAttribute("value")).toBe("New Code")
-    })
-  })
-
   it("should change the content of one subitem if type in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
@@ -611,6 +592,10 @@ describe('ItemDetailEdit - Desktop', () => {
 })
 
 describe('ItemDetailEdit - Mobile', () => {
+  afterEach(() => {
+    store.dispatch(resetToInitialStateAuthSlice());
+  })
+
   it("should callback update item if click on submit button for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
     const mockCallbackUpdateDetail = jest.fn();

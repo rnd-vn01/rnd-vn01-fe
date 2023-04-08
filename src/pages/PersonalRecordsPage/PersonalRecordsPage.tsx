@@ -1,7 +1,6 @@
 import './PersonalRecordsPage.scss'
 import React, { useEffect, useState } from 'react';
 import {
-  FullPageTitleBar,
   RecordsChart,
   RecordsProgressLog,
   RecordsSummary,
@@ -20,7 +19,7 @@ export const PersonalRecordsPage: React.FC<IPersonalRecordsPage> = ({
 
 }) => {
   const { t } = useTranslation();
-  document.title = `${APP_NAME} | ${t('data_management_page.title')}`
+  document.title = `${APP_NAME} | ${t('personal_records_page.title')}`
   const {
     user
   } = useSelector(
@@ -36,8 +35,7 @@ export const PersonalRecordsPage: React.FC<IPersonalRecordsPage> = ({
         const result = await getQuizzesOfUsers(user.firebaseId)
         setQuizzesList(result)
       } catch {
-        console.log("Going here")
-        alert(t('login_page.messages.save_quiz_error'))
+        alert(t('login_page.messages.save_quiz_error')) // NOT_TESTED
         history.push("/", { isRedirect: true })
       }
     }
@@ -46,7 +44,7 @@ export const PersonalRecordsPage: React.FC<IPersonalRecordsPage> = ({
   }, [])
 
   useEffect(() => {
-    if (quizzesList.length) {
+    if (quizzesList.length) { // NOT_TESTED
       setRender(render + 1);
     }
   }, [quizzesList])

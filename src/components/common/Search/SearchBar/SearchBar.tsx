@@ -27,6 +27,8 @@ export const SearchBar: React.FC<ISearchBar> = ({
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
 
   useEffect(() => {
     callbackSetResults(searchResults)
@@ -45,6 +47,18 @@ export const SearchBar: React.FC<ISearchBar> = ({
       setQuery(passedQuery)
     }
   }, [passedQuery])
+
+  useEffect(() => {
+    setIsFilter(paramPassedIsFilter)
+  }, [paramPassedIsFilter])
+
+  useEffect(() => {
+    if (isReadyForSearch) {
+      if (passedQuery && passedQuery !== query) {
+        setQuery(passedQuery)
+      }
+    }
+  }, [isReadyForSearch])
 
   return (
     <div
@@ -72,7 +86,6 @@ export const SearchBar: React.FC<ISearchBar> = ({
             value={query}
             disabled={isChoosingAlphabet}
             onChange={e => setQuery(e.target.value)}
-            onClick={() => setQuery("")}
             role="input"
             aria-label="search-input"
             placeholder={t('search_bar.placeholder')}></input>
@@ -97,13 +110,15 @@ export const SearchBar: React.FC<ISearchBar> = ({
             }}
           >
           </img>
-        </span >
+        </span>
 
         <SearchProcessor
-          query={query}
+          query={isReadyForSearch ? query : ""}
           callbackSetResults={setSearchResults}
           callbackSetLoading={setIsLoading}
+          callbackIsReadyForSearch={setIsReadyForSearch}
         />
       </div>
-      );
+    </div>
+  );
 };

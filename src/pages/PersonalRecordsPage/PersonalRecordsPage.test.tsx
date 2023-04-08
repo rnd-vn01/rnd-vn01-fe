@@ -33,9 +33,6 @@ jest.mock('react-chartjs-2', () => ({
 describe('PersonalRecordsPage', () => {
   beforeEach(() => {
     mockQuizRecords();
-    render(<Provider store={store}>
-      <PersonalRecordsPage />
-    </Provider>)
   })
 
   it("to be rendered the desktop viewport successfully", async () => {

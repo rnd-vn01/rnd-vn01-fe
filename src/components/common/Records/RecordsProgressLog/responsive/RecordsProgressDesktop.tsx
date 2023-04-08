@@ -33,9 +33,8 @@ export const RecordsProgressDesktop: React.FC<IRecordsProgressLogDesktop> = ({ d
       className="records-progress-desktop grid grid-cols-4 gap-6 py-2"
     >
       {data.map((item: any, index: number) => (
-        <>
+        <div key={index}>
           <div
-            key={index}
             ref={el => meridiansRef.current[index] = el}
             className="col-span-1 records-progress-desktop__meridian flex-center flex-col"
             style={{
@@ -53,8 +52,8 @@ export const RecordsProgressDesktop: React.FC<IRecordsProgressLogDesktop> = ({ d
           <ReactTooltip id={`tooltip-${index}`} place="top" effect="solid">
             <p>{t(`meridian_tooltips.${item.caption}`)}</p>
           </ReactTooltip>
-        </>
+        </div>
       ))}
-    </div>
+    </div >
   )
 }
