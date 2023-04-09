@@ -37,7 +37,7 @@ import { storeQuizResult } from 'src/helpers/api/quizRecords';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
-enum QUIZ_STATE {
+export enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
   IN_PROGRESS = 1,
   ENDED = 2
@@ -45,7 +45,8 @@ enum QUIZ_STATE {
 
 export const QuizManager: React.FC<IQuizManager> = ({
   callbackSetQuestionType,
-  callbackSetQuizStatus
+  callbackSetQuizStatus,
+  callbackSetQuizState
 }) => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -563,6 +564,10 @@ export const QuizManager: React.FC<IQuizManager> = ({
       }))
     }
   }, [field]);
+
+  useEffect(() => {
+    callbackSetQuizState(quizState)
+  }, [quizState])
 
   const updatePointsCurrentField = () => {
     if (parseInt(field) !== 0) {

@@ -8,6 +8,7 @@ describe('QuizManager', () => {
     render(<Provider store={store}>
       <QuizManager
         callbackSetQuizStatus={jest.fn()}
+        callbackSetQuizState={jest.fn()}
       />
     </Provider>)
   })

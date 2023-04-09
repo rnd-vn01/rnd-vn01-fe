@@ -64,6 +64,7 @@ interface IModel {
 interface IQuizManager {
   callbackSetQuestionType?: (number) => void;
   callbackSetQuizStatus?: (any) => void;
+  callbackSetQuizState?: (number) => void;
 }
 
 interface IQuizOptions {
