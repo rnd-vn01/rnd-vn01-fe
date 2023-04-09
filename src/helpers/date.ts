@@ -56,7 +56,7 @@ export const getMonday = (d: Date) => {
 }
 
 export const getSunday = (d: Date) => {
-  let sunday = moment().endOf('week').add(1, "days").toDate()
+  let sunday = moment(d).endOf('week').add(1, "days").toDate()
   sunday.setHours(23);
   sunday.setMinutes(59);
   sunday.setSeconds(59);

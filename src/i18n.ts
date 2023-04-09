@@ -84,7 +84,9 @@ i18n
               not_found: "Your login information is not correct!",
               login_to_continue: "Please log in to continue!",
               save_quiz_error: "Error occured. Quiz's result cannot be saved!",
-              records_error: "Error occured. Cannot get the personal records!"
+              records_error: "Error occured. Cannot get the personal records!",
+              login_successful: "Login successfully",
+              wait_for_redirect: "Login successfully. Please wait for a moment!"
             }
           },
           quiz_page: {
@@ -336,7 +338,10 @@ i18n
             pending: "Updating image",
             success: "Uploaded successfully!",
             error: 'Error occured! Cannot upload image.',
-          }
+          },
+          loading_data: "Loading data",
+          storing_quiz_result: "Storing quiz result. Please wait for a moment!",
+          getting_records: "Getting personal records. Please wait for a moment!"
         }
       },
       vi: {
@@ -416,7 +421,9 @@ i18n
               not_found: "Thông tin đăng nhập không đúng!",
               login_to_continue: "Vui lòng đăng nhập để tiếp tục!",
               save_quiz_error: "Có lỗi xảy ra. Kết quả bài kiểm tra không thể được lưu trữ!",
-              records_error: "Có lỗi xảy ra. Không thể lấy thông tin cá nhân!"
+              records_error: "Có lỗi xảy ra. Không thể lấy thông tin cá nhân!",
+              login_successful: "Đăng nhập thành công",
+              wait_for_redirect: "Đăng nhập thành công. Vui lòng chờ trong giây lát"
             }
           },
           quiz_page: {
@@ -666,7 +673,10 @@ i18n
             pending: "Đang tải ảnh",
             success: "Tải ảnh thành công!",
             error: 'Lỗi! Không thể tải ảnh.',
-          }
+          },
+          loading_data: "Đang tải dữ liệu",
+          storing_quiz_result: "Đang lưu kết quả bài kiểm tra. Vui lòng chờ trong giây lát!",
+          getting_records: "Đang tải dữ liệu cá nhân. Vui lòng chờ trong giây lát!"
         }
       }
     }

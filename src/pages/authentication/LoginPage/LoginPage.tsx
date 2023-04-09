@@ -109,6 +109,22 @@ export const LoginPage: React.FC = () => {
           // Valid login
           const user = result.user;
 
+          MySwal.fire({
+            icon: 'success',
+            title: t('login_page.messages.login_successful'),
+            text: t('login_page.messages.wait_for_redirect'),
+          }).then(() => {
+            MySwal.fire({
+              didOpen: () => {
+                MySwal.showLoading(null);
+              },
+              didClose: () => {
+                MySwal.hideLoading();
+              },
+              allowOutsideClick: false,
+            })
+          })
+
           await login(user.uid)
 
           const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
@@ -137,6 +153,7 @@ export const LoginPage: React.FC = () => {
             }))
           }
 
+          MySwal.close();
           history.push("/", { isRedirect: true })
         }
       })
@@ -196,6 +213,22 @@ export const LoginPage: React.FC = () => {
       return;
     }
 
+    MySwal.fire({
+      icon: 'success',
+      title: t('login_page.messages.login_successful'),
+      text: t('login_page.messages.wait_for_redirect'),
+    }).then(() => {
+      MySwal.fire({
+        didOpen: () => {
+          MySwal.showLoading(null);
+        },
+        didClose: () => {
+          MySwal.hideLoading();
+        },
+        allowOutsideClick: false,
+      })
+    })
+
     try {
       await createNewAccount({
         firebase_id: user.uid,
@@ -248,6 +281,7 @@ export const LoginPage: React.FC = () => {
       }
     }
 
+    MySwal.close();
     history.push("/", { isRedirect: true })
   }
 

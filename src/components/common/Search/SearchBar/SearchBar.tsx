@@ -7,6 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { SearchProcessor } from '../SearchProcessor/SearchProcessor';
 import IconFilterOn from 'src/assets/images/IconFilterOn.svg';
 import IconFilterOff from 'src/assets/images/IconFilterOff.svg';
+import ReactTooltip from 'react-tooltip';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 export const SearchBar: React.FC<ISearchBar> = ({
   callbackSetResults,
@@ -30,6 +33,8 @@ export const SearchBar: React.FC<ISearchBar> = ({
   const [isFilter, setIsFilter] = useState<boolean>(false);
   const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
 
+  const MySwal = withReactContent(Swal);
+
   useEffect(() => {
     callbackSetResults(searchResults)
   }, [searchResults])
@@ -46,6 +51,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
     if (isReadyForSearch) {
       if (passedQuery && passedQuery !== query) {
         setQuery(passedQuery)
+        MySwal.close();
       }
     }
   }, [isReadyForSearch])
@@ -69,7 +75,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
       <div
         role="div"
         aria-label="search-bar"
-        className="search-bar"
+        className={`search-bar`}
         onClick={() => {
           (inputBoxRef.current as HTMLInputElement)?.focus()
         }}>
@@ -90,7 +96,9 @@ export const SearchBar: React.FC<ISearchBar> = ({
             onChange={e => setQuery(e.target.value)}
             role="input"
             aria-label="search-input"
-            placeholder={t('search_bar.placeholder')}></input>
+            placeholder={t('search_bar.placeholder')}
+            data-tip
+            data-for={`tooltip-search-bar`}></input>
 
           {!isLoading && query !== "" && <span className="search-bar__number-of-results"
             role="span"
@@ -113,6 +121,10 @@ export const SearchBar: React.FC<ISearchBar> = ({
           >
           </img>
         </span >
+
+        {!isReadyForSearch && <ReactTooltip id={`tooltip-search-bar`} place="right" effect="float">
+          <p>{t('loading_data')}...</p>
+        </ReactTooltip>}
 
         <SearchProcessor
           query={isReadyForSearch ? query : ""}

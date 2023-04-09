@@ -14,6 +14,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { getQuizzesOfUsers } from 'src/helpers/api/quizRecords';
 import { useHistory } from 'react-router-dom';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 export const PersonalRecordsPage: React.FC<IPersonalRecordsPage> = ({
 
@@ -28,15 +30,33 @@ export const PersonalRecordsPage: React.FC<IPersonalRecordsPage> = ({
   const [quizzesList, setQuizzesList] = useState<any>([]);
   const [render, setRender] = useState<number>(0);
   const history = useHistory();
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const getQuizzes = async () => {
       try {
+        MySwal.fire({
+          title: t('getting_records'),
+          didOpen: () => {
+            MySwal.showLoading(null);
+          },
+          didClose: () => {
+            MySwal.hideLoading();
+          },
+          allowOutsideClick: false,
+        })
+
         const result = await getQuizzesOfUsers(user.firebaseId)
+        MySwal.close();
         setQuizzesList(result)
       } catch {
-        alert(t('login_page.messages.save_quiz_error')) // NOT_TESTED
-        history.push("/", { isRedirect: true })
+        MySwal.fire({
+          title: "Error...",
+          text: t('login_page.messages.save_quiz_error'),
+          icon: "error"
+        }).then(() => {
+          history.push("/", { isRedirect: true })
+        })
       }
     }
 

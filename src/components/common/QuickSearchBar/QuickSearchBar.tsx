@@ -7,6 +7,7 @@ import { QuickSearchResults } from './QuickSearchResults/QuickSearchResults';
 import { useAppDispatch } from 'src/redux/store';
 import { setShowingQuickInformation } from 'src/redux/slice';
 import { useTranslation } from 'react-i18next';
+import ReactTooltip from 'react-tooltip';
 
 export const QuickSearchBar: React.FC = ({ }) => {
   const inputBoxRef = useRef()
@@ -68,7 +69,13 @@ export const QuickSearchBar: React.FC = ({ }) => {
         aria-label="quick-search-input"
         placeholder={t('search_bar.placeholder')}
         disabled={!isReadyForSearch}
+        data-tip
+        data-for={`tooltip-quick-search`}
       ></input>
+
+      {!isReadyForSearch && <ReactTooltip id={`tooltip-quick-search`} place="bottom" effect="float">
+        <p>{t('loading_data')}...</p>
+      </ReactTooltip>}
 
       <QuickSearchResults
         query={query}

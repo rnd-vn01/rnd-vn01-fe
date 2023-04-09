@@ -188,6 +188,22 @@ export const CreateAccountPage: React.FC = () => {
       const user = res.user as any;
       const email = user?.reloadUserInfo?.providerUserInfo?.[0].email
 
+      MySwal.fire({
+        icon: 'success',
+        title: t('login_page.messages.login_successful'),
+        text: t('login_page.messages.wait_for_redirect'),
+      }).then(() => {
+        MySwal.fire({
+          didOpen: () => {
+            MySwal.showLoading(null);
+          },
+          didClose: () => {
+            MySwal.hideLoading();
+          },
+          allowOutsideClick: false,
+        })
+      })
+
       try {
         await createNewAccount({
           firebase_id: user.uid,
@@ -219,8 +235,10 @@ export const CreateAccountPage: React.FC = () => {
         }
       }))
 
+      MySwal.close();
       history.push("/", { isRedirect: true });
     } catch (err: any) {
+      MySwal.close();
       MySwal.fire({
         icon: 'error',
         title: t('error'),
