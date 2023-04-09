@@ -104,7 +104,8 @@
       "SearchResultItem.tsx",
       "DetailPage.tsx",
       "pages/authentication/",
-      "api/axios/"
+      "api/axios/",
+      "AdvancedSearchPage.tsx"
     ]
   }
 }

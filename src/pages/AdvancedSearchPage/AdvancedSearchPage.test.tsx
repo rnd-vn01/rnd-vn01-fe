@@ -19,11 +19,8 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe('Advanced Search page - Desktop', () => {
-  beforeAll(() => {
-    mockGetItems();
-  })
-
   beforeEach(() => {
+    mockGetItems();
     spyScrollTo.mockClear();
     render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
