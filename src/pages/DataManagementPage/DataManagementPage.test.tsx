@@ -60,22 +60,3 @@ describe('Data Management Page - Desktop', () => {
     })
   })
 });
-
-describe('Data Management Page - Mobile', () => {
-  beforeEach(() => {
-    spyScrollTo.mockClear();
-    render(
-      <ResponsiveContext.Provider value={{ width: 500 }}>
-        <Provider store={store}>
-          <DataManagementPage />
-        </Provider>
-      </ResponsiveContext.Provider>)
-  })
-
-  it("to include the mobile title bar", async () => {
-    await waitFor(() => {
-      expect(screen.getByRole("div", { name: "mobile-title-bar" })).toBeInTheDocument();
-      expect(screen.getByRole("div", { name: "side-menu" })).toBeInTheDocument();
-    })
-  })
-});

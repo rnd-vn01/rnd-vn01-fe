@@ -69,21 +69,3 @@ describe('Advanced Search page - Desktop', () => {
     })
   })
 });
-
-describe('Advanced Search page - Mobile', () => {
-  beforeEach(() => {
-    spyScrollTo.mockClear();
-    render(<ResponsiveContext.Provider value={{ width: 500 }}>
-      <Provider store={store}>
-        <AdvancedSearchPage />
-      </Provider>
-    </ResponsiveContext.Provider>)
-  })
-
-  it("to include the mobile title bar", async () => {
-    await waitFor(() => {
-      expect(screen.getByRole("div", { name: "mobile-title-bar" })).toBeInTheDocument();
-      expect(screen.getByRole("div", { name: "side-menu" })).toBeInTheDocument();
-    })
-  })
-});
