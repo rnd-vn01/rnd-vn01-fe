@@ -103,6 +103,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
     {
       item: t('auth_bar.menu.home'),
       onClick: () => {
+        localStorage.removeItem("accessToken")
         history.push("/", { isRedirect: true })
       },
       selectable: true,
@@ -158,7 +159,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
           aria-label="title-bar-logo"
           className="title-bar__menu--button-logo inline-flex w-fit h-full flex-center"
           onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
-          <img src={Logo} className="title-bar__menu--image-logo"></img>
+          <img src={isLoggedIn ? user.profileImage : Logo} className="title-bar__menu--image-logo"></img>
         </div>
       </span>
 

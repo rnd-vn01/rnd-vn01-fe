@@ -4,6 +4,7 @@ import { AuthBar } from './AuthBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
 
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -209,6 +210,28 @@ describe('AuthBar', () => {
     await waitFor(() => {
       const menuItemDropdown = screen.queryByText(`menu-item-dropdown-data_management`)
       expect(menuItemDropdown).toBeNull();
+    })
+  })
+
+  it("should use the default image if no profile image is found", async () => {
+    store.dispatch(setStateAuth({
+      isLoggedIn: true,
+      user: {
+        name: "NAME",
+        email: "test@gmail.com",
+        profileImage: undefined,
+        firebaseId: "firebaseId",
+        isAdmin: true
+      }
+    }));
+
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
+
+    await waitFor(() => {
+      const profileImage = screen.getByTestId("auth-bar-profile-image");
+      expect((profileImage as any).src).toBe(DEFAULT_PROFILE_IMAGE_URL)
     })
   })
 });

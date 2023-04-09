@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import IconAdmin from 'src/assets/images/IconAdmin.svg';
+import { DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
 
 export const AuthBar: React.FC = ({ }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
@@ -78,6 +79,7 @@ export const AuthBar: React.FC = ({ }) => {
         history.push("/", { isRedirect: true })
         logout();
         dispatch(resetToInitialStateAuthSlice());
+        localStorage.removeItem("accessToken")
       },
       selectable: true,
       divider: false
@@ -133,7 +135,9 @@ export const AuthBar: React.FC = ({ }) => {
             onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
             {isLoggedIn ?
               <>
-                <img src={Logo} className="auth-bar__menu--image-logo"></img>
+                <img referrerPolicy="no-referrer"
+                  data-testid="auth-bar-profile-image"
+                  src={user.profileImage || DEFAULT_PROFILE_IMAGE_URL} className="auth-bar__menu--image-logo"></img>
                 {user.isAdmin && <img src={IconAdmin} className="auth-bar__menu--icon-gear"></img>}
               </>
               :

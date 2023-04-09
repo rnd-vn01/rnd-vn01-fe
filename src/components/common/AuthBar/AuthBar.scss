@@ -34,14 +34,16 @@
     }
 
     &--image-logo {
-      height: 40px;
-      width: 40px;
+      height: 54px;
+      width: 54px;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     &--icon {
-      height: 20px;
-      width: 20px;
-      padding: 7.5px;
+      height: 32px;
+      width: 32px;
+      padding: 10px;
     }
 
     &--icon-gear {
@@ -54,7 +56,6 @@
 
     &--button-logo {
       background: var(--theme-background);
-      padding: 6px;
       border-radius: 50px;
       cursor: pointer;
       border: 1px solid black;

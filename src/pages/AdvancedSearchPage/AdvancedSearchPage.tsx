@@ -12,6 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import { MobileTitleBar, SideCriteriaBox, SideMenu } from 'src/components/common/responsive';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+import { result } from 'lodash';
 
 export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const { t } = useTranslation();
@@ -26,6 +29,8 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const [isFilter, setIsFilter] = useState<boolean>(false);
   const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
 
+  const MySwal = withReactContent(Swal);
+
   // RESPONSIVE
   const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
@@ -38,6 +43,18 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
         setShowingScrollToTop(false);
       }
     })
+
+    if (hookQuery.get('query')) {
+      MySwal.fire({
+        didOpen: () => {
+          MySwal.showLoading(null);
+        },
+        didClose: () => {
+          MySwal.hideLoading();
+        },
+        allowOutsideClick: false,
+      })
+    }
   }, [])
 
   return (

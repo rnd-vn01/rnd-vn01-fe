@@ -7,6 +7,7 @@ import { QuickSearchResults } from './QuickSearchResults/QuickSearchResults';
 import { useAppDispatch } from 'src/redux/store';
 import { setShowingQuickInformation } from 'src/redux/slice';
 import { useTranslation } from 'react-i18next';
+import ReactTooltip from 'react-tooltip';
 
 export const QuickSearchBar: React.FC = ({ }) => {
   const inputBoxRef = useRef()
@@ -17,6 +18,7 @@ export const QuickSearchBar: React.FC = ({ }) => {
   const [usingQuickSearchIconImage, setUsingQuickSearchIconImage] = useState<any>(SearchIconGray)
   const [query, setQuery] = useState<string>("");
   const [isInFocus, setIsInFocus] = useState<boolean>(false);
+  const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export const QuickSearchBar: React.FC = ({ }) => {
       aria-label="quick-search"
       className="quick-search"
       ref={wrapperRef}
-      onClick={() => {
+      onClick={(e) => {
         (inputBoxRef.current as HTMLInputElement)?.focus()
       }}>
 
@@ -58,18 +60,27 @@ export const QuickSearchBar: React.FC = ({ }) => {
 
       <input
         ref={inputBoxRef}
-        className="quick-search__input"
+        className={`quick-search__input ${!isReadyForSearch && "quick-search__input--loading"}`}
         onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
         onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
         value={query}
         onChange={e => setQuery(e.target.value)}
         role="input"
         aria-label="quick-search-input"
-        placeholder={t('search_bar.placeholder')}></input>
+        placeholder={t('search_bar.placeholder')}
+        disabled={!isReadyForSearch}
+        data-tip
+        data-for={`tooltip-quick-search`}
+      ></input>
+
+      {!isReadyForSearch && <ReactTooltip id={`tooltip-quick-search`} place="bottom" effect="float">
+        <p>{t('loading_data')}...</p>
+      </ReactTooltip>}
 
       <QuickSearchResults
         query={query}
         isShowing={isInFocus}
+        callbackIsReadyForSearch={setIsReadyForSearch}
       />
     </div>
   );

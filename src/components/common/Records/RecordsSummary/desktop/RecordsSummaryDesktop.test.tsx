@@ -4,33 +4,7 @@ import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { Context as ResponsiveContext } from "react-responsive";
 import { resetToInitialStateLanguageSlice, setStateLanguage } from 'src/redux/slice';
-
-const DEMO_RECORDS_SUMMARY = {
-  0: {
-    points: 215,
-    meridians: 11,
-    quizzes: 52,
-    accuracy: 76,
-  },
-  1: {
-    points: 150,
-    meridians: 9,
-    quizzes: 40,
-    accuracy: 80
-  },
-  2: {
-    points: 15,
-    meridians: 2,
-    quizzes: 5,
-    accuracy: 68
-  },
-  3: {
-    points: 2,
-    meridians: 1,
-    quizzes: 2,
-    accuracy: 79
-  }
-}
+import { SAMPLE_QUIZ_LIST } from '../../tests/quizList';
 
 describe('RecordsSummaryDesktop', () => {
   beforeEach(() => {
@@ -40,7 +14,9 @@ describe('RecordsSummaryDesktop', () => {
 
     render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
-        <RecordsSummaryDesktop />
+        <RecordsSummaryDesktop
+          data={SAMPLE_QUIZ_LIST}
+        />
       </Provider>
     </ResponsiveContext.Provider>)
   })
@@ -56,10 +32,6 @@ describe('RecordsSummaryDesktop', () => {
   })
 
   it("should update showing type this_year option if changed from select", async () => {
-    render(<Provider store={store}>
-      <RecordsSummaryDesktop />
-    </Provider>)
-
     const recordsSummaryTypeSelect = screen.getAllByRole("select", { name: "records-summary-desktop-type-select" })
     fireEvent.change(recordsSummaryTypeSelect[0], { target: { value: 1 } })
 
@@ -69,18 +41,14 @@ describe('RecordsSummaryDesktop', () => {
       const recordsSummaryQuizzes = screen.getAllByTestId("record-summary-quizzes")
       const recordsSummaryAccuracy = screen.getAllByTestId("record-summary-accuracy")
 
-      expect(recordsSummaryPoints[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[1].points}`)
-      expect(recordsSummaryMeridians[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[1].meridians}`)
-      expect(recordsSummaryQuizzes[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[1].quizzes}`)
-      expect(recordsSummaryAccuracy[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[1].accuracy}%`)
+      expect(recordsSummaryPoints[0].innerHTML).toBe(`20`)
+      expect(recordsSummaryMeridians[0].innerHTML).toBe(`7`)
+      expect(recordsSummaryQuizzes[0].innerHTML).toBe(`3`)
+      expect(recordsSummaryAccuracy[0].innerHTML).toBe(`33%`)
     })
   })
 
   it("should update showing type this_month option if changed from select", async () => {
-    render(<Provider store={store}>
-      <RecordsSummaryDesktop />
-    </Provider>)
-
     const recordsSummaryTypeSelect = screen.getAllByRole("select", { name: "records-summary-desktop-type-select" })
     fireEvent.change(recordsSummaryTypeSelect[0], { target: { value: 2 } })
 
@@ -90,18 +58,14 @@ describe('RecordsSummaryDesktop', () => {
       const recordsSummaryQuizzes = screen.getAllByTestId("record-summary-quizzes")
       const recordsSummaryAccuracy = screen.getAllByTestId("record-summary-accuracy")
 
-      expect(recordsSummaryPoints[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[2].points}`)
-      expect(recordsSummaryMeridians[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[2].meridians}`)
-      expect(recordsSummaryQuizzes[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[2].quizzes}`)
-      expect(recordsSummaryAccuracy[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[2].accuracy}%`)
+      expect(recordsSummaryPoints[0].innerHTML).toBe(`20`)
+      expect(recordsSummaryMeridians[0].innerHTML).toBe(`7`)
+      expect(recordsSummaryQuizzes[0].innerHTML).toBe(`3`)
+      expect(recordsSummaryAccuracy[0].innerHTML).toBe(`33%`)
     })
   })
 
   it("should update showing type this_week option if changed from select", async () => {
-    render(<Provider store={store}>
-      <RecordsSummaryDesktop />
-    </Provider>)
-
     const recordsSummaryTypeSelect = screen.getAllByRole("select", { name: "records-summary-desktop-type-select" })
     fireEvent.change(recordsSummaryTypeSelect[0], { target: { value: 3 } })
 
@@ -111,10 +75,10 @@ describe('RecordsSummaryDesktop', () => {
       const recordsSummaryQuizzes = screen.getAllByTestId("record-summary-quizzes")
       const recordsSummaryAccuracy = screen.getAllByTestId("record-summary-accuracy")
 
-      expect(recordsSummaryPoints[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[3].points}`)
-      expect(recordsSummaryMeridians[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[3].meridians}`)
-      expect(recordsSummaryQuizzes[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[3].quizzes}`)
-      expect(recordsSummaryAccuracy[0].innerHTML).toBe(`${DEMO_RECORDS_SUMMARY[3].accuracy}%`)
+      expect(recordsSummaryPoints[0].innerHTML).toBe(`20`)
+      expect(recordsSummaryMeridians[0].innerHTML).toBe(`7`)
+      expect(recordsSummaryQuizzes[0].innerHTML).toBe(`3`)
+      expect(recordsSummaryAccuracy[0].innerHTML).toBe(`33%`)
     })
   })
 

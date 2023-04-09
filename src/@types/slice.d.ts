@@ -21,6 +21,7 @@ interface IAuthSlice {
 interface IQuickSearchResults {
   query: string;
   isShowing?: boolean;
+  callbackIsReadyForSearch?: (boolean) => void;
 }
 
 interface ILanguageSlice {
@@ -63,6 +64,7 @@ interface IModel {
 interface IQuizManager {
   callbackSetQuestionType?: (number) => void;
   callbackSetQuizStatus?: (any) => void;
+  callbackSetQuizState?: (number) => void;
 }
 
 interface IQuizOptions {
@@ -122,6 +124,7 @@ interface ISearchProcessor {
   query?: query;
   callbackSetResults?: (any) => void;
   callbackSetLoading?: (boolean) => void;
+  callbackIsReadyForSearch?: (boolean) => void;
 }
 
 interface IAdvancedSearchPage {
@@ -187,11 +190,11 @@ interface IPersonalRecordsPage {
 }
 
 interface IRecordsChart {
-
+  quizzesList?: any;
 }
 
 interface IRecordsProgressLog {
-
+  quizzesList?: any;
 }
 
 interface IRecordsProgressLogDesktop {
@@ -323,4 +326,9 @@ interface ISideCriteriaBox {
   filters?: any;
   currentFilterOptions?: any;
   callbackSetCurrentFilterOptions?: (any) => void;
+}
+
+interface IDataSlice {
+  acupuncturePoints: Array<IAcupuncturePoint>,
+  meridians: Array<IMeridian>
 }

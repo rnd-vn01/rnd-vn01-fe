@@ -9,8 +9,13 @@ import {
   setPointSelected,
   setStateLanguage
 } from 'src/redux/slice';
+import { mockGetItemByCode } from 'src/api/mocks/items/mockGetItemByCode';
 
 describe('QuickInformationMiddleware', () => {
+  beforeAll(() => {
+    mockGetItemByCode()
+  })
+
   afterEach(() => {
     store.dispatch(resetToInitialStatePointSelectionSlice());
     store.dispatch(resetToInitialStateLanguageSlice())

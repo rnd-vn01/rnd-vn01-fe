@@ -1,13 +1,14 @@
 import './RecordsSummaryDesktop.scss';
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { SUMMARY_SHOWING_TIME_TYPES, SUMMARY_SHOWING_TIME_TYPE_OPTIONS } from 'src/configs/constants';
+import { SUMMARY_SHOWING_TIME_TYPES } from 'src/configs/constants';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import IconStreak from "src/assets/images/IconStreak.svg";
 import IconActivityTracker1 from "src/assets/images/IconActivityTracker1.svg"
 import IconActivityTracker2 from "src/assets/images/IconActivityTracker2.svg"
 import IconActivityTracker3 from "src/assets/images/IconActivityTracker3.svg"
+import { getSummary } from 'src/helpers/statistics';
 
 export const RecordsSummaryDesktop: React.FC<IRecordsSummary> = ({
   data
@@ -18,7 +19,8 @@ export const RecordsSummaryDesktop: React.FC<IRecordsSummary> = ({
     points: 0,
     meridians: 0,
     quizzes: 0,
-    accuracy: 0
+    accuracy: 0,
+    dates: 0,
   });
   const {
     currentLanguage
@@ -34,49 +36,8 @@ export const RecordsSummaryDesktop: React.FC<IRecordsSummary> = ({
   const refCircle3 = useRef<any>(null);
 
   useEffect(() => {
-    let testData = {}
-
-    switch (showingTypeOption) {
-      case SUMMARY_SHOWING_TIME_TYPE_OPTIONS.ALL_TIME:
-        testData = {
-          points: 215,
-          meridians: 11,
-          quizzes: 52,
-          accuracy: 76,
-          days: 15
-        }
-        break;
-      case SUMMARY_SHOWING_TIME_TYPE_OPTIONS.THIS_YEAR:
-        testData = {
-          points: 150,
-          meridians: 9,
-          quizzes: 40,
-          accuracy: 80,
-          days: 15
-        }
-        break;
-      case SUMMARY_SHOWING_TIME_TYPE_OPTIONS.THIS_MONTH:
-        testData = {
-          points: 15,
-          meridians: 2,
-          quizzes: 5,
-          accuracy: 68,
-          days: 10
-        }
-        break;
-      case SUMMARY_SHOWING_TIME_TYPE_OPTIONS.THIS_WEEK:
-        testData = {
-          points: 2,
-          meridians: 1,
-          quizzes: 2,
-          accuracy: 79,
-          days: 0
-        }
-        break;
-    }
-
-    setShowingData(testData)
-  }, [showingTypeOption])
+    setShowingData(getSummary(data, showingTypeOption))
+  }, [data, showingTypeOption])
 
   useLayoutEffect(() => {
     const streakDiv = refStreakDiv.current as HTMLDivElement;

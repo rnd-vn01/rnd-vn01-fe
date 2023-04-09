@@ -13,11 +13,13 @@ import { APP_NAME, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 import { CursorControlMiddleware } from 'src/components/middleware';
 import { useMediaQuery } from 'react-responsive';
 import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
+import { QUIZ_STATE } from 'src/components/common/QuizManager/QuizManager';
 
 export const QuizPage: React.FC = () => {
   const { t, i18n } = useTranslation();
   const sceneRef = useRef();
   const [questionType, setQuestionType] = useState<number>(QUIZ_QUESTION_TYPE.DESCRIPTION);
+  const [quizState, setQuizState] = useState<number>(QUIZ_STATE.SELECT_OPTIONS)
 
   // RESPONSIVE
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
@@ -74,10 +76,11 @@ export const QuizPage: React.FC = () => {
         <QuizManager
           callbackSetQuestionType={setQuestionType}
           callbackSetQuizStatus={setQuizStatus}
+          callbackSetQuizState={setQuizState}
         ></QuizManager>
       </div>
 
-      {isDesktop && <div
+      {isDesktop && quizState !== QUIZ_STATE.IN_PROGRESS && < div
         style={{
           zIndex: 202
         }}
@@ -85,38 +88,44 @@ export const QuizPage: React.FC = () => {
         <AuthBar />
       </div>}
 
-      {!isDesktop && <MobileTitleBar
-        translateCode={"quiz_page"}
-        isQuiz={true}
-        isShowingSideMenu={isShowingSideMenu}
-        callbackSetIsShowingSideMenu={setIsShowingSideMenu}
-        currentQuest={quizStatus.currentQuest}
-        totalQuest={quizStatus.totalQuest}
-        totalCorrect={quizStatus.totalCorrect}
-      />}
-
-      {!isDesktop && <>
-        <SideMenu
-          isShowing={isShowingSideMenu}
-          callbackSetIsShowing={setIsShowingSideMenu}
+      {
+        !isDesktop && <MobileTitleBar
+          translateCode={"quiz_page"}
+          isQuiz={true}
+          isShowingSideMenu={isShowingSideMenu}
+          callbackSetIsShowingSideMenu={setIsShowingSideMenu}
+          currentQuest={quizStatus.currentQuest}
+          totalQuest={quizStatus.totalQuest}
+          totalCorrect={quizStatus.totalCorrect}
         />
-      </>}
+      }
 
-      {isDesktop && <div className="quiz-page__section--controls">
-        <HomePageControl
-          isQuizPage={true}
-          callbackPanCenter={() => (sceneRef.current as any)?.panCenter()}
-          callbackPanDown={() => (sceneRef.current as any)?.panDown()}
-          callbackPanLeft={() => (sceneRef.current as any)?.panLeft()}
-          callbackPanRight={() => (sceneRef.current as any)?.panRight()}
-          callbackPanUp={() => (sceneRef.current as any)?.panUp()}
-          callbackZoomIn={() => (sceneRef.current as any)?.zoomIn()}
-          callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
-        />
-      </div>}
+      {
+        !isDesktop && <>
+          <SideMenu
+            isShowing={isShowingSideMenu}
+            callbackSetIsShowing={setIsShowingSideMenu}
+          />
+        </>
+      }
+
+      {
+        isDesktop && <div className="quiz-page__section--controls">
+          <HomePageControl
+            isQuizPage={true}
+            callbackPanCenter={() => (sceneRef.current as any)?.panCenter()}
+            callbackPanDown={() => (sceneRef.current as any)?.panDown()}
+            callbackPanLeft={() => (sceneRef.current as any)?.panLeft()}
+            callbackPanRight={() => (sceneRef.current as any)?.panRight()}
+            callbackPanUp={() => (sceneRef.current as any)?.panUp()}
+            callbackZoomIn={() => (sceneRef.current as any)?.zoomIn()}
+            callbackZoomOut={() => (sceneRef.current as any)?.zoomOut()}
+          />
+        </div>
+      }
 
       {/* Middleware */}
       <CursorControlMiddleware />
-    </div>
+    </div >
   );
 };

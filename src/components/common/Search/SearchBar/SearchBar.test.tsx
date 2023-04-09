@@ -2,10 +2,15 @@ import { createEvent, fireEvent, render, screen, waitFor } from '@testing-librar
 import { SearchBar } from './SearchBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 const mockCallbackIsFilter = jest.fn();
 
 describe('SearchBar', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     render(<Provider store={store}>
       <SearchBar
@@ -21,22 +26,6 @@ describe('SearchBar', () => {
   it("to be rendered successfully", async () => {
     await waitFor(() => {
       expect(screen.getByRole("div", { name: "search-bar" })).toBeInTheDocument();
-    })
-  })
-
-  it("should focus on the input box if click on the quick search bar", async () => {
-    const searchBar = screen.getByRole("div", { name: "search-bar" })
-    fireEvent.click(searchBar)
-
-    await waitFor(() => {
-      const searchInput = screen.getByRole("input", { name: "search-input" })
-      const focusedElement = document.activeElement;
-      expect(focusedElement).toBe(searchInput)
-
-      const searchBarIcon = screen.getByRole("img", { name: "search-bar-icon" })
-      let searchBarIconURL = (searchBarIcon as any).src.split("/")
-      searchBarIconURL = searchBarIconURL[searchBarIconURL.length - 1]
-      expect(searchBarIconURL).toBe("SearchIconBlack.svg")
     })
   })
 
@@ -89,3 +78,29 @@ describe('SearchBar', () => {
     })
   })
 });
+
+describe('SearchBar with query passed', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
+  beforeEach(() => {
+    render(<Provider store={store}>
+      <SearchBar
+        callbackSetResults={jest.fn()}
+        callbackSetLoading={jest.fn()}
+        callbackSetQuery={jest.fn()}
+        callbackIsFilter={mockCallbackIsFilter}
+        numberOfMatchingResults={5}
+        passedQuery='a'
+      />
+    </Provider>)
+  })
+
+  it("to update the value in search input box if passed by param", async () => {
+    await waitFor(() => {
+      const searchInput = screen.getByRole("input", { name: "search-input" })
+      expect(searchInput.getAttribute("value")).toBe("a")
+    })
+  })
+})

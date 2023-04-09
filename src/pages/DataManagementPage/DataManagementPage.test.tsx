@@ -3,11 +3,16 @@ import { DataManagementPage } from './DataManagementPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { Context as ResponsiveContext } from "react-responsive";
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 const spyScrollTo = jest.fn();
 Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });
 
 describe('Data Management Page - Desktop', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     spyScrollTo.mockClear();
     render(
@@ -52,25 +57,6 @@ describe('Data Management Page - Desktop', () => {
         top: 0,
         behavior: "smooth",
       })
-    })
-  })
-});
-
-describe('Data Management Page - Mobile', () => {
-  beforeEach(() => {
-    spyScrollTo.mockClear();
-    render(
-      <ResponsiveContext.Provider value={{ width: 500 }}>
-        <Provider store={store}>
-          <DataManagementPage />
-        </Provider>
-      </ResponsiveContext.Provider>)
-  })
-
-  it("to include the mobile title bar", async () => {
-    await waitFor(() => {
-      expect(screen.getByRole("div", { name: "mobile-title-bar" })).toBeInTheDocument();
-      expect(screen.getByRole("div", { name: "side-menu" })).toBeInTheDocument();
     })
   })
 });

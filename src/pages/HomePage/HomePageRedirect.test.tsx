@@ -3,6 +3,8 @@ import { HomePage } from './HomePage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { Context as ResponsiveContext } from "react-responsive";
+import React from 'react';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -15,6 +17,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe('HomePage redirected entry', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();

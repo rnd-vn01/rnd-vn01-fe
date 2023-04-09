@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getNeighborPoints } from 'src/helpers/getNeighborsPoints';
-import { LINE_POINTS, POINT_LOCATIONS } from 'src/configs/constants';
+import { IS_TESTING_SELECTABLE_MULTIPLE_MERIDIANS, LINE_POINTS, POINT_LOCATIONS } from 'src/configs/constants';
 
 export const initialStateSelectionSlice = {
   selectedLabel: null,
@@ -62,28 +62,30 @@ export const selectionSlice = createSlice({
       state.preSelectLine = null;
 
       if (action.payload.selectedLabel) {
-        // In case not the first item selected
-        if (backupCurrentSelectedPoint !== null
-          && backupCurrentSelectedPoint !== undefined
-          && backupCurrentSelectedPoint !== ""
-          && backupCurrentSelectedPoint !== "M-HN-3") {
-          // Check to mark in case of a neighbor
-          // If is in the neighbor list
-          if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)
-            || state.showingNeighbors?.includes(action.payload.selectedLabel)) {
-            // If not being also one from secondary selected meridian
-            if (state.secondarySelectedMeridian === null ||
-              state.secondarySelectedMeridian === undefined) {
-              // If not of the same meridian
-              let selectedPointMeridian = backupCurrentSelectedPoint.split("-") as any
-              selectedPointMeridian = selectedPointMeridian[0]
+        if (IS_TESTING_SELECTABLE_MULTIPLE_MERIDIANS) {
+          // In case not the first item selected
+          if (backupCurrentSelectedPoint !== null
+            && backupCurrentSelectedPoint !== undefined
+            && backupCurrentSelectedPoint !== ""
+            && backupCurrentSelectedPoint !== "M-HN-3") {
+            // Check to mark in case of a neighbor
+            // If is in the neighbor list
+            if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)
+              || state.showingNeighbors?.includes(action.payload.selectedLabel)) {
+              // If not being also one from secondary selected meridian
+              if (state.secondarySelectedMeridian === null ||
+                state.secondarySelectedMeridian === undefined) {
+                // If not of the same meridian
+                let selectedPointMeridian = backupCurrentSelectedPoint.split("-") as any
+                selectedPointMeridian = selectedPointMeridian[0]
 
-              // New meridian
-              let newPointMeridian = action.payload.selectedLabel.split("-") as any
-              newPointMeridian = newPointMeridian[0]
+                // New meridian
+                let newPointMeridian = action.payload.selectedLabel.split("-") as any
+                newPointMeridian = newPointMeridian[0]
 
-              if (selectedPointMeridian !== newPointMeridian) {
-                state.secondarySelectedMeridian = selectedPointMeridian
+                if (selectedPointMeridian !== newPointMeridian) {
+                  state.secondarySelectedMeridian = selectedPointMeridian
+                }
               }
             }
           }

@@ -82,7 +82,11 @@ i18n
               invalid_password: "Your password is invalid!",
               not_verified: "Please verify your account through email!",
               not_found: "Your login information is not correct!",
-              login_to_continue: "Please log in to continue!"
+              login_to_continue: "Please log in to continue!",
+              save_quiz_error: "Error occured. Quiz's result cannot be saved!",
+              records_error: "Error occured. Cannot get the personal records!",
+              login_successful: "Login successfully",
+              wait_for_redirect: "Login successfully. Please wait for a moment!"
             }
           },
           quiz_page: {
@@ -185,7 +189,11 @@ i18n
             caution: "caution: fields remained blank would be skipped in saving",
             demo_caution: "Please be informed that the UI is for demo purpose, so no update would be made. The following\
             are the content of the detail after update:",
-            warning: "Warning"
+            warning: "Warning",
+            update_result: {
+              success: "Updated successfully!",
+              failed: "Error occured! Could not update the information."
+            }
           },
           personal_records_page: {
             title: "Personal Records"
@@ -322,7 +330,18 @@ i18n
           view_on_model: "View location on model",
           new_personal_records: {
             days_streak: "days streak"
-          }
+          },
+          exception: {
+            cannot_create_account: "Error! Cannot create new account."
+          },
+          toast: {
+            pending: "Updating image",
+            success: "Uploaded successfully!",
+            error: 'Error occured! Cannot upload image.',
+          },
+          loading_data: "Loading data",
+          storing_quiz_result: "Storing quiz result. Please wait for a moment!",
+          getting_records: "Getting personal records. Please wait for a moment!"
         }
       },
       vi: {
@@ -400,7 +419,11 @@ i18n
               invalid_password: "Mật khẩu không hợp lệ!",
               not_verified: "Vui lòng xác thực tài khoản qua Email đã đăng ký!",
               not_found: "Thông tin đăng nhập không đúng!",
-              login_to_continue: "Vui lòng đăng nhập để tiếp tục!"
+              login_to_continue: "Vui lòng đăng nhập để tiếp tục!",
+              save_quiz_error: "Có lỗi xảy ra. Kết quả bài kiểm tra không thể được lưu trữ!",
+              records_error: "Có lỗi xảy ra. Không thể lấy thông tin cá nhân!",
+              login_successful: "Đăng nhập thành công",
+              wait_for_redirect: "Đăng nhập thành công. Vui lòng chờ trong giây lát"
             }
           },
           quiz_page: {
@@ -484,7 +507,7 @@ i18n
             placeholder: "Tìm kiếm..."
           },
           data_management_page: {
-            title: "Quản lý Dữ liệu",
+            title: "Cập nhật Dữ liệu",
           },
           placeholders: {
             name: "tên",
@@ -503,7 +526,11 @@ i18n
             caution: "lưu ý: các trường được để trống sẽ không được lưu trữ",
             demo_caution: "Vì giao diện hiện tại đang được sử dụng cho mục đích demo, quá trình cập nhật thông tin\
             sẽ không được thực hiện. Thông tin chi tiết sau khi được cập nhật sẽ bao gồm:",
-            warning: "Lưu ý"
+            warning: "Lưu ý",
+            update_result: {
+              success: "Đã cập nhật thông tin thành công!",
+              failed: "Có lỗi xảy ra! Không thể cập nhật thông tin."
+            }
           },
           personal_records_page: {
             title: "Dữ Liệu Cá Nhân"
@@ -638,7 +665,18 @@ i18n
           view_on_model: "Xem vị trí trên mô hình",
           new_personal_records: {
             days_streak: "ngày liên tiếp"
-          }
+          },
+          exception: {
+            cannot_create_account: "Lỗi! Không thể đăng ký tài khoản mới."
+          },
+          toast: {
+            pending: "Đang tải ảnh",
+            success: "Tải ảnh thành công!",
+            error: 'Lỗi! Không thể tải ảnh.',
+          },
+          loading_data: "Đang tải dữ liệu",
+          storing_quiz_result: "Đang lưu kết quả bài kiểm tra. Vui lòng chờ trong giây lát!",
+          getting_records: "Đang tải dữ liệu cá nhân. Vui lòng chờ trong giây lát!"
         }
       }
     }

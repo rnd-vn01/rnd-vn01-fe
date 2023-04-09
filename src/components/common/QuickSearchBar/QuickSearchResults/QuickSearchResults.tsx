@@ -4,11 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { capitalize } from 'src/helpers/capitalize';
 import { debounce } from "lodash"
 
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
-import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
-
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { passFilter, SEARCH_BY } from 'src/helpers/searchProcess';
@@ -16,15 +11,31 @@ import Highlighter from 'react-highlight-words';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { setLineSelectedByLabel, setPointSelectedByLabel } from 'src/redux/slice';
+import {
+  setAcupuncturePoints,
+  setLineSelectedByLabel,
+  setMeridians,
+  setPointSelectedByLabel
+} from 'src/redux/slice';
+import {
+  getAcupuncturePoints,
+  getMeridians
+} from 'src/helpers/api/items';
 
-export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isShowing }) => {
+export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
+  query, isShowing, callbackIsReadyForSearch }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const {
     currentLanguage
   } = useSelector(
     (state: RootState) => state.languageSlice,
+  );
+  const {
+    acupuncturePoints,
+    meridians
+  } = useSelector(
+    (state: RootState) => state.dataSlice,
   );
   const { t } = useTranslation();
 
@@ -37,10 +48,10 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
       points: []
     }
 
-    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
-    const DEMO_DATA_MERIDIAN = currentLanguage === "EN" ? DEMO_DATA_MERIDIAN_EN : DEMO_DATA_MERIDIAN_VI
+    const ACUPUNCTURE_POINTS = acupuncturePoints;
+    const MERIDIANS = meridians;
 
-    DEMO_DATA.forEach((point) => {
+    ACUPUNCTURE_POINTS.forEach((point) => {
       if (passFilter(point, query, true, SEARCH_BY.NAME)
         || passFilter(point, query, true, SEARCH_BY.CODE)) {
         EXAMPLE_RESULT.points.push({
@@ -50,7 +61,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
       }
     })
 
-    DEMO_DATA_MERIDIAN.forEach((meridian) => {
+    MERIDIANS.forEach((meridian) => {
       if (passFilter(meridian, query, false, SEARCH_BY.NAME)
         || passFilter(meridian, query, false, SEARCH_BY.CODE)) {
         EXAMPLE_RESULT.meridians.push({
@@ -76,6 +87,21 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
       setIsLoading(false);
     }
   }, [query]);
+
+  useEffect(() => {
+    const updateInitial = async () => {
+      callbackIsReadyForSearch(false);
+      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
+      const dataMeridians = await getMeridians(currentLanguage);
+
+      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
+      dispatch(setMeridians(dataMeridians))
+
+      callbackIsReadyForSearch(true);
+    }
+
+    updateInitial();
+  }, [])
 
   return (
     <div

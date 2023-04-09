@@ -117,7 +117,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
               placeholder={t(`placeholders.code`)}
               role="input"
               aria-label="input-code"
-              onChange={(e) => updateInformation(e.target.value, "code", -1)} />
+              disabled={true} />
           </h1>
           <h1 className="item-detail-edit__header--name col-span-1">
             <input

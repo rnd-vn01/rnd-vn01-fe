@@ -3,6 +3,7 @@ import { RecordsProgressLog } from './RecordsProgressLog';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { resetToInitialStateLanguageSlice, setStateLanguage } from 'src/redux/slice';
+import { SAMPLE_QUIZ_LIST } from '../tests/quizList';
 
 describe('RecordsProgressLog', () => {
   afterEach(() => {
@@ -11,7 +12,9 @@ describe('RecordsProgressLog', () => {
 
   it("to be rendered successfully", async () => {
     render(<Provider store={store}>
-      <RecordsProgressLog />
+      <RecordsProgressLog
+        quizzesList={SAMPLE_QUIZ_LIST}
+      />
     </Provider>)
     await waitFor(() => {
       expect(screen.getByRole("div", { name: "records-progress" })).toBeInTheDocument();
@@ -20,7 +23,9 @@ describe('RecordsProgressLog', () => {
 
   it("should update showing type this_year option if changed from select", async () => {
     render(<Provider store={store}>
-      <RecordsProgressLog />
+      <RecordsProgressLog
+        quizzesList={SAMPLE_QUIZ_LIST}
+      />
     </Provider>)
 
     // Change to log mode
@@ -35,7 +40,9 @@ describe('RecordsProgressLog', () => {
 
   it("should update showing type this_month option if changed from select", async () => {
     render(<Provider store={store}>
-      <RecordsProgressLog />
+      <RecordsProgressLog
+        quizzesList={SAMPLE_QUIZ_LIST}
+      />
     </Provider>)
 
     // Change to log mode
@@ -50,7 +57,9 @@ describe('RecordsProgressLog', () => {
 
   it("should update showing type this_week option if changed from select", async () => {
     render(<Provider store={store}>
-      <RecordsProgressLog />
+      <RecordsProgressLog
+        quizzesList={SAMPLE_QUIZ_LIST}
+      />
     </Provider>)
 
     // Change to log mode
@@ -65,7 +74,9 @@ describe('RecordsProgressLog', () => {
 
   it("should change back to is progress if is in log mode and click back to progress", async () => {
     render(<Provider store={store}>
-      <RecordsProgressLog />
+      <RecordsProgressLog
+        quizzesList={SAMPLE_QUIZ_LIST}
+      />
     </Provider>)
 
     // Change to log mode
@@ -83,7 +94,9 @@ describe('RecordsProgressLog', () => {
     }))
 
     render(<Provider store={store}>
-      <RecordsProgressLog />
+      <RecordsProgressLog
+        quizzesList={SAMPLE_QUIZ_LIST}
+      />
     </Provider>)
   })
 });

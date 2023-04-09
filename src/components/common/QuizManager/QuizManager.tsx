@@ -11,9 +11,6 @@ import { QuizQuestion } from './QuizQuestion/QuizQuestion';
 import { MERIDIAN_POINTS, QUIZ_QUESTION_TYPE } from 'src/configs/constants';
 import { QuizTimer } from './QuizTimer/QuizTimer';
 
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-
 // Sounds
 import mainSound from "src/assets/sounds/main.mp3"
 import correctSound from "src/assets/sounds/right.mp3"
@@ -21,14 +18,26 @@ import wrongSound from "src/assets/sounds/wrong.mp3"
 import { QuizSummary } from './QuizSummary/QuizSummary';
 import { QuizTitleBar } from './QuizTitleBar/QuizTitleBar';
 import {
-  highlightPoint, resetToInitialStatePointSelectionSlice, setIsNavigateQuest,
+  highlightPoint,
+  resetToInitialStatePointSelectionSlice,
+  setAcupuncturePoints,
+  setIsNavigateQuest,
   setIsShowing4Labels,
-  setNavigateQuestSelectable, setNavigateQuestSelectedPoint,
-  setQuizField, setShowingCorrectPoint, setShowingPoints, setStrictMode, unsetStrictMode
+  setNavigateQuestSelectable,
+  setNavigateQuestSelectedPoint,
+  setQuizField,
+  setShowingCorrectPoint,
+  setShowingPoints,
+  setStrictMode,
+  unsetStrictMode
 } from 'src/redux/slice';
 import { useMediaQuery } from 'react-responsive';
+import { getAcupuncturePoints } from 'src/helpers/api/items';
+import { storeQuizResult } from 'src/helpers/api/quizRecords';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
-enum QUIZ_STATE {
+export enum QUIZ_STATE {
   SELECT_OPTIONS = 0,
   IN_PROGRESS = 1,
   ENDED = 2
@@ -36,7 +45,8 @@ enum QUIZ_STATE {
 
 export const QuizManager: React.FC<IQuizManager> = ({
   callbackSetQuestionType,
-  callbackSetQuizStatus
+  callbackSetQuizStatus,
+  callbackSetQuizState
 }) => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -49,6 +59,16 @@ export const QuizManager: React.FC<IQuizManager> = ({
     selectedPoint
   } = useSelector(
     (state: RootState) => state.quizSlice,
+  );
+  const {
+    acupuncturePoints
+  } = useSelector(
+    (state: RootState) => state.dataSlice,
+  );
+  const {
+    user
+  } = useSelector(
+    (state: RootState) => state.authSlice,
   );
   const dispatch = useAppDispatch();
 
@@ -68,7 +88,8 @@ export const QuizManager: React.FC<IQuizManager> = ({
   const [answersList, setAnswersList] = useState<Array<any>>([]);
   const DEMO_QUESTION_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
   const [numberOfQuestionsOptionsList, setNumberOfQuestionsOptionsList] = useState<Array<number>>(DEMO_QUESTION_COUNT_OPTIONS)
-  const [questionType, setQuestionType] = useState<number>(QUIZ_QUESTION_TYPE.DESCRIPTION)
+  const questionTypeRef = useRef<number>(QUIZ_QUESTION_TYPE.DESCRIPTION)
+  const [fetchingData, setFetchingData] = useState<boolean>(true);
 
   const pointCurrentFieldIndexes = useRef<any>([]);
   const usedPointIndexes = useRef<any>([]);
@@ -82,6 +103,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
   });
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const usedQuestionType = useRef<Array<number>>([]);
+  const MySwal = withReactContent(Swal);
 
   // Sounds
   const mainSoundPlayer = useRef<any>(new Audio(mainSound))
@@ -137,8 +159,55 @@ export const QuizManager: React.FC<IQuizManager> = ({
     startTimer();
   }
 
-  const endQuiz = () => {
+  const endQuiz = async () => {
     setQuizState(QUIZ_STATE["ENDED"])
+
+    // Call API to store quiz results
+    const quiz = quizHistory.current;
+
+    // Count number of correct answer
+    let correctAnswers = 0;
+    let quizDetails = []
+    quiz?.questions?.forEach(detail => {
+      if (detail !== null && detail.correctAnswer === detail.answer)
+        correctAnswers += 1;
+
+      quizDetails.push({
+        question: detail.question,
+        answer: detail.answer,
+        correctAnswer: detail.correctAnswer,
+        time: detail.time,
+        isCorrect: detail !== null && detail.correctAnswer === detail.answer,
+        options: detail.options
+      })
+    })
+
+    const quizResult = {
+      userFirebaseId: user.firebaseId,
+      numberOfQuestions: quiz?.options?.numberOfQuestions,
+      quizOption: quiz?.options?.field[0]?.value,
+      correctAnswers,
+      details: quizDetails,
+      datetime: new Date().toISOString()
+    }
+
+    try {
+      MySwal.fire({
+        title: t('storing_quiz_result'),
+        didOpen: () => {
+          MySwal.showLoading(null);
+        },
+        didClose: () => {
+          MySwal.hideLoading();
+        },
+        allowOutsideClick: false,
+      })
+
+      await storeQuizResult(quizResult)
+      MySwal.close();
+    } catch (e) {
+      alert(t('login_page.messages.records_error'))
+    }
   }
 
   useEffect(() => {
@@ -165,7 +234,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
     let getAnswer = "" as any;
     let getCorrectAnswer = "" as any;
 
-    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+    if (questionTypeRef.current === QUIZ_QUESTION_TYPE.NAVIGATE) {
       if (selectedPoint === null || selectedPoint === undefined) {
         alert(t('quiz_page.alerts.select_one'))
         return;
@@ -218,7 +287,8 @@ export const QuizManager: React.FC<IQuizManager> = ({
     if (currentQuestion === numberOfQuestions) {
       setIsFinished(true);
     }
-    if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
+
+    if (questionTypeRef.current === QUIZ_QUESTION_TYPE.NAVIGATE) {
       dispatch(setNavigateQuestSelectable({
         selectable: false
       }))
@@ -226,13 +296,13 @@ export const QuizManager: React.FC<IQuizManager> = ({
       dispatch(setShowingCorrectPoint({
         correctPoint: temporarilyStoredQuestionContent.current.correctAnswer
       }))
-    } else if (questionType === QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
+    } else if (questionTypeRef.current === QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
       let correctAnswer = temporarilyStoredQuestionContent.current.options[temporarilyStoredQuestionContent.current.correctAnswer].answer
       let correctPointCode = correctAnswer.substring(0, correctAnswer.indexOf(" "))
       dispatch(setShowingCorrectPoint({
         correctPoint: correctPointCode
       }))
-    } else if (questionType === QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION) {
+    } else if (questionTypeRef.current === QUIZ_QUESTION_TYPE.IDENTIFY_CORRECT_LOCATION) {
       let correctAnswer = temporarilyStoredQuestionContent.current.options[temporarilyStoredQuestionContent.current.correctAnswer].answer
       let correctPointCode = correctAnswer.substring(0, correctAnswer.indexOf(" "))
       dispatch(setShowingCorrectPoint({
@@ -289,9 +359,22 @@ export const QuizManager: React.FC<IQuizManager> = ({
     mainSoundPlayer.current?.pause();
   }
 
+  useEffect(() => {
+    const updateInitial = async () => {
+      setFetchingData(true);
+
+      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
+      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
+
+      setFetchingData(false);
+    }
+
+    updateInitial();
+  }, [])
+
   //Maintain quiz contents
   const generateQuestion = (option = null) => {
-    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+    const DEMO_DATA = acupuncturePoints
     let used = []
 
     if (parseInt(field) === 0) {
@@ -302,7 +385,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
       while (true) {
         random = Math.floor(Math.random() * DEMO_DATA.length)
 
-        if (!usedPointIndexes.current.includes(DEMO_DATA[random].code)) {
+        if (!usedPointIndexes.current.includes(random)) {
           used.push(random)
           usedPointIndexes.current.push(random)
           break;
@@ -324,7 +407,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
       while (true) {
         random = Math.floor(Math.random() * thisMeridianIndexes.length)
 
-        if (!usedPointIndexes.current.includes(thisMeridianIndexes[random].code)) {
+        if (!usedPointIndexes.current.includes(thisMeridianIndexes[random])) {
           used.push(thisMeridianIndexes[random])
           usedPointIndexes.current.push(thisMeridianIndexes[random])
           break;
@@ -380,7 +463,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
         break
     }
 
-    setQuestionType(questionType)
+    questionTypeRef.current = questionType;
     callbackSetQuestionType(questionType)
 
     if (questionType !== QUIZ_QUESTION_TYPE.CHOOSE_FROM_LOCATION) {
@@ -439,7 +522,8 @@ export const QuizManager: React.FC<IQuizManager> = ({
 
     if (questionType === QUIZ_QUESTION_TYPE.NAVIGATE) {
       temporarilyStoredQuestionContent.current = {
-        question: `${t('quiz_page.questions.description')}${DEMO_DATA[used[correct]].description}?`,
+        question: `${t('quiz_page.questions.navigate')}`.replace("{POINT_NAME}",
+          `${DEMO_DATA[used[correct]].name}`),
         options: TEST_ANSWERS_LIST,
         answer: null,
         correctAnswer: TEST_ANSWERS_LIST[correct].answer.substring(0, TEST_ANSWERS_LIST[correct].answer.indexOf(" ")),
@@ -481,11 +565,15 @@ export const QuizManager: React.FC<IQuizManager> = ({
     }
   }, [field]);
 
+  useEffect(() => {
+    callbackSetQuizState(quizState)
+  }, [quizState])
+
   const updatePointsCurrentField = () => {
     if (parseInt(field) !== 0) {
       const points = MERIDIAN_POINTS[MERIDIANS[field - 1]];
       let indexes = []
-      const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
+      const DEMO_DATA = acupuncturePoints
 
       points.forEach(point => {
         DEMO_DATA.forEach((item, index) => {
@@ -533,17 +621,29 @@ export const QuizManager: React.FC<IQuizManager> = ({
         ${quizState === QUIZ_STATE["ENDED"] && "quiz-manager__section--main--wide--ended"}
       `}>
         {quizState === QUIZ_STATE["SELECT_OPTIONS"] ?
-          <QuizOptions
-            fieldOptionsList={DEMO_FIELD_OPTIONS}
-            numberOfQuestionsOptionsList={numberOfQuestionsOptionsList}
-            field={field}
-            numberOfQuestions={numberOfQuestions}
-            setField={setField}
-            setNumberOfQuestion={setNumberOfQuestions}
-          /> : quizState === QUIZ_STATE["IN_PROGRESS"] ?
+          (fetchingData ?
+            <div className='flex-center h-full'>
+              <div role="status" style={{
+                textAlign: "center",
+                width: "100%",
+              }} className="flex-center">
+                <svg aria-hidden="true" className="w-10 h-10 mt-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                  <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                </svg>
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div> : <QuizOptions
+              fieldOptionsList={DEMO_FIELD_OPTIONS}
+              numberOfQuestionsOptionsList={numberOfQuestionsOptionsList}
+              field={field}
+              numberOfQuestions={numberOfQuestions}
+              setField={setField}
+              setNumberOfQuestion={setNumberOfQuestions}
+            />) : quizState === QUIZ_STATE["IN_PROGRESS"] ?
             <QuizQuestion
               questionContent={questionContent}
-              type={questionType}
+              type={questionTypeRef.current}
               optionsList={answersList}
               correctAnswer={correctAnswer}
               isShowingAnswer={isShowingAnswer}
