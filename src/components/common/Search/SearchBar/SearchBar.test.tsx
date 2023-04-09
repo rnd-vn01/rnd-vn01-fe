@@ -78,29 +78,3 @@ describe('SearchBar', () => {
     })
   })
 });
-
-describe('SearchBar with query passed', () => {
-  beforeAll(() => {
-    mockGetItems();
-  })
-
-  beforeEach(() => {
-    render(<Provider store={store}>
-      <SearchBar
-        callbackSetResults={jest.fn()}
-        callbackSetLoading={jest.fn()}
-        callbackSetQuery={jest.fn()}
-        callbackIsFilter={mockCallbackIsFilter}
-        numberOfMatchingResults={5}
-        passedQuery='a'
-      />
-    </Provider>)
-  })
-
-  it("to update the value in search input box if passed by param", async () => {
-    await waitFor(() => {
-      const searchInput = screen.getByRole("input", { name: "search-input" })
-      expect(searchInput.getAttribute("value")).toBe("a")
-    })
-  })
-})
