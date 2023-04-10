@@ -8,7 +8,7 @@ describe('RecordsSummary', () => {
   beforeEach(() => {
     jest
       .useFakeTimers()
-      .setSystemTime(new Date('2022-04-08'));
+      .setSystemTime(new Date('2023-04-08'));
 
     render(<Provider store={store}>
       <RecordsSummary

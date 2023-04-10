@@ -87,7 +87,7 @@ export const getSummary = (quizzesList: Array<IFormattedQuizDetail>,
     points: acupuncturePoints.length,
     meridians: meridians.length,
     quizzes: quizzesCount,
-    accuracy: Math.round(sumAccuracies / quizzesCount),
+    accuracy: quizzesCount ? Math.round(sumAccuracies / quizzesCount) : 0,
     days: calculateDateStreak(quizzesList)
   }
 }

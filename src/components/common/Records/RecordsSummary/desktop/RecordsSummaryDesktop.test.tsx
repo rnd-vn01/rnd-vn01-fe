@@ -12,6 +12,10 @@ describe('RecordsSummaryDesktop', () => {
       currentLanguage: "EN"
     }))
 
+    jest
+      .useFakeTimers()
+      .setSystemTime(new Date('2023-04-08'));
+
     render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
         <RecordsSummaryDesktop
