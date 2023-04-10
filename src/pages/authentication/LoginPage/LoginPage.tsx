@@ -342,7 +342,7 @@ export const LoginPage: React.FC = () => {
           theme="blank"
           logo={GoogleLogo}
           caption={t('login_page.button_captions.sign_in_with_google')}
-          name="login"
+          name="login-google"
           onClick={signInWithGoogle}
         />
       </div>
