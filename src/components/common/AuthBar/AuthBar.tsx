@@ -58,6 +58,14 @@ export const AuthBar: React.FC = ({ }) => {
       divider: true,
     },
     {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+      },
+      selectable: true,
+      divider: false
+    },
+    {
       item: t('auth_bar.menu.about_us'),
       onClick: () => {
         history.push("/about")
@@ -110,6 +118,14 @@ export const AuthBar: React.FC = ({ }) => {
       },
       selectable: true,
       divider: true,
+    },
+    {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+      },
+      selectable: true,
+      divider: false
     },
     {
       item: t('auth_bar.menu.about_us'),

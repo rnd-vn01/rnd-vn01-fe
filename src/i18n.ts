@@ -35,7 +35,8 @@ i18n
               about_us: "About Us",
               start_quiz: "Start Quiz",
               advanced_search: "Advanced Search",
-              home: "Home"
+              home: "Home",
+              manual: "How To Use"
             }
           },
           create_account_page: {
@@ -144,7 +145,8 @@ i18n
               data_management: "Data Update",
               personal_records: "Personal Records",
               about_us: "About Us",
-              edit_profile: "Edit Profile"
+              edit_profile: "Edit Profile",
+              manual: "How To Use"
             }
           },
           advanced_search_page: {
@@ -341,7 +343,10 @@ i18n
           },
           loading_data: "Loading data",
           storing_quiz_result: "Storing quiz result. Please wait for a moment!",
-          getting_records: "Getting personal records. Please wait for a moment!"
+          getting_records: "Getting personal records. Please wait for a moment!",
+          manual_page: {
+            title: "How To Use"
+          }
         }
       },
       vi: {
@@ -372,7 +377,8 @@ i18n
               about_us: "Về Chúng Tôi",
               start_quiz: "Kiểm Tra",
               advanced_search: "Tìm Kiếm Nâng Cao",
-              home: "Trang Chủ"
+              home: "Trang Chủ",
+              manual: "Cách Sử Dụng"
             }
           },
           create_account_page: {
@@ -481,7 +487,8 @@ i18n
               data_management: "Cập Nhật Dữ Liệu",
               personal_records: "Dữ Liệu Cá Nhân",
               about_us: "Về Chúng Tôi",
-              edit_profile: "Cập Nhật Thông Tin"
+              edit_profile: "Cập Nhật Thông Tin",
+              manual: "Cách Sử Dụng"
             }
           },
           advanced_search_page: {
@@ -676,7 +683,10 @@ i18n
           },
           loading_data: "Đang tải dữ liệu",
           storing_quiz_result: "Đang lưu kết quả bài kiểm tra. Vui lòng chờ trong giây lát!",
-          getting_records: "Đang tải dữ liệu cá nhân. Vui lòng chờ trong giây lát!"
+          getting_records: "Đang tải dữ liệu cá nhân. Vui lòng chờ trong giây lát!",
+          manual_page: {
+            title: "Cách Sử Dụng"
+          }
         }
       }
     }

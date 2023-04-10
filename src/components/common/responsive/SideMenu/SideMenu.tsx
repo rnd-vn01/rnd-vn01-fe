@@ -76,6 +76,15 @@ export const SideMenu: React.FC<ISideMenu> = ({
       divider: true,
     },
     {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+        callbackSetIsShowing(false);
+      },
+      selectable: true,
+      divider: false
+    },
+    {
       item: t('auth_bar.menu.about_us'),
       onClick: () => {
         history.push("/about")
@@ -122,6 +131,15 @@ export const SideMenu: React.FC<ISideMenu> = ({
       },
       selectable: true,
       divider: true,
+    },
+    {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+        callbackSetIsShowing(false);
+      },
+      selectable: true,
+      divider: false
     },
     {
       item: t('auth_bar.menu.about_us'),
