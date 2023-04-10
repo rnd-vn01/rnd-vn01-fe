@@ -134,7 +134,40 @@ export const selectionSlice = createSlice({
     },
 
     setIsCurrentMousePosition(state, action) {
-      state.currentMousePosition = action.payload.currentMousePosition;
+      if (!action.payload.currentMousePosition) {
+        state.currentMousePosition = null;
+        return;
+
+      }
+      state.currentMousePosition = {
+        x: action.payload.currentMousePosition.x,
+        y: action.payload.currentMousePosition.y,
+        z: action.payload.currentMousePosition.z
+      };
+
+      if (action.payload.currentMousePosition.isMobile) {
+        let minDistance = 1000;
+        let selectedLine = "";
+        let pointer = action.payload.currentMousePosition
+
+        Object.keys(LINE_POINTS).forEach(meridian => {
+          LINE_POINTS[meridian].forEach(linePoint => {
+            // Only check if in the same side
+            if (linePoint.z * pointer.z >= 0) {
+              const distance = Math.sqrt(Math.pow(linePoint.x - pointer.x, 2) + Math.pow(linePoint.y - pointer.y, 2))
+              if (distance < minDistance) {
+                minDistance = distance
+                selectedLine = meridian
+              }
+            }
+          })
+        })
+
+        if (minDistance < 0.5) {
+          state.selectedLabel = selectedLine;
+          state.selectedType = 'line';
+        }
+      }
     },
 
     setIsCurrentMouseMovePosition(state, action) {

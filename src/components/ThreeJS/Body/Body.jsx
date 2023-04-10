@@ -50,7 +50,8 @@ export const Body = ({ isQuizMode }) => {
               currentMousePosition: {
                 x: e.point.x,
                 y: e.point.y,
-                z: e.point.z
+                z: e.point.z,
+                isMobile: !isDesktop
               }
             })
           }
@@ -63,7 +64,8 @@ export const Body = ({ isQuizMode }) => {
               currentMousePosition: {
                 x: e.point.x,
                 y: e.point.y,
-                z: e.point.z
+                z: e.point.z,
+                isMobile: false
               }
             })
           } else {

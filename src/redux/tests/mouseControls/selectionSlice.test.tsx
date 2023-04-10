@@ -24,7 +24,8 @@ describe("selectionSlice", () => {
       currentMousePosition: {
         "x": 0.8,
         "y": 5.325,
-        "z": -3.35
+        "z": -3.35,
+        isMobile: false
       }
     }))
 
@@ -120,7 +121,8 @@ describe("selectionSlice", () => {
       currentMousePosition: {
         "x": 100,
         "y": 100,
-        "z": 100
+        "z": 100,
+        isMobile: false
       }
     }))
 
@@ -339,5 +341,35 @@ describe("selectionSlice", () => {
     await waitFor(() => {
       expect(store.getState().selectionSlice.secondarySelectedMeridian).toBeNull()
     })
+  })
+
+  it("should select a line if double click on a position close enough to a line", async () => {
+    store.dispatch(setIsCurrentMousePosition({
+      currentMousePosition: {
+        "x": 0.8,
+        "y": 5.325,
+        "z": -3.35,
+        isMobile: true
+      }
+    }))
+
+    expect(store.getState().selectionSlice.selectedLabel).toBe("BL")
+    expect(store.getState().selectionSlice.selectedType).toBe("line")
+    expect(store.getState().selectionSlice.isSelectingFromMenu).not.toBeTruthy()
+  })
+
+  it("should select a line if double click on a position not close enough to a line", async () => {
+    store.dispatch(setIsCurrentMousePosition({
+      currentMousePosition: {
+        "x": 100,
+        "y": 100,
+        "z": 100,
+        isMobile: true
+      }
+    }))
+
+    expect(store.getState().selectionSlice.selectedLabel).toBe(null)
+    expect(store.getState().selectionSlice.selectedType).toBe(null)
+    expect(store.getState().selectionSlice.isSelectingFromMenu).not.toBeTruthy()
   })
 })

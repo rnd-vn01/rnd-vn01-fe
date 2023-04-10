@@ -105,7 +105,7 @@
       "DetailPage.tsx",
       "pages/authentication/",
       "api/axios/",
-      "Search/SearchBar.tsx"
+      "Search/SearchBar/"
     ]
   }
 }
