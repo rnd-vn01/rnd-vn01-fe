@@ -55,7 +55,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --testPathIgnorePatterns=.*e2e.test.ts",
     "eject": "react-scripts eject",
     "test:coverage": "react-scripts test --watchAll --coverage --testPathIgnorePatterns=.*e2e.test.ts",
     "test:e2e": "react-scripts test --watchAll --testPathPattern=.*e2e.test.ts$",

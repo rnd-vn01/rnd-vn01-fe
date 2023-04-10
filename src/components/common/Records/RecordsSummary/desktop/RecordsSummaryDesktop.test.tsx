@@ -8,9 +8,9 @@ import { SAMPLE_QUIZ_LIST } from '../../tests/quizList';
 
 describe('RecordsSummaryDesktop', () => {
   beforeEach(() => {
-    store.dispatch(setStateLanguage({
-      currentLanguage: "EN"
-    }))
+    jest
+      .useFakeTimers()
+      .setSystemTime(new Date('2023-04-08'));
 
     jest
       .useFakeTimers()
@@ -23,6 +23,10 @@ describe('RecordsSummaryDesktop', () => {
         />
       </Provider>
     </ResponsiveContext.Provider>)
+
+    store.dispatch(setStateLanguage({
+      currentLanguage: "EN"
+    }))
   })
 
   afterEach(() => {
