@@ -69,6 +69,15 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       code: "personal_records"
     },
     {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+      },
+      selectable: true,
+      divider: false,
+      code: "manual"
+    },
+    {
       item: t('auth_bar.menu.about_us'),
       onClick: () => {
         history.push("/about")
@@ -136,6 +145,15 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
       selectable: true,
       divider: true,
       code: "advanced_search"
+    },
+    {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+      },
+      selectable: true,
+      divider: false,
+      code: "manual"
     },
     {
       item: t('auth_bar.menu.about_us'),

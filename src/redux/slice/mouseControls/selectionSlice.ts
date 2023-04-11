@@ -137,8 +137,8 @@ export const selectionSlice = createSlice({
       if (!action.payload.currentMousePosition) {
         state.currentMousePosition = null;
         return;
-
       }
+
       state.currentMousePosition = {
         x: action.payload.currentMousePosition.x,
         y: action.payload.currentMousePosition.y,

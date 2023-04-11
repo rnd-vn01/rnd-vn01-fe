@@ -12,7 +12,9 @@ describe('MeridianControl', () => {
 
   it("to be rendered successfully", async () => {
     render(<Provider store={store}>
-      <MeridianControl />
+      <MeridianControl
+        callbackResetViewMode={jest.fn()}
+      />
     </Provider>)
 
     await waitFor(() => {
@@ -23,7 +25,7 @@ describe('MeridianControl', () => {
   it("should perform as expected when selected one item from menu for desktop", async () => {
     render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
-        <MeridianControl />
+        <MeridianControl callbackResetViewMode={jest.fn()} />
       </Provider>
     </ResponsiveContext.Provider>)
 
@@ -43,7 +45,7 @@ describe('MeridianControl', () => {
 
     render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
-        <MeridianControl />
+        <MeridianControl callbackResetViewMode={jest.fn()} />
       </Provider>
     </ResponsiveContext.Provider>)
 
@@ -61,7 +63,7 @@ describe('MeridianControl', () => {
   it("should scroll to the right while clicking on the button", async () => {
     render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
-        <MeridianControl />
+        <MeridianControl callbackResetViewMode={jest.fn()} />
       </Provider>
     </ResponsiveContext.Provider>)
 
@@ -78,7 +80,7 @@ describe('MeridianControl', () => {
   it("should scroll to the left while clicking on the button", async () => {
     render(<ResponsiveContext.Provider value={{ width: 1200 }}>
       <Provider store={store}>
-        <MeridianControl />
+        <MeridianControl callbackResetViewMode={jest.fn()} />
       </Provider>
     </ResponsiveContext.Provider>)
 
@@ -89,6 +91,28 @@ describe('MeridianControl', () => {
 
       fireEvent.click(screen.getByRole("button", { name: "meridian-control-scroll-left" }))
       expect(mockScrollBy).toHaveBeenCalledWith(-145, 0);
+    })
+  })
+
+  it("should deselect a meridian if clicked on the meridian while selected", async () => {
+    render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+      <Provider store={store}>
+        <MeridianControl callbackResetViewMode={jest.fn()} />
+      </Provider>
+    </ResponsiveContext.Provider>)
+
+
+    const menuItem = screen.getByRole("div", { name: "meridian-control-item-1" })
+    fireEvent.click(menuItem)
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.preSelectLine).toBe("LI")
+    })
+
+    fireEvent.click(menuItem)
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.preSelectLine).toBe(null)
     })
   })
 });

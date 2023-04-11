@@ -80,6 +80,10 @@ describe('AuthBar', () => {
       path: '/records'
     },
     {
+      item: 'auth_bar.menu.manual',
+      path: '/manual'
+    },
+    {
       item: 'auth_bar.menu.about_us',
       path: '/about'
     },
@@ -126,6 +130,10 @@ describe('AuthBar', () => {
     {
       item: 'auth_bar.menu.advanced_search',
       path: '/advanced-search'
+    },
+    {
+      item: 'auth_bar.menu.manual',
+      path: '/manual'
     },
     {
       item: 'auth_bar.menu.about_us',

@@ -1,5 +1,5 @@
 import { SAMPLE_QUIZ_LIST } from "src/components/common/Records/tests/quizList"
-import { calculateDateStreak, getLogsForChart } from "src/helpers/statistics";
+import { calculateDateStreak, getLogsForChart, getSummary } from "src/helpers/statistics";
 
 test("getLogsForChart", () => {
   const results = getLogsForChart(SAMPLE_QUIZ_LIST, 0);
@@ -83,4 +83,14 @@ describe("calculateDateStreak", () => {
 
     expect(calculateDateStreak(QUIZZES_LIST as any)).toBe(0)
   })
+})
+
+test("quizSummary for empty quizzes", () => {
+  jest
+    .useFakeTimers()
+    .setSystemTime(new Date('2023-04-11'));
+
+  const results = getSummary(SAMPLE_QUIZ_LIST, 3);
+
+  expect(results.accuracy).toBe(0);
 })

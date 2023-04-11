@@ -28,4 +28,29 @@ describe("HomePageControl", () => {
       expect(screen.getByRole("div", { name: "meridian-control" })).toBeTruthy();
     })
   })
+
+  it("should reset the viewport to center if deselect a meridian from quick meridian icon", async () => {
+    const mockcallbackPanCenter = jest.fn();
+
+    render(<ResponsiveContext.Provider value={{ width: 1280 }}>
+      <Provider store={store}>
+        <HomePageControl
+          callbackPanCenter={mockcallbackPanCenter}
+        />
+      </Provider>
+    </ResponsiveContext.Provider>)
+
+    const menuItem = screen.getByRole("div", { name: "meridian-control-item-1" })
+    fireEvent.click(menuItem)
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.preSelectLine).toBe("LI")
+    })
+
+    fireEvent.click(menuItem)
+
+    await waitFor(() => {
+      expect(mockcallbackPanCenter).toHaveBeenCalled();
+    })
+  })
 })
