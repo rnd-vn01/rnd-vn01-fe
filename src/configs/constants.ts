@@ -7048,7 +7048,7 @@ export const IMPORTANT_POINTS = [
 ]
 
 export const IS_TESTING_COLORFUL_MERIDIAN_POINTS = false;
-export const IS_TESTING_SELECTABLE_MULTIPLE_MERIDIANS = true;
+export const IS_TESTING_SELECTABLE_MULTIPLE_MERIDIANS = false;
 
 export const MERIDIAN_COLOR_MAP = {
   "LU": "#32FF8F", //LU
