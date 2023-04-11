@@ -365,7 +365,8 @@ i18n
             },
             itemInteraction: "Methods to interact with the acupuncture points or meridians",
             quickMenu: "Menu for quick selecting a meridian"
-          }
+          },
+          click_to_deselect: "Click to deselect"
         }
       },
       vi: {
@@ -724,7 +725,8 @@ i18n
             },
             itemInteraction: "Các phương pháp tương tác với huyệt đạo hoặc kinh lạc",
             quickMenu: "Menu chọn nhanh kinh lạc"
-          }
+          },
+          click_to_deselect: "Bấm vào để bỏ chọn"
         }
       }
     }
