@@ -28,4 +28,4 @@ src/pages/QuizPage
     QuizPage.tsx ~ 41,43
 
 src/redux/slice/mouseControls
-    selectionSlice.ts ~ 65
+    selectionSlice.ts ~ 30,65

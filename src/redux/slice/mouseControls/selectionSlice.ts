@@ -27,7 +27,7 @@ export const selectionSlice = createSlice({
   reducers: {
     resetToInitialStatePointSelectionSlice(state) {
       state.backupSelectedPoint = `${state.selectedLabel || ""}`;
-      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors))
+      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors || []))
       state.selectedLabel = null;
       state.selectedType = null;
       state.isHoveringPoint = false;
