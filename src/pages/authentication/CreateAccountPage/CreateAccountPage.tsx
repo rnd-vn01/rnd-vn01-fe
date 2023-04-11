@@ -189,19 +189,15 @@ export const CreateAccountPage: React.FC = () => {
       const email = user?.reloadUserInfo?.providerUserInfo?.[0].email
 
       MySwal.fire({
-        icon: 'success',
         title: t('login_page.messages.login_successful'),
         text: t('login_page.messages.wait_for_redirect'),
-      }).then(() => {
-        MySwal.fire({
-          didOpen: () => {
-            MySwal.showLoading(null);
-          },
-          didClose: () => {
-            MySwal.hideLoading();
-          },
-          allowOutsideClick: false,
-        })
+        didOpen: () => {
+          MySwal.showLoading(null);
+        },
+        didClose: () => {
+          MySwal.hideLoading();
+        },
+        allowOutsideClick: false,
       })
 
       try {
