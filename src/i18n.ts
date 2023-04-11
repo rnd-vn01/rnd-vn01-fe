@@ -345,7 +345,26 @@ i18n
           storing_quiz_result: "Storing quiz result. Please wait for a moment!",
           getting_records: "Getting personal records. Please wait for a moment!",
           manual_page: {
-            title: "How To Use"
+            title: "How To Use",
+            interactions: "Methods to interact with the 3D model",
+            desktop: {
+              rotate: 'Use left mouse click and drag to rotate around the model',
+              pan: 'Use right mouse click and drag to pan along one side of the model',
+              zoom: 'Scroll the mouse wheel upwards or downwards to zoom in or zoom out the model',
+              hover: 'Hover over the meridian (color will be changed to black) or acupuncture point (color will be changed to yellow) to mark for selection',
+              select: 'Click on the meridian line (color changed to red, all acupuncture points of the meridian would be showed) or the acupuncture point (color changed to yellow with red border) to view information about the selected item',
+              deselect: 'Deselect by click on the item (acupuncture point or meridian) or double-click on any empty area on the model skin',
+              selectMeridian: 'Can quickly select a meridian by choosing from the horizontal scroll menu. After selected, the meridian would be bring into focus (like in the image). Can interact with the model to observer the location of the meridian, or click on the line to view information about the meridian with the acupuncture points involved'
+            },
+            mobile: {
+              rotate: 'Press and drag to the left or right side (swipe) to rotate around the model',
+              pan: 'Press 2 fingers and drag along one side to pan along that side of the model',
+              zoom: 'Press 2 fingers and spread or pinch to zoom in or zoom out the model',
+              selectPoint: 'Single press on an acupuncture point to select the point for viewing detail. To deselect, press on the point or double press on any empty area on the model skin',
+              selectMeridian: 'Double press on any area of the meridian (prevent the spaces occupied by the acupuncture points) to select the meridian for viewing detail. To deselect, double press on any empty area on the model skin'
+            },
+            itemInteraction: "Methods to interact with the acupuncture points or meridians",
+            quickMenu: "Menu for quick selecting a meridian"
           }
         }
       },
@@ -685,7 +704,26 @@ i18n
           storing_quiz_result: "Đang lưu kết quả bài kiểm tra. Vui lòng chờ trong giây lát!",
           getting_records: "Đang tải dữ liệu cá nhân. Vui lòng chờ trong giây lát!",
           manual_page: {
-            title: "Cách Sử Dụng"
+            title: "Cách Sử Dụng",
+            interactions: "Các phương pháp tương tác với mô hình 3D",
+            desktop: {
+              rotate: 'Click chuột trái và rê chuột để xoay xung quanh mô hình',
+              pan: 'Click chuột phải và rê chuột để di chuyển dọc theo một phía của mô hình',
+              zoom: 'Cuộn chuột lên hoặc xuống để phóng to hoặc thu nhỏ mô hình',
+              hover: 'Rê chuột lên trên kinh lạc (chuyển thành màu đen) hoặc huyệt đạo (chuyển thành màu vàng) để khoanh vùng chọn cho đối tượng',
+              select: 'Click vào kinh lạc (chuyển thành màu đỏ, đồng thời hiển thị toàn bộ huyệt đạo thuộc kinh) hoặc huyệt đạo (chuyển thành màu vàng có viền đỏ) để chọn xem thông tin của đối tượng',
+              deselect: 'Bỏ chọn bằng cách click vào đối tượng hoặc click đúp vào bất cứ vùng trống nào trên mô hình',
+              selectMeridian: 'Có thể chọn nhanh kinh lạc bằng cách lựa chọn trong menu trượt ngang. Sau khi được lựa chọn, kinh lạc sẽ được hiển thị vào màn hình (giống trong ảnh). Có thể tương tác với mô hình để xem vị trí kinh lạc và bấm vào để xem thông tin chi tiết kinh lạc cùng các huyệt đạo'
+            },
+            mobile: {
+              rotate: 'Ấn và kéo sang trái hoặc phải để xoay xung quanh mô hình',
+              pan: 'Ấn 2 ngón và kéo dọc theo một chiều để di chuyển dọc theo một phía của mô hình',
+              zoom: 'Ấn 2 ngón và vung ra hoặc vào để phóng to hoặc thu nhỏ mô hình',
+              selectPoint: 'Ấn vào một huyệt đạo để chọn xem chi tiết huyệt. Để huỷ chọn huyệt, có thể ấn một lần vào huyệt hoặc ấn đúp vào một vùng trống trên mô hình',
+              selectMeridian: 'Ấn đúp vào một vùng trên kinh lạc (tránh vị trí trùng vị trí huyệt đạo) để chọn xem chi tiết kinh lạc. Để huỷ chọn kinh lạc, ấn đúp vào một vùng trống trên mô hình'
+            },
+            itemInteraction: "Các phương pháp tương tác với huyệt đạo hoặc kinh lạc",
+            quickMenu: "Menu chọn nhanh kinh lạc"
           }
         }
       }

@@ -5,13 +5,13 @@
   margin: 0 auto;
   background: var(--theme-background);
   margin-top: 60px;
-  min-height: 100vh;
+  min-height: 150vh;
 
   &__content {
     margin-top: 30px;
-    width: 70vw;
-    margin-left: 15vw;
-    margin-bottom: 40px;
+    width: 85vw;
+    margin-left: 7.5vw;
+    padding-bottom: 40px;
 
     @include smallscreen {
       width: 90vw;
@@ -32,15 +32,37 @@
     }
 
     &--project-name {
-      font-size: 3.25rem;
-      line-height: 3.75rem;
+      font-size: 3.15rem;
+      line-height: 3.45rem;
       width: fit-content;
-      text-align: left;
+      text-align: center;
 
       @include smallscreen {
         font-size: 2rem;
         line-height: 2.5rem;
       }
     }
+  }
+
+  &__desktop {
+    h2 {
+      font-size: 2rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  &__mobile {
+    h2 {
+      font-size: 1.5rem;
+      line-height: 1.75rem;
+    }
+  }
+
+  &__instruction {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    font-family: 'header-light' !important;
+    text-align: center;
+    padding-top: 1rem;
   }
 }
