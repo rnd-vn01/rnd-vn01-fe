@@ -4,7 +4,7 @@ let page = null;
 
 jest.setTimeout(60000);
 
-describe.skip("Authentication - Log in", () => {
+describe("Authentication - Log in", () => {
   beforeAll(async () => {
     browser = await puppeteer.launch();
     page = await browser.newPage();
@@ -141,7 +141,7 @@ describe.skip("Authentication - Log in", () => {
   })
 })
 
-describe.skip("Authentication - Sign up", () => {
+describe("Authentication - Sign up", () => {
   beforeAll(async () => {
     browser = await puppeteer.launch();
     page = await browser.newPage();
