@@ -24,3 +24,5 @@ yarn-error.log*
 *.txt
 
 /sitemap
+
+/src/e2e/artifacts
