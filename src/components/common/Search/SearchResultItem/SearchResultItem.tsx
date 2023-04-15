@@ -1,11 +1,10 @@
 import './SearchResultItem.scss';
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
 import { useHistory } from 'react-router-dom';
 import Highlighter from "react-highlight-words";
-import IconViewOnModel from "src/assets/images/IconShow.svg";
 import ReactTooltip from 'react-tooltip';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
@@ -61,13 +60,23 @@ export const SearchResultItem: React.FC<ISearchResultItem> = ({
           className="search-result__header--view-left"
           data-tip
           data-for={`tooltip-${item.code}`}>
-          <img
-            src={IconViewOnModel}
+          <div
+            role="img"
+            aria-label="view-on-model"
+            style={{
+              cursor: "pointer",
+              transform: "translateY(-3.5px)"
+            }}
             onClick={(e) => {
               history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
                 isRedirect: true
               })
-            }}></img>
+            }}>
+            <FontAwesomeIcon
+              icon={faLocationDot}
+              className='search-result__icon--map-pin'
+            />
+          </div>
           <ReactTooltip id={`tooltip-${item.code}`} place="bottom" effect="solid">
             <p>{t('view_on_model')}</p>
           </ReactTooltip>

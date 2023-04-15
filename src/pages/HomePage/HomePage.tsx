@@ -6,7 +6,7 @@ import {
 import DemoImage from "src/assets/images/Demo.png";
 import { Canvas } from '@react-three/fiber'
 import { Scene } from 'src/components/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { APP_NAME } from 'src/configs/constants';
 import { LanguagePicker } from 'src/components/common';
@@ -16,6 +16,7 @@ import { useLocation } from 'react-router-dom';
 import { SideMenu } from 'src/components/common/responsive/SideMenu/SideMenu';
 import { useMediaQuery } from 'react-responsive';
 import { MenuBar } from 'src/components/common/responsive/MenuBar/MenuBar';
+import { resetToInitialStatePointSelectionSlice } from 'src/redux/slice';
 
 export const HomePage: React.FC = () => {
   const [isShowingLanding, setIsShowingLanding] = useState<boolean>(true);
@@ -26,6 +27,7 @@ export const HomePage: React.FC = () => {
 
   const location = useLocation() as any;
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
+  const dispatch = useDispatch();
 
   const {
     currentLanguage
@@ -56,6 +58,12 @@ export const HomePage: React.FC = () => {
           setIsShowingLanding(false);
         }
       }, 5000);
+    }
+
+    if (location.search === "") {
+      setTimeout(() => {
+        dispatch(resetToInitialStatePointSelectionSlice())
+      }, 500);
     }
   }, [])
 

@@ -1,9 +1,8 @@
 import './AuthBar.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
-import Logo from "src/assets/images/Logo.svg";
 import { logout } from 'src/configs/firebase';
 import { resetToInitialStateAuthSlice } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
@@ -16,6 +15,8 @@ export const AuthBar: React.FC = ({ }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
   const history = useHistory();
   const dispatch = useDispatch();
+  const menuButtonRef = useRef();
+  const menuDropdownRef = useRef();
   const {
     isLoggedIn,
     user
@@ -137,6 +138,19 @@ export const AuthBar: React.FC = ({ }) => {
     },
   ]
 
+  useEffect(() => {
+    document.addEventListener('click', (e) => {
+      const { target } = e
+
+      if ((menuButtonRef as any).current && (menuDropdownRef as any).current) {
+        if (!(menuButtonRef as any).current.contains(target)
+          && !(menuDropdownRef as any).current.contains(target)) {
+          setIsOpenDropdown(false);
+        }
+      }
+    })
+  }, []);
+
   return (
     <div
       role="div"
@@ -148,6 +162,7 @@ export const AuthBar: React.FC = ({ }) => {
             className="auth-bar__menu--button-logo inline-flex w-fit h-full flex-center"
             role="menu-button"
             aria-label="auth-bar-menu-button"
+            ref={menuButtonRef}
             onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
             {isLoggedIn ?
               <>
@@ -161,7 +176,9 @@ export const AuthBar: React.FC = ({ }) => {
           </div>
         </span>
 
-        <div className={`auth-bar__dropdown w-fit h-fit flex flex-col items-start justify-center
+        <div
+          ref={menuDropdownRef}
+          className={`auth-bar__dropdown w-fit h-fit flex flex-col items-start justify-center
           p-1 ${!isOpenDropdown && "auth-bar__dropdown--hide"}`}
           role="div"
           aria-label="auth-bar-dropdown">

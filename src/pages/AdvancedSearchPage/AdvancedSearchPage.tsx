@@ -26,7 +26,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const [query, setQuery] = useState<string>("");
   const [numberOfMatchingResults, setNumberOfMatchingResults] = useState<number>(0);
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
-  const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(true);
   const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
 
   const MySwal = withReactContent(Swal);

@@ -74,7 +74,7 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
                         {capitalizeAndMapInformationField(isPoint, field, usingLanguage)}
                       </div>
                       <div className="information-block__info">
-                        <p className={`information-block__info--text p-2`}>
+                        <p className={`information-block__info--text p-2 pb-0`}>
                           {itemInformation[field]}
                         </p>
                       </div>

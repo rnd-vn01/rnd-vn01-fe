@@ -108,7 +108,8 @@
       "pages/authentication/",
       "api/axios/",
       "Search/SearchBar/",
-      "ManualPage.tsx"
+      "ManualPage.tsx",
+      "src/e2e"
     ]
   }
 }

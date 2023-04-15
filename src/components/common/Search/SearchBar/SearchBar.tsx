@@ -30,7 +30,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(true);
   const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
 
   const MySwal = withReactContent(Swal);

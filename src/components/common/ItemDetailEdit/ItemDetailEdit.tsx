@@ -105,7 +105,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
     <div
       role="div"
       aria-label="item-detail-edit"
-      className={`item-detail-edit`}
+      className={`item-detail-edit pt-2`}
     >
       <div
         className="item-detail-edit__header">

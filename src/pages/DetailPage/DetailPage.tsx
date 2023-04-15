@@ -173,8 +173,9 @@ export const DetailPage: React.FC<IDetailPage> = ({
           />
         </>}
 
-
-        <SearchBarRedirect />
+        {
+          !isEdit && <SearchBarRedirect />
+        }
 
         {Object.keys(detail).length > 0 && (
           !isEdit ? <ItemDetail

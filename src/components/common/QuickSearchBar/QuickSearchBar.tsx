@@ -11,7 +11,6 @@ import ReactTooltip from 'react-tooltip';
 
 export const QuickSearchBar: React.FC = ({ }) => {
   const inputBoxRef = useRef()
-  const history = useHistory();
   const dispatch = useAppDispatch();
   const wrapperRef = useRef()
 

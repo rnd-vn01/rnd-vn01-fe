@@ -3,6 +3,7 @@ import { FullPageTitleBar } from './FullPageTitleBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
 
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -330,6 +331,30 @@ describe('FullPageTitleBar', () => {
 
       expect(menuItemCurrentPage).toHaveClass("title-bar__dropdown--selected-item")
       expect(menuItemOtherPage).not.toHaveClass("title-bar__dropdown--selected-item")
+    })
+  })
+
+  it("should use the default image if no profile image is found", async () => {
+    store.dispatch(setStateAuth({
+      isLoggedIn: true,
+      user: {
+        name: "NAME",
+        email: "test@gmail.com",
+        profileImage: undefined,
+        firebaseId: "firebaseId",
+        isAdmin: true
+      }
+    }));
+
+    render(<Provider store={store}>
+      <FullPageTitleBar
+        translateCode="advanced_search"
+      />
+    </Provider>)
+
+    await waitFor(() => {
+      const profileImage = screen.getByTestId("title-bar-profile-image");
+      expect((profileImage as any).src).toBe(DEFAULT_PROFILE_IMAGE_URL)
     })
   })
 });

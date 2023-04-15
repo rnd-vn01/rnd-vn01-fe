@@ -139,12 +139,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
               >
                 <div className="quick-search-results__block--category">
                   <span className="quick-search-results__result-block">
-                    <Highlighter
-                      highlightClassName='quick-search-results__highlighted'
-                      searchWords={[query]}
-                      autoEscape={true}
-                      textToHighlight={capitalize(category)}>
-                    </Highlighter>
+                    {capitalize(t(`general.${category}`))}
                   </span>
                 </div>
                 {results[category].map((item: any, subIndex: number) => (
