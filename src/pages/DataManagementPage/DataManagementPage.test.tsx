@@ -8,6 +8,20 @@ import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 const spyScrollTo = jest.fn();
 Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });
 
+jest.mock("react-router-dom", () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+    location: {
+      pathname: '',
+      search: ''
+    }
+  }),
+  useLocation: () => ({
+    pathname: '',
+    search: ''
+  })
+}));
+
 describe('Data Management Page - Desktop', () => {
   beforeEach(() => {
     mockGetItems();

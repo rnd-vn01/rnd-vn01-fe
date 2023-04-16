@@ -11,12 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
+import { useLocation } from 'react-router-dom';
 
 export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
 
 }) => {
   const { t } = useTranslation();
   document.title = `${APP_NAME} | ${t('data_management_page.title')}`
+  const location = useLocation() as any;
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -25,6 +27,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
   const [isFilter, setIsFilter] = useState<boolean>(true);
   const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
+  const [passedFilterOptions, setPassedFilterOptions] = useState<any>({});
 
   // RESPONSIVE
   const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
@@ -38,6 +41,10 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
         setShowingScrollToTop(false);
       }
     })
+
+    if (location?.state?.filterOptions) {
+      setPassedFilterOptions(location?.state?.filterOptions)
+    }
   }, [])
 
   return (
@@ -80,6 +87,7 @@ export const DataManagementPage: React.FC<IAdvancedSearchPage> = ({
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
           isFilter={isFilter}
           callbackSetIsFilter={setIsFilter}
+          passedFilterOptions={passedFilterOptions}
         />
       </div>
 

@@ -917,16 +917,16 @@ video {
   padding-right: 0.5rem;
 }
 
+.pb-0 {
+  padding-bottom: 0px;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
 }
 
 .pt-1 {
   padding-top: 0.25rem;
-}
-
-.pb-0 {
-  padding-bottom: 0px;
 }
 
 .pt-2 {

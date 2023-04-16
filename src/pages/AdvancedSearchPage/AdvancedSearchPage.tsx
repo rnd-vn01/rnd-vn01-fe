@@ -15,11 +15,13 @@ import { MobileTitleBar, SideCriteriaBox, SideMenu } from 'src/components/common
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import { result } from 'lodash';
+import { useLocation } from 'react-router-dom';
 
 export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const { t } = useTranslation();
   let hookQuery = useQuery();
   document.title = `${APP_NAME} | ${t('advanced_search_page.title')}`
+  const location = useLocation() as any;
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,6 +30,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
   const [isChoosingAlphabet, setIsChoosingAlphabet] = useState<boolean>(false);
   const [isFilter, setIsFilter] = useState<boolean>(true);
   const [showingScrollToTop, setShowingScrollToTop] = useState<boolean>(false);
+  const [passedFilterOptions, setPassedFilterOptions] = useState<any>({});
 
   const MySwal = withReactContent(Swal);
 
@@ -43,6 +46,10 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
         setShowingScrollToTop(false);
       }
     })
+
+    if (location?.state?.filterOptions) {
+      setPassedFilterOptions(location?.state?.filterOptions)
+    }
 
     if (hookQuery.get('query')) {
       MySwal.fire({
@@ -98,6 +105,7 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
           callbackSetChoosingAlphabet={setIsChoosingAlphabet}
           isFilter={isFilter}
           callbackSetIsFilter={setIsFilter}
+          passedFilterOptions={passedFilterOptions}
         />
       </div>
 

@@ -16,7 +16,7 @@ import { useLocation } from 'react-router-dom';
 import { SideMenu } from 'src/components/common/responsive/SideMenu/SideMenu';
 import { useMediaQuery } from 'react-responsive';
 import { MenuBar } from 'src/components/common/responsive/MenuBar/MenuBar';
-import { resetToInitialStatePointSelectionSlice } from 'src/redux/slice';
+import { resetToInitialStatePointSelectionSlice, setViewDetailsPersistLastPage } from 'src/redux/slice';
 
 export const HomePage: React.FC = () => {
   const [isShowingLanding, setIsShowingLanding] = useState<boolean>(true);
@@ -35,10 +35,12 @@ export const HomePage: React.FC = () => {
     (state: RootState) => state.languageSlice,
   );
   const {
-    isShowingQuickInformation
+    isShowingQuickInformation,
+    loadingQuickInformation
   } = useSelector(
     (state: RootState) => state.selectionSlice,
   );
+
   const {
     modelLoaded
   } = useSelector(
@@ -63,8 +65,10 @@ export const HomePage: React.FC = () => {
     if (location.search === "") {
       setTimeout(() => {
         dispatch(resetToInitialStatePointSelectionSlice())
-      }, 500);
+      }, 100);
     }
+
+    dispatch(setViewDetailsPersistLastPage(null))
   }, [])
 
   useEffect(() => {
@@ -124,7 +128,7 @@ export const HomePage: React.FC = () => {
           </div>
         </>}
 
-      {(isShowingQuickInformation != null) &&
+      {(isShowingQuickInformation != null || loadingQuickInformation) &&
         <div
           role="div"
           aria-label="home-page-information"

@@ -363,8 +363,7 @@ export const QuizManager: React.FC<IQuizManager> = ({
     const updateInitial = async () => {
       setFetchingData(true);
 
-      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
-      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
+      await getAcupuncturePoints(currentLanguage);
 
       setFetchingData(false);
     }

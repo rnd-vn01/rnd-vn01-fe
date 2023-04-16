@@ -3,9 +3,21 @@ import { QuickSearchBar } from './QuickSearchBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
 import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
-import { resetToInitialStateDataSlice, setAcupuncturePoints, setMeridians } from 'src/redux/slice';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
+import { resetToInitialStateDataSlice } from 'src/redux/slice';
+
+jest.mock("react-router-dom", () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+    location: {
+      pathname: '',
+      search: ''
+    }
+  }),
+  useLocation: () => ({
+    pathname: '',
+    search: ''
+  })
+}));
 
 describe('QuickSearchBar', () => {
   beforeAll(() => {

@@ -5,7 +5,7 @@ import { faAngleDown, faArrowUp, faArrowRight } from '@fortawesome/free-solid-sv
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
-import { resetToInitialStateAuthSlice, setStateLanguage } from 'src/redux/slice';
+import { resetToInitialStateAuthSlice, resetToInitialStateDataSlice, setStateLanguage } from 'src/redux/slice';
 import { useHistory } from 'react-router-dom';
 import { logout } from 'src/configs/firebase';
 
@@ -191,7 +191,8 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   ${currentLanguage === "EN" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("EN");
-                    history.go(0)
+                    dispatch(resetToInitialStateDataSlice(null));
+                    history.go(0);
                   }}
                   data-testid="side-menu-language__EN"
                 >
@@ -202,6 +203,7 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   ${currentLanguage === "VI" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("VI");
+                    dispatch(resetToInitialStateDataSlice(null));
                     history.go(0)
                   }}
                   data-testid="side-menu-language__VI"

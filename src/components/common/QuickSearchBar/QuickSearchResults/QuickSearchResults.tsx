@@ -12,9 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import {
-  setAcupuncturePoints,
   setLineSelectedByLabel,
-  setMeridians,
   setPointSelectedByLabel
 } from 'src/redux/slice';
 import {
@@ -43,6 +41,9 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
   const [results, setResults] = useState<any>({})
 
   const fetchResults = async (query: string) => {
+    setResults({});
+    setIsLoading(true);
+
     let EXAMPLE_RESULT = {
       meridians: [],
       points: []
@@ -90,12 +91,17 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
 
   useEffect(() => {
     const updateInitial = async () => {
-      callbackIsReadyForSearch(false);
-      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
-      const dataMeridians = await getMeridians(currentLanguage);
+      let isLoadNew = true;
 
-      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
-      dispatch(setMeridians(dataMeridians))
+      if (!acupuncturePoints || !meridians) {
+        callbackIsReadyForSearch(false);
+        isLoadNew = true;
+      } else {
+        callbackIsReadyForSearch(true);
+      }
+
+      await getAcupuncturePoints(currentLanguage);
+      await getMeridians(currentLanguage);
 
       callbackIsReadyForSearch(true);
     }
@@ -111,7 +117,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
       ${!isLoading && isShowing && Object.keys(results).length > 0 ? "quick-search-results--showing" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
-      <div
+      {query !== "" && <div
         className={`quick-search-results__block--advanced-search flex justify-between`}
         role="div"
         aria-label="quick-search-advanced-search"
@@ -126,7 +132,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
         <div className='inline-flex items-center justify-center' style={{ transform: "rotate(45deg)" }}>
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
-      </div>
+      </div>}
+
       {!isLoading && Object.keys(results).length > 0 &&
         Object.keys(results).map((category: any, index: number) => {
           if (results[category].length > 0) {

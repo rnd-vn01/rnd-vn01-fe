@@ -6,9 +6,10 @@ import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
 import { useHistory } from 'react-router-dom';
 import Highlighter from "react-highlight-words";
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState, useAppDispatch } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
 import ReactTooltip from 'react-tooltip';
+import { setHomeQueryPersistThroughNavigation } from 'src/redux/slice';
 
 export const ItemDetail: React.FC<IItemDetail> = ({
   item,
@@ -17,11 +18,18 @@ export const ItemDetail: React.FC<IItemDetail> = ({
   query
 }) => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
   const {
     isLoggedIn,
     user
   } = useSelector(
     (state: RootState) => state.authSlice,
+  );
+
+  const {
+    viewDetailsLastPage
+  } = useSelector(
+    (state: RootState) => state.navigationSlice,
   );
   const { t } = useTranslation();
 
@@ -89,7 +97,21 @@ export const ItemDetail: React.FC<IItemDetail> = ({
           data-testid="back-icon"
           onClick={(e) => {
             e.stopPropagation();
-            history.push(`${query ? `/advanced-search?query=${query}` : "/advanced-search"}`)
+            if (viewDetailsLastPage) {
+              const { path, isRedirect, query, filterOptions } = viewDetailsLastPage;
+
+              if (query) {
+                dispatch(setHomeQueryPersistThroughNavigation(query))
+              }
+
+              history.push(path, {
+                isRedirect,
+                query,
+                filterOptions
+              })
+            } else {
+              history.push(`${query ? `/advanced-search?query=${query}` : "/advanced-search"}`)
+            }
           }}></FontAwesomeIcon>
 
         {isLoggedIn && user?.isAdmin && <FontAwesomeIcon
