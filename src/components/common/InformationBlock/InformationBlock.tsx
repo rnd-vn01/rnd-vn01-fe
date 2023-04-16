@@ -95,6 +95,7 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
                         }}
                         role="icon"
                         aria-label="icon-back"
+                        data-testid="icon-back"
                         className='information-block__title--back-icon' />
                     }
                   </div>

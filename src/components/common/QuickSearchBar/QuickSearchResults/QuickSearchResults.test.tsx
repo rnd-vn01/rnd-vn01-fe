@@ -126,4 +126,30 @@ describe('QuickSearchResults', () => {
       expect(store.getState().selectionSlice.selectedType).toBe("point")
     })
   })
+
+  it("should load results if not loaded", async () => {
+    store.dispatch(setAcupuncturePoints(null));
+    store.dispatch(setMeridians(null));
+
+    render(
+      <Provider store={store}>
+        <QuickSearchResults
+          query={""}
+          callbackIsReadyForSearch={jest.fn()}
+        />
+      </Provider>)
+  })
+
+  it("should use old results first if loaded, and load in background", async () => {
+    store.dispatch(setAcupuncturePoints([]));
+    store.dispatch(setMeridians([]));
+
+    render(
+      <Provider store={store}>
+        <QuickSearchResults
+          query={""}
+          callbackIsReadyForSearch={jest.fn()}
+        />
+      </Provider>)
+  })
 });

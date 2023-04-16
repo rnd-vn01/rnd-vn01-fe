@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { resetToInitialStatePointSelectionSlice, setShowingQuickInformation } from 'src/redux/slice';
+import { resetToInitialStateNavigationSlice, resetToInitialStatePointSelectionSlice, setBackFromInformationBlock, setQuickSearchPersistQuery, setShowingQuickInformation } from 'src/redux/slice';
 import store from 'src/redux/store';
 import { InformationBlock } from './InformationBlock';
 import { Context as ResponsiveContext } from "react-responsive";
@@ -22,6 +22,7 @@ jest.mock("react-router-dom", () => ({
 describe('InformationBlock', () => {
   afterEach(() => {
     store.dispatch(resetToInitialStatePointSelectionSlice());
+    store.dispatch(resetToInitialStateNavigationSlice());
   })
 
   beforeEach(() => {
@@ -186,6 +187,35 @@ describe('InformationBlock', () => {
 
       await waitFor(() => {
         expect(screen.queryByTestId("information-block-title")).toBeNull()
+      })
+    })
+
+    it("should render the back icon if displayed by search result selected", async () => {
+      store.dispatch(setQuickSearchPersistQuery("sampleQuery"))
+      store.dispatch(setBackFromInformationBlock(false))
+
+      render(<ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <InformationBlock
+            isPoint={false}
+            itemInformation={{
+              code: "LU",
+              name: "Lung",
+              description: "Description for Lung",
+              diseases: "",
+            }}
+          />
+        </Provider>
+      </ResponsiveContext.Provider>)
+
+      await waitFor(() => {
+        expect(screen.queryByTestId("icon-back")).toBeTruthy()
+      })
+
+      fireEvent.click(screen.queryByTestId("icon-back"))
+
+      await waitFor(() => {
+        expect(store.getState().navigationSlice.backFromInformationBlock).toBeTruthy()
       })
     })
   })
