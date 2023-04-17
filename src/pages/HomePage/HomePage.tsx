@@ -110,10 +110,6 @@ export const HomePage: React.FC = () => {
             <AuthBar />
           </div>
 
-          <div className="home-page__section--language">
-            <LanguagePicker />
-          </div>
-
           <div className="home-page__section--controls">
             <HomePageControl
               isQuizPage={false}

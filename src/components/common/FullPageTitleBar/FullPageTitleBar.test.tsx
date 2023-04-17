@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FullPageTitleBar } from './FullPageTitleBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { resetToInitialStateAuthSlice, resetToInitialStateLanguageSlice, setStateAuth, setStateLanguage } from 'src/redux/slice';
 import { DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
 
 const mockHistoryPush = jest.fn();
@@ -20,13 +20,22 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe('FullPageTitleBar', () => {
+  beforeEach(() => {
+    store.dispatch(setStateLanguage({
+      currentLanguage: "EN"
+    }))
+  })
+
   afterEach(() => {
     store.dispatch(resetToInitialStateAuthSlice());
+    store.dispatch(resetToInitialStateLanguageSlice())
   })
 
   it("to be rendered successfully", async () => {
     render(<Provider store={store}>
-      <FullPageTitleBar />
+      <FullPageTitleBar
+        translateCode='about_us'
+      />
     </Provider>)
 
     await waitFor(() => {
@@ -36,7 +45,9 @@ describe('FullPageTitleBar', () => {
 
   it("to log out the user and redirect to homepage if clicking on the logout", async () => {
     render(<Provider store={store}>
-      <FullPageTitleBar />
+      <FullPageTitleBar
+        translateCode='about_us'
+      />
     </Provider>)
 
     store.dispatch(setStateAuth({
@@ -105,7 +116,9 @@ describe('FullPageTitleBar', () => {
       }));
 
       render(<Provider store={store}>
-        <FullPageTitleBar />
+        <FullPageTitleBar
+          translateCode='about_us'
+        />
       </Provider>)
 
       await waitFor(() => {
@@ -146,7 +159,9 @@ describe('FullPageTitleBar', () => {
       }));
 
       render(<Provider store={store}>
-        <FullPageTitleBar />
+        <FullPageTitleBar
+          translateCode='about_us'
+        />
       </Provider>)
 
       await waitFor(() => {
@@ -170,7 +185,9 @@ describe('FullPageTitleBar', () => {
     }));
 
     render(<Provider store={store}>
-      <FullPageTitleBar />
+      <FullPageTitleBar
+        translateCode='about_us'
+      />
     </Provider>)
 
     await waitFor(() => {
@@ -182,7 +199,9 @@ describe('FullPageTitleBar', () => {
 
   it("should redirect to home page if clicking on the Home option, not logged in", async () => {
     render(<Provider store={store}>
-      <FullPageTitleBar />
+      <FullPageTitleBar
+        translateCode='about_us'
+      />
     </Provider>)
 
     store.dispatch(setStateAuth({
@@ -215,7 +234,9 @@ describe('FullPageTitleBar', () => {
     }));
 
     render(<Provider store={store}>
-      <FullPageTitleBar />
+      <FullPageTitleBar
+        translateCode='about_us'
+      />
     </Provider>)
 
     await waitFor(() => {
@@ -226,7 +247,9 @@ describe('FullPageTitleBar', () => {
 
   it("should show the menu content when clicking on the logo", async () => {
     render(<Provider store={store}>
-      <FullPageTitleBar />
+      <FullPageTitleBar
+        translateCode='about_us'
+      />
     </Provider>)
 
     store.dispatch(setStateAuth({
@@ -245,7 +268,9 @@ describe('FullPageTitleBar', () => {
 
   it("should hide the menu content when clicking on the logo and the menu is in collapsed mode", async () => {
     render(<Provider store={store}>
-      <FullPageTitleBar />
+      <FullPageTitleBar
+        translateCode='about_us'
+      />
     </Provider>)
 
     store.dispatch(setStateAuth({
@@ -263,7 +288,7 @@ describe('FullPageTitleBar', () => {
     })
   })
 
-  it("should add color background for first word in page title", async () => {
+  it("should add color background for corresponding word in page title", async () => {
     render(<Provider store={store}>
       <FullPageTitleBar
         translateCode="about us"
@@ -275,8 +300,8 @@ describe('FullPageTitleBar', () => {
       const firstWordTitle = screen.getByRole("h1", { name: "word-0" })
       const secondWordTitle = screen.getByRole("h1", { name: "word-1" })
 
-      expect(firstWordTitle).toHaveClass("title-bar__page-title--bg")
-      expect(secondWordTitle).not.toHaveClass("title-bar__page-title--bg")
+      expect(secondWordTitle).toHaveClass("title-bar__page-title--bg")
+      expect(firstWordTitle).not.toHaveClass("title-bar__page-title--bg")
     })
   })
 
@@ -356,5 +381,43 @@ describe('FullPageTitleBar', () => {
       const profileImage = screen.getByTestId("title-bar-profile-image");
       expect((profileImage as any).src).toBe(DEFAULT_PROFILE_IMAGE_URL)
     })
+  })
+});
+
+describe('FullPageTitleBar Vietnamese language', () => {
+  beforeEach(() => {
+    store.dispatch(setStateLanguage({
+      currentLanguage: "VI"
+    }))
+  })
+
+  afterEach(() => {
+    store.dispatch(resetToInitialStateAuthSlice());
+    store.dispatch(resetToInitialStateLanguageSlice())
+  })
+
+  it("cover the case second highlighted words next to the first", async () => {
+    store.dispatch(setStateAuth({
+      isLoggedIn: false,
+      user: {}
+    }));
+
+    render(<Provider store={store}>
+      <FullPageTitleBar
+        translateCode="long long title"
+      />
+    </Provider>)
+  })
+
+  it("cover the case using default title bar", async () => {
+    store.dispatch(setStateAuth({
+      isLoggedIn: false,
+      user: {}
+    }));
+
+    render(<Provider store={store}>
+      <FullPageTitleBar
+      />
+    </Provider>)
   })
 });

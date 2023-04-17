@@ -36,7 +36,8 @@ i18n
               start_quiz: "Start Quiz",
               advanced_search: "Advanced Search",
               home: "Home",
-              manual: "How To Use"
+              manual: "How To Use",
+              language: "Language"
             }
           },
           create_account_page: {
@@ -398,7 +399,8 @@ i18n
               start_quiz: "Kiểm Tra",
               advanced_search: "Tìm Kiếm Nâng Cao",
               home: "Trang Chủ",
-              manual: "Cách Sử Dụng"
+              manual: "Cách Sử Dụng",
+              language: "Ngôn Ngữ"
             }
           },
           create_account_page: {

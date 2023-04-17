@@ -191,8 +191,11 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   ${currentLanguage === "EN" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("EN");
-                    dispatch(resetToInitialStateDataSlice(null));
-                    history.go(0);
+
+                    setTimeout(() => {
+                      dispatch(resetToInitialStateDataSlice(null));
+                      history.go(0);
+                    }, 50)
                   }}
                   data-testid="side-menu-language__EN"
                 >
@@ -203,8 +206,11 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   ${currentLanguage === "VI" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("VI");
-                    dispatch(resetToInitialStateDataSlice(null));
-                    history.go(0)
+
+                    setTimeout(() => {
+                      dispatch(resetToInitialStateDataSlice(null));
+                      history.go(0);
+                    }, 50)
                   }}
                   data-testid="side-menu-language__VI"
                 >

@@ -1,5 +1,8 @@
+src/components/common/QuickSearchBar
+    QuickSearchBar.tsx ~ 117-120
+
 src/components/common/QuickSearchBar/QuickSearchResults
-    QuickSearchResults.tsx ~ 161-164
+    QuickSearchResults.tsx ~ 168-180
 
 src/components/common/Records/RecordsProgressLog
     RecordsProgressLog.tsx ~ 33

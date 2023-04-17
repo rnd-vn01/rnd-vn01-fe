@@ -195,13 +195,13 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     if (isQuizMode) {
       if (showingCorrectPoint !== null && showingCorrectPoint !== undefined) {
         if (showingCorrectPoint === label) {
-          setColor(0x93895E)
+          setColor(0x76CE31)
           setIsAnswerPoint(true);
         }
 
         if (showingCorrectPoint !== selectedPoint && selectedPoint !== null && selectedPoint !== undefined
           && selectedPoint === label) {
-          setColor(0x834E46)
+          setColor(0xCE3B32)
           setIsAnswerPoint(true);
         }
       } else {
@@ -266,8 +266,6 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     } else if (!isSelectedOnQuizFocus && selectedLabel !== "" && isSameMeridianSelected) {
       setIsShowingLabel(false);
     } else if (isInCloseZoomMode >= ZOOM_CONTROL_LEVEL.SHOW_LABEL) {
-      // const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
-      // setIsShowingLabel(frustum.containsPoint(coor))
       isInZoomedLabelShowMode.current = true;
       setIsShowingLabel(isImportantPoint)
     } else {
@@ -286,13 +284,6 @@ export const Point = ({ positionArray, label, labelPosition, reverse = false, vi
     setIsImportantPoint(IMPORTANT_POINTS.includes(label))
     setDefaultColor();
   }, [])
-
-  // useEffect(() => {
-  //   if (isInZoomedLabelShowMode.current) {
-  //     const coor = new Vector3(positionArray[0], positionArray[1], positionArray[2])
-  //     setIsShowingLabel(frustum.containsPoint(coor))
-  //   }
-  // }, [frustum, preSelectLine])
 
   return (
     checkPointShowing() ? (<>

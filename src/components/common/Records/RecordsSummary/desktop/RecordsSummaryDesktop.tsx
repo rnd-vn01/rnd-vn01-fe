@@ -5,6 +5,7 @@ import { SUMMARY_SHOWING_TIME_TYPES } from 'src/configs/constants';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import IconStreak from "src/assets/images/IconStreak.svg";
+import IconStreakGray from "src/assets/images/IconStreakGray.svg";
 import IconActivityTracker1 from "src/assets/images/IconActivityTracker1.svg"
 import IconActivityTracker2 from "src/assets/images/IconActivityTracker2.svg"
 import IconActivityTracker3 from "src/assets/images/IconActivityTracker3.svg"
@@ -116,7 +117,8 @@ export const RecordsSummaryDesktop: React.FC<IRecordsSummary> = ({
             </span>}
 
             <div ref={refStreakDiv} className='records-summary-desktop__streak'>
-              <img src={IconStreak} className='records-summary-desktop__streak--image'></img>
+              <img src={showingData.days > 0 ? IconStreak : IconStreakGray}
+                className='records-summary-desktop__streak--image'></img>
 
               <div className='records-summary-desktop__streak--text flex-center flex-col'>
                 <h1>{showingData.days}</h1>

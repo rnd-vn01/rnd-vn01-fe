@@ -7085,3 +7085,43 @@ export const POINT_MERIDIAN_COLOR_MAP = {
 }
 
 export const DEFAULT_PROFILE_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/vn01-staging.appspot.com/o/default.jpg?alt=media&token=4cbce2c8-9847-415a-888e-d87443d0f7a1"
+
+export const HIGHLIGHT_PAGE_TITLES = {
+  personal_records: {
+    "VI": [0, 1],
+    "EN": [1]
+  },
+  manual: {
+    "VI": [1, 2],
+    "EN": [2]
+  },
+  data_management: {
+    "VI": [0, 1],
+    "EN": [0]
+  },
+  edit_profile: {
+    "VI": [0, 1],
+    "EN": [1]
+  },
+  advanced_search: {
+    "VI": [2, 3],
+    "EN": [0]
+  },
+  about_us: {
+    "VI": [1, 2],
+    "EN": [1]
+  },
+  //FOR TESTING PURPOSE
+  "about us": {
+    "VI": [1, 2],
+    "EN": [1]
+  },
+  "long long title": {
+    "VI": [1, 2],
+    "EN": [1]
+  },
+  "default": {
+    "VI": [0],
+    "EN": [0]
+  }
+}

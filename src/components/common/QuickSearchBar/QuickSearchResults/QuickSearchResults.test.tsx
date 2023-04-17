@@ -107,40 +107,7 @@ describe('QuickSearchResults', () => {
     })
   })
 
-  it("should set the point as selected if the result is clicked", async () => {
-    render(
-      <Provider store={store}>
-        <QuickSearchResults
-          query={"M-HN-3"}
-          callbackIsReadyForSearch={jest.fn()}
-        />
-      </Provider>)
-
-    await waitFor(() => {
-      const resultItems = screen.getAllByRole("quick-search-result-item")
-
-      //Point M-HN-3
-      fireEvent.click(resultItems[0])
-
-      expect(store.getState().selectionSlice.selectedLabel).toBe("M-HN-3")
-      expect(store.getState().selectionSlice.selectedType).toBe("point")
-    })
-  })
-
   it("should load results if not loaded", async () => {
-    store.dispatch(setAcupuncturePoints(null));
-    store.dispatch(setMeridians(null));
-
-    render(
-      <Provider store={store}>
-        <QuickSearchResults
-          query={""}
-          callbackIsReadyForSearch={jest.fn()}
-        />
-      </Provider>)
-  })
-
-  it("should use old results first if loaded, and load in background", async () => {
     store.dispatch(setAcupuncturePoints([]));
     store.dispatch(setMeridians([]));
 

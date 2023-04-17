@@ -49,8 +49,11 @@ export const LanguagePicker: React.FC = () => {
             role="language-picker-dropdown-item"
             onClick={() => {
               setLanguage(language);
-              dispatch(resetToInitialStateDataSlice(null));
-              history.go(0)
+
+              setTimeout(() => {
+                dispatch(resetToInitialStateDataSlice(null));
+                history.go(0);
+              }, 50)
             }}
             key={`language-${index}`}>
             {language}

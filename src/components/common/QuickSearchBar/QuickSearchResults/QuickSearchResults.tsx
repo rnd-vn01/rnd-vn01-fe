@@ -1,5 +1,5 @@
 import './QuickSearchResults.scss';
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import { capitalize } from 'src/helpers/capitalize';
 import { debounce } from "lodash"
@@ -39,6 +39,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
 
   const [isLoading, setIsLoading] = useState<any>(false)
   const [results, setResults] = useState<any>({})
+  const cloneAcupuncturePoints = useRef<Array<any>>([]);
+  const cloneMeridians = useRef<Array<any>>([]);
 
   const fetchResults = async (query: string) => {
     setResults({});
@@ -49,8 +51,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
       points: []
     }
 
-    const ACUPUNCTURE_POINTS = acupuncturePoints;
-    const MERIDIANS = meridians;
+    const ACUPUNCTURE_POINTS = cloneAcupuncturePoints.current;
+    const MERIDIANS = cloneMeridians.current;
 
     ACUPUNCTURE_POINTS.forEach((point) => {
       if (passFilter(point, query, true, SEARCH_BY.NAME)
@@ -93,7 +95,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
     const updateInitial = async () => {
       let isLoadNew = true;
 
-      if (!acupuncturePoints || !meridians) {
+      if (!acupuncturePoints.length || !meridians.length) {
         callbackIsReadyForSearch(false);
         isLoadNew = true;
       } else {
@@ -108,6 +110,14 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
 
     updateInitial();
   }, [])
+
+  useEffect(() => {
+    cloneAcupuncturePoints.current = acupuncturePoints
+  }, [acupuncturePoints])
+
+  useEffect(() => {
+    cloneMeridians.current = meridians
+  }, [meridians])
 
   return (
     <div

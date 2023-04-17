@@ -18,6 +18,7 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
 
   const [isLoading, setIsLoading] = useState<any>(true)
   const [results, setResults] = useState<any>([])
+
   const {
     currentLanguage
   } = useSelector(

@@ -6,7 +6,7 @@ import { RootState } from 'src/redux/store';
 import { logout } from 'src/configs/firebase';
 import { resetToInitialStateAuthSlice } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
-import { DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
+import { DEFAULT_PROFILE_IMAGE_URL, HIGHLIGHT_PAGE_TITLES } from 'src/configs/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import IconAdmin from 'src/assets/images/IconAdmin.svg';
@@ -24,6 +24,11 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
     user
   } = useSelector(
     (state: RootState) => state.authSlice,
+  );
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
   );
   const { t, i18n } = useTranslation();
 
@@ -184,6 +189,8 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
     })
   }, []);
 
+  const highlightIndexes = HIGHLIGHT_PAGE_TITLES[translateCode ?? "default"][currentLanguage]
+
   return (
     <div
       role="div"
@@ -212,11 +219,16 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
         <h1 className="title-bar__page-title">
           {
             t(`title_bar.pages.${translateCode || "default"}`).split(" ").map((word, index) => {
-              return <h1
-                key={`word-${index}`}
-                role={"h1"}
-                aria-label={`word-${index}`}
-                className={`${index === 0 ? "title-bar__page-title--bg" : ""}`}>{index !== 0 && " "} {word}</h1>
+              return <span>
+                {index !== 0 && index === highlightIndexes[0] && " "}
+                <h1
+                  key={`word-${index}`}
+                  role={"h1"}
+                  aria-label={`word-${index}`}
+                  className={`${highlightIndexes.includes(index) ? "title-bar__page-title--bg" : ""}`}>
+                  {index !== 0 && index !== highlightIndexes[0] && " "} {word}
+                </h1>
+              </span>
             })
           }
         </h1>
