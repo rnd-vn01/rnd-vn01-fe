@@ -50,18 +50,6 @@ export const AdvancedSearchPage: React.FC<IAdvancedSearchPage> = ({ }) => {
     if (location?.state?.filterOptions) {
       setPassedFilterOptions(location?.state?.filterOptions)
     }
-
-    if (hookQuery.get('query')) {
-      MySwal.fire({
-        didOpen: () => {
-          MySwal.showLoading(null);
-        },
-        didClose: () => {
-          MySwal.hideLoading();
-        },
-        allowOutsideClick: false,
-      })
-    }
   }, [])
 
   return (

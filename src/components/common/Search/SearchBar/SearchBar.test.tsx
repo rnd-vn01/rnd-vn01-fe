@@ -6,6 +6,21 @@ import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 const mockCallbackIsFilter = jest.fn();
 
+const mockHistoryPush = jest.fn();
+jest.mock("react-router-dom", () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+    location: {
+      pathname: []
+    },
+    go: jest.fn()
+  }),
+  useLocation: () => ({
+    pathname: '',
+    search: ''
+  })
+}));
+
 describe('SearchBar', () => {
   beforeAll(() => {
     mockGetItems();

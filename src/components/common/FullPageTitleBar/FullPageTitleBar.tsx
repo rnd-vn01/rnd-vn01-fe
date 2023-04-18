@@ -189,7 +189,7 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
     })
   }, []);
 
-  const highlightIndexes = HIGHLIGHT_PAGE_TITLES[translateCode ?? "default"][currentLanguage]
+  const highlightIndexes = HIGHLIGHT_PAGE_TITLES[translateCode || "default"][currentLanguage]
 
   return (
     <div
