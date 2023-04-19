@@ -1,5 +1,5 @@
 import './RecordsProgressLog.scss';
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import {
   MERIDIANS, SUMMARY_SHOWING_TIME_TYPES,
@@ -19,7 +19,6 @@ export const RecordsProgressLog: React.FC<IRecordsProgressLog> = ({
   const [showingTypeOption, setShowingTypeOption] = useState<number>(0);
   const [showingData, setShowingData] = useState<any>([]);
   const [render, setRender] = useState<number>(0);
-  const containerRef = useRef<any>(null);
   const {
     currentLanguage
   } = useSelector(
