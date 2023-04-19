@@ -13,12 +13,20 @@ export const RecordsProgressDesktop: React.FC<IRecordsProgressLogDesktop> = ({ d
     if (resized) {
       const firstMeridianRef = meridiansRef.current?.[0] as HTMLDivElement;
       const width = firstMeridianRef?.clientWidth;
+      const height = firstMeridianRef?.clientHeight;
+
+      const isResizeHeight = height > width;
 
       meridiansRef.current?.forEach((ref) => {
         if (ref) { // NOT_TESTED
           (ref as HTMLDivElement).style.height = `${width}px`;
         }
       })
+
+      if (!isResizeHeight) {
+        (document.querySelector(".records-progress") as HTMLDivElement).style.height = `${width * 6}px`;
+        (document.querySelector(".records-chart") as HTMLDivElement).style.height = `${width * 6}px`;
+      }
     }
   }, [resized])
 
