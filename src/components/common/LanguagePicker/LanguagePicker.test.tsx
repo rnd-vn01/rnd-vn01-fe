@@ -47,12 +47,16 @@ describe('LanguagePicker', () => {
   })
 
   it("should update the language if change selection on the picker", async () => {
+    jest.useFakeTimers();
+
     // Trigger to show the picker
     const languagePickerIcon = screen.getByRole("div", { name: "language-picker-icon" })
     fireEvent.click(languagePickerIcon)
 
     const options = screen.getAllByRole("language-picker-dropdown-item");
     fireEvent.click(options[1])
+
+    jest.advanceTimersByTime(100);
 
     await waitFor(() => {
       expect(store.getState().languageSlice.currentLanguage).toBe("VI")

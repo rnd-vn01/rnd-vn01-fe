@@ -1,12 +1,15 @@
 import './FullPageTitleBar.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
-import Logo from "src/assets/images/Logo.svg";
 import { logout } from 'src/configs/firebase';
 import { resetToInitialStateAuthSlice } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
+import { DEFAULT_PROFILE_IMAGE_URL, HIGHLIGHT_PAGE_TITLES } from 'src/configs/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import IconAdmin from 'src/assets/images/IconAdmin.svg';
 
 export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
   translateCode
@@ -14,11 +17,18 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
   const history = useHistory();
   const dispatch = useDispatch();
+  const menuButtonRef = useRef();
+  const menuDropdownRef = useRef();
   const {
     isLoggedIn,
     user
   } = useSelector(
     (state: RootState) => state.authSlice,
+  );
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
   );
   const { t, i18n } = useTranslation();
 
@@ -166,6 +176,21 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
     },
   ]
 
+  useEffect(() => {
+    document.addEventListener('click', (e) => {
+      const { target } = e
+
+      if ((menuButtonRef as any).current && (menuDropdownRef as any).current) {
+        if (!(menuButtonRef as any).current.contains(target)
+          && !(menuDropdownRef as any).current.contains(target)) {
+          setIsOpenDropdown(false);
+        }
+      }
+    })
+  }, []);
+
+  const highlightIndexes = HIGHLIGHT_PAGE_TITLES[translateCode || "default"][currentLanguage]
+
   return (
     <div
       role="div"
@@ -175,9 +200,18 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
         <div
           role="div"
           aria-label="title-bar-logo"
+          ref={menuButtonRef}
           className="title-bar__menu--button-logo inline-flex w-fit h-full flex-center"
           onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
-          <img src={isLoggedIn ? user.profileImage : Logo} className="title-bar__menu--image-logo"></img>
+          {isLoggedIn ?
+            <>
+              <img referrerPolicy="no-referrer"
+                data-testid="title-bar-profile-image"
+                src={user.profileImage || DEFAULT_PROFILE_IMAGE_URL} className="title-bar__menu--image-logo"></img>
+              {user.isAdmin && <img src={IconAdmin} className="title-bar__menu--icon-gear"></img>}
+            </>
+            :
+            <FontAwesomeIcon className="title-bar__menu--icon" icon={faEllipsisVertical} />}
         </div>
       </span>
 
@@ -185,19 +219,24 @@ export const FullPageTitleBar: React.FC<IFullPageTitleBar> = ({
         <h1 className="title-bar__page-title">
           {
             t(`title_bar.pages.${translateCode || "default"}`).split(" ").map((word, index) => {
-              return <h1
-                key={`word-${index}`}
-                role={"h1"}
-                aria-label={`word-${index}`}
-                className={`${index === 0 ? "title-bar__page-title--bg" : ""}`}>{index !== 0 && " "} {word}</h1>
+              return <span>
+                {index !== 0 && index === highlightIndexes[0] && " "}
+                <h1
+                  key={`word-${index}`}
+                  role={"h1"}
+                  aria-label={`word-${index}`}
+                  className={`${highlightIndexes.includes(index) ? "title-bar__page-title--bg" : ""}`}>
+                  {index !== 0 && index !== highlightIndexes[0] && " "} {word}
+                </h1>
+              </span>
             })
           }
         </h1>
 
-
         <div
           role="div"
           aria-label="title-bar-dropdown"
+          ref={menuDropdownRef}
           className={`title-bar__dropdown w-fit h-fit flex flex-col items-end justify-center
                 p-1 ${!isOpenDropdown && "title-bar__dropdown--hide"}`}>
           {isLoggedIn ? MENU_ITEMS.map((item, index) => {

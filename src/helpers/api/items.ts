@@ -1,3 +1,5 @@
+import { setAcupuncturePoints, setMeridians } from "src/redux/slice"
+import store from "src/redux/store"
 import { apiItem } from "src/api/endpoints/apiItem/apiItem"
 const EXCLUDE_FIELDS = ["_id", "createdAt", "updatedAt", "__v"]
 
@@ -5,6 +7,7 @@ export const getMeridians = async (currentLanguage: string) => {
   const meridians = await apiItem.getMeridians(currentLanguage.toLowerCase())
   const filteredMeridians = (meridians as any).data
     .map(({ _id, updatedAt, createdAt, __v, ...keepAttrs }) => keepAttrs)
+  store.dispatch(setMeridians([...filteredMeridians]))
   return filteredMeridians
 }
 
@@ -12,6 +15,7 @@ export const getAcupuncturePoints = async (currentLanguage: string) => {
   const points = await apiItem.getAcupuncturePoints(currentLanguage.toLowerCase())
   const filteredPoints = (points as any).data
     .map(({ _id, updatedAt, createdAt, __v, ...keepAttrs }) => keepAttrs)
+  store.dispatch(setAcupuncturePoints([...filteredPoints]))
   return filteredPoints
 }
 

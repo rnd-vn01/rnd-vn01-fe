@@ -462,28 +462,54 @@ export const Scene = forwardRef((props, ref) => {
           _v.sub(controls.current.target)
           camera.current?.position.sub(_v);
 
-          const distanceToCenter = controls.current.object.position.distanceTo(controls.current.target);
+          let distanceToCenter = controls.current.object.position.distanceTo(controls.current.target);
 
-          if (distanceToCenter >= (isDesktop ? 25 : 40)) {
-            dispatch(setInCloseZoomMode({
-              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
-            }))
-          } else if (distanceToCenter < (isDesktop ? 5 : 10)) {
-            dispatch(setInCloseZoomMode({
-              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
-            }))
-          } else if (distanceToCenter < (isDesktop ? 12.5 : 15)) {
-            dispatch(setInCloseZoomMode({
-              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
-            }))
-          } else if (distanceToCenter < (isDesktop ? 20 : 20)) {
-            dispatch(setInCloseZoomMode({
-              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
-            }))
+          if (camera?.current?.zoom === 1.5 || !isDesktop) {
+            if (distanceToCenter >= (isDesktop ? 25 : 40)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
+              }))
+            } else if (distanceToCenter < (isDesktop ? 5 : 10)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
+              }))
+            } else if (distanceToCenter < (isDesktop ? 12.5 : 15)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
+              }))
+            } else if (distanceToCenter < (isDesktop ? 20 : 20)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
+              }))
+            } else {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
+              }))
+            }
           } else {
-            dispatch(setInCloseZoomMode({
-              isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
-            }))
+            distanceToCenter /= (camera?.current?.zoom - 0.1);
+
+            if (distanceToCenter >= (isDesktop ? 25 : 40)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.FAR
+              }))
+            } else if (distanceToCenter < (isDesktop ? 5 : 10)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.EXTRA_LARGE
+              }))
+            } else if (distanceToCenter < (isDesktop ? 12.5 : 15)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LABEL
+              }))
+            } else if (distanceToCenter < (isDesktop ? 20 : 20)) {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_ALL
+              }))
+            } else {
+              dispatch(setInCloseZoomMode({
+                isInCloseZoomMode: ZOOM_CONTROL_LEVEL.SHOW_LINE
+              }))
+            }
           }
 
           //defineAndRestateFrustum();

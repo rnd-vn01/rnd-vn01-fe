@@ -49,6 +49,14 @@
       transform: translateY(3.5px);
       border: 1px solid black;
     }
+
+    &--icon-gear {
+      position: absolute;
+      right: 2.5px;
+      bottom: -2.5px;
+      height: 12px;
+      width: 12px;
+    }
   }
 
   &__dropdown {
@@ -67,6 +75,7 @@
       cursor: pointer;
       padding: 0 5px;
       font-size: 1.1rem;
+      width: 100%;
 
       &:hover {
         background: var(--theme-primary)

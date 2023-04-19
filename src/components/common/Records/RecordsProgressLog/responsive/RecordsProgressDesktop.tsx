@@ -36,11 +36,13 @@ export const RecordsProgressDesktop: React.FC<IRecordsProgressLogDesktop> = ({ d
         <div key={index}>
           <div
             ref={el => meridiansRef.current[index] = el}
-            className="col-span-1 records-progress-desktop__meridian flex-center flex-col"
+            className={`col-span-1 records-progress-desktop__meridian flex-center flex-col
+            records-progress-desktop__meridian--${index}
+            ${item.percentage === 0 && `records-progress-desktop__meridian--0pc`}`}
             style={{
               background: `radial-gradient(${MERIDIAN_COLOR_MAP[item.caption]} 0%, ${item.percentage / 2}%, 
               #FFFFFF ${item.percentage}%)`,
-              border: `1px solid ${MERIDIAN_COLOR_MAP[item.caption]}`,
+              border: `1px solid black`,
             }}
             data-tip
             data-for={`tooltip-${index}`}>

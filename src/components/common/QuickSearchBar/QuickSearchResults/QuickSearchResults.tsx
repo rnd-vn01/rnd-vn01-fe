@@ -1,5 +1,5 @@
 import './QuickSearchResults.scss';
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import { capitalize } from 'src/helpers/capitalize';
 import { debounce } from "lodash"
@@ -12,9 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import {
-  setAcupuncturePoints,
   setLineSelectedByLabel,
-  setMeridians,
   setPointSelectedByLabel
 } from 'src/redux/slice';
 import {
@@ -41,15 +39,20 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
 
   const [isLoading, setIsLoading] = useState<any>(false)
   const [results, setResults] = useState<any>({})
+  const cloneAcupuncturePoints = useRef<Array<any>>([]);
+  const cloneMeridians = useRef<Array<any>>([]);
 
   const fetchResults = async (query: string) => {
+    setResults({});
+    setIsLoading(true);
+
     let EXAMPLE_RESULT = {
       meridians: [],
       points: []
     }
 
-    const ACUPUNCTURE_POINTS = acupuncturePoints;
-    const MERIDIANS = meridians;
+    const ACUPUNCTURE_POINTS = cloneAcupuncturePoints.current;
+    const MERIDIANS = cloneMeridians.current;
 
     ACUPUNCTURE_POINTS.forEach((point) => {
       if (passFilter(point, query, true, SEARCH_BY.NAME)
@@ -90,18 +93,31 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
 
   useEffect(() => {
     const updateInitial = async () => {
-      callbackIsReadyForSearch(false);
-      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
-      const dataMeridians = await getMeridians(currentLanguage);
+      let isLoadNew = true;
 
-      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
-      dispatch(setMeridians(dataMeridians))
+      if (!acupuncturePoints.length || !meridians.length) {
+        callbackIsReadyForSearch(false);
+        isLoadNew = true;
+      } else {
+        callbackIsReadyForSearch(true);
+      }
+
+      await getAcupuncturePoints(currentLanguage);
+      await getMeridians(currentLanguage);
 
       callbackIsReadyForSearch(true);
     }
 
     updateInitial();
   }, [])
+
+  useEffect(() => {
+    cloneAcupuncturePoints.current = acupuncturePoints
+  }, [acupuncturePoints])
+
+  useEffect(() => {
+    cloneMeridians.current = meridians
+  }, [meridians])
 
   return (
     <div
@@ -111,7 +127,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
       ${!isLoading && isShowing && Object.keys(results).length > 0 ? "quick-search-results--showing" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
-      <div
+      {query !== "" && <div
         className={`quick-search-results__block--advanced-search flex justify-between`}
         role="div"
         aria-label="quick-search-advanced-search"
@@ -126,7 +142,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
         <div className='inline-flex items-center justify-center' style={{ transform: "rotate(45deg)" }}>
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
-      </div>
+      </div>}
+
       {!isLoading && Object.keys(results).length > 0 &&
         Object.keys(results).map((category: any, index: number) => {
           if (results[category].length > 0) {
@@ -139,12 +156,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
               >
                 <div className="quick-search-results__block--category">
                   <span className="quick-search-results__result-block">
-                    <Highlighter
-                      highlightClassName='quick-search-results__highlighted'
-                      searchWords={[query]}
-                      autoEscape={true}
-                      textToHighlight={capitalize(category)}>
-                    </Highlighter>
+                    {capitalize(t(`general.${category}`))}
                   </span>
                 </div>
                 {results[category].map((item: any, subIndex: number) => (

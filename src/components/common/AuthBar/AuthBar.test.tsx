@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AuthBar } from './AuthBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { resetToInitialStateAuthSlice, resetToInitialStateLanguageSlice, setStateAuth, setStateLanguage } from 'src/redux/slice';
 import { DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
 
 const mockHistoryPush = jest.fn();
@@ -12,7 +12,8 @@ jest.mock("react-router-dom", () => ({
     push: mockHistoryPush,
     location: {
       pathname: []
-    }
+    },
+    go: jest.fn()
   }),
   useLocation: () => ({
     pathname: '',
@@ -20,9 +21,21 @@ jest.mock("react-router-dom", () => ({
   })
 }));
 
+jest.mock('react-i18next', () => ({
+  useTranslation: () => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => { })
+      }
+    }
+  }
+}));
+
 describe('AuthBar', () => {
   afterEach(() => {
     store.dispatch(resetToInitialStateAuthSlice());
+    store.dispatch(resetToInitialStateLanguageSlice());
   })
 
   it("to be rendered successfully", async () => {
@@ -240,6 +253,117 @@ describe('AuthBar', () => {
     await waitFor(() => {
       const profileImage = screen.getByTestId("auth-bar-profile-image");
       expect((profileImage as any).src).toBe(DEFAULT_PROFILE_IMAGE_URL)
+    })
+  })
+
+  it("should show the language dropdown if hovered into language menu option", async () => {
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
+
+    const languageMenuItem = screen.getByRole("menu-item", { name: "menu-item-language" })
+    fireEvent.mouseEnter(languageMenuItem);
+
+    await waitFor(() => {
+      expect(screen.getByRole("div", { name: "dropdown-language" })).not.toHaveClass("auth-bar__dropdown--language--hide")
+    })
+  })
+
+  it("should show the language dropdown then hide if move out of the box for more than 100ms", async () => {
+    jest.useFakeTimers();
+
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
+
+    const languageMenuItem = screen.getByRole("menu-item", { name: "menu-item-language" })
+    fireEvent.mouseEnter(languageMenuItem);
+    fireEvent.mouseLeave(languageMenuItem);
+
+    jest.advanceTimersByTime(100);
+
+    await waitFor(() => {
+      expect(screen.getByRole("div", { name: "dropdown-language" })).toHaveClass("auth-bar__dropdown--language--hide")
+    })
+  })
+
+  it("should update the language to EN if select from the collapsed select", async () => {
+    jest.useFakeTimers();
+
+    store.dispatch(setStateLanguage({
+      currentLanguage: "VI"
+    }))
+
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
+
+    await waitFor(() => {
+      // Click on English
+      fireEvent.click(screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-language-en" }))
+    })
+
+    jest.advanceTimersByTime(100);
+
+    expect(store.getState().languageSlice.currentLanguage).toBe("EN")
+  })
+
+  it("should update the language to VI if select from the collapsed select", async () => {
+    jest.useFakeTimers();
+
+    store.dispatch(setStateLanguage({
+      currentLanguage: "EN"
+    }))
+
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
+
+    await waitFor(() => {
+      // Click on English
+      fireEvent.click(screen.getByRole("menu-item-dropdown", { name: "menu-item-dropdown-language-vi" }))
+    })
+
+    jest.advanceTimersByTime(100);
+
+    expect(store.getState().languageSlice.currentLanguage).toBe("VI")
+  })
+
+  it("should show the language dropdown if mouse leave the language option but mouse enter the language dropdown", async () => {
+    jest.useFakeTimers();
+
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
+
+    const languageMenuItem = screen.getByRole("menu-item", { name: "menu-item-language" })
+    fireEvent.mouseEnter(languageMenuItem);
+    fireEvent.mouseLeave(languageMenuItem);
+
+    const languageDropdown = screen.getByRole("div", { name: "dropdown-language" })
+    fireEvent.mouseEnter(languageDropdown);
+
+    jest.advanceTimersByTime(100);
+
+    await waitFor(() => {
+      expect(languageDropdown).not.toHaveClass("auth-bar__dropdown--language--hide")
+    })
+  })
+
+  it("should hide the language dropdown if mouse leave language dropdown", async () => {
+    jest.useFakeTimers();
+
+    render(<Provider store={store}>
+      <AuthBar />
+    </Provider>)
+
+    const languageMenuItem = screen.getByRole("div", { name: "dropdown-language" })
+    fireEvent.mouseLeave(languageMenuItem);
+
+    jest.advanceTimersByTime(100);
+
+    await waitFor(() => {
+      expect(languageMenuItem).toHaveClass("auth-bar__dropdown--language--hide")
     })
   })
 });

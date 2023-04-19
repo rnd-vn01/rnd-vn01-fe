@@ -39,8 +39,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({
     PointElement,
     LineElement,
     Title,
-    Tooltip,
-    Legend
+    Tooltip
   );
 
   const DATE_UNITS = [t("records.chart.time_units.day"),

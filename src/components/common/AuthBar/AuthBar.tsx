@@ -1,26 +1,36 @@
 import './AuthBar.scss';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
-import Logo from "src/assets/images/Logo.svg";
 import { logout } from 'src/configs/firebase';
-import { resetToInitialStateAuthSlice } from 'src/redux/slice';
+import { resetToInitialStateAuthSlice, resetToInitialStateDataSlice, setStateLanguage } from 'src/redux/slice';
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import IconAdmin from 'src/assets/images/IconAdmin.svg';
 import { DEFAULT_PROFILE_IMAGE_URL } from 'src/configs/constants';
+import { debounce } from "lodash"
 
 export const AuthBar: React.FC = ({ }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
+  const [isOpenDropdownLanguage, setisOpenDropdownLanguage] = useState<boolean>(false);
   const history = useHistory();
   const dispatch = useDispatch();
+  const menuButtonRef = useRef();
+  const menuDropdownRef = useRef();
+  const menuLanguageDropdownRef = useRef();
+  const mouseOverLanguage = useRef<boolean>(false);
   const {
     isLoggedIn,
     user
   } = useSelector(
     (state: RootState) => state.authSlice,
+  );
+  const {
+    currentLanguage
+  } = useSelector(
+    (state: RootState) => state.languageSlice,
   );
   const { t, i18n } = useTranslation();
 
@@ -137,6 +147,43 @@ export const AuthBar: React.FC = ({ }) => {
     },
   ]
 
+  useEffect(() => {
+    document.addEventListener('click', (e) => {
+      const { target } = e
+
+      if ((menuButtonRef as any).current && (menuDropdownRef as any).current) {
+        if (!(menuButtonRef as any).current.contains(target)
+          && !(menuDropdownRef as any).current.contains(target)) {
+          setIsOpenDropdown(false);
+        }
+      }
+    })
+  }, []);
+
+  useEffect(() => {
+    setisOpenDropdownLanguage(false);
+  }, [isOpenDropdown])
+
+  const debounceMouseLeaveLanguage = useCallback(
+    debounce(() => {
+      if (!mouseOverLanguage.current) {
+        setisOpenDropdownLanguage(false);
+      }
+    }, 100), []);
+
+  const setLanguage = (language: string) => {
+    console.log("called set language with", language)
+    dispatch(setStateLanguage({
+      currentLanguage: language
+    }))
+    i18n.changeLanguage(language.toLowerCase())
+
+    setTimeout(() => {
+      dispatch(resetToInitialStateDataSlice(null));
+      history.go(0);
+    }, 50)
+  }
+
   return (
     <div
       role="div"
@@ -148,6 +195,7 @@ export const AuthBar: React.FC = ({ }) => {
             className="auth-bar__menu--button-logo inline-flex w-fit h-full flex-center"
             role="menu-button"
             aria-label="auth-bar-menu-button"
+            ref={menuButtonRef}
             onClick={() => setIsOpenDropdown(!isOpenDropdown)}>
             {isLoggedIn ?
               <>
@@ -161,10 +209,35 @@ export const AuthBar: React.FC = ({ }) => {
           </div>
         </span>
 
-        <div className={`auth-bar__dropdown w-fit h-fit flex flex-col items-start justify-center
+        <div
+          ref={menuDropdownRef}
+          className={`auth-bar__dropdown w-fit h-fit flex flex-col items-start justify-center
           p-1 ${!isOpenDropdown && "auth-bar__dropdown--hide"}`}
           role="div"
           aria-label="auth-bar-dropdown">
+          <div
+            className='w-full'
+            role="menu-item"
+            aria-label={`menu-item-language`}
+            key={`menu-lanugage`}
+            onMouseEnter={() => setisOpenDropdownLanguage(true)}
+            onMouseLeave={() => debounceMouseLeaveLanguage()}>
+            <div
+              className="auth-bar__dropdown--item w-fit"
+              role="menu-item-dropdown"
+              aria-label={`menu-item-dropdown-language`}>
+              <span className='w-100 flex justify-between'>
+                {t('auth_bar.menu.language')}
+
+                <FontAwesomeIcon
+                  icon={faChevronRight}
+                  className='auth-bar__dropdown--item-icon'
+                ></FontAwesomeIcon>
+              </span>
+            </div>
+
+            <hr className='auth-bar__dropdown--divider w-100' />
+          </div>
           {isLoggedIn ? MENU_ITEMS.map((item, index) => {
             if (item.selectable) {
               return (
@@ -204,6 +277,53 @@ export const AuthBar: React.FC = ({ }) => {
               )
             })
           }
+
+          <div
+            className={`auth-bar__dropdown--language 
+              ${!isOpenDropdownLanguage && "auth-bar__dropdown--language--hide"}`}
+            ref={menuLanguageDropdownRef}
+            onMouseEnter={() => mouseOverLanguage.current = true}
+            onMouseLeave={() => {
+              mouseOverLanguage.current = false;
+              setisOpenDropdownLanguage(false);
+            }}
+            role="div"
+            aria-label="dropdown-language"
+          >
+            <div
+              className='w-full'
+              role="menu-item"
+              aria-label={`menu-item-language-en`}
+              key={`menu-lanugage-en`}>
+              <div
+                className={`auth-bar__dropdown--language--item w-fit
+                  ${currentLanguage === "EN" && "auth-bar__dropdown--language--selected"}
+                `}
+                role="menu-item-dropdown"
+                aria-label={`menu-item-dropdown-language-en`}
+                onClick={() => setLanguage("EN")}
+              >
+                English
+              </div>
+            </div>
+
+            <div
+              className='w-full'
+              role="menu-item"
+              aria-label={`menu-item-language-vi`}
+              key={`menu-lanugage-vi`}>
+              <div
+                className={`auth-bar__dropdown--language--item w-fit
+                  ${currentLanguage === "VI" && "auth-bar__dropdown--language--selected"}
+                `}
+                role="menu-item-dropdown"
+                aria-label={`menu-item-dropdown-language-vi`}
+                data-testid={`menu-item-language-vi`}
+                onClick={() => setLanguage("VI")}>
+                Tiếng Việt
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

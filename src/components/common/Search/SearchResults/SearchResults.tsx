@@ -19,7 +19,8 @@ export const SearchResults: React.FC<ISearchResults> = ({
   callbackSetNumberOfMatchingResults,
   callbackSetChoosingAlphabet,
   callbackSetIsFilter,
-  isFilter
+  isFilter,
+  passedFilterOptions
 }) => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -121,6 +122,12 @@ export const SearchResults: React.FC<ISearchResults> = ({
     }, 250)
   }, [filteredResults, allAlphabetFilteredResults])
 
+  useEffect(() => {
+    if (Object.keys(passedFilterOptions).length) {
+      setCurrentFilterOptions(passedFilterOptions)
+    }
+  }, [passedFilterOptions])
+
   const processShowingItems = () => {
     let newResults = results.filter(
       item => passFilter(item, query, item.diseases ? false : true, currentFilterOptions.searchBy)
@@ -214,6 +221,7 @@ export const SearchResults: React.FC<ISearchResults> = ({
                       query={[query]}
                       usingLanguage={currentLanguage}
                       isPoint={result.diseases ? false : true}
+                      filterOptions={currentFilterOptions}
                     />)}
                 </InfiniteScroll>
               </div>

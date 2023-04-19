@@ -155,6 +155,7 @@ interface ISearchResults {
   callbackSetChoosingAlphabet?: (boolean) => void;
   isFilter?: boolean;
   callbackSetIsFilter?: (boolean) => void;
+  passedFilterOptions?: any;
 }
 
 interface ISearchResultItem {
@@ -162,6 +163,7 @@ interface ISearchResultItem {
   isPoint?: boolean;
   usingLanguage?: "EN" | "VI";
   query?: Array<string>;
+  filterOptions?: any;
 }
 
 interface ISearchResultsAlphabetFilters {
@@ -250,6 +252,7 @@ interface ISelectionSlice {
   secondarySelectedMeridian?: string;
   backupSelectedPoint?: string;
   backupSelectedNeighbors?: Array<string>;
+  loadingQuickInformation?: boolean;
 }
 
 interface IModelInteractionControl {
@@ -331,4 +334,18 @@ interface ISideCriteriaBox {
 interface IDataSlice {
   acupuncturePoints: Array<IAcupuncturePoint>,
   meridians: Array<IMeridian>
+}
+
+interface INavigationSlice {
+  quickSearchPersistQuery?: string;
+  backFromInformationBlock?: boolean;
+  viewDetailsLastPage?: ILastPagePersist;
+  homeQueryPersistThroughNavigation?: string;
+}
+
+interface ILastPagePersist {
+  path?: string;
+  isRedirect?: boolean;
+  query?: string;
+  filterOptions?: any;
 }

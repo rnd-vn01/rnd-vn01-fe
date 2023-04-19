@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 
-import { setShowingQuickInformation } from 'src/redux/slice';
+import { setLoadingQuickInformation, setShowingQuickInformation } from 'src/redux/slice';
 import { getAcupuncturePointByCode, getMeridianByCode } from 'src/helpers/api/items';
 
 export const QuickInformationMiddleware: React.FC = ({ }) => {
   const {
     selectedLabel,
     selectedType,
+    loadingQuickInformation
   } = useSelector(
     (state: RootState) => state.selectionSlice,
   );
@@ -25,7 +26,10 @@ export const QuickInformationMiddleware: React.FC = ({ }) => {
     const getItemInformation = async () => {
       if (selectedLabel != undefined) {
         if (selectedType === "point") {
+          dispatch(setLoadingQuickInformation(true))
           const item = await getAcupuncturePointByCode(currentLanguage, selectedLabel)
+          dispatch(setLoadingQuickInformation(false))
+
           dispatch(setShowingQuickInformation({
             quickInformation: {
               type: "point",
@@ -33,7 +37,10 @@ export const QuickInformationMiddleware: React.FC = ({ }) => {
             }
           }))
         } else {
+          dispatch(setLoadingQuickInformation(true))
           const item = await getMeridianByCode(currentLanguage, selectedLabel)
+          dispatch(setLoadingQuickInformation(false))
+
           dispatch(setShowingQuickInformation({
             quickInformation: {
               type: "line",

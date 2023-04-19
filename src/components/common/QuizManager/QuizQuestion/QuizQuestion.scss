@@ -63,21 +63,21 @@
     }
 
     &--true {
-      background: #95A543;
-      color: white;
+      background: #76CE31;
+      color: black;
 
       &:hover {
-        background: #95A543 !important;
-        color: white;
+        background: #76CE31 !important;
+        color: black;
       }
     }
 
     &--false {
-      background: var(--theme-danger);
+      background: #CE3B32;
       color: white;
 
       &:hover {
-        background: var(--theme-danger) !important;
+        background: #CE3B32 !important;
         color: white;
       }
     }

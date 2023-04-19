@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { ItemDetail } from './ItemDetail';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
+import { resetToInitialStateAuthSlice, resetToInitialStateNavigationSlice, setStateAuth, setViewDetailsPersistLastPage } from 'src/redux/slice';
 
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -39,6 +39,7 @@ const DEMO_MERIDIAN = {
 describe('ItemDetail', () => {
   afterEach(() => {
     store.dispatch(resetToInitialStateAuthSlice());
+    store.dispatch(resetToInitialStateNavigationSlice());
   })
 
   it("to be rendered successfully", async () => {
@@ -161,6 +162,63 @@ describe('ItemDetail', () => {
 
     await waitFor(() => {
       expect(mockHistoryPush).toHaveBeenCalledWith("/?type=line&code=LU", { "isRedirect": true })
+    })
+  })
+
+  it("should pass the param if clicking on back and passed state is stored in slice", async () => {
+    store.dispatch(setViewDetailsPersistLastPage({
+      path: "testPath",
+      isRedirect: true,
+      query: "testQuery",
+      filterOptions: {}
+    }))
+
+    render(<Provider store={store}>
+      <ItemDetail
+        item={DEMO_POINT}
+        query={'query'}
+        isPoint={true}
+      />
+    </Provider>)
+
+    const backIcon = screen.getByTestId("back-icon")
+    fireEvent.click(backIcon)
+
+    await waitFor(() => {
+      expect(mockHistoryPush).toHaveBeenCalledWith("testPath", {
+        isRedirect: true,
+        query: "testQuery",
+        filterOptions: {}
+      })
+      expect(store.getState().navigationSlice.homeQueryPersistThroughNavigation).toBe("testQuery")
+    })
+  })
+
+  it("should pass the param if clicking on back and passed state is stored in slice - case no query", async () => {
+    store.dispatch(setViewDetailsPersistLastPage({
+      path: "testPath",
+      isRedirect: true,
+      query: "",
+      filterOptions: {}
+    }))
+
+    render(<Provider store={store}>
+      <ItemDetail
+        item={DEMO_POINT}
+        query={'query'}
+        isPoint={true}
+      />
+    </Provider>)
+
+    const backIcon = screen.getByTestId("back-icon")
+    fireEvent.click(backIcon)
+
+    await waitFor(() => {
+      expect(mockHistoryPush).toHaveBeenCalledWith("testPath", {
+        isRedirect: true,
+        query: "",
+        filterOptions: {}
+      })
     })
   })
 });

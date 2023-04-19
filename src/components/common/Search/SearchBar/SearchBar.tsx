@@ -2,7 +2,7 @@ import './SearchBar.scss';
 import React, { useState, useRef, useEffect } from "react";
 import SearchIconGray from "src/assets/images/SearchIconGray.svg"
 import SearchIconBlack from "src/assets/images/SearchIconBlack.svg"
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SearchProcessor } from '../SearchProcessor/SearchProcessor';
 import IconFilterOn from 'src/assets/images/IconFilterOn.svg';
@@ -22,7 +22,7 @@ export const SearchBar: React.FC<ISearchBar> = ({
   paramPassedIsFilter
 }) => {
   const inputBoxRef = useRef()
-  const history = useHistory();
+  const location = useLocation() as any;
 
   const [usingQuickSearchIconImage, setUsingQuickSearchIconImage] = useState<any>(SearchIconGray)
   const [query, setQuery] = useState<string>("");
@@ -30,13 +30,17 @@ export const SearchBar: React.FC<ISearchBar> = ({
 
   const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [isFilter, setIsFilter] = useState<boolean>(true);
   const [isReadyForSearch, setIsReadyForSearch] = useState<boolean>(false);
 
   const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     callbackSetResults(searchResults)
+
+    if (location?.state?.fromDetailPage) {
+      (inputBoxRef.current as HTMLInputElement)?.focus()
+    }
   }, [searchResults])
 
   useEffect(() => {
@@ -51,7 +55,6 @@ export const SearchBar: React.FC<ISearchBar> = ({
     if (isReadyForSearch) {
       if (passedQuery && passedQuery !== query) {
         setQuery(passedQuery)
-        MySwal.close();
       }
     }
   }, [isReadyForSearch])
@@ -59,14 +62,6 @@ export const SearchBar: React.FC<ISearchBar> = ({
   useEffect(() => {
     setIsFilter(paramPassedIsFilter)
   }, [paramPassedIsFilter])
-
-  useEffect(() => {
-    if (isReadyForSearch) {
-      if (passedQuery && passedQuery !== query) {
-        setQuery(passedQuery)
-      }
-    }
-  }, [isReadyForSearch])
 
   return (
     <div

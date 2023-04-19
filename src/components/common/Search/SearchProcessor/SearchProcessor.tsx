@@ -18,6 +18,7 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
 
   const [isLoading, setIsLoading] = useState<any>(true)
   const [results, setResults] = useState<any>([])
+
   const {
     currentLanguage
   } = useSelector(
@@ -85,13 +86,17 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
 
   useEffect(() => {
     const updateInitial = async () => {
-      callbackIsReadyForSearch(false);
+      let isLoadNew = false;
 
-      const dataAcupuncturePoints = await getAcupuncturePoints(currentLanguage);
-      const dataMeridians = await getMeridians(currentLanguage);
+      if (!acupuncturePoints || !meridians) {
+        callbackIsReadyForSearch(false);
+        isLoadNew = true;
+      } else {
+        callbackIsReadyForSearch(true);
+      }
 
-      dispatch(setAcupuncturePoints(dataAcupuncturePoints))
-      dispatch(setMeridians(dataMeridians))
+      await getAcupuncturePoints(currentLanguage);
+      await getMeridians(currentLanguage);
 
       callbackIsReadyForSearch(true);
     }

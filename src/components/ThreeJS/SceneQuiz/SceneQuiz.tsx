@@ -25,6 +25,7 @@ import { angleToRadians } from 'src/helpers/angle';
 import { useSelector } from 'react-redux';
 import { FOCUS_OPTIONS, MERIDIANS, POINT_LOCATIONS } from 'src/configs/constants';
 import { useMediaQuery } from 'react-responsive';
+import { Floor } from '../Floor/Floor';
 
 enum PAN_DIRECTION {
   LEFT = 0,
@@ -376,10 +377,7 @@ export const SceneQuiz = forwardRef((props, ref) => {
       {quizField === 0 && <Others
         showLine={isShowingLine} />}
       {/* Floor */}
-      <mesh rotation={[-(angleToRadians(90)), 0.02, 0]} position={[0, -29.9, 0]} receiveShadow>
-        <planeGeometry args={[3000, 300]} />
-        <meshStandardMaterial color="#d3edfb" />
-      </mesh>
+      <Floor />
 
     </Suspense >
   );

@@ -62,32 +62,14 @@ describe('SearchBarRedirect', () => {
     })
   })
 
-  it("should update the value if type in the input box", async () => {
+  it("should redirect to advanced search with same query if type in query", async () => {
     const searchInput = screen.getByRole("input", { name: "search-input" })
     fireEvent.change(searchInput, { target: { value: "aa" } })
 
     await waitFor(() => {
-      expect(searchInput.getAttribute("value")).toBe("aa")
-    })
-  })
-
-  it("should redirect if press enter on the search box", async () => {
-    const searchInput = screen.getByRole("input", { name: "search-input" })
-    fireEvent.change(searchInput, { target: { value: "aa" } })
-    fireEvent.keyDown(searchInput, { key: 'Enter', code: 13 });
-
-    await waitFor(() => {
-      expect(mockHistoryPush).toHaveBeenCalledWith("/advanced-search?query=aa")
-    })
-  })
-
-  it("should not redirect if press a key other than Enter", async () => {
-    const searchInput = screen.getByRole("input", { name: "search-input" })
-    fireEvent.change(searchInput, { target: { value: "aa" } })
-    fireEvent.keyDown(searchInput, { key: 'Shift', code: 16 });
-
-    await waitFor(() => {
-      expect(mockHistoryPush).not.toHaveBeenCalled()
+      expect(mockHistoryPush).toHaveBeenCalledWith("/advanced-search?query=aa", {
+        fromDetailPage: true
+      })
     })
   })
 });

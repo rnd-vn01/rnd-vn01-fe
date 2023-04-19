@@ -19,6 +19,7 @@ export const initialStateSelectionSlice = {
   secondarySelectedMeridian: null,
   backupSelectedPoint: "",
   backupSelectedNeighbors: [],
+  loadingQuickInformation: false
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -42,6 +43,7 @@ export const selectionSlice = createSlice({
       state.preSelectLine = null;
       state.showingNeighbors = [];
       state.secondarySelectedMeridian = null;
+      state.loadingQuickInformation = false;
     },
 
     setPointSelected(state, action) {
@@ -259,6 +261,10 @@ export const selectionSlice = createSlice({
     setRemoveBackup(state) {
       state.backupSelectedNeighbors = []
       state.backupSelectedPoint = "";
+    },
+
+    setLoadingQuickInformation(state, action) {
+      state.loadingQuickInformation = action.payload;
     }
   },
 });
@@ -268,5 +274,5 @@ export const { resetToInitialStatePointSelectionSlice, setPointSelected,
   setLineSelected, setIsHoveringPoint, setIsHoveringLine, setIsCurrentMousePosition,
   setIsCurrentMouseMovePosition, setLineHover, setLineSelectedByLabel,
   setShowingQuickInformation, setPointSelectedByLabel, setLinePreSelectByLabel,
-  setRemoveBackup } = actions;
+  setRemoveBackup, setLoadingQuickInformation } = actions;
 export default reducer;
