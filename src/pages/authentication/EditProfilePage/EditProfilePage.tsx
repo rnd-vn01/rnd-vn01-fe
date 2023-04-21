@@ -273,8 +273,8 @@ export const EditProfilePage: React.FC = ({
         </div>
 
         <input style={{ display: "none" }} type='file' id="uploadImage" name="uploadImage"
+          accept="image/png, image/jpeg"
           onChange={handleInputChange} />
-
 
         <Button
           theme="filled"
