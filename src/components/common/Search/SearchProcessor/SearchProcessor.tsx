@@ -33,8 +33,8 @@ export const SearchProcessor: React.FC<ISearchProcessor> = ({
   const dispatch = useAppDispatch();
 
   const fetchResults = (query: string) => {
-    const ACUPUNCTURE_POINTS = acupuncturePoints;
-    const MERIDIANS = meridians;
+    const ACUPUNCTURE_POINTS = acupuncturePoints || [];
+    const MERIDIANS = meridians || [];
 
     let results = []
     if (query !== "") {
