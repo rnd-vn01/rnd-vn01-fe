@@ -32,7 +32,7 @@
     &--back {
       position: absolute;
       left: 0px;
-      top: 5px;
+      bottom: 13px;
       height: 20px;
       display: block;
       opacity: 0.5;
@@ -46,8 +46,8 @@
 
     &--edit {
       position: absolute;
-      right: 0px;
-      top: 5px;
+      right: -10px;
+      bottom: 13px;
       height: 20px;
       display: block;
       opacity: 0.5;
@@ -60,13 +60,18 @@
     }
 
     &--view-on-model {
-      height: 75%;
+      height: 100%;
       width: 30px;
       opacity: 0.5;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
       margin-left: 10px;
+      bottom: 0;
+
+      svg {
+        height: 22.5px;
+      }
 
       &:hover {
         opacity: 1
