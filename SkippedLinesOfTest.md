@@ -8,7 +8,7 @@ src/components/common/Records/RecordsProgressLog
     RecordsProgressLog.tsx ~ 33
 
 src/components/common/Records/RecordsProgressLog/responsive
-    RecordsProgressDesktop.tsx ~ 18
+    RecordsProgressDesktop.tsx ~ 21-26
 
 src/components/common/Search/SearchResults
     SearchResults.tsx ~ 164-167,215
@@ -17,9 +17,6 @@ src/helpers
     searchProcess.ts ~ 131
     statistics.ts ~ 72,116,157-165
     
-src/pages/AdvancedSearchPage
-    AdvancedSearchPage.tsx ~ 55-60
-
 src/pages/PersonalRecordsPage
     PersonalRecordsPage.tsx ~ 41-44,53-58,68
     PersonalRecordsPageDesktop.tsx ~ 41-44,53-58,68

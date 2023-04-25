@@ -51,15 +51,17 @@ export const MenuBar: React.FC<IMenuBar> = ({
         {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
 
-      <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
+      {/* <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
       ${!isShowing && "menu-bar__item--hidden"}`}
         data-testid="model-control-box">
         {!isShowingSideMenu && <ModelViewModeControl />}
         {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
-      </div>
+      </div> */}
 
       <div className={`menu-bar__item ${isShowingSideMenu && "menu-bar__item--no-wrap"}
-      ${!isShowing && "menu-bar__item--hidden"}`}>
+      ${!isShowing && "menu-bar__item--hidden"}`}
+        data-testid="meridian-control"
+      >
         {!isShowingSideMenu && <MeridianControlResponsive />}
         {isShowingSearchBar && <div className='menu-bar__item--overlayed' />}
       </div>
@@ -68,7 +70,9 @@ export const MenuBar: React.FC<IMenuBar> = ({
       ${!isShowing && "menu-bar__item--hidden"}`}
         onClick={() => callbackSetIsShowingSearchBar(!isShowingSearchBar)}
         role="menu-button"
-        aria-label="search-bar">
+        aria-label="search-bar"
+        data-testid="search-bar"
+      >
         {!isShowingSideMenu &&
           <div className='w-full h-full flex-center'>
             <FontAwesomeIcon className="menu-bar__menu--icon-search" icon={isShowingSearchBar ? faXmark : faSearch} />
