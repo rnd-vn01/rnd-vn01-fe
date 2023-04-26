@@ -247,6 +247,7 @@ i18n
               dr: "Dr.",
               supervisor: "Supervisor",
               nhan_le_thi: "Nhan Le Thi",
+              lecturer_hcmus: "Senior Lecturer at University of Science - VNU HCM",
               development_team: "Development team",
               members: {
                 nhan_nguyen_cao: "Nhan Nguyen Cao",
@@ -266,7 +267,10 @@ i18n
               consultants: {
                 title: "Consultants",
                 minh_ma_hoang: "Minh Ma Hoang",
-                van_le_thi_tuong: "Van Le Thi Tuong"
+                van_le_thi_tuong: "Van Le Thi Tuong",
+                acupuncturist: "Acupuncturist",
+                visiting_lecturer: "Visiting lecturer at Ho Chi Minh City University of Medicine and Pharmacy",
+                lecturer: "Lecturer at Pham Ngoc Thach University of Medicine"
               },
               users: {
                 title: "Users",
@@ -610,6 +614,7 @@ i18n
               dr: "TS.",
               supervisor: "Giáo viên Hướng dẫn",
               nhan_le_thi: "Lê Thị Nhàn",
+              lecturer_hcmus: "Giảng viên Đại học Khoa học Tự nhiên - ĐHQG TP.HCM",
               development_team: "Nhóm thực hiện",
               members: {
                 nhan_nguyen_cao: "Nguyễn Cao Nhân",
@@ -629,7 +634,10 @@ i18n
               consultants: {
                 title: "Cố vấn Chuyên môn",
                 minh_ma_hoang: "Mã Hoàng Minh",
-                van_le_thi_tuong: "Lê Thị Tường Vân"
+                van_le_thi_tuong: "Lê Thị Tường Vân",
+                acupuncturist: "Bác sĩ Châm cứu",
+                visiting_lecturer: "Giảng viên Thỉnh giảng Đại học Y Dược TP.HCM",
+                lecturer: "Giảng viên Đại học Y Khoa Phạm Ngọc Thạch"
               },
               users: {
                 title: "Người dùng",
