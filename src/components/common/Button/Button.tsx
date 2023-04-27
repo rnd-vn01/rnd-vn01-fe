@@ -13,7 +13,8 @@ export const Button: React.FC<IButton> = ({
 
   return (
     <button
-      className={`button flex-center ${themeClass}`}
+      className={`button flex-center ${themeClass}
+      ${isDisabled && "button--disabled"}`}
       onClick={() => {
         if (!isDisabled)
           onClick();

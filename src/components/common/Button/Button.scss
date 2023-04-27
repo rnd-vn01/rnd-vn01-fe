@@ -35,6 +35,16 @@
     }
   }
 
+  &--disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+
+    &:hover {
+      opacity: 0.75;
+      background: var(--theme-primary);
+    }
+  }
+
   &__caption {
     margin: 0;
     padding: 0;

@@ -16,6 +16,8 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
 
     @include smallscreen {
       max-height: calc(100% - 130px);
@@ -24,6 +26,12 @@
 
     @include tablet {
       font-size: 1.25rem;
+    }
+
+    p {
+      max-height: 100%;
+      overflow-y: auto;
+      padding: 10px 0px;
     }
 
     &--navigate {

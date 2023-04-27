@@ -25,6 +25,8 @@ export const EditProfilePage: React.FC = ({
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
+
   // RESPONSIVE
   const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
@@ -105,6 +107,7 @@ export const EditProfilePage: React.FC = ({
 
   const upload = async (file: any) => {
     return new Promise((resolve, reject) => {
+      setIsUploadingImage(true);
       const storageRef = ref(storage, `/accounts/${file.name}-${Date.now()}`)
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -119,6 +122,7 @@ export const EditProfilePage: React.FC = ({
           }
         },
         function (error) {
+          setIsUploadingImage(false);
           setImageError("Error occured");
           switch (error.code) {
             case "storage/unauthorized":
@@ -136,6 +140,7 @@ export const EditProfilePage: React.FC = ({
         },
         function () {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setIsUploadingImage(false);
             resolve({
               default: downloadURL
             });
@@ -280,8 +285,11 @@ export const EditProfilePage: React.FC = ({
           theme="filled"
           caption={t('edit_profile_page.button_captions.update_profile')}
           name="update-profile"
+          isDisabled={isUploadingImage}
           onClick={() => {
-            validateAndSave();
+            if (!isUploadingImage) {
+              validateAndSave();
+            }
           }}
         />
       </div>
