@@ -124,7 +124,8 @@ export enum SUMMARY_SHOWING_TIME_TYPE_OPTIONS {
 
 export const ADMIN_EMAILS = [
   "nguyencaonhan001@gmail.com",
-  "ad.rnd.vn01@gmail.com"
+  "ad.rnd.vn01@gmail.com",
+  "cycle13.rnd.vn01@gmail.com"
 ]
 
 export const LINE_POINTS = {
