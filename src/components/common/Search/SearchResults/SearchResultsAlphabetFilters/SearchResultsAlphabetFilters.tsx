@@ -62,7 +62,11 @@ export const SearchResultsAlphabetFilters: React.FC<ISearchResultsAlphabetFilter
         key={`alphabet-${index}`}
         className={`search-results-alphabet-filters__alphabet col-span-1 text-center
           ${alphabet.isAvailable ? "search-results-alphabet-filters__alphabet--available" : ""}`}
-        onClick={() => callbackSetAlphabetFilteringOption(alphabet.index)}
+        onClick={() => {
+          if (alphabet.isAvailable) {
+            callbackSetAlphabetFilteringOption(alphabet.index)
+          }
+        }}
         role="h1"
         aria-label={`search-results-alphabet-${alphabet.letter}`}
         data-testid={`search-results-alphabet-${alphabet.index}`}
