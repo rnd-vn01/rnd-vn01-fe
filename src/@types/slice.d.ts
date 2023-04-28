@@ -185,6 +185,7 @@ interface IItemDetail {
 interface IItemDetailEdit extends IItemDetail {
   callbackUpdateDetail?: (any) => void;
   mobileCalledEditDetail?: number;
+  resetItemDetail?: (any) => void;
 }
 
 interface IPersonalRecordsPage {

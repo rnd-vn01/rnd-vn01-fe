@@ -303,13 +303,43 @@ describe('ItemDetailEdit - Desktop', () => {
 
   it("should redirect to details page if clicking on cancel button", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
+    const mockResetItemDetail = jest.fn();
 
     render(
       <ResponsiveContext.Provider value={{ width: 1200 }}>
         <Provider store={store}>
           <ItemDetailEdit
             item={ITEM}
-            isPoint={true} />
+            isPoint={true}
+            resetItemDetail={mockResetItemDetail} />
+        </Provider></ResponsiveContext.Provider>)
+
+    const inputCaution = screen.getByRole("textarea", { name: "textarea-caution" })
+    fireEvent.change(inputCaution, { target: { value: "New Caution" } })
+
+    await waitFor(() => {
+      fireEvent.change(inputCaution, { target: { value: "New Caution 2" } })
+
+      const buttonCancel = screen.getByRole("div", { name: "button-cancel" })
+      fireEvent.click(buttonCancel)
+    })
+
+    await waitFor(() => {
+      expect(mockResetItemDetail).toHaveBeenCalledWith(JSON.parse(JSON.stringify(DEMO_POINT)))
+    })
+  })
+
+  it("should pass original object if updated and clicked on cancel button", async () => {
+    const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
+    const mockResetItemDetail = jest.fn();
+
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true}
+            resetItemDetail={mockResetItemDetail} />
         </Provider></ResponsiveContext.Provider>)
 
     const buttonCancel = screen.getByRole("div", { name: "button-cancel" })
@@ -317,6 +347,7 @@ describe('ItemDetailEdit - Desktop', () => {
 
     await waitFor(() => {
       expect(true).toBeTruthy();
+      expect(mockResetItemDetail).toHaveBeenCalledWith(ITEM)
     })
   })
 

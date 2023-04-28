@@ -220,6 +220,7 @@ export const DetailPage: React.FC<IDetailPage> = ({
             query={hookQuery.get('query')}
             callbackUpdateDetail={handleUpdate}
             mobileCalledEditDetail={mobileCalledEditDetail}
+            resetItemDetail={setDetail}
           />
         )}
       </div>

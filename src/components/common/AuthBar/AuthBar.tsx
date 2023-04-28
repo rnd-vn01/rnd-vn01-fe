@@ -172,7 +172,6 @@ export const AuthBar: React.FC = ({ }) => {
     }, 100), []);
 
   const setLanguage = (language: string) => {
-    console.log("called set language with", language)
     dispatch(setStateLanguage({
       currentLanguage: language
     }))
