@@ -2,7 +2,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { ChangePasswordPage } from './ChangePasswordPage';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
-import Swal from 'sweetalert2';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
