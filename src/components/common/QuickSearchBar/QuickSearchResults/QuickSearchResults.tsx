@@ -1,13 +1,8 @@
 import './QuickSearchResults.scss';
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import { capitalize } from 'src/helpers/capitalize';
 import { debounce } from "lodash"
-
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
-import DEMO_DATA_MERIDIAN_VI from 'src/assets/test_data/meridians_vi.json';
-import DEMO_DATA_MERIDIAN_EN from 'src/assets/test_data/meridians_en.json';
 
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
@@ -16,9 +11,17 @@ import Highlighter from 'react-highlight-words';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { setLineSelectedByLabel, setPointSelectedByLabel } from 'src/redux/slice';
+import {
+  setLineSelectedByLabel,
+  setPointSelectedByLabel
+} from 'src/redux/slice';
+import {
+  getAcupuncturePoints,
+  getMeridians
+} from 'src/helpers/api/items';
 
-export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isShowing }) => {
+export const QuickSearchResults: React.FC<IQuickSearchResults> = ({
+  query, isShowing, callbackIsReadyForSearch }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const {
@@ -26,21 +29,32 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
   } = useSelector(
     (state: RootState) => state.languageSlice,
   );
+  const {
+    acupuncturePoints,
+    meridians
+  } = useSelector(
+    (state: RootState) => state.dataSlice,
+  );
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState<any>(false)
   const [results, setResults] = useState<any>({})
+  const cloneAcupuncturePoints = useRef<Array<any>>([]);
+  const cloneMeridians = useRef<Array<any>>([]);
 
   const fetchResults = async (query: string) => {
+    setResults({});
+    setIsLoading(true);
+
     let EXAMPLE_RESULT = {
       meridians: [],
       points: []
     }
 
-    const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI
-    const DEMO_DATA_MERIDIAN = currentLanguage === "EN" ? DEMO_DATA_MERIDIAN_EN : DEMO_DATA_MERIDIAN_VI
+    const ACUPUNCTURE_POINTS = cloneAcupuncturePoints.current;
+    const MERIDIANS = cloneMeridians.current;
 
-    DEMO_DATA.forEach((point) => {
+    ACUPUNCTURE_POINTS.forEach((point) => {
       if (passFilter(point, query, true, SEARCH_BY.NAME)
         || passFilter(point, query, true, SEARCH_BY.CODE)) {
         EXAMPLE_RESULT.points.push({
@@ -50,7 +64,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
       }
     })
 
-    DEMO_DATA_MERIDIAN.forEach((meridian) => {
+    MERIDIANS.forEach((meridian) => {
       if (passFilter(meridian, query, false, SEARCH_BY.NAME)
         || passFilter(meridian, query, false, SEARCH_BY.CODE)) {
         EXAMPLE_RESULT.meridians.push({
@@ -77,6 +91,34 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
     }
   }, [query]);
 
+  useEffect(() => {
+    const updateInitial = async () => {
+      let isLoadNew = true;
+
+      if (!acupuncturePoints.length || !meridians.length) {
+        callbackIsReadyForSearch(false);
+        isLoadNew = true;
+      } else {
+        callbackIsReadyForSearch(true);
+      }
+
+      await getAcupuncturePoints(currentLanguage);
+      await getMeridians(currentLanguage);
+
+      callbackIsReadyForSearch(true);
+    }
+
+    updateInitial();
+  }, [])
+
+  useEffect(() => {
+    cloneAcupuncturePoints.current = acupuncturePoints
+  }, [acupuncturePoints])
+
+  useEffect(() => {
+    cloneMeridians.current = meridians
+  }, [meridians])
+
   return (
     <div
       role="div"
@@ -85,7 +127,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
       ${!isLoading && isShowing && Object.keys(results).length > 0 ? "quick-search-results--showing" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
-      <div
+      {query !== "" && <div
         className={`quick-search-results__block--advanced-search flex justify-between`}
         role="div"
         aria-label="quick-search-advanced-search"
@@ -100,7 +142,8 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
         <div className='inline-flex items-center justify-center' style={{ transform: "rotate(45deg)" }}>
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
-      </div>
+      </div>}
+
       {!isLoading && Object.keys(results).length > 0 &&
         Object.keys(results).map((category: any, index: number) => {
           if (results[category].length > 0) {
@@ -113,12 +156,7 @@ export const QuickSearchResults: React.FC<IQuickSearchResults> = ({ query, isSho
               >
                 <div className="quick-search-results__block--category">
                   <span className="quick-search-results__result-block">
-                    <Highlighter
-                      highlightClassName='quick-search-results__highlighted'
-                      searchWords={[query]}
-                      autoEscape={true}
-                      textToHighlight={capitalize(category)}>
-                    </Highlighter>
+                    {capitalize(t(`general.${category}`))}
                   </span>
                 </div>
                 {results[category].map((item: any, subIndex: number) => (

@@ -21,6 +21,7 @@ interface IAuthSlice {
 interface IQuickSearchResults {
   query: string;
   isShowing?: boolean;
+  callbackIsReadyForSearch?: (boolean) => void;
 }
 
 interface ILanguageSlice {
@@ -63,6 +64,7 @@ interface IModel {
 interface IQuizManager {
   callbackSetQuestionType?: (number) => void;
   callbackSetQuizStatus?: (any) => void;
+  callbackSetQuizState?: (number) => void;
 }
 
 interface IQuizOptions {
@@ -122,6 +124,7 @@ interface ISearchProcessor {
   query?: query;
   callbackSetResults?: (any) => void;
   callbackSetLoading?: (boolean) => void;
+  callbackIsReadyForSearch?: (boolean) => void;
 }
 
 interface IAdvancedSearchPage {
@@ -152,6 +155,7 @@ interface ISearchResults {
   callbackSetChoosingAlphabet?: (boolean) => void;
   isFilter?: boolean;
   callbackSetIsFilter?: (boolean) => void;
+  passedFilterOptions?: any;
 }
 
 interface ISearchResultItem {
@@ -159,6 +163,7 @@ interface ISearchResultItem {
   isPoint?: boolean;
   usingLanguage?: "EN" | "VI";
   query?: Array<string>;
+  filterOptions?: any;
 }
 
 interface ISearchResultsAlphabetFilters {
@@ -180,6 +185,7 @@ interface IItemDetail {
 interface IItemDetailEdit extends IItemDetail {
   callbackUpdateDetail?: (any) => void;
   mobileCalledEditDetail?: number;
+  resetItemDetail?: (any) => void;
 }
 
 interface IPersonalRecordsPage {
@@ -187,11 +193,11 @@ interface IPersonalRecordsPage {
 }
 
 interface IRecordsChart {
-
+  quizzesList?: any;
 }
 
 interface IRecordsProgressLog {
-
+  quizzesList?: any;
 }
 
 interface IRecordsProgressLogDesktop {
@@ -247,6 +253,7 @@ interface ISelectionSlice {
   secondarySelectedMeridian?: string;
   backupSelectedPoint?: string;
   backupSelectedNeighbors?: Array<string>;
+  loadingQuickInformation?: boolean;
 }
 
 interface IModelInteractionControl {
@@ -323,4 +330,23 @@ interface ISideCriteriaBox {
   filters?: any;
   currentFilterOptions?: any;
   callbackSetCurrentFilterOptions?: (any) => void;
+}
+
+interface IDataSlice {
+  acupuncturePoints: Array<IAcupuncturePoint>,
+  meridians: Array<IMeridian>
+}
+
+interface INavigationSlice {
+  quickSearchPersistQuery?: string;
+  backFromInformationBlock?: boolean;
+  viewDetailsLastPage?: ILastPagePersist;
+  homeQueryPersistThroughNavigation?: string;
+}
+
+interface ILastPagePersist {
+  path?: string;
+  isRedirect?: boolean;
+  query?: string;
+  filterOptions?: any;
 }

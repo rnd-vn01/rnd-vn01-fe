@@ -126,25 +126,6 @@ describe('ItemDetailEdit - Desktop', () => {
     })
   })
 
-  it("should change the content of field code when typed in new value", async () => {
-    const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
-
-    render(
-      <ResponsiveContext.Provider value={{ width: 1200 }}>
-        <Provider store={store}>
-          <ItemDetailEdit
-            item={ITEM}
-            isPoint={true} />
-        </Provider></ResponsiveContext.Provider>)
-
-    const inputCode = screen.getByRole("input", { name: "input-code" })
-    fireEvent.change(inputCode, { target: { value: "New Code" } })
-
-    await waitFor(() => {
-      expect(inputCode.getAttribute("value")).toBe("New Code")
-    })
-  })
-
   it("should change the content of one subitem if type in new value", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
 
@@ -177,8 +158,8 @@ describe('ItemDetailEdit - Desktop', () => {
             callbackUpdateDetail={mockCallbackUpdateDetail} />
         </Provider></ResponsiveContext.Provider>)
 
-    const inputCode = screen.getByRole("input", { name: "input-code" })
-    fireEvent.change(inputCode, { target: { value: "New Code" } })
+    const inputName = screen.getByRole("input", { name: "input-name" })
+    fireEvent.change(inputName, { target: { value: "New Name" } })
 
     const functionalities = screen.getAllByRole("point-functionality")
     fireEvent.change(functionalities[1], { target: { value: "F2 Updated" } })
@@ -188,7 +169,7 @@ describe('ItemDetailEdit - Desktop', () => {
 
     await waitFor(() => {
       let UPDATED_ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
-      UPDATED_ITEM["code"] = "New Code"
+      UPDATED_ITEM["name"] = "New Name"
       UPDATED_ITEM["functionalities"][1] = "F2 Updated"
 
       expect(mockCallbackUpdateDetail).toHaveBeenCalledWith(UPDATED_ITEM)
@@ -322,13 +303,43 @@ describe('ItemDetailEdit - Desktop', () => {
 
   it("should redirect to details page if clicking on cancel button", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
+    const mockResetItemDetail = jest.fn();
 
     render(
       <ResponsiveContext.Provider value={{ width: 1200 }}>
         <Provider store={store}>
           <ItemDetailEdit
             item={ITEM}
-            isPoint={true} />
+            isPoint={true}
+            resetItemDetail={mockResetItemDetail} />
+        </Provider></ResponsiveContext.Provider>)
+
+    const inputCaution = screen.getByRole("textarea", { name: "textarea-caution" })
+    fireEvent.change(inputCaution, { target: { value: "New Caution" } })
+
+    await waitFor(() => {
+      fireEvent.change(inputCaution, { target: { value: "New Caution 2" } })
+
+      const buttonCancel = screen.getByRole("div", { name: "button-cancel" })
+      fireEvent.click(buttonCancel)
+    })
+
+    await waitFor(() => {
+      expect(mockResetItemDetail).toHaveBeenCalledWith(JSON.parse(JSON.stringify(DEMO_POINT)))
+    })
+  })
+
+  it("should pass original object if updated and clicked on cancel button", async () => {
+    const ITEM = JSON.parse(JSON.stringify(DEMO_POINT))
+    const mockResetItemDetail = jest.fn();
+
+    render(
+      <ResponsiveContext.Provider value={{ width: 1200 }}>
+        <Provider store={store}>
+          <ItemDetailEdit
+            item={ITEM}
+            isPoint={true}
+            resetItemDetail={mockResetItemDetail} />
         </Provider></ResponsiveContext.Provider>)
 
     const buttonCancel = screen.getByRole("div", { name: "button-cancel" })
@@ -336,6 +347,7 @@ describe('ItemDetailEdit - Desktop', () => {
 
     await waitFor(() => {
       expect(true).toBeTruthy();
+      expect(mockResetItemDetail).toHaveBeenCalledWith(ITEM)
     })
   })
 
@@ -352,8 +364,8 @@ describe('ItemDetailEdit - Desktop', () => {
             callbackUpdateDetail={mockCallbackUpdateDetail} />
         </Provider></ResponsiveContext.Provider>)
 
-    const inputCode = screen.getByRole("input", { name: "input-code" })
-    fireEvent.change(inputCode, { target: { value: "New Code" } })
+    const inputName = screen.getByRole("input", { name: "input-name" })
+    fireEvent.change(inputName, { target: { value: "New Name" } })
 
     const points = screen.getAllByRole("meridian-point")
     fireEvent.change(points[1], { target: { value: "P2 Updated" } })
@@ -363,7 +375,7 @@ describe('ItemDetailEdit - Desktop', () => {
 
     await waitFor(() => {
       let UPDATED_ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
-      UPDATED_ITEM["code"] = "New Code"
+      UPDATED_ITEM["name"] = "New Name"
       UPDATED_ITEM["points"][1] = "P2 Updated"
 
       expect(mockCallbackUpdateDetail).toHaveBeenCalledWith(UPDATED_ITEM)
@@ -611,6 +623,10 @@ describe('ItemDetailEdit - Desktop', () => {
 })
 
 describe('ItemDetailEdit - Mobile', () => {
+  afterEach(() => {
+    store.dispatch(resetToInitialStateAuthSlice());
+  })
+
   it("should callback update item if click on submit button for meridian", async () => {
     const ITEM = JSON.parse(JSON.stringify(DEMO_MERIDIAN))
     const mockCallbackUpdateDetail = jest.fn();

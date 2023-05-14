@@ -37,9 +37,16 @@
     cursor: pointer;
     font-size: 1.25rem;
     color: var(--theme-highlight);
+    text-align: center;
 
     &:hover {
       color: var(--theme-highlight-hover)
     }
+  }
+
+  &__body {
+    max-height: 100%;
+    overflow-y: auto;
+    padding: 20px 0px;
   }
 }

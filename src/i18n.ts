@@ -35,7 +35,9 @@ i18n
               about_us: "About Us",
               start_quiz: "Start Quiz",
               advanced_search: "Advanced Search",
-              home: "Home"
+              home: "Home",
+              manual: "How To Use",
+              language: "Language"
             }
           },
           create_account_page: {
@@ -82,7 +84,11 @@ i18n
               invalid_password: "Your password is invalid!",
               not_verified: "Please verify your account through email!",
               not_found: "Your login information is not correct!",
-              login_to_continue: "Please log in to continue!"
+              login_to_continue: "Please log in to continue!",
+              save_quiz_error: "Error occured. Quiz's result cannot be saved!",
+              records_error: "Error occured. Cannot get the personal records!",
+              login_successful: "Login successfully",
+              wait_for_redirect: "Login successfully. Please wait for a moment!"
             }
           },
           quiz_page: {
@@ -140,7 +146,8 @@ i18n
               data_management: "Data Update",
               personal_records: "Personal Records",
               about_us: "About Us",
-              edit_profile: "Edit Profile"
+              edit_profile: "Edit Profile",
+              manual: "How To Use"
             }
           },
           advanced_search_page: {
@@ -185,7 +192,11 @@ i18n
             caution: "caution: fields remained blank would be skipped in saving",
             demo_caution: "Please be informed that the UI is for demo purpose, so no update would be made. The following\
             are the content of the detail after update:",
-            warning: "Warning"
+            warning: "Warning",
+            update_result: {
+              success: "Updated successfully!",
+              failed: "Error occured! Could not update the information."
+            }
           },
           personal_records_page: {
             title: "Personal Records"
@@ -236,6 +247,7 @@ i18n
               dr: "Dr.",
               supervisor: "Supervisor",
               nhan_le_thi: "Nhan Le Thi",
+              lecturer_hcmus: "Senior Lecturer at University of Science - VNU HCM",
               development_team: "Development team",
               members: {
                 nhan_nguyen_cao: "Nhan Nguyen Cao",
@@ -255,7 +267,10 @@ i18n
               consultants: {
                 title: "Consultants",
                 minh_ma_hoang: "Minh Ma Hoang",
-                van_le_thi_tuong: "Van Le Thi Tuong"
+                van_le_thi_tuong: "Van Le Thi Tuong",
+                acupuncturist: "Acupuncturist",
+                visiting_lecturer: "Visiting lecturer at Ho Chi Minh City University of Medicine and Pharmacy",
+                lecturer: "Lecturer at Pham Ngoc Thach University of Medicine"
               },
               users: {
                 title: "Users",
@@ -322,7 +337,41 @@ i18n
           view_on_model: "View location on model",
           new_personal_records: {
             days_streak: "days streak"
-          }
+          },
+          exception: {
+            cannot_create_account: "Error! Cannot create new account."
+          },
+          toast: {
+            pending: "Updating image",
+            success: "Uploaded successfully!",
+            error: 'Error occured! Cannot upload image.',
+          },
+          loading_data: "Loading data",
+          storing_quiz_result: "Storing quiz result. Please wait for a moment!",
+          getting_records: "Getting personal records. Please wait for a moment!",
+          manual_page: {
+            title: "How To Use",
+            interactions: "Methods to interact with the 3D model",
+            desktop: {
+              rotate: 'Use left mouse click and drag to rotate around the model',
+              pan: 'Use right mouse click and drag to pan along one side of the model',
+              zoom: 'Scroll the mouse wheel upwards or downwards to zoom in or zoom out the model',
+              hover: 'Hover over the meridian (color will be changed to black) or acupuncture point (color will be changed to yellow) to mark for selection',
+              select: 'Click on the meridian line (color changed to red, all acupuncture points of the meridian would be showed) or the acupuncture point (color changed to yellow with red border) to view information about the selected item',
+              deselect: 'Deselect by click on the item (acupuncture point or meridian) or double-click on any empty area on the model skin',
+              selectMeridian: 'Can quickly select a meridian by choosing from the horizontal scroll menu. After selected, the meridian would be bring into focus (like in the image). Can interact with the model to observer the location of the meridian, or click on the line to view information about the meridian with the acupuncture points involved'
+            },
+            mobile: {
+              rotate: 'Press and drag to the left or right side (swipe) to rotate around the model',
+              pan: 'Press 2 fingers and drag along one side to pan along that side of the model',
+              zoom: 'Press 2 fingers and spread or pinch to zoom in or zoom out the model',
+              selectPoint: 'Single press on an acupuncture point to select the point for viewing detail. To deselect, press on the point or double press on any empty area on the model skin',
+              selectMeridian: 'Double press on any area of the meridian (prevent the spaces occupied by the acupuncture points) to select the meridian for viewing detail. To deselect, double press on any empty area on the model skin'
+            },
+            itemInteraction: "Methods to interact with the acupuncture points or meridians",
+            quickMenu: "Menu for quick selecting a meridian"
+          },
+          click_to_deselect: "Click to deselect"
         }
       },
       vi: {
@@ -353,7 +402,9 @@ i18n
               about_us: "Về Chúng Tôi",
               start_quiz: "Kiểm Tra",
               advanced_search: "Tìm Kiếm Nâng Cao",
-              home: "Trang Chủ"
+              home: "Trang Chủ",
+              manual: "Cách Sử Dụng",
+              language: "Ngôn Ngữ"
             }
           },
           create_account_page: {
@@ -400,7 +451,11 @@ i18n
               invalid_password: "Mật khẩu không hợp lệ!",
               not_verified: "Vui lòng xác thực tài khoản qua Email đã đăng ký!",
               not_found: "Thông tin đăng nhập không đúng!",
-              login_to_continue: "Vui lòng đăng nhập để tiếp tục!"
+              login_to_continue: "Vui lòng đăng nhập để tiếp tục!",
+              save_quiz_error: "Có lỗi xảy ra. Kết quả bài kiểm tra không thể được lưu trữ!",
+              records_error: "Có lỗi xảy ra. Không thể lấy thông tin cá nhân!",
+              login_successful: "Đăng nhập thành công",
+              wait_for_redirect: "Đăng nhập thành công. Vui lòng chờ trong giây lát"
             }
           },
           quiz_page: {
@@ -458,7 +513,8 @@ i18n
               data_management: "Cập Nhật Dữ Liệu",
               personal_records: "Dữ Liệu Cá Nhân",
               about_us: "Về Chúng Tôi",
-              edit_profile: "Cập Nhật Thông Tin"
+              edit_profile: "Cập Nhật Thông Tin",
+              manual: "Cách Sử Dụng"
             }
           },
           advanced_search_page: {
@@ -484,7 +540,7 @@ i18n
             placeholder: "Tìm kiếm..."
           },
           data_management_page: {
-            title: "Quản lý Dữ liệu",
+            title: "Cập nhật Dữ liệu",
           },
           placeholders: {
             name: "tên",
@@ -503,7 +559,11 @@ i18n
             caution: "lưu ý: các trường được để trống sẽ không được lưu trữ",
             demo_caution: "Vì giao diện hiện tại đang được sử dụng cho mục đích demo, quá trình cập nhật thông tin\
             sẽ không được thực hiện. Thông tin chi tiết sau khi được cập nhật sẽ bao gồm:",
-            warning: "Lưu ý"
+            warning: "Lưu ý",
+            update_result: {
+              success: "Đã cập nhật thông tin thành công!",
+              failed: "Có lỗi xảy ra! Không thể cập nhật thông tin."
+            }
           },
           personal_records_page: {
             title: "Dữ Liệu Cá Nhân"
@@ -554,6 +614,7 @@ i18n
               dr: "TS.",
               supervisor: "Giáo viên Hướng dẫn",
               nhan_le_thi: "Lê Thị Nhàn",
+              lecturer_hcmus: "Giảng viên Đại học Khoa học Tự nhiên - ĐHQG TP.HCM",
               development_team: "Nhóm thực hiện",
               members: {
                 nhan_nguyen_cao: "Nguyễn Cao Nhân",
@@ -573,7 +634,10 @@ i18n
               consultants: {
                 title: "Cố vấn Chuyên môn",
                 minh_ma_hoang: "Mã Hoàng Minh",
-                van_le_thi_tuong: "Lê Thị Tường Vân"
+                van_le_thi_tuong: "Lê Thị Tường Vân",
+                acupuncturist: "Bác sĩ Châm cứu",
+                visiting_lecturer: "Giảng viên Thỉnh giảng Đại học Y Dược TP.HCM",
+                lecturer: "Giảng viên Đại học Y Khoa Phạm Ngọc Thạch"
               },
               users: {
                 title: "Người dùng",
@@ -638,7 +702,41 @@ i18n
           view_on_model: "Xem vị trí trên mô hình",
           new_personal_records: {
             days_streak: "ngày liên tiếp"
-          }
+          },
+          exception: {
+            cannot_create_account: "Lỗi! Không thể đăng ký tài khoản mới."
+          },
+          toast: {
+            pending: "Đang tải ảnh",
+            success: "Tải ảnh thành công!",
+            error: 'Lỗi! Không thể tải ảnh.',
+          },
+          loading_data: "Đang tải dữ liệu",
+          storing_quiz_result: "Đang lưu kết quả bài kiểm tra. Vui lòng chờ trong giây lát!",
+          getting_records: "Đang tải dữ liệu cá nhân. Vui lòng chờ trong giây lát!",
+          manual_page: {
+            title: "Cách Sử Dụng",
+            interactions: "Các phương pháp tương tác với mô hình 3D",
+            desktop: {
+              rotate: 'Click chuột trái và rê chuột để xoay xung quanh mô hình',
+              pan: 'Click chuột phải và rê chuột để di chuyển dọc theo một phía của mô hình',
+              zoom: 'Cuộn chuột lên hoặc xuống để phóng to hoặc thu nhỏ mô hình',
+              hover: 'Rê chuột lên trên kinh lạc (chuyển thành màu đen) hoặc huyệt đạo (chuyển thành màu vàng) để khoanh vùng chọn cho đối tượng',
+              select: 'Click vào kinh lạc (chuyển thành màu đỏ, đồng thời hiển thị toàn bộ huyệt đạo thuộc kinh) hoặc huyệt đạo (chuyển thành màu vàng có viền đỏ) để chọn xem thông tin của đối tượng',
+              deselect: 'Bỏ chọn bằng cách click vào đối tượng hoặc click đúp vào bất cứ vùng trống nào trên mô hình',
+              selectMeridian: 'Có thể chọn nhanh kinh lạc bằng cách lựa chọn trong menu trượt ngang. Sau khi được lựa chọn, kinh lạc sẽ được hiển thị vào màn hình (giống trong ảnh). Có thể tương tác với mô hình để xem vị trí kinh lạc và bấm vào để xem thông tin chi tiết kinh lạc cùng các huyệt đạo'
+            },
+            mobile: {
+              rotate: 'Ấn và kéo sang trái hoặc phải để xoay xung quanh mô hình',
+              pan: 'Ấn 2 ngón và kéo dọc theo một chiều để di chuyển dọc theo một phía của mô hình',
+              zoom: 'Ấn 2 ngón và vung ra hoặc vào để phóng to hoặc thu nhỏ mô hình',
+              selectPoint: 'Ấn vào một huyệt đạo để chọn xem chi tiết huyệt. Để huỷ chọn huyệt, có thể ấn một lần vào huyệt hoặc ấn đúp vào một vùng trống trên mô hình',
+              selectMeridian: 'Ấn đúp vào một vùng trên kinh lạc (tránh vị trí trùng vị trí huyệt đạo) để chọn xem chi tiết kinh lạc. Để huỷ chọn kinh lạc, ấn đúp vào một vùng trống trên mô hình'
+            },
+            itemInteraction: "Các phương pháp tương tác với huyệt đạo hoặc kinh lạc",
+            quickMenu: "Menu chọn nhanh kinh lạc"
+          },
+          click_to_deselect: "Bấm vào để bỏ chọn"
         }
       }
     }

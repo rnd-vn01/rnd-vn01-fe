@@ -17,7 +17,9 @@ export const QuizQuestion: React.FC<IQuizQuestion> = ({
       className="quiz-question">
       <div className={`quiz-question__question flex-center
       ${type === QUIZ_QUESTION_TYPE.NAVIGATE ? "quiz-question__question--navigate" : ""}`}>
-        {questionContent}
+        <p>
+          {questionContent}
+        </p>
       </div>
 
       {type !== QUIZ_QUESTION_TYPE.NAVIGATE ?

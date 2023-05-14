@@ -107,7 +107,9 @@ describe('Menu bar - Mobile', () => {
       </ResponsiveContext.Provider>)
 
     await waitFor(() => {
-      expect(screen.getByTestId("model-control-box")).toHaveClass("menu-bar__item--no-wrap")
+      expect(screen.getByTestId("show-menu-icon")).toHaveClass("menu-bar__item--no-wrap")
+      expect(screen.getByTestId("meridian-control")).toHaveClass("menu-bar__item--no-wrap")
+      expect(screen.getByTestId("search-bar")).toHaveClass("menu-bar__item--no-wrap")
     })
   })
 

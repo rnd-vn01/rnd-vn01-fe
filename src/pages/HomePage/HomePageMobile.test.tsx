@@ -7,6 +7,7 @@ import {
   resetToInitialStatePointSelectionSlice,
 } from 'src/redux/slice';
 import { Context as ResponsiveContext } from "react-responsive";
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -19,6 +20,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe('Home page - Mobile viewport', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();

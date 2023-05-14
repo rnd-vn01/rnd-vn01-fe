@@ -1,5 +1,5 @@
 import './ItemDetailEdit.scss';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faCheck, faMultiply } from '@fortawesome/free-solid-svg-icons';
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
@@ -14,11 +14,13 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
   usingLanguage,
   query,
   callbackUpdateDetail,
-  mobileCalledEditDetail
+  mobileCalledEditDetail,
+  resetItemDetail
 }) => {
   const history = useHistory();
   const [itemDetail, setItemDetail] = useState<any>({});
   const [newItemValue, setNewItemValue] = useState<string>("");
+  const backupItemDetail = useRef<any>({});
   const { t } = useTranslation();
   const isDesktop = useMediaQuery({ query: '(min-width: 1080px)' });
 
@@ -40,6 +42,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
     })
 
     setItemDetail(itemDetail)
+    backupItemDetail.current = JSON.parse(JSON.stringify(item));
   }, [item])
 
   useEffect(() => {
@@ -105,7 +108,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
     <div
       role="div"
       aria-label="item-detail-edit"
-      className={`item-detail-edit`}
+      className={`item-detail-edit pt-2`}
     >
       <div
         className="item-detail-edit__header">
@@ -117,7 +120,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
               placeholder={t(`placeholders.code`)}
               role="input"
               aria-label="input-code"
-              onChange={(e) => updateInformation(e.target.value, "code", -1)} />
+              disabled={true} />
           </h1>
           <h1 className="item-detail-edit__header--name col-span-1">
             <input
@@ -308,6 +311,7 @@ export const ItemDetailEdit: React.FC<IItemDetailEdit> = ({
           role="div"
           aria-label="button-cancel"
           onClick={() => {
+            resetItemDetail(backupItemDetail.current)
             history.push(location.pathname.replace("?edit", ""))
           }}>
           <FontAwesomeIcon

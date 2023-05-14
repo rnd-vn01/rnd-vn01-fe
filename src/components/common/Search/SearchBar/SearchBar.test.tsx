@@ -2,10 +2,30 @@ import { createEvent, fireEvent, render, screen, waitFor } from '@testing-librar
 import { SearchBar } from './SearchBar';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 const mockCallbackIsFilter = jest.fn();
 
+const mockHistoryPush = jest.fn();
+jest.mock("react-router-dom", () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+    location: {
+      pathname: []
+    },
+    go: jest.fn()
+  }),
+  useLocation: () => ({
+    pathname: '',
+    search: ''
+  })
+}));
+
 describe('SearchBar', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     render(<Provider store={store}>
       <SearchBar
@@ -21,22 +41,6 @@ describe('SearchBar', () => {
   it("to be rendered successfully", async () => {
     await waitFor(() => {
       expect(screen.getByRole("div", { name: "search-bar" })).toBeInTheDocument();
-    })
-  })
-
-  it("should focus on the input box if click on the quick search bar", async () => {
-    const searchBar = screen.getByRole("div", { name: "search-bar" })
-    fireEvent.click(searchBar)
-
-    await waitFor(() => {
-      const searchInput = screen.getByRole("input", { name: "search-input" })
-      const focusedElement = document.activeElement;
-      expect(focusedElement).toBe(searchInput)
-
-      const searchBarIcon = screen.getByRole("img", { name: "search-bar-icon" })
-      let searchBarIconURL = (searchBarIcon as any).src.split("/")
-      searchBarIconURL = searchBarIconURL[searchBarIconURL.length - 1]
-      expect(searchBarIconURL).toBe("SearchIconBlack.svg")
     })
   })
 

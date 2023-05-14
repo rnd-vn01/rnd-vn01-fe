@@ -5,6 +5,10 @@
   margin: 0 auto;
   height: 100vh;
 
+  @include desktop {
+    overflow-y: hidden;
+  }
+
   &__section {
     height: 100%;
 

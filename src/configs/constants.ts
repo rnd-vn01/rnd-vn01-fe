@@ -124,7 +124,8 @@ export enum SUMMARY_SHOWING_TIME_TYPE_OPTIONS {
 
 export const ADMIN_EMAILS = [
   "nguyencaonhan001@gmail.com",
-  "ad.rnd.vn01@gmail.com"
+  "ad.rnd.vn01@gmail.com",
+  "cycle13.rnd.vn01@gmail.com"
 ]
 
 export const LINE_POINTS = {
@@ -7048,6 +7049,7 @@ export const IMPORTANT_POINTS = [
 ]
 
 export const IS_TESTING_COLORFUL_MERIDIAN_POINTS = false;
+export const IS_TESTING_SELECTABLE_MULTIPLE_MERIDIANS = true;
 
 export const MERIDIAN_COLOR_MAP = {
   "LU": "#32FF8F", //LU
@@ -7081,4 +7083,46 @@ export const POINT_MERIDIAN_COLOR_MAP = {
   "Liv": 0x59ff59, //Liv
   "Du": 0x7f7fd5, //Du
   "Ren": 0x9bb9b9 //Ren
+}
+
+export const DEFAULT_PROFILE_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/vn01-staging.appspot.com/o/default.jpg?alt=media&token=4cbce2c8-9847-415a-888e-d87443d0f7a1"
+
+export const HIGHLIGHT_PAGE_TITLES = {
+  personal_records: {
+    "VI": [0, 1],
+    "EN": [1]
+  },
+  manual: {
+    "VI": [1, 2],
+    "EN": [2]
+  },
+  data_management: {
+    "VI": [0, 1],
+    "EN": [0]
+  },
+  edit_profile: {
+    "VI": [0, 1],
+    "EN": [1]
+  },
+  advanced_search: {
+    "VI": [2, 3],
+    "EN": [0]
+  },
+  about_us: {
+    "VI": [1, 2],
+    "EN": [1]
+  },
+  //FOR TESTING PURPOSE
+  "about us": {
+    "VI": [1, 2],
+    "EN": [1]
+  },
+  "long long title": {
+    "VI": [1, 2],
+    "EN": [1]
+  },
+  "default": {
+    "VI": [0],
+    "EN": [0]
+  }
 }

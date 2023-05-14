@@ -52,9 +52,9 @@
     font-size: 1.75rem;
     width: calc(100% - 170px);
     margin-right: 10px;
-    font-family: 'header-light' !important;
-    transform: translateY(5px);
+    font-family: 'regular-light' !important;
     line-height: 2.5rem;
+    cursor: pointer;
 
     @include smallscreen {
       width: calc(100% - 140px);
@@ -69,6 +69,10 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+    }
+
+    &--loading {
+      cursor: wait;
     }
   }
 

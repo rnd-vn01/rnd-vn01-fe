@@ -5,7 +5,7 @@ import { faAngleDown, faArrowUp, faArrowRight } from '@fortawesome/free-solid-sv
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
-import { resetToInitialStateAuthSlice, setStateLanguage } from 'src/redux/slice';
+import { resetToInitialStateAuthSlice, resetToInitialStateDataSlice, setStateLanguage } from 'src/redux/slice';
 import { useHistory } from 'react-router-dom';
 import { logout } from 'src/configs/firebase';
 
@@ -76,6 +76,15 @@ export const SideMenu: React.FC<ISideMenu> = ({
       divider: true,
     },
     {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+        callbackSetIsShowing(false);
+      },
+      selectable: true,
+      divider: false
+    },
+    {
       item: t('auth_bar.menu.about_us'),
       onClick: () => {
         history.push("/about")
@@ -122,6 +131,15 @@ export const SideMenu: React.FC<ISideMenu> = ({
       },
       selectable: true,
       divider: true,
+    },
+    {
+      item: t('auth_bar.menu.manual'),
+      onClick: () => {
+        history.push("/manual")
+        callbackSetIsShowing(false);
+      },
+      selectable: true,
+      divider: false
     },
     {
       item: t('auth_bar.menu.about_us'),
@@ -173,7 +191,11 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   ${currentLanguage === "EN" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("EN");
-                    history.go(0)
+
+                    setTimeout(() => {
+                      dispatch(resetToInitialStateDataSlice(null));
+                      history.go(0);
+                    }, 50)
                   }}
                   data-testid="side-menu-language__EN"
                 >
@@ -184,7 +206,11 @@ export const SideMenu: React.FC<ISideMenu> = ({
                   ${currentLanguage === "VI" && "side-menu__language-pick-item--selected"}`}
                   onClick={() => {
                     setLanguage("VI");
-                    history.go(0)
+
+                    setTimeout(() => {
+                      dispatch(resetToInitialStateDataSlice(null));
+                      history.go(0);
+                    }, 50)
                   }}
                   data-testid="side-menu-language__VI"
                 >

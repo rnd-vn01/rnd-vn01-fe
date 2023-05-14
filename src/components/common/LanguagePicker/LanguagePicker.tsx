@@ -2,7 +2,7 @@ import './LanguagePicker.scss';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
-import { LANGUAGES_LIST, setStateLanguage } from 'src/redux/slice';
+import { LANGUAGES_LIST, resetToInitialStateDataSlice, setStateLanguage } from 'src/redux/slice';
 import { useTranslation } from 'react-i18next';
 
 export const LanguagePicker: React.FC = () => {
@@ -49,7 +49,11 @@ export const LanguagePicker: React.FC = () => {
             role="language-picker-dropdown-item"
             onClick={() => {
               setLanguage(language);
-              history.go(0)
+
+              setTimeout(() => {
+                dispatch(resetToInitialStateDataSlice(null));
+                history.go(0);
+              }, 50)
             }}
             key={`language-${index}`}>
             {language}

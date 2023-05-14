@@ -6,18 +6,25 @@ import {
   resetToInitialStateGlobalSlice,
   resetToInitialStatePointSelectionSlice,
   setModelLoaded,
+  setPointSelectedByLabel,
   setShowingQuickInformation
 } from 'src/redux/slice';
+import { mockGetItems } from 'src/api/mocks/items/mockGetItems';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useLocation: () => ({
     pathname: "TEST_PATH",
-    state: {}
+    state: {},
+    search: ''
   })
 }));
 
 describe('HomePage default entry', () => {
+  beforeAll(() => {
+    mockGetItems();
+  })
+
   beforeEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
@@ -116,6 +123,23 @@ describe('HomePage default entry', () => {
 
     await waitFor(() => {
       expect(landingPage).toHaveClass("home-page__landing--hidden")
+    })
+  })
+
+  it("should reset selected item if page is render with another point selected", async () => {
+    store.dispatch(setPointSelectedByLabel({
+      selectedPoint: "BL-3"
+    }))
+
+    jest.useFakeTimers();
+    render(<Provider store={store}>
+      <HomePage />
+    </Provider>)
+
+    jest.advanceTimersByTime(500)
+
+    await waitFor(() => {
+      expect(store.getState().selectionSlice.selectedLabel).toBeNull();
     })
   })
 });

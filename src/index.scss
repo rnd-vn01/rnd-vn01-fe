@@ -72,6 +72,12 @@ body * {
   font-display: swap;
 }
 
+@font-face {
+  font-family: "regular-light";
+  src: url("assets/fonts/AdelleSansEXT-Light.otf") format('opentype');
+  font-display: swap;
+}
+
 h1,
 h2,
 h3,

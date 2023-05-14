@@ -16,6 +16,8 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
 
     @include smallscreen {
       max-height: calc(100% - 130px);
@@ -24,6 +26,12 @@
 
     @include tablet {
       font-size: 1.25rem;
+    }
+
+    p {
+      max-height: 100%;
+      overflow-y: auto;
+      padding: 10px 0px;
     }
 
     &--navigate {
@@ -63,21 +71,21 @@
     }
 
     &--true {
-      background: #95A543;
-      color: white;
+      background: #76CE31;
+      color: black;
 
       &:hover {
-        background: #95A543 !important;
-        color: white;
+        background: #76CE31 !important;
+        color: black;
       }
     }
 
     &--false {
-      background: var(--theme-danger);
+      background: #CE3B32;
       color: white;
 
       &:hover {
-        background: var(--theme-danger) !important;
+        background: #CE3B32 !important;
         color: white;
       }
     }

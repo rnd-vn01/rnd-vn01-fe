@@ -5,6 +5,7 @@ import {
   getMonday,
   getMonthNameFromIndex,
   getShortMonthNameFromIndex,
+  getSunday,
   getWeekNumber
 } from 'src/helpers/date';
 
@@ -79,4 +80,12 @@ test("getMonday of a date where monday is of previous month or year", () => {
   expect(monday.getDate()).toBe(26)
   expect(monday.getMonth()).toBe(11)
   expect(monday.getFullYear()).toBe(2022)
+})
+
+test("getSunday", () => {
+  const date = new Date(2023, 3, 7)
+  const monday = getSunday(date)
+  expect(monday.getDate()).toBe(9)
+  expect(monday.getMonth()).toBe(3)
+  expect(monday.getFullYear()).toBe(2023)
 })

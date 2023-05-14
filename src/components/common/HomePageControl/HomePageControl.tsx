@@ -42,7 +42,9 @@ export const HomePageControl: React.FC<IHomePageControl> = ({
       {!isQuizPage &&
         <div className="home-page-control__control">
           {!isDesktop && <MeridianControlResponsive />}
-          {isDesktop && <MeridianControl />}
+          {isDesktop && <MeridianControl
+            callbackResetViewMode={() => callbackPanCenter()} //NOT_TESTED
+          />}
         </div>
       }
     </div>

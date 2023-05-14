@@ -19,4 +19,24 @@
       margin-left: 10vw;
     }
   }
+
+  &__image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    cursor: pointer;
+    text-align: center;
+
+    &--block {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    &--error {
+      color: red;
+    }
+  }
 }

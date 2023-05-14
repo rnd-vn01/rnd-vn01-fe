@@ -1,10 +1,8 @@
 import './RecordsChart.scss';
 import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
 import { capitalize } from 'src/helpers/capitalize';
-import { generateRandomDate, getCurrentDateFullString, getInputDateFormat, getMidnight, getMonday, getWeekNumber } from 'src/helpers/date';
+import { getCurrentDateFullString, getInputDateFormat, getMidnight, getMonday, getWeekNumber } from 'src/helpers/date';
 import moment from 'moment';
 import {
   Chart as ChartJS,
@@ -17,22 +15,17 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import DEMO_DATA_VI from 'src/assets/test_data/acupoints_vi.json';
-import DEMO_DATA_EN from 'src/assets/test_data/acupoints_en.json';
 import { MERIDIANS } from 'src/configs/constants';
 import { useMediaQuery } from 'react-responsive';
+import { getLogsForChart } from 'src/helpers/statistics';
 
-export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
+export const RecordsChart: React.FC<IRecordsChart> = ({
+  quizzesList
+}) => {
   const { t } = useTranslation();
   const [isPoint, setIsPoint] = useState<boolean>(true);
   const [showingTypeOption, setShowingTypeOption] = useState<number>(0);
-  const [showingData, setShowingData] = useState<any>([]);
-  const {
-    currentLanguage
-  } = useSelector(
-    (state: RootState) => state.languageSlice,
-  );
-  const [fromDate, setFromDate] = useState<Date>(getMidnight(new Date()));
+  const [fromDate, setFromDate] = useState<Date>(getMidnight(getMonday(new Date())));
   const [toDate, setToDate] = useState<Date>(getMidnight(new Date()));
   const [chartData, setChartData] = useState<any>({
     labels: [],
@@ -46,8 +39,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
     PointElement,
     LineElement,
     Title,
-    Tooltip,
-    Legend
+    Tooltip
   );
 
   const DATE_UNITS = [t("records.chart.time_units.day"),
@@ -78,7 +70,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
   }, [showingTypeOption, isPoint])
 
   const getData = () => {
-    const testData = generateTestLogData();
+    const testData = generateLogData();
     const labels = generateLabels();
 
     const data = []
@@ -174,7 +166,7 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
     switch (showingTypeOption) {
       case 0:
         let iterator = new Date(fromDate);
-        while (iterator <= toDate) {
+        while (getMidnight(iterator) <= toDate) {
           labels.push({
             value: new Date(iterator),
             label: getCurrentDateFullString(iterator)
@@ -283,87 +275,8 @@ export const RecordsChart: React.FC<IRecordsChart> = ({ }) => {
     }
   }
 
-  const generateTestLogData = () => {
-    let testData = []
-
-    // Generate test data
-    // This week
-    let dates = [] as any
-    for (let i = 0; i < 2; i++) {
-      dates.push(generateRandomDate(moment().startOf('isoWeek').toDate(), moment().toDate()))
-    }
-
-    // This month
-    let maxDateMonth = moment().startOf('isoWeek').subtract(1, 'days').toDate() > moment().toDate() ?
-      moment().startOf('isoWeek').subtract(1, 'days').toDate() : moment().toDate()
-    for (let i = 0; i < 3; i++) {
-      dates.push(generateRandomDate(moment().startOf('month').toDate(),
-        maxDateMonth))
-    }
-
-    // This year
-    for (let i = 0; i < 35; i++) {
-      dates.push(generateRandomDate(moment().startOf('year').toDate(),
-        moment().startOf('month').subtract(1, 'days').toDate()))
-    }
-
-    // All time
-    for (let i = 0; i < 12; i++) {
-      dates.push(generateRandomDate(moment().subtract(2, 'years').toDate(),
-        moment().startOf('year').subtract(1, 'days').toDate()))
-    }
-
-    dates.sort((a: Date, b: Date) => new Date(a.getTime()) < new Date(b.getTime()))
-
-    dates.forEach((date) => {
-      const numberOfQuestions = (Math.floor(Math.random() * 6) + 1) * 5;
-      const correctAnswers = Math.floor(Math.random() * numberOfQuestions)
-
-      const DEMO_DATA = currentLanguage === "EN" ? DEMO_DATA_EN : DEMO_DATA_VI;
-      const pointsLength = DEMO_DATA.length;
-      let correctPoints = []
-      while (correctPoints.length < correctAnswers) {
-        const randomPoint = DEMO_DATA[Math.floor(Math.random() * pointsLength)]
-        if (!correctPoints.find((point: any) => point.code === randomPoint.code)) {
-          correctPoints.push({
-            code: randomPoint.code,
-            name: randomPoint.name,
-            meridian: randomPoint.code.split("-")[0],
-            isCorrect: true
-          })
-        }
-      }
-
-      let wrongPoints = []
-      while (wrongPoints.length < numberOfQuestions - correctAnswers) {
-        const randomPoint = DEMO_DATA[Math.floor(Math.random() * pointsLength)]
-        if (!correctPoints.find((point: any) => point.code === randomPoint.code)
-          && !wrongPoints.find((point: any) => point.code === randomPoint.code)) {
-          wrongPoints.push({
-            code: randomPoint.code,
-            name: randomPoint.name,
-            meridian: randomPoint.code.split("-")[0],
-            isCorrect: false
-          })
-        }
-      }
-
-      testData.push({
-        date: date,
-        result: {
-          numberOfQuestions: numberOfQuestions,
-          correctAnswers: correctAnswers,
-          points: correctPoints.concat(wrongPoints)
-        }
-      })
-    })
-
-    return testData
-  }
-
-  const setDatesToDefault = () => {
-    setFromDate(getMidnight(new Date()))
-    setToDate(getMidnight(new Date()))
+  const generateLogData = () => {
+    return getLogsForChart(quizzesList, showingTypeOption)
   }
 
   const options = {

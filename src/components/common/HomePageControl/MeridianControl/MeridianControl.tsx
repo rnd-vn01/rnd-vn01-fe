@@ -22,11 +22,14 @@ import controlRight from "src/assets/images/homeControls/controlIcons/controlRig
 import { EXTRA_MERIDIAN_COLORS, MERIDIANS_COLOR } from 'src/configs/constants';
 import { resetToInitialStatePointSelectionSlice, setLinePreSelectByLabel } from 'src/redux/slice';
 import { hexToRgb } from '@mui/material';
+import ReactTooltip from 'react-tooltip';
 
-export const MeridianControl: React.FC = ({ }) => {
+export const MeridianControl: React.FC<{
+  callbackResetViewMode: () => void
+}> = ({ callbackResetViewMode }) => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  const [selectedMeridian, setSelectedMeridian] = useState<string>("LU");
+  const [selectedMeridian, setSelectedMeridian] = useState<string>(null);
   const scrollableDiv = useRef<any>(null);
 
   const OPTIONS = {
@@ -155,15 +158,23 @@ export const MeridianControl: React.FC = ({ }) => {
                   background: rgb
                 }}
                 onClick={() => {
-                  setSelectedMeridian(meridian);
-                  dispatch(resetToInitialStatePointSelectionSlice());
-                  dispatch(setLinePreSelectByLabel({
-                    line: meridian
-                  }))
+                  if (selectedMeridian === meridian) {
+                    setSelectedMeridian(null);
+                    dispatch(resetToInitialStatePointSelectionSlice());
+                    callbackResetViewMode();
+                  } else {
+                    setSelectedMeridian(meridian);
+                    dispatch(resetToInitialStatePointSelectionSlice());
+                    dispatch(setLinePreSelectByLabel({
+                      line: meridian
+                    }))
+                  }
                 }}
                 key={index}
                 aria-label={`meridian-control-item-${index}`}
                 role="div"
+                data-tip
+                data-for={`tooltip-${meridian}`}
               >
                 <div className={`meridian-control-desktop__item-icon-container flex-center`}
                   style={{ background: OPTIONS[meridian].color }}>
@@ -175,6 +186,10 @@ export const MeridianControl: React.FC = ({ }) => {
                 <div className={`meridian-control-desktop__item-name`}>
                   <p>{OPTIONS[meridian].name}</p>
                 </div>
+
+                {selectedMeridian === meridian && <ReactTooltip id={`tooltip-${meridian}`} place="top" effect="solid">
+                  <p>{t('click_to_deselect')}</p>
+                </ReactTooltip>}
               </div>
             )
           })}

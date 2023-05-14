@@ -55,9 +55,10 @@
     &--view {
       position: absolute;
       right: 0px;
-      top: 5px;
+      bottom: 13px;
       height: 20px;
       display: none;
+      opacity: 0.5;
 
       @include mobile {
         right: 5px;
@@ -65,13 +66,14 @@
 
       &:hover {
         display: block;
+        opacity: 1;
       }
     }
 
     &--view-left {
       position: absolute;
       left: 0px;
-      top: 5px;
+      bottom: 13px;
       height: 20px;
       width: 30px;
       display: none;
@@ -145,5 +147,17 @@
 
   &__highlighted {
     background: var(--theme-highlight)
+  }
+
+  &__icon {
+    &--map-pin {
+      height: 25px;
+      width: 25px;
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
 }

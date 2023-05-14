@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getNeighborPoints } from 'src/helpers/getNeighborsPoints';
-import { LINE_POINTS, POINT_LOCATIONS } from 'src/configs/constants';
+import { IS_TESTING_SELECTABLE_MULTIPLE_MERIDIANS, LINE_POINTS, POINT_LOCATIONS } from 'src/configs/constants';
 
 export const initialStateSelectionSlice = {
   selectedLabel: null,
@@ -19,6 +19,7 @@ export const initialStateSelectionSlice = {
   secondarySelectedMeridian: null,
   backupSelectedPoint: "",
   backupSelectedNeighbors: [],
+  loadingQuickInformation: false
 } as ISelectionSlice;
 
 export const selectionSlice = createSlice({
@@ -27,7 +28,7 @@ export const selectionSlice = createSlice({
   reducers: {
     resetToInitialStatePointSelectionSlice(state) {
       state.backupSelectedPoint = `${state.selectedLabel || ""}`;
-      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors))
+      state.backupSelectedNeighbors = JSON.parse(JSON.stringify(state.showingNeighbors || []))
       state.selectedLabel = null;
       state.selectedType = null;
       state.isHoveringPoint = false;
@@ -42,6 +43,7 @@ export const selectionSlice = createSlice({
       state.preSelectLine = null;
       state.showingNeighbors = [];
       state.secondarySelectedMeridian = null;
+      state.loadingQuickInformation = false;
     },
 
     setPointSelected(state, action) {
@@ -62,28 +64,30 @@ export const selectionSlice = createSlice({
       state.preSelectLine = null;
 
       if (action.payload.selectedLabel) {
-        // In case not the first item selected
-        if (backupCurrentSelectedPoint !== null
-          && backupCurrentSelectedPoint !== undefined
-          && backupCurrentSelectedPoint !== ""
-          && backupCurrentSelectedPoint !== "M-HN-3") {
-          // Check to mark in case of a neighbor
-          // If is in the neighbor list
-          if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)
-            || state.showingNeighbors?.includes(action.payload.selectedLabel)) {
-            // If not being also one from secondary selected meridian
-            if (state.secondarySelectedMeridian === null ||
-              state.secondarySelectedMeridian === undefined) {
-              // If not of the same meridian
-              let selectedPointMeridian = backupCurrentSelectedPoint.split("-") as any
-              selectedPointMeridian = selectedPointMeridian[0]
+        if (IS_TESTING_SELECTABLE_MULTIPLE_MERIDIANS) {
+          // In case not the first item selected
+          if (backupCurrentSelectedPoint !== null
+            && backupCurrentSelectedPoint !== undefined
+            && backupCurrentSelectedPoint !== ""
+            && backupCurrentSelectedPoint !== "M-HN-3") {
+            // Check to mark in case of a neighbor
+            // If is in the neighbor list
+            if (state.backupSelectedNeighbors?.includes(action.payload.selectedLabel)
+              || state.showingNeighbors?.includes(action.payload.selectedLabel)) {
+              // If not being also one from secondary selected meridian
+              if (state.secondarySelectedMeridian === null ||
+                state.secondarySelectedMeridian === undefined) {
+                // If not of the same meridian
+                let selectedPointMeridian = backupCurrentSelectedPoint.split("-") as any
+                selectedPointMeridian = selectedPointMeridian[0]
 
-              // New meridian
-              let newPointMeridian = action.payload.selectedLabel.split("-") as any
-              newPointMeridian = newPointMeridian[0]
+                // New meridian
+                let newPointMeridian = action.payload.selectedLabel.split("-") as any
+                newPointMeridian = newPointMeridian[0]
 
-              if (selectedPointMeridian !== newPointMeridian) {
-                state.secondarySelectedMeridian = selectedPointMeridian
+                if (selectedPointMeridian !== newPointMeridian) {
+                  state.secondarySelectedMeridian = selectedPointMeridian
+                }
               }
             }
           }
@@ -132,7 +136,40 @@ export const selectionSlice = createSlice({
     },
 
     setIsCurrentMousePosition(state, action) {
-      state.currentMousePosition = action.payload.currentMousePosition;
+      if (!action.payload.currentMousePosition) {
+        state.currentMousePosition = null;
+        return;
+      }
+
+      state.currentMousePosition = {
+        x: action.payload.currentMousePosition.x,
+        y: action.payload.currentMousePosition.y,
+        z: action.payload.currentMousePosition.z
+      };
+
+      if (action.payload.currentMousePosition.isMobile) {
+        let minDistance = 1000;
+        let selectedLine = "";
+        let pointer = action.payload.currentMousePosition
+
+        Object.keys(LINE_POINTS).forEach(meridian => {
+          LINE_POINTS[meridian].forEach(linePoint => {
+            // Only check if in the same side
+            if (linePoint.z * pointer.z >= 0) {
+              const distance = Math.sqrt(Math.pow(linePoint.x - pointer.x, 2) + Math.pow(linePoint.y - pointer.y, 2))
+              if (distance < minDistance) {
+                minDistance = distance
+                selectedLine = meridian
+              }
+            }
+          })
+        })
+
+        if (minDistance < 0.5) {
+          state.selectedLabel = selectedLine;
+          state.selectedType = 'line';
+        }
+      }
     },
 
     setIsCurrentMouseMovePosition(state, action) {
@@ -224,6 +261,10 @@ export const selectionSlice = createSlice({
     setRemoveBackup(state) {
       state.backupSelectedNeighbors = []
       state.backupSelectedPoint = "";
+    },
+
+    setLoadingQuickInformation(state, action) {
+      state.loadingQuickInformation = action.payload;
     }
   },
 });
@@ -233,5 +274,5 @@ export const { resetToInitialStatePointSelectionSlice, setPointSelected,
   setLineSelected, setIsHoveringPoint, setIsHoveringLine, setIsCurrentMousePosition,
   setIsCurrentMouseMovePosition, setLineHover, setLineSelectedByLabel,
   setShowingQuickInformation, setPointSelectedByLabel, setLinePreSelectByLabel,
-  setRemoveBackup } = actions;
+  setRemoveBackup, setLoadingQuickInformation } = actions;
 export default reducer;

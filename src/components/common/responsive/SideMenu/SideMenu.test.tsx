@@ -61,6 +61,8 @@ describe('Side menu', () => {
   })
 
   it("should update the language to EN if select from the collapsed select", async () => {
+    jest.useFakeTimers();
+
     store.dispatch(setStateLanguage({
       currentLanguage: "VI"
     }))
@@ -82,11 +84,15 @@ describe('Side menu', () => {
       fireEvent.click(screen.getByTestId("side-menu-language__EN"))
     })
 
+    jest.advanceTimersByTime(50);
+
     expect(store.getState().languageSlice.currentLanguage).toBe("EN")
     store.dispatch(resetToInitialStateLanguageSlice())
   })
 
   it("should update the language to VI if select from the collapsed select", async () => {
+    jest.useFakeTimers();
+
     store.dispatch(setStateLanguage({
       currentLanguage: "EN"
     }))
@@ -108,6 +114,8 @@ describe('Side menu', () => {
       fireEvent.click(screen.getByTestId("side-menu-language__VI"))
     })
 
+    jest.advanceTimersByTime(50);
+
     expect(store.getState().languageSlice.currentLanguage).toBe("VI")
     store.dispatch(resetToInitialStateLanguageSlice())
   })
@@ -128,6 +136,10 @@ describe('Side menu', () => {
     {
       item: 'auth_bar.menu.personal_records',
       path: '/records'
+    },
+    {
+      item: 'auth_bar.menu.manual',
+      path: '/manual'
     },
     {
       item: 'auth_bar.menu.about_us',
@@ -181,6 +193,10 @@ describe('Side menu', () => {
     {
       item: 'auth_bar.menu.advanced_search',
       path: '/advanced-search'
+    },
+    {
+      item: 'auth_bar.menu.manual',
+      path: '/manual'
     },
     {
       item: 'auth_bar.menu.about_us',

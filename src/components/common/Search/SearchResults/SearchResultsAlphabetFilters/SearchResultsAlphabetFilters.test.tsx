@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { SearchResultsAlphabetFilters } from './SearchResultsAlphabetFilters';
 import { Provider } from 'react-redux';
 import store from 'src/redux/store';
@@ -46,11 +46,14 @@ const DEMO_RESULTS = [{
   "technique": "Perpendicularly 0.8~1.5 cun"
 }]
 
+const callbackSetAlphabetFilteringOption = jest.fn();
+
 describe('SearchResultsAlphabetFilters', () => {
   beforeEach(() => {
     render(<Provider store={store}>
       <SearchResultsAlphabetFilters
         results={DEMO_RESULTS}
+        callbackSetAlphabetFilteringOption={callbackSetAlphabetFilteringOption}
       />
     </Provider>)
   })
@@ -65,13 +68,19 @@ describe('SearchResultsAlphabetFilters', () => {
     })
   })
 
-  it("should update the first option to Tất cả if change language to Vietnamese", async () => {
-    store.dispatch(setStateLanguage({
-      currentLanguage: "VI"
-    }))
-
+  it("should do nothing if clicked on the not available letter", async () => {
     await waitFor(() => {
-      expect(screen.getByTestId("search-results-alphabet--1").innerHTML).toBe("Tất cả");
+      fireEvent.click(screen.getByTestId("search-results-alphabet-20"))
     })
+
+    expect(callbackSetAlphabetFilteringOption).not.toHaveBeenCalled()
+  })
+
+  it("should callback if clicked on available letter", async () => {
+    await waitFor(() => {
+      fireEvent.click(screen.getByTestId("search-results-alphabet-19"))
+    })
+
+    expect(callbackSetAlphabetFilteringOption).toHaveBeenCalledWith(19)
   })
 });

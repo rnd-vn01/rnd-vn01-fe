@@ -58,6 +58,20 @@ jest.mock('react-i18next', () => ({
   }
 }));
 
+jest.mock("react-router-dom", () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+    location: {
+      pathname: '',
+      search: ''
+    }
+  }),
+  useLocation: () => ({
+    pathname: '',
+    search: ''
+  })
+}));
+
 const spyScrollTo = jest.fn();
 Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo });
 
@@ -74,6 +88,7 @@ describe('Search Results - Desktop', () => {
             results={DEMO_RESULTS}
             isFilter={true}
             callbackSetIsFilter={jest.fn()}
+            passedFilterOptions={{}}
           />
         </Provider>
       </ResponsiveContext.Provider>)
@@ -183,6 +198,7 @@ describe('Search Results - Mobile', () => {
             results={DEMO_RESULTS}
             isFilter={true}
             callbackSetIsFilter={jest.fn()}
+            passedFilterOptions={{}}
           />
         </Provider>
       </ResponsiveContext.Provider>)

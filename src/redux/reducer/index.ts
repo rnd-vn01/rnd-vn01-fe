@@ -7,6 +7,8 @@ import selectionSlice from 'src/redux/slice/mouseControls/selectionSlice';
 import globalSlice from 'src/redux/slice/global/globalSlice';
 import quizSlice from 'src/redux/slice/quiz/quizSlice';
 import zoomControlSlice from 'src/redux/slice/camera/zoomControlSlice';
+import dataSlice from 'src/redux/slice/data/dataSlice';
+import navigationSlice from 'src/redux/slice/navigation/navigationSlice';
 
 export const rootReducer = combineReducers({
   cameraQuaternionSlice,
@@ -15,5 +17,7 @@ export const rootReducer = combineReducers({
   selectionSlice,
   globalSlice,
   quizSlice,
-  zoomControlSlice
+  zoomControlSlice,
+  dataSlice,
+  navigationSlice
 });

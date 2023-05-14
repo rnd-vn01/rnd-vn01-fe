@@ -16,18 +16,12 @@
   }
 
   &__header {
-    cursor: pointer;
     position: relative;
     margin-left: -20px;
     margin-right: -20px;
     padding-right: 20px;
     padding-left: 20px;
     margin-top: 30px;
-
-    &:hover>&--back,
-    &:hover>&--edit {
-      display: block;
-    }
 
     &--code,
     &--name {
@@ -38,35 +32,46 @@
     &--back {
       position: absolute;
       left: 0px;
-      top: 5px;
+      bottom: 13px;
       height: 20px;
-      display: none;
+      display: block;
+      opacity: 0.5;
+      cursor: pointer;
 
       &:hover {
         display: block;
+        opacity: 1;
       }
     }
 
     &--edit {
       position: absolute;
-      right: 0px;
-      top: 5px;
+      right: -10px;
+      bottom: 13px;
       height: 20px;
-      display: none;
+      display: block;
+      opacity: 0.5;
+      cursor: pointer;
 
       &:hover {
         display: block;
+        opacity: 1;
       }
     }
 
     &--view-on-model {
-      height: 75%;
+      height: 100%;
       width: 30px;
       opacity: 0.5;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
       margin-left: 10px;
+      bottom: 0;
+
+      svg {
+        height: 22.5px;
+      }
 
       &:hover {
         opacity: 1
@@ -76,12 +81,16 @@
 
   &__category {
     color: black;
-    font-size: 1rem;
+    font-size: 1.15rem;
     font-weight: bold;
     margin-top: 2px;
 
     &--caution {
       color: var(--theme-danger);
+    }
+
+    span {
+      font-family: "header" !important;
     }
   }
 
@@ -145,6 +154,19 @@
 
       &:hover {
         background: var(--theme-primary);
+      }
+    }
+  }
+
+  &__icon {
+    &--map-pin {
+      height: 25px;
+      width: 25px;
+      opacity: 0.5;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
       }
     }
   }

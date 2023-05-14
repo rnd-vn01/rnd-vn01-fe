@@ -3,11 +3,12 @@ import React, { useState, useRef, useEffect } from "react";
 import SearchIconGray from "src/assets/images/SearchIconGray.svg"
 import SearchIconBlack from "src/assets/images/SearchIconBlack.svg"
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const SearchBarRedirect: React.FC = ({ }) => {
   const inputBoxRef = useRef()
   const history = useHistory();
-
+  const { t } = useTranslation();
   const [usingQuickSearchIconImage, setUsingQuickSearchIconImage] = useState<any>(SearchIconGray)
   const [query, setQuery] = useState<string>("");
 
@@ -33,12 +34,12 @@ export const SearchBarRedirect: React.FC = ({ }) => {
           onFocus={() => setUsingQuickSearchIconImage(SearchIconBlack)}
           onBlur={() => setUsingQuickSearchIconImage(SearchIconGray)}
           value={query}
-          onChange={e => setQuery(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === "Enter") {
-              history.push(`/advanced-search?query=${query}`)
-            }
+          onChange={e => {
+            history.push(`/advanced-search?query=${e.target.value}`, {
+              fromDetailPage: true
+            })
           }}
+          placeholder={t('search_bar.placeholder')}
           role="input"
           aria-label="search-input"></input>
 

@@ -1,15 +1,15 @@
 import './ItemDetail.scss';
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faEdit, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { capitalizeAndMapInformationField } from 'src/helpers/capitalize';
 import { useHistory } from 'react-router-dom';
 import Highlighter from "react-highlight-words";
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState, useAppDispatch } from 'src/redux/store';
 import { useTranslation } from 'react-i18next';
-import IconViewOnModel from "src/assets/images/IconShow.svg";
 import ReactTooltip from 'react-tooltip';
+import { setHomeQueryPersistThroughNavigation } from 'src/redux/slice';
 
 export const ItemDetail: React.FC<IItemDetail> = ({
   item,
@@ -18,11 +18,18 @@ export const ItemDetail: React.FC<IItemDetail> = ({
   query
 }) => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
   const {
     isLoggedIn,
     user
   } = useSelector(
     (state: RootState) => state.authSlice,
+  );
+
+  const {
+    viewDetailsLastPage
+  } = useSelector(
+    (state: RootState) => state.navigationSlice,
   );
   const { t } = useTranslation();
 
@@ -49,15 +56,24 @@ export const ItemDetail: React.FC<IItemDetail> = ({
               className="item-detail__header--view-on-model"
               data-tip
               data-for={`tooltip-${item.code}`}>
-              <img
-                src={IconViewOnModel}
+
+              <div
+                role="img"
+                aria-label="view-on-model"
+                style={{
+                  cursor: "pointer",
+                  transform: "translateY(2.5px)"
+                }}
                 onClick={(e) => {
                   history.push(`/?type=${isPoint ? "point" : "line"}&code=${item["code"]}`, {
                     isRedirect: true
                   })
-                }}
-                role="img"
-                aria-label="view-on-model"></img>
+                }}>
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  className='item-detail__icon--map-pin'
+                />
+              </div>
               <ReactTooltip id={`tooltip-${item.code}`} place="bottom" effect="solid">
                 <p>{t('view_on_model')}</p>
               </ReactTooltip>
@@ -81,7 +97,21 @@ export const ItemDetail: React.FC<IItemDetail> = ({
           data-testid="back-icon"
           onClick={(e) => {
             e.stopPropagation();
-            history.push(`${query ? `/advanced-search?query=${query}` : "/advanced-search"}`)
+            if (viewDetailsLastPage) {
+              const { path, isRedirect, query, filterOptions } = viewDetailsLastPage;
+
+              if (query) {
+                dispatch(setHomeQueryPersistThroughNavigation(query))
+              }
+
+              history.push(path, {
+                isRedirect,
+                query,
+                filterOptions
+              })
+            } else {
+              history.push(`${query ? `/advanced-search?query=${query}` : "/advanced-search"}`)
+            }
           }}></FontAwesomeIcon>
 
         {isLoggedIn && user?.isAdmin && <FontAwesomeIcon
@@ -98,7 +128,7 @@ export const ItemDetail: React.FC<IItemDetail> = ({
         {Object.keys(item).map((field, index) => {
           if (field !== "name" && field !== "code") {
             return (
-              <div key={`point-information-${index}`}>
+              <div key={`point-information-${index}`} className='mb-4'>
                 <div
                   className={`item-detail__category ${field === "caution" ? "item-detail__category--caution" : ""}`}>
                   <span>{capitalizeAndMapInformationField(isPoint, field, usingLanguage)}</span>

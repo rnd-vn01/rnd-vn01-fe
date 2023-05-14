@@ -21,6 +21,7 @@ import { resetToInitialStateAuthSlice, setStateAuth } from 'src/redux/slice';
 import { useAppDispatch } from 'src/redux/store';
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from 'react-responsive';
+import { createNewAccount, getAccountInfo, login } from 'src/helpers/api/auth';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -51,6 +52,7 @@ export const LoginPage: React.FC = () => {
   // Hooks
   useEffect(() => {
     logout();
+    localStorage.removeItem("accessToken")
     dispatch(resetToInitialStateAuthSlice())
 
     if (location?.state?.isRedirect) {
@@ -99,21 +101,55 @@ export const LoginPage: React.FC = () => {
           })
             .then(() => {
               logout();
+              localStorage.removeItem("accessToken")
               dispatch(resetToInitialStateAuthSlice())
               return;
             })
         } else {
           // Valid login
           const user = result.user;
-          dispatch(setStateAuth({
-            isLoggedIn: true,
-            user: {
-              email: user.email,
-              profileImage: "https://firebasestorage.googleapis.com/v0/b/cs204finalproj.appspot.com/o/istockphoto-1223671392-612x612.jpg?alt=media&token=e9312c19-c34e-4a87-9a72-552532766cde",
-              firebaseId: user.uid,
-              isAdmin: ADMIN_EMAILS.includes(user.email)
-            }
-          }))
+
+          MySwal.fire({
+            title: t('login_page.messages.login_successful'),
+            text: t('login_page.messages.wait_for_redirect'),
+            didOpen: () => {
+              MySwal.showLoading(null);
+            },
+            didClose: () => {
+              MySwal.hideLoading();
+            },
+            allowOutsideClick: false,
+          })
+
+          await login(user.uid)
+
+          const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
+
+          if (Object.keys(accountInfo).length) {
+            dispatch(setStateAuth({
+              isLoggedIn: true,
+              user: {
+                email: accountInfo.email,
+                profileImage: accountInfo.image,
+                firebaseId: user.uid,
+                isAdmin: ADMIN_EMAILS.includes(accountInfo.email),
+                name: accountInfo.name
+              }
+            }))
+          } else {
+            dispatch(setStateAuth({
+              isLoggedIn: true,
+              user: {
+                email: user.email,
+                profileImage: "https://firebasestorage.googleapis.com/v0/b/cs204finalproj.appspot.com/o/istockphoto-1223671392-612x612.jpg?alt=media&token=e9312c19-c34e-4a87-9a72-552532766cde",
+                firebaseId: user.uid,
+                isAdmin: ADMIN_EMAILS.includes(user.email),
+                name: ""
+              }
+            }))
+          }
+
+          MySwal.close();
           history.push("/", { isRedirect: true })
         }
       })
@@ -159,9 +195,42 @@ export const LoginPage: React.FC = () => {
   }
 
   const signInWithGoogle = async () => {
+    let user;
+
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      const user = res.user as any;
+      user = res.user as any;
+    } catch (err: any) {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: err.message,
+      })
+      return;
+    }
+
+    MySwal.fire({
+      title: t('login_page.messages.login_successful'),
+      text: t('login_page.messages.wait_for_redirect'),
+      didOpen: () => {
+        MySwal.showLoading(null);
+      },
+      didClose: () => {
+        MySwal.hideLoading();
+      },
+      allowOutsideClick: false,
+    })
+
+    try {
+      await createNewAccount({
+        firebase_id: user.uid,
+        email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
+        image: user.photoURL,
+        name: user.displayName,
+        roles: ['user']
+      })
+
+      await login(user.uid)
 
       dispatch(setStateAuth({
         isLoggedIn: true,
@@ -173,15 +242,39 @@ export const LoginPage: React.FC = () => {
           isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
         }
       }))
+    } catch (e) {
+      await login(user.uid)
 
-      history.push("/", { isRedirect: true })
-    } catch (err: any) {
-      MySwal.fire({
-        icon: 'error',
-        title: t('error'),
-        text: err.message,
-      })
+      // Skip this catch, case of normal login
+      const accountInfo = await getAccountInfo(user.uid) as IParamGetAccountInfo
+
+      if (Object.keys(accountInfo).length) {
+        dispatch(setStateAuth({
+          isLoggedIn: true,
+          user: {
+            email: accountInfo.email,
+            profileImage: accountInfo.image,
+            firebaseId: user.uid,
+            isAdmin: ADMIN_EMAILS.includes(accountInfo.email),
+            name: accountInfo.name
+          }
+        }))
+      } else {
+        dispatch(setStateAuth({
+          isLoggedIn: true,
+          user: {
+            name: user.displayName,
+            email: user?.reloadUserInfo?.providerUserInfo?.[0].email,
+            profileImage: user?.reloadUserInfo?.providerUserInfo?.[0].photoUrl,
+            firebaseId: user.uid,
+            isAdmin: ADMIN_EMAILS.includes(user?.reloadUserInfo?.providerUserInfo?.[0].email),
+          }
+        }))
+      }
     }
+
+    MySwal.close();
+    history.push("/", { isRedirect: true })
   }
 
   return (
@@ -249,7 +342,7 @@ export const LoginPage: React.FC = () => {
           theme="blank"
           logo={GoogleLogo}
           caption={t('login_page.button_captions.sign_in_with_google')}
-          name="login"
+          name="login-google"
           onClick={signInWithGoogle}
         />
       </div>

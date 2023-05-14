@@ -34,14 +34,16 @@
     }
 
     &--image-logo {
-      height: 40px;
-      width: 40px;
+      height: 54px;
+      width: 54px;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     &--icon {
-      height: 20px;
-      width: 20px;
-      padding: 7.5px;
+      height: 25px;
+      width: 25px;
+      padding: 13.5px;
     }
 
     &--icon-gear {
@@ -54,7 +56,6 @@
 
     &--button-logo {
       background: var(--theme-background);
-      padding: 6px;
       border-radius: 50px;
       cursor: pointer;
       border: 1px solid black;
@@ -80,9 +81,15 @@
       cursor: pointer;
       padding: 0 5px;
       font-size: 1.1rem;
+      width: 100%;
 
       &:hover {
         background: var(--theme-primary)
+      }
+
+      &-icon {
+        font-size: 1rem;
+        transform: translateY(7.5px);
       }
     }
 
@@ -90,10 +97,47 @@
       border: 0;
       clear: both;
       display: block;
-      width: 96%;
+      width: 100%;
       background-color: black;
       height: 1px;
       margin: 2px 0;
+    }
+  }
+
+  &__dropdown--language {
+    position: absolute;
+    border: 1px solid black;
+    left: calc(100% + 5px);
+    top: -1px;
+    background: var(--theme-background);
+    z-index: 100;
+    width: fit-content;
+    padding: 0 2px;
+
+    &--hide {
+      display: none;
+    }
+
+    &--item {
+      cursor: pointer;
+      padding: 0 3px;
+      margin: 1px 0;
+      font-size: 1rem;
+      width: 100%;
+      white-space: nowrap;
+
+      &:hover {
+        background: var(--theme-primary)
+      }
+
+      &-icon {
+        font-size: 1rem;
+        transform: translateY(7.5px);
+      }
+    }
+
+    &--selected {
+      background: var(--theme-highlight)
     }
   }
 }

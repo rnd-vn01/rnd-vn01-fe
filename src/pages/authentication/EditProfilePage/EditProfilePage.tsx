@@ -13,6 +13,10 @@ import { Button } from 'src/components/common';
 import { setStateAuth } from 'src/redux/slice';
 import { useMediaQuery } from 'react-responsive';
 import { MobileTitleBar, SideMenu } from 'src/components/common/responsive';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from 'src/configs/firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import { updateProfile } from 'src/helpers/api/auth';
 
 export const EditProfilePage: React.FC = ({
 
@@ -20,6 +24,8 @@ export const EditProfilePage: React.FC = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
 
   // RESPONSIVE
   const [isShowingSideMenu, setIsShowingSideMenu] = useState<boolean>(false);
@@ -49,6 +55,7 @@ export const EditProfilePage: React.FC = ({
     if (user?.email) {
       setEmail(user?.email || "");
       setName(user?.name || "");
+      setImage(user?.profileImage || "");
     }
   }, [user]);
 
@@ -65,15 +72,96 @@ export const EditProfilePage: React.FC = ({
   //Values
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [image, setImage] = useState<string>("");
   const [calledUpdated, setCalledUpdated] = useState<boolean>(false);
 
   //Errors
   const [emailError, setEmailError] = useState<string>("");
   const [nameError, setNameError] = useState<string>("");
+  const [imageError, setImageError] = useState<string>("");
 
-  const validateAndSave = () => {
+  const handleInputChange = async (e: any) => {
+    //Upload images to firebase
+    Array.from(e.target.files).forEach(async (file: any) => {
+      let uploadPromise = upload(file).then((url: any) => {
+        setImage(url.default);
+        setImageError("");
+      })
+
+      toast.promise(
+        uploadPromise,
+        {
+          pending: t('toast.pending'),
+          success: t('toast.success'),
+          error: t('toast.error'),
+        },
+        {
+          success: {
+            duration: 5000,
+            icon: '🔥',
+          },
+        } as any
+      );
+    })
+  }
+
+  const upload = async (file: any) => {
+    return new Promise((resolve, reject) => {
+      setIsUploadingImage(true);
+      const storageRef = ref(storage, `/accounts/${file.name}-${Date.now()}`)
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        'state_changed',
+        function (snapshot) {
+          switch (snapshot.state) {
+            case "paused":
+              break;
+            case "running":
+              break;
+          }
+        },
+        function (error) {
+          setIsUploadingImage(false);
+          setImageError("Error occured");
+          switch (error.code) {
+            case "storage/unauthorized":
+              reject("User doesn't have permission to access the object");
+              break;
+
+            case "storage/canceled":
+              reject("User canceled the upload");
+              break;
+
+            case "storage/unknown":
+              reject("Unknown error occurred, inspect error.serverResponse");
+              break;
+          }
+        },
+        function () {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setIsUploadingImage(false);
+            resolve({
+              default: downloadURL
+            });
+          })
+        }
+      );
+    })
+  }
+
+  const uploadImage = () => {
+    document?.getElementById('uploadImage')?.click();
+  }
+
+  const validateAndSave = async () => {
     if (name === "") {
       setNameError(t("create_account_page.messages.invalid"));
+      return;
+    }
+
+    if (image === "" || imageError !== "") {
+      setImageError(t("create_account_page.messages.invalid"));
       return;
     }
 
@@ -91,21 +179,42 @@ export const EditProfilePage: React.FC = ({
     //Valid
     setCalledUpdated(true);
 
-    // Handle updates
-    dispatch(setStateAuth({
-      isLoggedIn: true,
-      user: {
-        ...user,
-        name: name
-      }
-    }))
+    let result = false;
+    result = await updateProfile({
+      firebase_id: user?.firebaseId,
+      email: email,
+      image: image,
+      name: name,
+    })
 
-    // TODO: CALL API
+    if (result) {
+      // Handle Update
+      dispatch(setStateAuth({
+        isLoggedIn: true,
+        user: {
+          ...user,
+          name: name,
+          profileImage: image
+        }
+      }))
 
-    MySwal.close();
-    history.push("/", { isRedirect: true })
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success...',
+        text: t('edit_page.update_result.success'),
+      })
+        .then(() => {
+          history.push("/", { isRedirect: true })
+          return;
+        })
+    } else {
+      MySwal.fire({
+        icon: 'error',
+        title: t('error'),
+        text: t('edit_page.update_result.failed'),
+      })
+    }
   }
-
 
   return (
     <div
@@ -158,15 +267,34 @@ export const EditProfilePage: React.FC = ({
           error={nameError !== ""}
           helperText={nameError} />
 
+        <div className="edit-profile-page__image--block">
+          <img className="edit-profile-page__image"
+            src={image}
+            onClick={() => uploadImage()}
+          >
+
+          </img>
+          <p className="edit-profile-page__image--error">{imageError}</p>
+        </div>
+
+        <input style={{ display: "none" }} type='file' id="uploadImage" name="uploadImage"
+          accept="image/png, image/jpeg"
+          onChange={handleInputChange} />
+
         <Button
           theme="filled"
           caption={t('edit_profile_page.button_captions.update_profile')}
           name="update-profile"
+          isDisabled={isUploadingImage}
           onClick={() => {
-            validateAndSave();
+            if (!isUploadingImage) {
+              validateAndSave();
+            }
           }}
         />
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

@@ -18,6 +18,7 @@ import { PersonalRecordsPage } from 'src/pages/PersonalRecordsPage/PersonalRecor
 import { AboutPage } from 'src/pages/AboutPage/AboutPage';
 import { ChangePasswordPage } from 'src/pages/authentication/ChangePasswordPage/ChangePasswordPage';
 import { EditProfilePage } from 'src/pages/authentication/EditProfilePage/EditProfilePage';
+import { ManualPage } from 'src/pages/ManualPage/ManualPage';
 
 export function Routers() {
   return (
@@ -115,6 +116,14 @@ export function Routers() {
           component={EditProfilePage}
           layout={FullLayout}
           isPrivate={true}
+        />
+
+        <BasicRoute
+          exact
+          path="/manual"
+          component={ManualPage}
+          layout={FullLayout}
+          isPrivate={false}
         />
 
         <Redirect to='/' />

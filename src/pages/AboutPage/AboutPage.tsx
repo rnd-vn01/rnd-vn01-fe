@@ -18,6 +18,7 @@ import PhotoChuong from "src/assets/images/about/members/Chuong.jpg"
 import LogoLinkedIn from "src/assets/images/about/LinkedIn.png"
 import PhotoDrMinh from "src/assets/images/about/doctors/DrMinh.jpg"
 import PhotoDrVan from "src/assets/images/about/doctors/DrVan.png"
+import PhotoDrNhan from "src/assets/images/about/DrNhan.jpg"
 import PhotoDHYD from "src/assets/images/about/University.jpg"
 import PhotoEngBook from "src/assets/images/about/EngBook.jpg"
 import PhotoViBook from "src/assets/images/about/ViBook.jpg"
@@ -91,18 +92,30 @@ export const AboutPage: React.FC<IAboutPage> = ({
           index={0}
         />
 
-        <AboutPageSection
+        {/* <AboutPageSection
           showContent={<></>}
           isCollapsable={false}
           sectionName={`${t('about_page.sections.client')}:`}
           information={`${t('about_page.sections.dr')} William Liu`}
-        />
+        /> */}
 
         <AboutPageSection
-          showContent={<></>}
-          isCollapsable={false}
           sectionName={`${t('about_page.sections.supervisor')}:`}
-          information={`${t('about_page.sections.dr')} ${t('about_page.sections.nhan_le_thi')}`}
+          information={``}
+          showContent={<div className='py-6 flex justify-around'>
+            <div className='about-page-section__member about-page-section__doctor flex items-center flex-col'>
+              <img className='about-page-section__member--avatar about-page-section__doctor--avatar'
+                src={PhotoDrNhan} />
+              <h1>{t('about_page.sections.dr')}{' '}{t('about_page.sections.nhan_le_thi')}
+              </h1>
+
+              <p className='mt-5 text-center'>
+                {t('about_page.sections.lecturer_hcmus')}
+              </p>
+            </div>
+          </div>}
+          index={5}
+          isCollapsable={true}
         />
 
         <AboutPageSection
@@ -194,6 +207,11 @@ export const AboutPage: React.FC<IAboutPage> = ({
                 src={PhotoDrMinh} />
               <h1>{t('about_page.sections.mmed')}{' '}{t('about_page.sections.consultants.minh_ma_hoang')}
               </h1>
+
+              <p className='mt-2 text-center'>
+                {t('about_page.sections.consultants.acupuncturist')}<br />
+                {t('about_page.sections.consultants.visiting_lecturer')}
+              </p>
             </div>
 
             <div className='col-span-1 about-page-section__member about-page-section__doctor flex items-center flex-col'>
@@ -201,6 +219,11 @@ export const AboutPage: React.FC<IAboutPage> = ({
                 src={PhotoDrVan} />
               <h1>{t('about_page.sections.mmed')}{' '}{t('about_page.sections.consultants.van_le_thi_tuong')}
               </h1>
+
+              <p className='mt-2 text-center'>
+                {t('about_page.sections.consultants.acupuncturist')}<br />
+                {t('about_page.sections.consultants.lecturer')}
+              </p>
             </div>
           </div>}
           isCollapsable={true}
