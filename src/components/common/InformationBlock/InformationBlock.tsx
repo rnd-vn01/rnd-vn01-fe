@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { useMediaQuery } from 'react-responsive';
 import { setBackFromInformationBlock, setViewDetailsPersistLastPage } from 'src/redux/slice';
+import { REFLECTIVE_MERIDIANS } from 'src/configs/constants';
 
 export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInformation, usingLanguage }) => {
   const history = useHistory();
@@ -118,6 +119,13 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
                     }
                   })}
 
+                  {
+                    !isPoint && REFLECTIVE_MERIDIANS.includes(itemInformation.code) &&
+                    <p className={`information-block__info--text-caution p-2 mt-3 pb-0 text-center`}>
+                      {t("reflective")}
+                    </p>
+                  }
+
                   <div
                     className={`information-block__view-details flex justify-between`}
                     role="div"
@@ -156,7 +164,6 @@ export const InformationBlock: React.FC<IInformationBlock> = ({ isPoint, itemInf
               >
                 <img src={isShowing ? IconShow : IconHide} className="information-block__menu--image-logo"></img>
               </div>}
-
 
               {itemInformation && isShowing &&
                 <div className='grid grid-cols-5'>

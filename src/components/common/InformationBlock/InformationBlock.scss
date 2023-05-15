@@ -77,7 +77,8 @@
   &__info {
     &--text-caution {
       color: var(--theme-danger);
-      font-weight: bold;
+      font-weight: semibold;
+      font-family: "header" !important;
     }
 
     &--text {
