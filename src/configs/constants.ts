@@ -2322,14 +2322,14 @@ export const LINE_POINTS = {
       "z": 2
     },
     {
-      "x": -13.1,
-      "y": -3,
-      "z": 2.6
+      "x": -12.8,
+      "y": -2.65,
+      "z": 2.8
     },
     {
-      "x": -13.3,
-      "y": -3.025,
-      "z": 3.1
+      "x": -13.25,
+      "y": -2.75,
+      "z": 3.6
     },
     {
       "x": -13.5,
@@ -5689,9 +5689,9 @@ export const POINT_LOCATIONS = {
   },
   "LU-10": {
     "position": [
-      -13.3,
-      -3.025,
-      3.1
+      -13.25,
+      -2.75,
+      3.6
     ],
     "reverse": 0,
     "viewFromBottom": false
@@ -7126,3 +7126,7 @@ export const HIGHLIGHT_PAGE_TITLES = {
     "EN": [0]
   }
 }
+
+export const REFLECTIVE_MERIDIANS = [
+  "LU", "LI", "ST", "SI", "SP", "HT", "BL", "KI", "PC", "TE", "GB", "Liv"
+]

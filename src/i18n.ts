@@ -371,7 +371,8 @@ i18n
             itemInteraction: "Methods to interact with the acupuncture points or meridians",
             quickMenu: "Menu for quick selecting a meridian"
           },
-          click_to_deselect: "Click to deselect"
+          click_to_deselect: "Click to deselect",
+          reflective: "The meridian is reflective. The model only shows the part of the meridian on one side of the body"
         }
       },
       vi: {
@@ -736,7 +737,8 @@ i18n
             itemInteraction: "Các phương pháp tương tác với huyệt đạo hoặc kinh lạc",
             quickMenu: "Menu chọn nhanh kinh lạc"
           },
-          click_to_deselect: "Bấm vào để bỏ chọn"
+          click_to_deselect: "Bấm vào để bỏ chọn",
+          reflective: "Kinh lạc có tính đối xứng. Mô hình chỉ hiển thị phần kinh lạc ở một bên của cơ thể"
         }
       }
     }

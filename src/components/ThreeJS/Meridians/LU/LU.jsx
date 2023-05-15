@@ -71,8 +71,8 @@ export const LU = ({ showLine }) => {
   points.push(new Vector3(-12.2, -1.5, 1.6))
   points.push(new Vector3(-12.4, -1.85, 1.5))
   points.push(new Vector3(-12.8, -2.5, 2))
-  points.push(new Vector3(-13.1, -3.0, 2.6))
-  points.push(new Vector3(-13.3, -3.025, 3.1))
+  points.push(new Vector3(-12.8, -2.65, 2.8))
+  points.push(new Vector3(-13.25, -2.75, 3.6))
   points.push(new Vector3(-13.5, -3.0, 4))
   points.push(new Vector3(-13.9, -3.1, 4.5))
 
@@ -117,7 +117,7 @@ export const LU = ({ showLine }) => {
         label="LU-9"
         labelPosition={0} />
       <Point
-        positionArray={[-13.3, -3.025, 3.1]}
+        positionArray={[-13.25, -2.75, 3.6]}
         label="LU-10"
         labelPosition={0} />
       <Point
